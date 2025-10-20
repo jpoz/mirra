@@ -13,12 +13,12 @@ import (
 )
 
 type Recording struct {
-	ID        string                 `json:"id"`
-	Timestamp time.Time              `json:"timestamp"`
-	Provider  string                 `json:"provider"`
-	Request   RequestData            `json:"request"`
-	Response  ResponseData           `json:"response"`
-	Timing    TimingData             `json:"timing"`
+	ID        string       `json:"id"`
+	Timestamp time.Time    `json:"timestamp"`
+	Provider  string       `json:"provider"`
+	Request   RequestData  `json:"request"`
+	Response  ResponseData `json:"response"`
+	Timing    TimingData   `json:"timing"`
 }
 
 type RequestData struct {

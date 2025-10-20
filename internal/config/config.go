@@ -7,10 +7,10 @@ import (
 )
 
 type Config struct {
-	Port      int                  `json:"port"`
-	Recording RecordingConfig      `json:"recording"`
-	Logging   LoggingConfig        `json:"logging"`
-	Providers map[string]Provider  `json:"providers"`
+	Port      int                 `json:"port"`
+	Recording RecordingConfig     `json:"recording"`
+	Logging   LoggingConfig       `json:"logging"`
+	Providers map[string]Provider `json:"providers"`
 }
 
 type RecordingConfig struct {

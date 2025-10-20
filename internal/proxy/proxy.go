@@ -260,7 +260,7 @@ func (p *Proxy) handleStreaming(w http.ResponseWriter, body io.Reader, rec *reco
 	flusher, ok := w.(http.Flusher)
 	if !ok {
 		slog.Error("response writer does not support flushing")
-		io.Copy(w, body)
+		_, _ = io.Copy(w, body)
 		return
 	}
 

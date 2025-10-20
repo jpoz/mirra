@@ -255,7 +255,7 @@ func TestIsGeminiPath(t *testing.T) {
 		{name: "v1_models_embedContent", path: "/v1/models/text-embedding:embedContent", expected: true},
 		{name: "v1_models_countTokens", path: "/v1/models/gemini-pro:countTokens", expected: true},
 		{name: "v1_models_slash_no_colon", path: "/v1/models/gemini-pro", expected: false}, // No colon, not Gemini
-		{name: "v1_models_list_no_colon", path: "/v1/models/", expected: false}, // No colon, not Gemini
+		{name: "v1_models_list_no_colon", path: "/v1/models/", expected: false},            // No colon, not Gemini
 		{name: "v1_files", path: "/v1/files", expected: true},
 		{name: "v1_files_id", path: "/v1/files/abc123", expected: true},
 		{name: "v1_files_nested", path: "/v1/files/abc123/metadata", expected: true},
