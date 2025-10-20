@@ -19,9 +19,46 @@ build: ## Build the mirra binary
 test: ## Run tests
 	go test ./...
 
+.PHONY: test-verbose
+test-verbose: ## Run tests with verbose output
+	go test -v ./...
+
+.PHONY: test-race
+test-race: ## Run tests with race detector
+	go test -race ./...
+
+.PHONY: test-coverage
+test-coverage: ## Run tests with coverage
+	go test -coverprofile=coverage.out -covermode=atomic ./...
+	@echo "Coverage report saved to coverage.out"
+	@go tool cover -func=coverage.out | grep total | awk '{print "Total coverage: " $$3}'
+
+.PHONY: coverage-html
+coverage-html: test-coverage ## Generate HTML coverage report
+	go tool cover -html=coverage.out -o coverage.html
+	@echo "HTML coverage report saved to coverage.html"
+	@which open > /dev/null && open coverage.html || echo "Open coverage.html in your browser"
+
+.PHONY: fmt
+fmt: ## Format Go code
+	gofmt -s -w .
+
+.PHONY: lint
+lint: ## Run linters
+	@which golangci-lint > /dev/null || (echo "golangci-lint not installed. Install with: brew install golangci-lint" && exit 1)
+	golangci-lint run ./...
+
+.PHONY: vet
+vet: ## Run go vet
+	go vet ./...
+
+.PHONY: install-hooks
+install-hooks: ## Install git hooks
+	@bash .githooks/setup.sh
+
 .PHONY: clean
-clean: ## Remove built binaries
-	rm -f mirra
+clean: ## Remove built binaries and coverage files
+	rm -f mirra coverage.out coverage.html
 
 ## Examples
 .PHONY: example_prompt

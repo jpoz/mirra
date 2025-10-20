@@ -1,0 +1,26 @@
+#!/bin/sh
+# Pre-push hook for mirra
+# Runs the full test suite before pushing
+
+set -e
+
+echo "Running pre-push checks..."
+
+# Run tests
+echo "→ Running tests..."
+if ! go test ./... -v; then
+    echo "❌ Tests failed. Please fix failing tests before pushing."
+    exit 1
+fi
+echo "✓ Tests passed"
+
+# Optional: Run tests with race detector (can be slow)
+# echo "→ Running tests with race detector..."
+# if ! go test -race ./...; then
+#     echo "❌ Race detector found issues. Please fix before pushing."
+#     exit 1
+# fi
+# echo "✓ Race detector passed"
+
+echo "✓ All pre-push checks passed"
+exit 0

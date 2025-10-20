@@ -71,8 +71,9 @@ func isGeminiPath(path string) bool {
 	}
 
 	// Model operations: /v1*/models/*
-	// Includes: generateContent, streamGenerateContent, embedContent, countTokens, etc.
-	if strings.Contains(path, "/models/") || strings.Contains(path, "/models:") {
+	// Gemini uses colons for operations (e.g., :generateContent)
+	// Only match if path contains both "/models" and ":" to avoid conflicts with OpenAI /v1/models/{id}
+	if (strings.Contains(path, "/models/") || strings.Contains(path, "/models:")) && strings.Contains(path, ":") {
 		return true
 	}
 
