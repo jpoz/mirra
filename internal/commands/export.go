@@ -62,7 +62,11 @@ func Export(args []string) error {
 	if err != nil {
 		return fmt.Errorf("failed to create output file: %w", err)
 	}
-	defer outFile.Close()
+	defer func() {
+		if err := outFile.Close(); err != nil {
+			slog.Error("failed to close output file", "error", err)
+		}
+	}()
 
 	count := 0
 
@@ -118,18 +122,18 @@ func Export(args []string) error {
 
 			// Write to output
 			if _, err := outFile.Write(scanner.Bytes()); err != nil {
-				f.Close()
+				_ = f.Close()
 				return fmt.Errorf("failed to write to output: %w", err)
 			}
 			if _, err := outFile.Write([]byte("\n")); err != nil {
-				f.Close()
+				_ = f.Close()
 				return fmt.Errorf("failed to write newline: %w", err)
 			}
 
 			count++
 		}
 
-		f.Close()
+		_ = f.Close()
 	}
 
 	slog.Info("export complete", "count", count, "output", *output)

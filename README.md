@@ -309,6 +309,62 @@ MIRRA is designed for minimal overhead:
 - Streaming responses pass through in real-time
 - Recording happens asynchronously without blocking requests
 
+## Development
+
+### Running Tests
+
+```bash
+# Run all tests
+make test
+
+# Run tests with verbose output
+make test-verbose
+
+# Run tests with race detector
+make test-race
+
+# Run tests with coverage
+make test-coverage
+
+# Generate HTML coverage report
+make coverage-html
+```
+
+### Code Quality
+
+```bash
+# Format code
+make fmt
+
+# Run linters
+make lint
+
+# Run go vet
+make vet
+```
+
+### Git Workflow
+
+Install git hooks for automatic code quality checks:
+
+```bash
+make install-hooks
+```
+
+This installs:
+- **pre-commit hook**: Runs `gofmt` and `go vet` on staged files
+- **pre-push hook**: Runs the full test suite before pushing
+
+To skip hooks temporarily:
+```bash
+git commit --no-verify
+git push --no-verify
+```
+
+### Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines and workflow.
+
 ## License
 
 See LICENSE file for details.

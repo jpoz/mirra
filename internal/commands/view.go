@@ -75,7 +75,7 @@ func View(args []string) error {
 			}
 		}
 
-		f.Close()
+		_ = f.Close()
 	}
 
 	if len(matches) == 0 {
@@ -121,7 +121,7 @@ func findLastRecording(files []string) (*recorder.Recording, error) {
 			}
 		}
 
-		f.Close()
+		_ = f.Close()
 	}
 
 	if lastRecording == nil {
@@ -355,7 +355,9 @@ func decompressGzip(data []byte) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to create gzip reader: %w", err)
 	}
-	defer reader.Close()
+	defer func() {
+		_ = reader.Close()
+	}()
 
 	decompressed, err := io.ReadAll(reader)
 	if err != nil {

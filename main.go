@@ -115,5 +115,5 @@ Commands:
   stats   - Show statistics about recordings
   view    - View a specific recording
   help    - Show this help message`
-	fmt.Fprintln(os.Stdout, usage)
+	_, _ = fmt.Fprintln(os.Stdout, usage)
 }

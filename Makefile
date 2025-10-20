@@ -19,9 +19,59 @@ build: ## Build the mirra binary
 test: ## Run tests
 	go test ./...
 
+.PHONY: test-verbose
+test-verbose: ## Run tests with verbose output
+	go test -v ./...
+
+.PHONY: test-race
+test-race: ## Run tests with race detector
+	go test -race ./...
+
+.PHONY: test-coverage
+test-coverage: ## Run tests with coverage
+	go test -coverprofile=coverage.out -covermode=atomic ./...
+	@echo "Coverage report saved to coverage.out"
+	@go tool cover -func=coverage.out | grep total | awk '{print "Total coverage: " $$3}'
+
+.PHONY: coverage-html
+coverage-html: test-coverage ## Generate HTML coverage report
+	go tool cover -html=coverage.out -o coverage.html
+	@echo "HTML coverage report saved to coverage.html"
+	@which open > /dev/null && open coverage.html || echo "Open coverage.html in your browser"
+
+.PHONY: fmt
+fmt: ## Format Go code
+	gofmt -s -w .
+
+.PHONY: fmt-check
+fmt-check: ## Check if code is formatted (like CI does)
+	@if [ "$$(gofmt -s -l . | wc -l)" -gt 0 ]; then \
+		echo "gofmt found formatting issues:"; \
+		gofmt -s -l .; \
+		echo "Run 'make fmt' to fix these issues"; \
+		exit 1; \
+	fi
+
+.PHONY: vet
+vet: ## Run go vet
+	go vet ./...
+
+.PHONY: lint
+lint: ## Run golangci-lint
+	@which golangci-lint > /dev/null || (echo "golangci-lint not installed. Install with: brew install golangci-lint" && exit 1)
+	golangci-lint run --timeout=5m ./...
+
+.PHONY: check
+check: fmt-check vet lint ## Run all checks (fmt-check, vet, lint) like CI does
+	@echo "All checks passed!"
+
+.PHONY: install-hooks
+install-hooks: ## Install git hooks
+	@bash .githooks/setup.sh
+
 .PHONY: clean
-clean: ## Remove built binaries
-	rm -f mirra
+clean: ## Remove built binaries and coverage files
+	rm -f mirra coverage.out coverage.html
 
 ## Examples
 .PHONY: example_prompt

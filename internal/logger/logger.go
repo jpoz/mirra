@@ -137,7 +137,7 @@ func (h *PrettyHandler) formatRequestLog(b *strings.Builder, r slog.Record) {
 		}
 
 		b.WriteString(statusColor)
-		b.WriteString(fmt.Sprintf("%d", status))
+		fmt.Fprintf(b, "%d", status)
 		b.WriteString(colorReset)
 		b.WriteString(" ")
 	}

@@ -71,8 +71,9 @@ func isGeminiPath(path string) bool {
 	}
 
 	// Model operations: /v1*/models/*
-	// Includes: generateContent, streamGenerateContent, embedContent, countTokens, etc.
-	if strings.Contains(path, "/models/") || strings.Contains(path, "/models:") {
+	// Gemini uses colons for operations (e.g., :generateContent)
+	// Only match if path contains both "/models" and ":" to avoid conflicts with OpenAI /v1/models/{id}
+	if (strings.Contains(path, "/models/") || strings.Contains(path, "/models:")) && strings.Contains(path, ":") {
 		return true
 	}
 
@@ -158,7 +159,9 @@ func (p *Proxy) Handle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "failed to read request body", http.StatusBadRequest)
 		return
 	}
-	defer r.Body.Close()
+	defer func() {
+		_ = r.Body.Close()
+	}()
 
 	// Capture request body
 	if len(bodyBytes) > 0 {
@@ -224,7 +227,9 @@ func (p *Proxy) Handle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "upstream request failed", http.StatusBadGateway)
 		return
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	// Copy response headers
 	for key, values := range resp.Header {
@@ -255,7 +260,7 @@ func (p *Proxy) handleRegular(w http.ResponseWriter, body io.Reader, rec *record
 	tee := io.TeeReader(body, &buf)
 
 	if _, err := io.Copy(w, tee); err != nil {
-		slog.Error("failed to copy response", "error", err)
+		slog.Error("failed to copy response", "id", rec.ID[:8], "error", err)
 		return
 	}
 
@@ -287,8 +292,8 @@ func (p *Proxy) handleRegular(w http.ResponseWriter, body io.Reader, rec *record
 func (p *Proxy) handleStreaming(w http.ResponseWriter, body io.Reader, rec *recorder.Recording) {
 	flusher, ok := w.(http.Flusher)
 	if !ok {
-		slog.Error("response writer does not support flushing")
-		io.Copy(w, body)
+		slog.Error("response writer does not support flushing", "id", rec.ID[:8])
+		_, _ = io.Copy(w, body)
 		return
 	}
 
@@ -303,18 +308,18 @@ func (p *Proxy) handleStreaming(w http.ResponseWriter, body io.Reader, rec *reco
 
 		// Write to client
 		if _, err := w.Write(line); err != nil {
-			slog.Error("failed to write streaming chunk", "error", err)
+			slog.Error("failed to write streaming chunk", "id", rec.ID[:8], "error", err)
 			break
 		}
 		if _, err := w.Write([]byte("\n")); err != nil {
-			slog.Error("failed to write newline", "error", err)
+			slog.Error("failed to write newline", "id", rec.ID[:8], "error", err)
 			break
 		}
 		flusher.Flush()
 	}
 
 	if err := scanner.Err(); err != nil {
-		slog.Error("error reading stream", "error", err)
+		slog.Error("error reading stream", "id", rec.ID[:8], "error", err)
 	}
 
 	if accumulated.Len() > 0 {

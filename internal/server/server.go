@@ -49,7 +49,9 @@ func (s *Server) Start(ctx context.Context) error {
 
 	select {
 	case err := <-errChan:
-		s.recorder.Close()
+		if closeErr := s.recorder.Close(); closeErr != nil {
+			slog.Error("recorder close error", "error", closeErr)
+		}
 		return err
 	case <-ctx.Done():
 		slog.Info("shutting down gracefully")
@@ -71,5 +73,5 @@ func (s *Server) Start(ctx context.Context) error {
 
 func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("OK"))
+	_, _ = w.Write([]byte("OK"))
 }
