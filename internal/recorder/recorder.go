@@ -13,13 +13,13 @@ import (
 )
 
 type Recording struct {
-	ID        string                 `json:"id"`
-	Timestamp time.Time              `json:"timestamp"`
-	Provider  string                 `json:"provider"`
-	Request   RequestData            `json:"request"`
-	Response  ResponseData           `json:"response"`
-	Timing    TimingData             `json:"timing"`
-	Error     string                 `json:"error,omitempty"`
+	ID        string       `json:"id"`
+	Timestamp time.Time    `json:"timestamp"`
+	Provider  string       `json:"provider"`
+	Request   RequestData  `json:"request"`
+	Response  ResponseData `json:"response"`
+	Timing    TimingData   `json:"timing"`
+	Error     string       `json:"error,omitempty"`
 }
 
 type RequestData struct {
@@ -122,7 +122,9 @@ func (r *Recorder) writeRecording(rec Recording) error {
 	if err != nil {
 		return fmt.Errorf("failed to open file: %w", err)
 	}
-	defer f.Close()
+	defer func() {
+		_ = f.Close()
+	}()
 
 	data, err := json.Marshal(rec)
 	if err != nil {

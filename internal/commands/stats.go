@@ -95,7 +95,7 @@ func Stats(args []string) error {
 			stats.addRecording(&rec)
 		}
 
-		f.Close()
+		_ = f.Close()
 	}
 
 	stats.print()

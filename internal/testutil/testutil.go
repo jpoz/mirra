@@ -21,7 +21,7 @@ func TempDir(t *testing.T) (string, func()) {
 	require.NoError(t, err, "failed to create temp directory")
 
 	cleanup := func() {
-		os.RemoveAll(dir)
+		_ = os.RemoveAll(dir)
 	}
 
 	return dir, cleanup
@@ -130,7 +130,9 @@ func GzipDecompress(t *testing.T, data []byte) []byte {
 
 	gz, err := gzip.NewReader(bytes.NewReader(data))
 	require.NoError(t, err, "failed to create gzip reader")
-	defer gz.Close()
+	defer func() {
+		_ = gz.Close()
+	}()
 
 	decompressed, err := io.ReadAll(gz)
 	require.NoError(t, err, "failed to read decompressed data")
@@ -203,13 +205,13 @@ func SetEnv(t *testing.T, key, value string) {
 	t.Helper()
 
 	oldValue, exists := os.LookupEnv(key)
-	os.Setenv(key, value)
+	_ = os.Setenv(key, value)
 
 	t.Cleanup(func() {
 		if exists {
-			os.Setenv(key, oldValue)
+			_ = os.Setenv(key, oldValue)
 		} else {
-			os.Unsetenv(key)
+			_ = os.Unsetenv(key)
 		}
 	})
 }

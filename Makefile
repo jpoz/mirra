@@ -43,14 +43,27 @@ coverage-html: test-coverage ## Generate HTML coverage report
 fmt: ## Format Go code
 	gofmt -s -w .
 
-.PHONY: lint
-lint: ## Run linters
-	@which golangci-lint > /dev/null || (echo "golangci-lint not installed. Install with: brew install golangci-lint" && exit 1)
-	golangci-lint run ./...
+.PHONY: fmt-check
+fmt-check: ## Check if code is formatted (like CI does)
+	@if [ "$$(gofmt -s -l . | wc -l)" -gt 0 ]; then \
+		echo "gofmt found formatting issues:"; \
+		gofmt -s -l .; \
+		echo "Run 'make fmt' to fix these issues"; \
+		exit 1; \
+	fi
 
 .PHONY: vet
 vet: ## Run go vet
 	go vet ./...
+
+.PHONY: lint
+lint: ## Run golangci-lint
+	@which golangci-lint > /dev/null || (echo "golangci-lint not installed. Install with: brew install golangci-lint" && exit 1)
+	golangci-lint run --timeout=5m ./...
+
+.PHONY: check
+check: fmt-check vet lint ## Run all checks (fmt-check, vet, lint) like CI does
+	@echo "All checks passed!"
 
 .PHONY: install-hooks
 install-hooks: ## Install git hooks

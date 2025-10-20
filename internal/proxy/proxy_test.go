@@ -320,7 +320,9 @@ func TestNew(t *testing.T) {
 	}
 
 	rec := recorder.New(true, "./test-recordings")
-	defer rec.Close()
+	defer func() {
+		_ = rec.Close()
+	}()
 
 	proxy := New(cfg, rec)
 

@@ -49,7 +49,9 @@ func (s *Server) Start(ctx context.Context) error {
 
 	select {
 	case err := <-errChan:
-		s.recorder.Close()
+		if closeErr := s.recorder.Close(); closeErr != nil {
+			slog.Error("recorder close error", "error", closeErr)
+		}
 		return err
 	case <-ctx.Done():
 		slog.Info("shutting down gracefully")
