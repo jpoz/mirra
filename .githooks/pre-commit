@@ -29,7 +29,7 @@ echo "✓ gofmt passed"
 
 # Run go vet on staged files
 echo "→ Running go vet..."
-echo "$STAGED_GO_FILES" | xargs -I {} dirname {} | sort -u | xargs go vet
+echo "$STAGED_GO_FILES" | xargs -I {} dirname {} | sort -u | xargs -I {} go vet ./{}
 echo "✓ go vet passed"
 
 echo "✓ All pre-commit checks passed"
