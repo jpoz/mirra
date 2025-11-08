@@ -20711,25 +20711,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
   ], Copy = createLucideIcon("Copy", __iconNode2);
 
+  // internal/ui/src/node_modules/lucide-react/dist/esm/icons/loader-circle.js
+  var __iconNode3 = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]], LoaderCircle = createLucideIcon("LoaderCircle", __iconNode3);
+
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/refresh-cw.js
-  var __iconNode3 = [
+  var __iconNode4 = [
     ["path", { d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", key: "v9h5vc" }],
     ["path", { d: "M21 3v5h-5", key: "1q7to0" }],
     ["path", { d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", key: "3uifl3" }],
     ["path", { d: "M8 16H3v5", key: "1cv678" }]
-  ], RefreshCw = createLucideIcon("RefreshCw", __iconNode3);
+  ], RefreshCw = createLucideIcon("RefreshCw", __iconNode4);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/search.js
-  var __iconNode4 = [
+  var __iconNode5 = [
     ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }],
     ["path", { d: "m21 21-4.3-4.3", key: "1qie3q" }]
-  ], Search = createLucideIcon("Search", __iconNode4);
+  ], Search = createLucideIcon("Search", __iconNode5);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/x.js
-  var __iconNode5 = [
+  var __iconNode6 = [
     ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
     ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
-  ], X = createLucideIcon("X", __iconNode5);
+  ], X = createLucideIcon("X", __iconNode6);
 
   // internal/ui/src/app/components/ui/table.tsx
   var import_react3 = __toESM(require_react(), 1);
@@ -23698,11 +23701,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // internal/ui/src/app/components/RecordingDetailModal.tsx
   var import_react4 = __toESM(require_react(), 1);
+  async function fetchParsedRecording(id) {
+    let response = await fetch(`/api/recordings/${id}/parse`);
+    if (!response.ok)
+      throw new Error("Failed to parse recording");
+    return response.json();
+  }
   function RecordingDetailModal({
     recording,
     onClose
   }) {
-    let [copiedSection, setCopiedSection] = (0, import_react4.useState)(null), copyToClipboard = (text, section) => {
+    let [copiedSection, setCopiedSection] = (0, import_react4.useState)(null), [viewMode, setViewMode] = (0, import_react4.useState)("raw"), {
+      data: parsedData,
+      isLoading: isParsing,
+      error: parseError
+    } = useQuery({
+      queryKey: ["parsed", recording.id],
+      queryFn: () => fetchParsedRecording(recording.id),
+      enabled: viewMode === "parsed" && recording.response.streaming
+    }), copyToClipboard = (text, section) => {
       navigator.clipboard.writeText(text), setCopiedSection(section), setTimeout(() => setCopiedSection(null), 2e3);
     }, formatJSON = (obj) => {
       try {
@@ -23743,7 +23760,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         )
       },
       copiedSection === "request" ? /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy")
-    )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Endpoint"), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-sm mt-1 font-mono" }, recording.request.method, " ", recording.request.path, recording.request.query && `?${recording.request.query}`)), /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Headers"), /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto" }, formatJSON(recording.request.headers))), recording.request.body && /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Body"), /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto max-h-64 overflow-y-auto whitespace-pre-wrap" }, formatBody(recording.request.body))))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "border rounded-md" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-between p-3 bg-gray-50 border-b" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react4.default.createElement("h3", { className: "font-semibold" }, "Response"), recording.response.streaming && /* @__PURE__ */ import_react4.default.createElement("span", { className: "text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded" }, "Streaming")), /* @__PURE__ */ import_react4.default.createElement(
+    )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Endpoint"), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-sm mt-1 font-mono" }, recording.request.method, " ", recording.request.path, recording.request.query && `?${recording.request.query}`)), /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Headers"), /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto" }, formatJSON(recording.request.headers))), recording.request.body && /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Body"), /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto max-h-64 overflow-y-auto whitespace-pre-wrap" }, formatBody(recording.request.body))))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "border rounded-md" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-between p-3 bg-gray-50 border-b" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react4.default.createElement("h3", { className: "font-semibold" }, "Response"), recording.response.streaming && /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement("span", { className: "text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded" }, "Streaming"), /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex ml-2 border rounded-md overflow-hidden" }, /* @__PURE__ */ import_react4.default.createElement(
+      "button",
+      {
+        className: `px-3 py-1 text-xs ${viewMode === "raw" ? "bg-blue-500 text-white" : "bg-white text-gray-700 hover:bg-gray-100"}`,
+        onClick: () => setViewMode("raw")
+      },
+      "Raw"
+    ), /* @__PURE__ */ import_react4.default.createElement(
+      "button",
+      {
+        className: `px-3 py-1 text-xs border-l ${viewMode === "parsed" ? "bg-blue-500 text-white" : "bg-white text-gray-700 hover:bg-gray-100"}`,
+        onClick: () => setViewMode("parsed")
+      },
+      "Parsed"
+    )))), /* @__PURE__ */ import_react4.default.createElement(
       Button,
       {
         size: "sm",
@@ -23758,7 +23789,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         )
       },
       copiedSection === "response" ? /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy")
-    )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Headers"), /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto" }, formatJSON(recording.response.headers))), recording.response.body && /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Body"), /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto max-h-96 overflow-y-auto whitespace-pre-wrap" }, formatBody(recording.response.body)))))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-end gap-2 p-6 border-t bg-gray-50" }, /* @__PURE__ */ import_react4.default.createElement(Button, { variant: "outline", onClick: onClose }, "Close"))));
+    )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Headers"), /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto" }, formatJSON(recording.response.headers))), recording.response.body && /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium text-gray-600" }, "Body"), recording.response.streaming && viewMode === "parsed" ? (
+      // Parsed view for streaming responses
+      /* @__PURE__ */ import_react4.default.createElement("div", { className: "mt-1" }, isParsing && /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-center p-8" }, /* @__PURE__ */ import_react4.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-blue-500" }), /* @__PURE__ */ import_react4.default.createElement("span", { className: "ml-2 text-gray-600" }, "Parsing stream...")), parseError && /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 bg-red-50 border border-red-200 rounded text-red-800 text-sm" }, "Failed to parse stream: ", parseError.message), parsedData && !isParsing && /* @__PURE__ */ import_react4.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Reconstructed Output"), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-3 bg-gray-50 rounded border" }, parsedData.text ? /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-sm whitespace-pre-wrap" }, parsedData.text) : /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-sm text-gray-500 italic" }, "No text content"))), Object.keys(parsedData.metadata).length > 0 && /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Metadata"), /* @__PURE__ */ import_react4.default.createElement("div", { className: "grid grid-cols-2 gap-2" }, Object.entries(parsedData.metadata).map(([key, value]) => /* @__PURE__ */ import_react4.default.createElement("div", { key, className: "p-2 bg-gray-50 rounded border" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "text-xs font-medium text-gray-600" }, key), /* @__PURE__ */ import_react4.default.createElement("div", { className: "text-sm mt-1" }, typeof value == "object" ? /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs" }, JSON.stringify(value, null, 2)) : String(value)))))), Object.keys(parsedData.eventCounts).length > 0 && /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Event Summary"), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-3 bg-gray-50 rounded border" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex flex-wrap gap-2" }, Object.entries(parsedData.eventCounts).map(([eventType, count]) => /* @__PURE__ */ import_react4.default.createElement(
+        "span",
+        {
+          key: eventType,
+          className: "inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-700"
+        },
+        eventType,
+        ": ",
+        count
+      )))))))
+    ) : (
+      // Raw view
+      /* @__PURE__ */ import_react4.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto max-h-96 overflow-y-auto whitespace-pre-wrap" }, formatBody(recording.response.body))
+    ))))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-end gap-2 p-6 border-t bg-gray-50" }, /* @__PURE__ */ import_react4.default.createElement(Button, { variant: "outline", onClick: onClose }, "Close"))));
   }
 
   // internal/ui/src/app/pages/Recordings.tsx
@@ -31214,6 +31260,7 @@ lucide-react/dist/esm/Icon.js:
 lucide-react/dist/esm/createLucideIcon.js:
 lucide-react/dist/esm/icons/check.js:
 lucide-react/dist/esm/icons/copy.js:
+lucide-react/dist/esm/icons/loader-circle.js:
 lucide-react/dist/esm/icons/refresh-cw.js:
 lucide-react/dist/esm/icons/search.js:
 lucide-react/dist/esm/icons/x.js:

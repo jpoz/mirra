@@ -15,8 +15,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/llmite-ai/mirra/internal/config"
 	"github.com/llmite-ai/mirra/internal/recorder"
+	"github.com/llmite-ai/mirra/internal/sse"
 )
 
 // RecordingListResponse represents the API response for listing recordings
@@ -116,13 +118,12 @@ func (h *Handlers) ListRecordings(w http.ResponseWriter, r *http.Request) {
 
 // GetRecording handles GET /api/recordings/:id
 func (h *Handlers) GetRecording(w http.ResponseWriter, r *http.Request) {
-	// Extract ID from path
-	parts := strings.Split(strings.TrimPrefix(r.URL.Path, "/api/recordings/"), "/")
-	if len(parts) == 0 || parts[0] == "" {
+	// Extract ID from URL parameter
+	id := chi.URLParam(r, "id")
+	if id == "" {
 		http.Error(w, "Recording ID required", http.StatusBadRequest)
 		return
 	}
-	id := parts[0]
 
 	// Read all recordings to find the one with matching ID
 	recordings, err := h.readAllRecordings("", "")
@@ -174,6 +175,88 @@ func (h *Handlers) GetRecording(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(redacted)
+}
+
+// ParsedStreamResponse represents the API response for parsed SSE streams
+type ParsedStreamResponse struct {
+	Text        string                 `json:"text"`
+	Metadata    map[string]interface{} `json:"metadata"`
+	EventCounts map[string]int         `json:"eventCounts"`
+}
+
+// ParseRecording handles GET /api/recordings/:id/parse
+func (h *Handlers) ParseRecording(w http.ResponseWriter, r *http.Request) {
+	// Extract ID from URL parameter
+	id := chi.URLParam(r, "id")
+	if id == "" {
+		http.Error(w, "Recording ID required", http.StatusBadRequest)
+		return
+	}
+
+	// Read all recordings to find the one with matching ID
+	recordings, err := h.readAllRecordings("", "")
+	if err != nil {
+		h.log.Error("Failed to read recordings", "error", err)
+		http.Error(w, "Failed to read recordings", http.StatusInternalServerError)
+		return
+	}
+
+	// Find recording by ID (support prefix matching)
+	var found *recorder.Recording
+	for i := range recordings {
+		if strings.HasPrefix(recordings[i].ID, id) {
+			found = &recordings[i]
+			break
+		}
+	}
+
+	if found == nil {
+		http.Error(w, "Recording not found", http.StatusNotFound)
+		return
+	}
+
+	// Check if this is a streaming response
+	if !found.Response.Streaming {
+		http.Error(w, "Recording is not a streaming response", http.StatusBadRequest)
+		return
+	}
+
+	// Get response body as string
+	bodyStr, ok := found.Response.Body.(string)
+	if !ok {
+		http.Error(w, "Response body is not in string format", http.StatusInternalServerError)
+		return
+	}
+
+	// Parse using the SSE parser
+	parser := sse.NewParser(found.Provider)
+	if parser == nil {
+		http.Error(w, fmt.Sprintf("No parser available for provider: %s", found.Provider), http.StatusNotImplemented)
+		return
+	}
+
+	parsed, err := parser.Parse(bodyStr)
+	if err != nil {
+		h.log.Error("Failed to parse SSE stream", "error", err, "provider", found.Provider)
+		http.Error(w, fmt.Sprintf("Failed to parse SSE stream: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Count events by type
+	eventCounts := make(map[string]int)
+	for _, event := range parsed.Events {
+		eventCounts[event.Type]++
+	}
+
+	// Prepare response
+	response := ParsedStreamResponse{
+		Text:        parsed.Text,
+		Metadata:    parsed.Metadata,
+		EventCounts: eventCounts,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
 }
 
 // readAllRecordings reads all recordings from JSONL files

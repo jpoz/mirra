@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
 import { format } from 'date-fns'
-import { X, Copy, Check } from 'lucide-react'
+import { X, Copy, Check, Loader2 } from 'lucide-react'
 import { Button } from './ui/button'
+import { useQuery } from '@tanstack/react-query'
+
+interface ParsedStream {
+  text: string
+  metadata: Record<string, any>
+  eventCounts: Record<string, number>
+}
 
 interface Recording {
   id: string
@@ -33,11 +40,31 @@ interface RecordingDetailModalProps {
   onClose: () => void
 }
 
+async function fetchParsedRecording(id: string): Promise<ParsedStream> {
+  const response = await fetch(`/api/recordings/${id}/parse`)
+  if (!response.ok) {
+    throw new Error('Failed to parse recording')
+  }
+  return response.json()
+}
+
 export default function RecordingDetailModal({
   recording,
   onClose,
 }: RecordingDetailModalProps) {
   const [copiedSection, setCopiedSection] = useState<string | null>(null)
+  const [viewMode, setViewMode] = useState<'raw' | 'parsed'>('raw')
+
+  // Fetch parsed data only when viewing parsed mode and response is streaming
+  const {
+    data: parsedData,
+    isLoading: isParsing,
+    error: parseError,
+  } = useQuery({
+    queryKey: ['parsed', recording.id],
+    queryFn: () => fetchParsedRecording(recording.id),
+    enabled: viewMode === 'parsed' && recording.response.streaming,
+  })
 
   const copyToClipboard = (text: string, section: string) => {
     navigator.clipboard.writeText(text)
@@ -195,9 +222,34 @@ export default function RecordingDetailModal({
               <div className="flex items-center gap-2">
                 <h3 className="font-semibold">Response</h3>
                 {recording.response.streaming && (
-                  <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
-                    Streaming
-                  </span>
+                  <>
+                    <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
+                      Streaming
+                    </span>
+                    {/* Tab buttons for streaming responses */}
+                    <div className="flex ml-2 border rounded-md overflow-hidden">
+                      <button
+                        className={`px-3 py-1 text-xs ${
+                          viewMode === 'raw'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-white text-gray-700 hover:bg-gray-100'
+                        }`}
+                        onClick={() => setViewMode('raw')}
+                      >
+                        Raw
+                      </button>
+                      <button
+                        className={`px-3 py-1 text-xs border-l ${
+                          viewMode === 'parsed'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-white text-gray-700 hover:bg-gray-100'
+                        }`}
+                        onClick={() => setViewMode('parsed')}
+                      >
+                        Parsed
+                      </button>
+                    </div>
+                  </>
                 )}
               </div>
               <Button
@@ -238,9 +290,82 @@ export default function RecordingDetailModal({
               {recording.response.body && (
                 <div>
                   <label className="text-sm font-medium text-gray-600">Body</label>
-                  <pre className="text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto max-h-96 overflow-y-auto whitespace-pre-wrap">
-                    {formatBody(recording.response.body)}
-                  </pre>
+                  {recording.response.streaming && viewMode === 'parsed' ? (
+                    // Parsed view for streaming responses
+                    <div className="mt-1">
+                      {isParsing && (
+                        <div className="flex items-center justify-center p-8">
+                          <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+                          <span className="ml-2 text-gray-600">Parsing stream...</span>
+                        </div>
+                      )}
+                      {parseError && (
+                        <div className="p-4 bg-red-50 border border-red-200 rounded text-red-800 text-sm">
+                          Failed to parse stream: {(parseError as Error).message}
+                        </div>
+                      )}
+                      {parsedData && !isParsing && (
+                        <div className="space-y-4">
+                          {/* Reconstructed Output */}
+                          <div>
+                            <h4 className="text-sm font-semibold mb-2">Reconstructed Output</h4>
+                            <div className="p-3 bg-gray-50 rounded border">
+                              {parsedData.text ? (
+                                <p className="text-sm whitespace-pre-wrap">{parsedData.text}</p>
+                              ) : (
+                                <p className="text-sm text-gray-500 italic">No text content</p>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Metadata */}
+                          {Object.keys(parsedData.metadata).length > 0 && (
+                            <div>
+                              <h4 className="text-sm font-semibold mb-2">Metadata</h4>
+                              <div className="grid grid-cols-2 gap-2">
+                                {Object.entries(parsedData.metadata).map(([key, value]) => (
+                                  <div key={key} className="p-2 bg-gray-50 rounded border">
+                                    <div className="text-xs font-medium text-gray-600">{key}</div>
+                                    <div className="text-sm mt-1">
+                                      {typeof value === 'object' ? (
+                                        <pre className="text-xs">{JSON.stringify(value, null, 2)}</pre>
+                                      ) : (
+                                        String(value)
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Event Summary */}
+                          {Object.keys(parsedData.eventCounts).length > 0 && (
+                            <div>
+                              <h4 className="text-sm font-semibold mb-2">Event Summary</h4>
+                              <div className="p-3 bg-gray-50 rounded border">
+                                <div className="flex flex-wrap gap-2">
+                                  {Object.entries(parsedData.eventCounts).map(([eventType, count]) => (
+                                    <span
+                                      key={eventType}
+                                      className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-700"
+                                    >
+                                      {eventType}: {count}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    // Raw view
+                    <pre className="text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto max-h-96 overflow-y-auto whitespace-pre-wrap">
+                      {formatBody(recording.response.body)}
+                    </pre>
+                  )}
                 </div>
               )}
             </div>

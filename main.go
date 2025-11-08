@@ -107,7 +107,8 @@ func startCommand(args []string) {
 		// API handlers
 		apiHandlers := api.NewHandlers(cfg, log)
 		r.Get("/api/recordings", apiHandlers.ListRecordings)
-		r.Get("/api/recordings/*", apiHandlers.GetRecording)
+		r.Get("/api/recordings/{id}/parse", apiHandlers.ParseRecording)
+		r.Get("/api/recordings/{id}", apiHandlers.GetRecording)
 
 		// UI static files
 		r.Get("/src/*", uiManager.SrcHandler("/src"))
