@@ -5,19 +5,25 @@ import (
 	"flag"
 	"fmt"
 	"log/slog"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+
+	"github.com/llmite-ai/mirra/internal/api"
 	"github.com/llmite-ai/mirra/internal/commands"
 	"github.com/llmite-ai/mirra/internal/config"
 	"github.com/llmite-ai/mirra/internal/logger"
 	"github.com/llmite-ai/mirra/internal/server"
+	"github.com/llmite-ai/mirra/internal/ui"
 )
 
 func main() {
 	// Initialize default logger for commands
-	log := logger.NewLogger("pretty", "info", os.Stdout)
+	log := logger.NewLogger(os.Getenv("LOG_OUTPUT"), os.Getenv("LOG_LEVEL"), os.Stdout)
 	slog.SetDefault(log)
 
 	if len(os.Args) < 2 {
@@ -80,6 +86,7 @@ func startCommand(args []string) {
 	slog.SetDefault(log)
 
 	srv := server.New(cfg)
+	uiManager := ui.NewManager()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -91,6 +98,27 @@ func startCommand(args []string) {
 		<-sigChan
 		slog.Info("shutting down")
 		cancel()
+	}()
+
+	go func() {
+		r := chi.NewRouter()
+		r.Use(middleware.Logger)
+
+		// API handlers
+		apiHandlers := api.NewHandlers(cfg, log)
+		r.Get("/api/recordings", apiHandlers.ListRecordings)
+		r.Get("/api/recordings/*", apiHandlers.GetRecording)
+
+		// UI static files
+		r.Get("/src/*", uiManager.SrcHandler("/src"))
+		r.Get("/*", uiManager.Static("internal/ui/static", "/"))
+
+		log.Info("starting ui server on :5678")
+
+		if err := http.ListenAndServe(":5678", r); err != nil {
+			slog.Error("ui server error", "error", err)
+			cancel()
+		}
 	}()
 
 	if err := srv.Start(ctx); err != nil {

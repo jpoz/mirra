@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"os"
 	"strings"
 	"time"
 )
@@ -265,6 +266,10 @@ func (h *PrettyHandler) appendAttr(b *strings.Builder, attr slog.Attr) {
 	default:
 		fmt.Fprintf(b, "%v", val.Any())
 	}
+}
+
+func NewDefaultLogger() *slog.Logger {
+	return NewLogger("pretty", "info", os.Stdout)
 }
 
 // NewLogger creates a new slog.Logger based on format and level

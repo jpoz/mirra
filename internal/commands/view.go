@@ -15,11 +15,13 @@ import (
 	"time"
 
 	"github.com/llmite-ai/mirra/internal/recorder"
+	"github.com/llmite-ai/mirra/internal/sse"
 )
 
 func View(args []string) error {
 	fs := flag.NewFlagSet("view", flag.ExitOnError)
 	recordingsPath := fs.String("recordings", "./recordings", "Path to recordings directory")
+	parsed := fs.Bool("parsed", false, "Parse streaming SSE responses and show reconstructed output")
 
 	if err := fs.Parse(args); err != nil {
 		return err
@@ -43,7 +45,7 @@ func View(args []string) error {
 		if err != nil {
 			return err
 		}
-		printRecording(lastRecording)
+		printRecording(lastRecording, *parsed)
 		return nil
 	}
 
@@ -90,7 +92,7 @@ func View(args []string) error {
 		return fmt.Errorf("please provide more characters to uniquely identify the recording")
 	}
 
-	printRecording(&matches[0])
+	printRecording(&matches[0], *parsed)
 	return nil
 }
 
@@ -131,7 +133,7 @@ func findLastRecording(files []string) (*recorder.Recording, error) {
 	return lastRecording, nil
 }
 
-func printRecording(rec *recorder.Recording) {
+func printRecording(rec *recorder.Recording, useParsed bool) {
 	fmt.Printf("=== Recording %s ===\n", rec.ID)
 	fmt.Printf("Timestamp: %s\n", rec.Timestamp.Format(time.RFC3339))
 	fmt.Printf("Provider: %s\n", rec.Provider)
@@ -191,6 +193,8 @@ func printRecording(rec *recorder.Recording) {
 			if bodyStr, ok := rec.Response.Body.(string); ok {
 				if isGzipped {
 					printGzippedBody(bodyStr)
+				} else if useParsed {
+					printParsedSSEBody(bodyStr, rec.Provider)
 				} else {
 					printSSEBody(bodyStr)
 				}
@@ -233,6 +237,67 @@ func redactSensitiveQueryParams(query string) string {
 	}
 
 	return strings.Join(redacted, "&")
+}
+
+// printParsedSSEBody uses the SSE parser to reconstruct and display the output
+func printParsedSSEBody(body, provider string) {
+	parser := sse.NewParser(provider)
+	if parser == nil {
+		fmt.Printf("\n  [No parser available for provider: %s]\n", provider)
+		printSSEBody(body)
+		return
+	}
+
+	parsed, err := parser.Parse(body)
+	if err != nil {
+		fmt.Printf("\n  [Failed to parse SSE: %v]\n", err)
+		printSSEBody(body)
+		return
+	}
+
+	// Print reconstructed text
+	fmt.Println("\n  === Reconstructed Output ===")
+	if parsed.Text != "" {
+		fmt.Printf("  %s\n", parsed.Text)
+	} else {
+		fmt.Println("  [No text content]")
+	}
+
+	// Print metadata
+	if len(parsed.Metadata) > 0 {
+		fmt.Println("\n  === Metadata ===")
+		for key, value := range parsed.Metadata {
+			// Format values nicely
+			switch v := value.(type) {
+			case string:
+				fmt.Printf("  %s: %s\n", key, v)
+			case int:
+				fmt.Printf("  %s: %d\n", key, v)
+			case float64:
+				fmt.Printf("  %s: %.0f\n", key, v)
+			default:
+				// For complex types like arrays/maps, use JSON
+				if jsonBytes, err := json.MarshalIndent(v, "    ", "  "); err == nil {
+					fmt.Printf("  %s:\n    %s\n", key, string(jsonBytes))
+				} else {
+					fmt.Printf("  %s: %v\n", key, v)
+				}
+			}
+		}
+	}
+
+	// Print event count
+	fmt.Printf("\n  === Event Summary ===\n")
+	fmt.Printf("  Total events: %d\n", len(parsed.Events))
+
+	// Count event types
+	eventCounts := make(map[string]int)
+	for _, event := range parsed.Events {
+		eventCounts[event.Type]++
+	}
+	for eventType, count := range eventCounts {
+		fmt.Printf("  %s: %d\n", eventType, count)
+	}
 }
 
 // printSSEBody parses and formats Server-Sent Events (SSE) format for better readability
