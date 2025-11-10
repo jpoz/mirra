@@ -9,10 +9,8 @@ import (
 	"log/slog"
 	"mime"
 	"net/http"
-	"net/url"
 	"os"
 	"os/exec"
-	"path"
 	"path/filepath"
 	"strings"
 	"time"
@@ -98,7 +96,9 @@ func (m *Manager) Static(root, remove string) http.HandlerFunc {
 
 		// Set the Content-Type header.
 		w.Header().Set("Content-Type", contentType)
-		w.Write(data)
+		if _, err := w.Write(data); err != nil {
+			log.Error("[assets] Failed to write response", "error", err)
+		}
 	}
 }
 
@@ -139,7 +139,11 @@ func (m *Manager) SrcHandler(root string) http.HandlerFunc {
 			http.NotFound(w, r)
 			return
 		}
-		defer file.Close()
+		defer func() {
+			if closeErr := file.Close(); closeErr != nil {
+				log.Error("Failed to close file", "path", filePath, "error", closeErr)
+			}
+		}()
 
 		contentType := mime.TypeByExtension(filepath.Ext(requestPath))
 		if contentType == "" {
@@ -182,10 +186,10 @@ func (m *Manager) SrcHandler(root string) http.HandlerFunc {
 			err = fmt.Errorf("failed to build %s: %v", requestPath, err)
 
 			w.Header().Set("Content-Type", "application/javascript")
-			w.Write([]byte(buildErrorScript(err)))
+			if _, writeErr := w.Write([]byte(buildErrorScript(err))); writeErr != nil {
+				log.Error("Failed to write error response", "error", writeErr)
+			}
 		}
-
-		return
 	}
 }
 
@@ -291,7 +295,9 @@ func (m *Manager) buildAndServerFromESBuild(
 	for _, outputFile := range result.OutputFiles {
 		relativePath := strings.TrimPrefix(outputFile.Path, buildOptions.Outdir)
 		if strings.HasSuffix(relativePath, requestPath) {
-			w.Write(outputFile.Contents)
+			if _, err := w.Write(outputFile.Contents); err != nil {
+				return fmt.Errorf("failed to write response: %w", err)
+			}
 			return nil
 		}
 		existingFiles = append(existingFiles, outputFile.Path)
@@ -308,56 +314,4 @@ func buildErrorScript(err error) string {
 }
 
 func (m *Manager) index(efs fs.FS, w http.ResponseWriter, _ *http.Request) {
-}
-
-func (m *Manager) list(efs fs.FS, w http.ResponseWriter, _ *http.Request) {
-	log := logger.NewDefaultLogger()
-	files, err := listEmbeddedFiles(efs)
-	if err != nil {
-		log.Error("[assets] Failed to list embedded files", "error", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "text/html")
-	w.Write([]byte("<html><body><ul>"))
-	for _, file := range files {
-		w.Write([]byte("<li><a href=\"" + file + "\">" + file + "</a></li>"))
-	}
-	w.Write([]byte("</ul></body></html>"))
-}
-
-func listEmbeddedFiles(efs fs.FS) ([]string, error) {
-	var files []string
-	err := fs.WalkDir(efs, ".", func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-
-		if d.IsDir() {
-			return nil
-		}
-
-		files = append(files, path)
-		return nil
-	})
-
-	return files, err
-}
-
-func getFilename(root, rawurl string) *string {
-	// remove root from rawurl
-	rawurl = strings.TrimPrefix(rawurl, root)
-
-	parsedURL, err := url.Parse(rawurl)
-	if err != nil {
-		return nil // or handle the error as you prefer
-	}
-
-	filename := path.Base(parsedURL.Path)
-	if filename == "/" || filename == "." {
-		return nil
-	}
-
-	return &filename
 }

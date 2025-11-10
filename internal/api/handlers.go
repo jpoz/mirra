@@ -113,7 +113,9 @@ func (h *Handlers) ListRecordings(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		h.log.Error("Failed to encode response", "error", err)
+	}
 }
 
 // GetRecording handles GET /api/recordings/:id
@@ -158,7 +160,9 @@ func (h *Handlers) GetRecording(w http.ResponseWriter, r *http.Request) {
 				gr, err := gzip.NewReader(strings.NewReader(string(decoded)))
 				if err == nil {
 					decompressed, err := io.ReadAll(gr)
-					gr.Close()
+					if closeErr := gr.Close(); closeErr != nil {
+						h.log.Error("Failed to close gzip reader", "error", closeErr)
+					}
 					if err == nil {
 						// Try to parse as JSON
 						var jsonBody interface{}
@@ -174,7 +178,9 @@ func (h *Handlers) GetRecording(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(redacted)
+	if err := json.NewEncoder(w).Encode(redacted); err != nil {
+		h.log.Error("Failed to encode response", "error", err)
+	}
 }
 
 // ParsedStreamResponse represents the API response for parsed SSE streams
@@ -256,7 +262,9 @@ func (h *Handlers) ParseRecording(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		h.log.Error("Failed to encode response", "error", err)
+	}
 }
 
 // readAllRecordings reads all recordings from JSONL files
@@ -332,7 +340,11 @@ func (h *Handlers) readRecordingsFromFile(path string) ([]recorder.Recording, er
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
+	defer func() {
+		if closeErr := file.Close(); closeErr != nil {
+			h.log.Error("Failed to close file", "path", path, "error", closeErr)
+		}
+	}()
 
 	var recordings []recorder.Recording
 	scanner := bufio.NewScanner(file)
