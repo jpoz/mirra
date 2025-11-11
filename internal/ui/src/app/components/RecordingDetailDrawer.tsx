@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { format } from 'date-fns'
-import { X, Copy, Check, Loader2 } from 'lucide-react'
+import { ArrowLeft, Copy, Check, Loader2 } from 'lucide-react'
 import { Button } from './ui/button'
 import { useQuery } from '@tanstack/react-query'
 
@@ -8,6 +8,18 @@ interface ParsedStream {
   text: string
   metadata: Record<string, any>
   eventCounts: Record<string, number>
+}
+
+interface RecordingSummary {
+  id: string
+  timestamp: string
+  provider: string
+  method: string
+  path: string
+  status: number
+  duration: number
+  responseSize: number
+  error?: string
 }
 
 interface Recording {
@@ -35,9 +47,19 @@ interface Recording {
   error?: string
 }
 
-interface RecordingDetailModalProps {
-  recording: Recording
+interface RecordingDetailDrawerProps {
+  recordings: RecordingSummary[]
+  initialRecordingId: string
   onClose: () => void
+  onNavigate?: (id: string) => void
+}
+
+async function fetchRecording(id: string): Promise<Recording> {
+  const response = await fetch(`/api/recordings/${id}`)
+  if (!response.ok) {
+    throw new Error('Failed to fetch recording')
+  }
+  return response.json()
 }
 
 async function fetchParsedRecording(id: string): Promise<ParsedStream> {
@@ -48,12 +70,88 @@ async function fetchParsedRecording(id: string): Promise<ParsedStream> {
   return response.json()
 }
 
-export default function RecordingDetailModal({
+function CompactRecordingItem({
   recording,
+  isSelected,
+  onClick,
+}: {
+  recording: RecordingSummary
+  isSelected: boolean
+  onClick: () => void
+}) {
+  const getStatusColor = (status: number) => {
+    if (status >= 200 && status < 300) return 'text-green-600 bg-green-50'
+    if (status >= 400 && status < 500) return 'text-yellow-600 bg-yellow-50'
+    if (status >= 500) return 'text-red-600 bg-red-50'
+    return 'text-gray-600 bg-gray-50'
+  }
+
+  return (
+    <div
+      id={`recording-${recording.id}`}
+      onClick={onClick}
+      className={`
+        p-3 border-b cursor-pointer transition-colors
+        ${
+          isSelected
+            ? 'bg-blue-100 border-l-4 border-l-blue-500 pl-2'
+            : 'hover:bg-gray-100 border-l-4 border-l-transparent'
+        }
+      `}
+    >
+      {/* ID + Timestamp Row */}
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs font-mono text-gray-600">
+          {recording.id.substring(0, 8)}
+        </span>
+        <span className="text-xs text-gray-500">
+          {format(new Date(recording.timestamp), 'HH:mm:ss')}
+        </span>
+      </div>
+
+      {/* Method + Path Row */}
+      <div className="text-sm font-mono mb-1 truncate">
+        <span className="font-semibold">{recording.method}</span>{' '}
+        <span className="text-gray-700">{recording.path}</span>
+      </div>
+
+      {/* Status + Provider Row */}
+      <div className="flex items-center justify-between">
+        <span
+          className={`text-xs px-2 py-0.5 rounded ${getStatusColor(recording.status)}`}
+        >
+          {recording.status}
+        </span>
+        <span className="text-xs text-gray-500">{recording.provider}</span>
+      </div>
+
+      {/* Error Indicator */}
+      {recording.error && (
+        <div className="mt-1 text-xs text-red-600 flex items-center">
+          <span className="w-1.5 h-1.5 bg-red-500 rounded-full mr-1" />
+          Error
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default function RecordingDetailDrawer({
+  recordings,
+  initialRecordingId,
   onClose,
-}: RecordingDetailModalProps) {
+  onNavigate,
+}: RecordingDetailDrawerProps) {
+  const [selectedId, setSelectedId] = useState(initialRecordingId)
   const [copiedSection, setCopiedSection] = useState<string | null>(null)
   const [viewMode, setViewMode] = useState<'raw' | 'parsed'>('raw')
+
+  // Fetch full recording details for the selected ID
+  const { data: recording, isLoading: isLoadingRecording } = useQuery({
+    queryKey: ['recording', selectedId],
+    queryFn: () => fetchRecording(selectedId),
+    enabled: !!selectedId,
+  })
 
   // Fetch parsed data only when viewing parsed mode and response is streaming
   const {
@@ -61,10 +159,52 @@ export default function RecordingDetailModal({
     isLoading: isParsing,
     error: parseError,
   } = useQuery({
-    queryKey: ['parsed', recording.id],
-    queryFn: () => fetchParsedRecording(recording.id),
-    enabled: viewMode === 'parsed' && recording.response.streaming,
+    queryKey: ['parsed', selectedId],
+    queryFn: () => fetchParsedRecording(selectedId),
+    enabled: viewMode === 'parsed' && !!recording?.response.streaming,
   })
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault()
+        const currentIndex = recordings.findIndex((r) => r.id === selectedId)
+        let newIndex = currentIndex
+
+        if (e.key === 'ArrowDown' && currentIndex < recordings.length - 1) {
+          newIndex = currentIndex + 1
+        } else if (e.key === 'ArrowUp' && currentIndex > 0) {
+          newIndex = currentIndex - 1
+        }
+
+        if (newIndex !== currentIndex) {
+          const newId = recordings[newIndex].id
+          if (onNavigate) {
+            onNavigate(newId)
+          } else {
+            setSelectedId(newId)
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [selectedId, recordings, onClose, onNavigate])
+
+  // Update selectedId when initialRecordingId changes (from URL)
+  useEffect(() => {
+    setSelectedId(initialRecordingId)
+  }, [initialRecordingId])
+
+  // Auto-scroll selected item into view
+  useEffect(() => {
+    const element = document.getElementById(`recording-${selectedId}`)
+    element?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [selectedId])
 
   const copyToClipboard = (text: string, section: string) => {
     navigator.clipboard.writeText(text)
@@ -96,24 +236,61 @@ export default function RecordingDetailModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
-          <div>
-            <h2 className="text-xl font-bold">Recording Details</h2>
-            <p className="text-sm text-gray-600 font-mono mt-1">{recording.id}</p>
-          </div>
+    <div className="w-full h-full flex flex-col">
+      {/* Header - spans both panes */}
+      <div className="flex items-center justify-between p-6 border-b bg-white">
+        <div className="flex items-center gap-4">
           <button
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-md transition-colors"
           >
-            <X className="h-5 w-5" />
+            <ArrowLeft className="h-5 w-5" />
           </button>
+          <div>
+            <h2 className="text-xl font-bold">Recording Details</h2>
+            {recording && (
+              <p className="text-sm text-gray-600 font-mono mt-1">{recording.id}</p>
+            )}
+          </div>
         </div>
+      </div>
 
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        {/* Main Content - Two Panes */}
+        <div className="flex flex-1 overflow-hidden">
+          {/* LEFT PANE - Compact List */}
+          <div className="w-80 border-r flex flex-col bg-gray-50">
+            <div className="p-3 border-b bg-white">
+              <h3 className="font-semibold text-sm">
+                Recordings ({recordings.length})
+              </h3>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              {recordings.map((rec) => (
+                <CompactRecordingItem
+                  key={rec.id}
+                  recording={rec}
+                  isSelected={rec.id === selectedId}
+                  onClick={() => {
+                    if (onNavigate) {
+                      onNavigate(rec.id)
+                    } else {
+                      setSelectedId(rec.id)
+                    }
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT PANE - Detail View */}
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {isLoadingRecording && !recording ? (
+              <div className="flex-1 flex items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+                <span className="ml-2 text-gray-600">Loading recording...</span>
+              </div>
+            ) : recording ? (
+              <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Metadata */}
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -370,15 +547,18 @@ export default function RecordingDetailModal({
               )}
             </div>
           </div>
+              </div>
+            ) : null}
+          </div>
         </div>
 
-        {/* Footer */}
+        {/* Footer - spans both panes */}
         <div className="flex items-center justify-end gap-2 p-6 border-t bg-gray-50">
           <Button variant="outline" onClick={onClose}>
-            Close
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to List
           </Button>
         </div>
-      </div>
     </div>
   )
 }

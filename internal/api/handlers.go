@@ -47,13 +47,15 @@ type RecordingSummary struct {
 type Handlers struct {
 	cfg *config.Config
 	log *slog.Logger
+	rec *recorder.Recorder
 }
 
 // NewHandlers creates a new API handlers instance
-func NewHandlers(cfg *config.Config, log *slog.Logger) *Handlers {
+func NewHandlers(cfg *config.Config, log *slog.Logger, rec *recorder.Recorder) *Handlers {
 	return &Handlers{
 		cfg: cfg,
 		log: log,
+		rec: rec,
 	}
 }
 
@@ -127,25 +129,15 @@ func (h *Handlers) GetRecording(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Read all recordings to find the one with matching ID
-	recordings, err := h.readAllRecordings("", "")
+	// Find recording by ID (uses efficient date-based lookup for timestamp-prefixed IDs)
+	found, err := h.findRecordingByID(id)
 	if err != nil {
-		h.log.Error("Failed to read recordings", "error", err)
-		http.Error(w, "Failed to read recordings", http.StatusInternalServerError)
-		return
-	}
-
-	// Find recording by ID (support prefix matching)
-	var found *recorder.Recording
-	for i := range recordings {
-		if strings.HasPrefix(recordings[i].ID, id) {
-			found = &recordings[i]
-			break
+		if err.Error() == "recording not found" {
+			http.Error(w, "Recording not found", http.StatusNotFound)
+		} else {
+			h.log.Error("Failed to find recording", "error", err)
+			http.Error(w, "Failed to read recordings", http.StatusInternalServerError)
 		}
-	}
-
-	if found == nil {
-		http.Error(w, "Recording not found", http.StatusNotFound)
 		return
 	}
 
@@ -199,25 +191,15 @@ func (h *Handlers) ParseRecording(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Read all recordings to find the one with matching ID
-	recordings, err := h.readAllRecordings("", "")
+	// Find recording by ID (uses efficient date-based lookup for timestamp-prefixed IDs)
+	found, err := h.findRecordingByID(id)
 	if err != nil {
-		h.log.Error("Failed to read recordings", "error", err)
-		http.Error(w, "Failed to read recordings", http.StatusInternalServerError)
-		return
-	}
-
-	// Find recording by ID (support prefix matching)
-	var found *recorder.Recording
-	for i := range recordings {
-		if strings.HasPrefix(recordings[i].ID, id) {
-			found = &recordings[i]
-			break
+		if err.Error() == "recording not found" {
+			http.Error(w, "Recording not found", http.StatusNotFound)
+		} else {
+			h.log.Error("Failed to find recording", "error", err)
+			http.Error(w, "Failed to read recordings", http.StatusInternalServerError)
 		}
-	}
-
-	if found == nil {
-		http.Error(w, "Recording not found", http.StatusNotFound)
 		return
 	}
 
@@ -265,6 +247,89 @@ func (h *Handlers) ParseRecording(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		h.log.Error("Failed to encode response", "error", err)
 	}
+}
+
+// extractDateFromID extracts the date prefix from a timestamp-prefixed ID
+// Returns the date in YYYY-MM-DD format, or empty string if not found
+func extractDateFromID(id string) string {
+	// Check if ID starts with date prefix (YYYYMMDD-)
+	if len(id) >= 9 && id[8] == '-' {
+		datePrefix := id[:8]
+		// Validate it's all digits
+		for _, c := range datePrefix {
+			if c < '0' || c > '9' {
+				return ""
+			}
+		}
+		// Convert YYYYMMDD to YYYY-MM-DD
+		if len(datePrefix) == 8 {
+			return datePrefix[:4] + "-" + datePrefix[4:6] + "-" + datePrefix[6:8]
+		}
+	}
+	return ""
+}
+
+// findRecordingByID finds a recording by ID, using the index for O(1) lookup
+func (h *Handlers) findRecordingByID(id string) (*recorder.Recording, error) {
+	// If recorder and index are available, use the index for instant lookup
+	if h.rec != nil {
+		idx := h.rec.GetIndex()
+		if idx != nil && idx.Size() > 0 {
+			// Try index-based lookup first (O(1) with seek)
+			rec, err := idx.ReadRecording(id)
+			if err == nil {
+				return rec, nil
+			}
+			// If not found in index, fall through to file-based search
+			h.log.Debug("Recording not found in index, falling back to file search", "id", id)
+		}
+	}
+
+	// Fallback: use date-based file lookup (Phase 1 optimization)
+	recordingsPath := h.cfg.Recording.Path
+	if recordingsPath == "" {
+		recordingsPath = "./recordings"
+	}
+
+	// Try to extract date from ID for targeted lookup
+	date := extractDateFromID(id)
+	if date != "" {
+		// Search only the specific day's file
+		filename := fmt.Sprintf("recordings-%s.jsonl", date)
+		filePath := filepath.Join(recordingsPath, filename)
+
+		// Check if file exists
+		if _, err := os.Stat(filePath); err == nil {
+			recordings, err := h.readRecordingsFromFile(filePath)
+			if err != nil {
+				h.log.Error("Failed to read recordings file", "file", filename, "error", err)
+				// Fall through to full scan
+			} else {
+				// Search for matching ID in this file
+				for i := range recordings {
+					if strings.HasPrefix(recordings[i].ID, id) {
+						return &recordings[i], nil
+					}
+				}
+				// Not found in expected file
+				return nil, fmt.Errorf("recording not found")
+			}
+		}
+	}
+
+	// Final fallback: scan all files (for old IDs without date prefix or if other methods failed)
+	recordings, err := h.readAllRecordings("", "")
+	if err != nil {
+		return nil, err
+	}
+
+	for i := range recordings {
+		if strings.HasPrefix(recordings[i].ID, id) {
+			return &recordings[i], nil
+		}
+	}
+
+	return nil, fmt.Errorf("recording not found")
 }
 
 // readAllRecordings reads all recordings from JSONL files

@@ -52,6 +52,11 @@ func main() {
 			slog.Error("view failed", "error", err)
 			os.Exit(1)
 		}
+	case "reindex":
+		if err := commands.Reindex(args); err != nil {
+			slog.Error("reindex failed", "error", err)
+			os.Exit(1)
+		}
 	case "help", "-h", "--help":
 		printUsage()
 	default:
@@ -105,7 +110,7 @@ func startCommand(args []string) {
 		r.Use(middleware.Logger)
 
 		// API handlers
-		apiHandlers := api.NewHandlers(cfg, log)
+		apiHandlers := api.NewHandlers(cfg, log, srv.GetRecorder())
 		r.Get("/api/recordings", apiHandlers.ListRecordings)
 		r.Get("/api/recordings/{id}/parse", apiHandlers.ParseRecording)
 		r.Get("/api/recordings/{id}", apiHandlers.GetRecording)

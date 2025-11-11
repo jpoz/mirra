@@ -3,6 +3,7 @@
 import React from "react";
 import { Routes, Route } from "react-router";
 import Recordings from "./pages/Recordings";
+import Recording from "./pages/Recording";
 
 function App() {
   return (
@@ -24,9 +25,11 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto flex-1 p-4">
+      <main className="mx-auto flex-1">
         <Routes>
           <Route path="/" element={<Recordings />} />
+          <Route path="/recordings" element={<Recordings />} />
+          <Route path="/recordings/:id" element={<Recording />} />
         </Routes>
       </main>
 

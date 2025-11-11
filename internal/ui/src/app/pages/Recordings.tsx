@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 import { format } from "date-fns";
 import { Search, RefreshCw } from "lucide-react";
 import {
@@ -12,7 +13,6 @@ import {
 } from "../components/ui/table";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import RecordingDetailModal from "../components/RecordingDetailModal";
 
 interface RecordingSummary {
   id: string;
@@ -32,31 +32,6 @@ interface RecordingListResponse {
   page: number;
   limit: number;
   hasMore: boolean;
-}
-
-interface Recording {
-  id: string;
-  timestamp: string;
-  provider: string;
-  request: {
-    method: string;
-    path: string;
-    query: string;
-    headers: Record<string, string[]>;
-    body: any;
-  };
-  response: {
-    status: number;
-    headers: Record<string, string[]>;
-    body: any;
-    streaming: boolean;
-  };
-  timing: {
-    startedAt: string;
-    completedAt: string;
-    durationMs: number;
-  };
-  error?: string;
 }
 
 async function fetchRecordings(
@@ -79,23 +54,13 @@ async function fetchRecordings(
   return response.json();
 }
 
-async function fetchRecording(id: string): Promise<Recording> {
-  const response = await fetch(`/api/recordings/${id}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch recording");
-  }
-  return response.json();
-}
-
 export default function Recordings() {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [limit] = useState(50);
   const [provider, setProvider] = useState("");
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
-  const [selectedRecordingId, setSelectedRecordingId] = useState<string | null>(
-    null,
-  );
 
   // Fetch recordings list with auto-refresh every 10 seconds
   const { data, isLoading, error, refetch, isFetching } = useQuery({
@@ -103,13 +68,6 @@ export default function Recordings() {
     queryFn: () => fetchRecordings(page, limit, provider, search),
     refetchInterval: 10000, // Auto-refresh every 10 seconds
     refetchIntervalInBackground: true,
-  });
-
-  // Fetch selected recording details
-  const { data: selectedRecording } = useQuery({
-    queryKey: ["recording", selectedRecordingId],
-    queryFn: () => fetchRecording(selectedRecordingId!),
-    enabled: !!selectedRecordingId,
   });
 
   const handleSearch = () => {
@@ -156,7 +114,7 @@ export default function Recordings() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="container space-y-4 p-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -266,7 +224,7 @@ export default function Recordings() {
                   data.recordings.map((recording) => (
                     <TableRow
                       key={recording.id}
-                      onClick={() => setSelectedRecordingId(recording.id)}
+                      onClick={() => navigate(`/recordings/${recording.id}`)}
                     >
                       <TableCell className="font-mono text-xs">
                         {truncateId(recording.id)}
@@ -333,14 +291,6 @@ export default function Recordings() {
             </div>
           )}
         </>
-      )}
-
-      {/* Recording Detail Modal */}
-      {selectedRecording && (
-        <RecordingDetailModal
-          recording={selectedRecording}
-          onClose={() => setSelectedRecordingId(null)}
-        />
       )}
     </div>
   );
