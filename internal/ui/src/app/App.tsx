@@ -36,11 +36,6 @@ function App() {
           <Route path="/recordings/:id" element={<Recording />} />
         </Routes>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t py-6">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground h-8"></div>
-      </footer>
     </div>
   );
 }

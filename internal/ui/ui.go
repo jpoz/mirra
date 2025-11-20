@@ -280,7 +280,7 @@ func (m *Manager) buildOptions() (api.BuildOptions, error) {
 func (m *Manager) build(buildOptions api.BuildOptions) error {
 	result := api.Build(buildOptions)
 	if len(result.Errors) != 0 {
-		return fmt.Errorf("failed to build package: %v", result.Errors)
+		return fmt.Errorf("failed to build package:\n%s", formatBuildErrors(result.Errors))
 	}
 	return nil
 }
@@ -293,10 +293,7 @@ func (m *Manager) buildAndServerFromESBuild(
 ) error {
 	result := api.Build(buildOptions)
 	if len(result.Errors) != 0 {
-		// TODO: make the error better.
-		// - there much more information in the error
-		// - could make a custom error type that includes that information?
-		return fmt.Errorf("failed to build package: %v", result.Errors)
+		return fmt.Errorf("failed to build package:\n%s", formatBuildErrors(result.Errors))
 	}
 
 	// Determine the content type of the file.
@@ -325,7 +322,29 @@ func (m *Manager) buildAndServerFromESBuild(
 
 func buildErrorScript(err error) string {
 	return fmt.Sprintf(`window.addEventListener('DOMContentLoaded', () => {
-  document.body.innerHTML += '<div style="color: red;">%s</div>';
+  document.body.innerHTML += '<div style="color: red; white-space: pre-wrap; font-family: monospace; padding: 20px; background: #fff0f0; border: 1px solid #ffcccc;">%s</div>';
 });
-		`, err.Error())
+		`, strings.ReplaceAll(err.Error(), "'", "\\'"))
+}
+
+func formatBuildErrors(errors []api.Message) string {
+	var sb strings.Builder
+	for i, err := range errors {
+		if i > 0 {
+			sb.WriteString("\n")
+		}
+		sb.WriteString(fmt.Sprintf("Error: %s", err.Text))
+		if err.Location != nil {
+			sb.WriteString(fmt.Sprintf("\nLocation: %s:%d:%d", err.Location.File, err.Location.Line, err.Location.Column))
+			if err.Location.LineText != "" {
+				sb.WriteString(fmt.Sprintf("\n> %s", err.Location.LineText))
+				if err.Location.Column >= 0 {
+					sb.WriteString("\n  ")
+					sb.WriteString(strings.Repeat(" ", err.Location.Column))
+					sb.WriteString("^")
+				}
+			}
+		}
+	}
+	return sb.String()
 }

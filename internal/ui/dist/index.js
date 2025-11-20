@@ -739,7 +739,7 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           }
           return dispatcher.useContext(Context);
         }
-        function useState11(initialState2) {
+        function useState10(initialState2) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState2);
         }
@@ -747,11 +747,11 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           var dispatcher = resolveDispatcher();
           return dispatcher.useReducer(reducer, initialArg, init);
         }
-        function useRef5(initialValue) {
+        function useRef6(initialValue) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect11(create, deps) {
+        function useEffect12(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create, deps);
         }
@@ -1280,7 +1280,7 @@ Check the top-level render call using <` + parentName + ">.");
           toArray,
           only: onlyChild
         };
-        exports.Children = Children3, exports.Component = Component4, exports.Fragment = REACT_FRAGMENT_TYPE, exports.Profiler = REACT_PROFILER_TYPE, exports.PureComponent = PureComponent, exports.StrictMode = REACT_STRICT_MODE_TYPE, exports.Suspense = REACT_SUSPENSE_TYPE, exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals, exports.act = act, exports.cloneElement = cloneElement$1, exports.createContext = createContext10, exports.createElement = createElement$1, exports.createFactory = createFactory, exports.createRef = createRef, exports.forwardRef = forwardRef6, exports.isValidElement = isValidElement3, exports.lazy = lazy, exports.memo = memo2, exports.startTransition = startTransition3, exports.unstable_act = act, exports.useCallback = useCallback6, exports.useContext = useContext11, exports.useDebugValue = useDebugValue, exports.useDeferredValue = useDeferredValue, exports.useEffect = useEffect11, exports.useId = useId2, exports.useImperativeHandle = useImperativeHandle, exports.useInsertionEffect = useInsertionEffect, exports.useLayoutEffect = useLayoutEffect4, exports.useMemo = useMemo6, exports.useReducer = useReducer, exports.useRef = useRef5, exports.useState = useState11, exports.useSyncExternalStore = useSyncExternalStore2, exports.useTransition = useTransition2, exports.version = ReactVersion, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+        exports.Children = Children3, exports.Component = Component4, exports.Fragment = REACT_FRAGMENT_TYPE, exports.Profiler = REACT_PROFILER_TYPE, exports.PureComponent = PureComponent, exports.StrictMode = REACT_STRICT_MODE_TYPE, exports.Suspense = REACT_SUSPENSE_TYPE, exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals, exports.act = act, exports.cloneElement = cloneElement$1, exports.createContext = createContext10, exports.createElement = createElement$1, exports.createFactory = createFactory, exports.createRef = createRef, exports.forwardRef = forwardRef6, exports.isValidElement = isValidElement3, exports.lazy = lazy, exports.memo = memo2, exports.startTransition = startTransition3, exports.unstable_act = act, exports.useCallback = useCallback6, exports.useContext = useContext11, exports.useDebugValue = useDebugValue, exports.useDeferredValue = useDeferredValue, exports.useEffect = useEffect12, exports.useId = useId2, exports.useImperativeHandle = useImperativeHandle, exports.useInsertionEffect = useInsertionEffect, exports.useLayoutEffect = useLayoutEffect4, exports.useMemo = useMemo6, exports.useReducer = useReducer, exports.useRef = useRef6, exports.useState = useState10, exports.useSyncExternalStore = useSyncExternalStore2, exports.useTransition = useTransition2, exports.version = ReactVersion, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
       })();
     }
   });
@@ -1584,7 +1584,7 @@ Check the top-level render call using <` + parentName + ">.");
       (function() {
         "use strict";
         typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
-        var React31 = require_react(), Scheduler = require_scheduler(), ReactSharedInternals = React31.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, suppressWarning = !1;
+        var React32 = require_react(), Scheduler = require_scheduler(), ReactSharedInternals = React32.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, suppressWarning = !1;
         function setSuppressWarning(newSuppressWarning) {
           suppressWarning = newSuppressWarning;
         }
@@ -2708,7 +2708,7 @@ Error generating stack: ` + x.message + `
         }
         var didWarnSelectedSetOnOption = !1, didWarnInvalidChild = !1, didWarnInvalidInnerHTML = !1;
         function validateProps(element, props) {
-          props.value == null && (typeof props.children == "object" && props.children !== null ? React31.Children.forEach(props.children, function(child) {
+          props.value == null && (typeof props.children == "object" && props.children !== null ? React32.Children.forEach(props.children, function(child) {
             child != null && (typeof child == "string" || typeof child == "number" || didWarnInvalidChild || (didWarnInvalidChild = !0, error("Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>.")));
           }) : props.dangerouslySetInnerHTML != null && (didWarnInvalidInnerHTML || (didWarnInvalidInnerHTML = !0, error("Pass a `value` prop if you set dangerouslyInnerHTML so React knows which value should be selected.")))), props.selected != null && !didWarnSelectedSetOnOption && (error("Use the `defaultValue` or `value` props on <select> instead of setting `selected` on <option>."), didWarnSelectedSetOnOption = !0);
         }
@@ -15060,14 +15060,14 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
       "use strict";
       (function() {
         "use strict";
-        var React31 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_PROVIDER_TYPE = Symbol.for("react.provider"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE2 = Symbol.for("react.lazy"), REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator, FAUX_ITERATOR_SYMBOL = "@@iterator";
+        var React32 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_PROVIDER_TYPE = Symbol.for("react.provider"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE2 = Symbol.for("react.lazy"), REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator, FAUX_ITERATOR_SYMBOL = "@@iterator";
         function getIteratorFn(maybeIterable) {
           if (maybeIterable === null || typeof maybeIterable != "object")
             return null;
           var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
           return typeof maybeIterator == "function" ? maybeIterator : null;
         }
-        var ReactSharedInternals = React31.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React32.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         function error(format2) {
           {
             for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++)
@@ -15681,10 +15681,10 @@ React keys must be passed directly to JSX without using spread:
   });
 
   // internal/ui/src/index.tsx
-  var import_react10 = __toESM(require_react(), 1), import_client2 = __toESM(require_client(), 1);
+  var import_react11 = __toESM(require_react(), 1), import_client2 = __toESM(require_client(), 1);
 
   // internal/ui/src/app/App.tsx
-  var import_react9 = __toESM(require_react(), 1);
+  var import_react10 = __toESM(require_react(), 1);
 
   // internal/ui/src/node_modules/react-router/dist/development/chunk-UIGDSWPH.mjs
   var React = __toESM(require_react(), 1), React2 = __toESM(require_react(), 1), React3 = __toESM(require_react(), 1), React4 = __toESM(require_react(), 1), React9 = __toESM(require_react(), 1), React8 = __toESM(require_react(), 1), React7 = __toESM(require_react(), 1), React6 = __toESM(require_react(), 1), React5 = __toESM(require_react(), 1), React10 = __toESM(require_react(), 1), React11 = __toESM(require_react(), 1), import_meta = {};
@@ -23766,7 +23766,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     );
   }
 
-  // internal/ui/src/app/pages/Recordings.tsx
+  // internal/ui/src/app/lib/api.ts
   async function fetchRecordings(page, limit, provider, search) {
     let params = new URLSearchParams({
       page: page.toString(),
@@ -23778,6 +23778,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       throw new Error("Failed to fetch recordings");
     return response.json();
   }
+
+  // internal/ui/src/app/pages/Recordings.tsx
   function Recordings() {
     let navigate = useNavigate(), [page, setPage] = (0, import_react4.useState)(1), [limit] = (0, import_react4.useState)(50), [provider, setProvider] = (0, import_react4.useState)(""), [search, setSearch] = (0, import_react4.useState)(""), [searchInput, setSearchInput] = (0, import_react4.useState)(""), { data: data2, isLoading, error, refetch, isFetching } = useQuery({
       queryKey: ["recordings", page, limit, provider, search],
@@ -23885,9 +23887,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // internal/ui/src/app/pages/Recording.tsx
-  var import_react6 = __toESM(require_react(), 1);
+  var import_react7 = __toESM(require_react(), 1);
 
-  // internal/ui/src/app/components/RecordingDetailDrawer.tsx
+  // internal/ui/src/app/components/RecordingDetail.tsx
   var import_react5 = __toESM(require_react(), 1);
   async function fetchRecording(id) {
     let response = await fetch(`/api/recordings/${id}`);
@@ -23901,41 +23903,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       throw new Error("Failed to parse recording");
     return response.json();
   }
-  function CompactRecordingItem({
-    recording,
-    isSelected,
-    onClick
-  }) {
-    let getStatusColor = (status) => status >= 200 && status < 300 ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20" : status >= 500 ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20" : "text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800";
-    return /* @__PURE__ */ import_react5.default.createElement(
-      "div",
-      {
-        id: `recording-${recording.id}`,
-        onClick,
-        className: `
-        p-3 border-b cursor-pointer transition-colors
-        ${isSelected ? "bg-blue-100 dark:bg-blue-900/30 border-l-4 border-l-blue-500 pl-2" : "hover:bg-muted border-l-4 border-l-transparent"}
-      `
-      },
-      /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between mb-1" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs font-mono text-muted-foreground" }, recording.id.substring(0, 8)), /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs text-muted-foreground" }, format(new Date(recording.timestamp), "HH:mm:ss"))),
-      /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-sm font-mono mb-1 truncate" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "font-semibold" }, recording.method), " ", /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-foreground/80" }, recording.path)),
-      /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react5.default.createElement(
-        "span",
-        {
-          className: `text-xs px-2 py-0.5 rounded ${getStatusColor(recording.status)}`
-        },
-        recording.status
-      ), /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs text-muted-foreground" }, recording.provider)),
-      recording.error && /* @__PURE__ */ import_react5.default.createElement("div", { className: "mt-1 text-xs text-red-600 dark:text-red-400 flex items-center" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "w-1.5 h-1.5 bg-red-500 rounded-full mr-1" }), "Error")
-    );
-  }
-  function RecordingDetailDrawer({
-    recordings,
-    initialRecordingId,
-    onClose,
-    onNavigate
-  }) {
-    let [selectedId, setSelectedId] = (0, import_react5.useState)(initialRecordingId), [copiedSection, setCopiedSection] = (0, import_react5.useState)(null), [searchParams, setSearchParams] = useSearchParams(), activeTab = searchParams.get("tab") || "request", setActiveTab = (tab) => {
+  function RecordingDetail({ recordingId }) {
+    let [copiedSection, setCopiedSection] = (0, import_react5.useState)(null), [searchParams, setSearchParams] = useSearchParams(), activeTab = searchParams.get("tab") || "request", navigate = useNavigate(), setActiveTab = (tab) => {
       setSearchParams(
         (prev) => {
           let newParams = new URLSearchParams(prev);
@@ -23944,38 +23913,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         { replace: !0 }
       );
     }, { data: recording, isLoading: isLoadingRecording } = useQuery({
-      queryKey: ["recording", selectedId],
-      queryFn: () => fetchRecording(selectedId),
-      enabled: !!selectedId
+      queryKey: ["recording", recordingId],
+      queryFn: () => fetchRecording(recordingId),
+      enabled: !!recordingId
     }), {
       data: parsedData,
       isLoading: isParsing,
       error: parseError
     } = useQuery({
-      queryKey: ["parsed", selectedId],
-      queryFn: () => fetchParsedRecording(selectedId),
+      queryKey: ["parsed", recordingId],
+      queryFn: () => fetchParsedRecording(recordingId),
       enabled: activeTab === "parsed" && !!recording?.response.streaming
-    });
-    (0, import_react5.useEffect)(() => {
-      let handleKeyDown = (e) => {
-        if (e.key === "Escape")
-          onClose();
-        else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-          e.preventDefault();
-          let currentIndex = recordings.findIndex((r2) => r2.id === selectedId), newIndex = currentIndex;
-          if (e.key === "ArrowDown" && currentIndex < recordings.length - 1 ? newIndex = currentIndex + 1 : e.key === "ArrowUp" && currentIndex > 0 && (newIndex = currentIndex - 1), newIndex !== currentIndex) {
-            let newId = recordings[newIndex].id;
-            onNavigate ? onNavigate(newId) : setSelectedId(newId);
-          }
-        }
-      };
-      return window.addEventListener("keydown", handleKeyDown), () => window.removeEventListener("keydown", handleKeyDown);
-    }, [selectedId, recordings, onClose, onNavigate]), (0, import_react5.useEffect)(() => {
-      setSelectedId(initialRecordingId);
-    }, [initialRecordingId]), (0, import_react5.useEffect)(() => {
-      document.getElementById(`recording-${selectedId}`)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, [selectedId]);
-    let copyToClipboard = (text, section) => {
+    }), copyToClipboard = (text, section) => {
       navigator.clipboard.writeText(text), setCopiedSection(section), setTimeout(() => setCopiedSection(null), 2e3);
     }, formatJSON = (obj) => {
       try {
@@ -23984,29 +23933,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return String(obj);
       }
     }, formatBody = (body) => typeof body == "string" ? body : formatJSON(body), getStatusColor = (status) => status >= 200 && status < 300 ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20" : status >= 500 ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20" : "text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800";
-    return /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-full h-full flex flex-col bg-background text-foreground" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-6 border-b bg-card" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement(
+    return isLoadingRecording && !recording ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react5.default.createElement(LoaderCircle, { className: "h-8 w-8 animate-spin text-primary" }), /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Loading recording...")) : recording ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-full h-full flex flex-col bg-background text-foreground" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-6 border-b bg-card" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement(
       "button",
       {
-        onClick: onClose,
+        onClick: () => navigate("/recordings"),
         className: "p-2 hover:bg-muted rounded-md transition-colors"
       },
       /* @__PURE__ */ import_react5.default.createElement(ArrowLeft, { className: "h-5 w-5" })
-    ), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-xl font-bold" }, "Recording Details"), recording && /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground font-mono mt-1" }, recording.id)))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex flex-1 overflow-hidden" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-80 border-r flex flex-col bg-muted/30" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-3 border-b bg-card" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold text-sm" }, "Recordings (", recordings.length, ")")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 overflow-y-auto" }, recordings.map((rec) => /* @__PURE__ */ import_react5.default.createElement(
-      CompactRecordingItem,
-      {
-        key: rec.id,
-        recording: rec,
-        isSelected: rec.id === selectedId,
-        onClick: () => {
-          onNavigate ? onNavigate(rec.id) : setSelectedId(rec.id);
-        }
-      }
-    )))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex flex-col overflow-hidden bg-background" }, isLoadingRecording && !recording ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center" }, /* @__PURE__ */ import_react5.default.createElement(LoaderCircle, { className: "h-8 w-8 animate-spin text-primary" }), /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Loading recording...")) : recording ? /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border-b" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 pb-0" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-2 gap-4 mb-6" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Timestamp"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, format(new Date(recording.timestamp), "MMM d, yyyy HH:mm:ss"))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Provider"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground" }, recording.provider))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Duration"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, recording.timing.durationMs, "ms")), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Status"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement(
+    ), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-xl font-bold" }, "Recording Details"), recording && /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground font-mono mt-1" }, recording.id)))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex flex-col overflow-hidden bg-background" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border-b" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 pb-0" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-2 gap-4 mb-6" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Timestamp"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, format(
+      new Date(recording.timestamp),
+      "MMM d, yyyy HH:mm:ss"
+    ))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Provider"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground" }, recording.provider))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Duration"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, recording.timing.durationMs, "ms")), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Status"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement(
       "span",
       {
-        className: `inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getStatusColor(
-          recording.response.status
-        )}`
+        className: `inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getStatusColor(recording.response.status)}`
       },
       recording.response.status
     )))), recording.error && /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md mb-6" }, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-red-800 dark:text-red-300" }, "Error"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-red-700 dark:text-red-400 mt-1 font-mono" }, recording.error)), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex gap-6 border-b -mb-px" }, ["request", "response", "parsed"].map((tab) => /* @__PURE__ */ import_react5.default.createElement(
@@ -24015,9 +23955,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         key: tab,
         onClick: () => setActiveTab(tab),
         className: `
-                          pb-3 text-sm font-medium transition-colors border-b-2
-                          ${activeTab === tab ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"}
-                        `
+                    pb-3 text-sm font-medium transition-colors border-b-2
+                    ${activeTab === tab ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"}
+                  `
       },
       tab.charAt(0).toUpperCase() + tab.slice(1) + (tab === "parsed" ? " Response" : "")
     ))))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 overflow-y-auto p-6 bg-muted/10" }, activeTab === "request" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold" }, "Request"), /* @__PURE__ */ import_react5.default.createElement(
@@ -24052,66 +23992,91 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         )
       },
       copiedSection === "response" ? /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy")
-    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto" }, formatJSON(recording.response.headers))), recording.response.body && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto max-h-[500px] w-full whitespace-pre-wrap" }, formatBody(recording.response.body))))), activeTab === "parsed" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold" }, "Parsed Response")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4" }, recording.response.streaming ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "mt-1" }, isParsing && /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-center p-8" }, /* @__PURE__ */ import_react5.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-primary" }), /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Parsing stream...")), parseError && /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-800 dark:text-red-300 text-sm" }, "Failed to parse stream: ", parseError.message), parsedData && !isParsing && /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Reconstructed Output"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-3 bg-muted/50 rounded border" }, parsedData.text ? /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm whitespace-pre-wrap" }, parsedData.text) : /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground italic" }, "No text content"))), Object.keys(parsedData.metadata).length > 0 && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Metadata"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-2 gap-2" }, Object.entries(parsedData.metadata).map(([key, value]) => /* @__PURE__ */ import_react5.default.createElement("div", { key, className: "p-2 bg-muted/50 rounded border" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-xs font-medium text-muted-foreground" }, key), /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-sm mt-1" }, typeof value == "object" ? /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs whitespace-pre-wrap overflow-x-auto" }, JSON.stringify(value, null, 2)) : String(value)))))), Object.keys(parsedData.eventCounts).length > 0 && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Event Summary"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-3 bg-muted/50 rounded border" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex flex-wrap gap-2" }, Object.entries(parsedData.eventCounts).map(([eventType, count]) => /* @__PURE__ */ import_react5.default.createElement(
-      "span",
-      {
-        key: eventType,
-        className: "inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
-      },
-      eventType,
-      ": ",
-      count
-    ))))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-center py-8 text-muted-foreground" }, "This recording is not streaming, so there is no parsed view available."))))) : null)), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-end gap-2 p-6 border-t bg-muted/30" }, /* @__PURE__ */ import_react5.default.createElement(Button, { variant: "outline", onClick: onClose }, /* @__PURE__ */ import_react5.default.createElement(ArrowLeft, { className: "h-4 w-4 mr-2" }), "Back to List")));
+    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto" }, formatJSON(recording.response.headers))), recording.response.body && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto max-h-[500px] w-full whitespace-pre-wrap" }, formatBody(recording.response.body))))), activeTab === "parsed" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold" }, "Parsed Response")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4" }, recording.response.streaming ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "mt-1" }, isParsing && /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-center p-8" }, /* @__PURE__ */ import_react5.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-primary" }), /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Parsing stream...")), parseError && /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-800 dark:text-red-300 text-sm" }, "Failed to parse stream: ", parseError.message), parsedData && !isParsing && /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Reconstructed Output"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-3 bg-muted/50 rounded border" }, parsedData.text ? /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm whitespace-pre-wrap" }, parsedData.text) : /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground italic" }, "No text content"))), Object.keys(parsedData.metadata).length > 0 && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Metadata"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-2 gap-2" }, Object.entries(parsedData.metadata).map(
+      ([key, value]) => /* @__PURE__ */ import_react5.default.createElement(
+        "div",
+        {
+          key,
+          className: "p-2 bg-muted/50 rounded border"
+        },
+        /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-xs font-medium text-muted-foreground" }, key),
+        /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-sm mt-1" }, typeof value == "object" ? /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs whitespace-pre-wrap overflow-x-auto" }, JSON.stringify(value, null, 2)) : String(value))
+      )
+    ))), Object.keys(parsedData.eventCounts).length > 0 && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Event Summary"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-3 bg-muted/50 rounded border" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex flex-wrap gap-2" }, Object.entries(parsedData.eventCounts).map(
+      ([eventType, count]) => /* @__PURE__ */ import_react5.default.createElement(
+        "span",
+        {
+          key: eventType,
+          className: "inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+        },
+        eventType,
+        ": ",
+        count
+      )
+    )))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-center py-8 text-muted-foreground" }, "This recording is not streaming, so there is no parsed view available.")))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Recording not found."));
+  }
+
+  // internal/ui/src/app/components/RecordingSidebar.tsx
+  var import_react6 = __toESM(require_react(), 1);
+  function RecordingSidebar({ currentRecordingId }) {
+    let navigate = useNavigate(), scrollRef = (0, import_react6.useRef)(null), { data: data2, isLoading } = useQuery({
+      queryKey: ["recordings", "sidebar"],
+      queryFn: () => fetchRecordings(1, 100),
+      // Fetch first 100 for the sidebar
+      refetchInterval: 5e3
+    }), recordings = data2?.recordings || [], getStatusColor = (status) => status >= 200 && status < 300 ? "text-green-600 dark:text-green-400" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400" : status >= 500 ? "text-red-600 dark:text-red-400" : "text-muted-foreground";
+    return (0, import_react6.useEffect)(() => {
+      let handleKeyDown = (e) => {
+        if (!recordings.length) return;
+        let currentIndex = recordings.findIndex((r2) => r2.id === currentRecordingId);
+        currentIndex !== -1 && (e.key === "ArrowUp" || e.key === "ArrowLeft" ? (e.preventDefault(), currentIndex > 0 && navigate(`/recordings/${recordings[currentIndex - 1].id}`)) : (e.key === "ArrowDown" || e.key === "ArrowRight") && (e.preventDefault(), currentIndex < recordings.length - 1 && navigate(`/recordings/${recordings[currentIndex + 1].id}`)));
+      };
+      return window.addEventListener("keydown", handleKeyDown), () => window.removeEventListener("keydown", handleKeyDown);
+    }, [currentRecordingId, recordings, navigate]), (0, import_react6.useEffect)(() => {
+      if (scrollRef.current) {
+        let activeElement = scrollRef.current.querySelector('[data-active="true"]');
+        activeElement && activeElement.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
+    }, [currentRecordingId, recordings]), isLoading ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-80 border-r bg-muted/10 flex items-center justify-center" }, /* @__PURE__ */ import_react6.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-muted-foreground" })) : /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-80 border-r bg-muted/10 flex flex-col h-full" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 border-b bg-background/50 backdrop-blur" }, /* @__PURE__ */ import_react6.default.createElement("h3", { className: "font-semibold text-sm text-muted-foreground uppercase tracking-wider" }, "Recent Recordings")), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex-1 overflow-y-auto", ref: scrollRef }, recordings.length === 0 ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 text-center text-muted-foreground text-sm" }, "No recordings found") : /* @__PURE__ */ import_react6.default.createElement("div", { className: "divide-y" }, recordings.map((recording) => {
+      let isActive = recording.id === currentRecordingId;
+      return /* @__PURE__ */ import_react6.default.createElement(
+        "button",
+        {
+          key: recording.id,
+          "data-active": isActive,
+          onClick: () => navigate(`/recordings/${recording.id}`),
+          className: `w-full text-left p-3 hover:bg-muted/50 transition-colors focus:outline-none ${isActive ? "bg-muted border-l-2 border-l-primary" : "border-l-2 border-l-transparent"}`
+        },
+        /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between mb-1" }, /* @__PURE__ */ import_react6.default.createElement("span", { className: `text-xs font-medium ${getStatusColor(recording.status)}` }, recording.status, " ", recording.method), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-muted-foreground" }, format(new Date(recording.timestamp), "HH:mm:ss"))),
+        /* @__PURE__ */ import_react6.default.createElement("div", { className: "text-xs font-mono truncate text-foreground/80 mb-1", title: recording.path }, recording.path),
+        /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between text-[10px] text-muted-foreground" }, /* @__PURE__ */ import_react6.default.createElement("span", null, recording.provider), /* @__PURE__ */ import_react6.default.createElement("span", null, recording.duration, "ms"))
+      );
+    }))));
   }
 
   // internal/ui/src/app/pages/Recording.tsx
-  async function fetchRecordings2(page, limit, provider, search) {
-    let params = new URLSearchParams({
-      page: page.toString(),
-      limit: limit.toString()
-    });
-    provider && params.append("provider", provider), search && params.append("search", search);
-    let response = await fetch(`/api/recordings?${params}`);
-    if (!response.ok)
-      throw new Error("Failed to fetch recordings");
-    return response.json();
-  }
   function Recording() {
-    let { id } = useParams(), navigate = useNavigate(), [searchParams] = useSearchParams(), [page] = (0, import_react6.useState)(1), [limit] = (0, import_react6.useState)(50), [provider] = (0, import_react6.useState)(""), [search] = (0, import_react6.useState)(""), { data: data2 } = useQuery({
-      queryKey: ["recordings", page, limit, provider, search],
-      queryFn: () => fetchRecordings2(page, limit, provider, search),
-      refetchInterval: 1e4,
-      // Auto-refresh every 10 seconds
-      refetchIntervalInBackground: !0
-    });
-    return id ? data2?.recordings ? /* @__PURE__ */ import_react6.default.createElement(
-      RecordingDetailDrawer,
-      {
-        recordings: data2.recordings,
-        initialRecordingId: id,
-        onClose: () => navigate("/recordings"),
-        onNavigate: (id2) => navigate(`/recordings/${id2}?${searchParams.toString()}`)
-      }
-    ) : /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-center py-12" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "text-gray-500" }, "Loading recordings...")) : (navigate("/recordings"), null);
+    let { id } = useParams(), navigate = useNavigate();
+    return id ? /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex h-[calc(100vh-4rem)] w-full border-b" }, /* @__PURE__ */ import_react7.default.createElement(RecordingSidebar, { currentRecordingId: id }), /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex-1 min-w-0 h-full" }, /* @__PURE__ */ import_react7.default.createElement(RecordingDetail, { recordingId: id }))) : (navigate("/recordings"), null);
   }
 
   // internal/ui/src/app/components/mode-toggle.tsx
-  var import_react8 = __toESM(require_react(), 1);
+  var import_react9 = __toESM(require_react(), 1);
 
   // internal/ui/src/app/components/theme-provider.tsx
-  var import_react7 = __toESM(require_react(), 1), initialState = {
+  var import_react8 = __toESM(require_react(), 1), initialState = {
     theme: "system",
     setTheme: () => null
-  }, ThemeProviderContext = (0, import_react7.createContext)(initialState);
+  }, ThemeProviderContext = (0, import_react8.createContext)(initialState);
   function ThemeProvider({
     children,
     defaultTheme = "system",
     storageKey = "vite-ui-theme"
   }) {
-    let [theme, setTheme] = (0, import_react7.useState)(
+    let [theme, setTheme] = (0, import_react8.useState)(
       () => localStorage.getItem(storageKey) || defaultTheme
     );
-    (0, import_react7.useEffect)(() => {
+    (0, import_react8.useEffect)(() => {
       let root2 = window.document.documentElement;
       if (root2.classList.remove("light", "dark"), theme === "system") {
         let systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -24126,10 +24091,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         localStorage.setItem(storageKey, theme2), setTheme(theme2);
       }
     };
-    return /* @__PURE__ */ import_react7.default.createElement(ThemeProviderContext.Provider, { value }, children);
+    return /* @__PURE__ */ import_react8.default.createElement(ThemeProviderContext.Provider, { value }, children);
   }
   var useTheme = () => {
-    let context = (0, import_react7.useContext)(ThemeProviderContext);
+    let context = (0, import_react8.useContext)(ThemeProviderContext);
     if (context === void 0)
       throw new Error("useTheme must be used within a ThemeProvider");
     return context;
@@ -24138,19 +24103,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // internal/ui/src/app/components/mode-toggle.tsx
   function ModeToggle() {
     let { theme, setTheme } = useTheme();
-    return /* @__PURE__ */ import_react8.default.createElement(Button, { variant: "ghost", size: "icon", onClick: () => setTheme(theme === "dark" ? "light" : "dark") }, /* @__PURE__ */ import_react8.default.createElement(Sun, { className: "h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" }), /* @__PURE__ */ import_react8.default.createElement(Moon, { className: "absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" }), /* @__PURE__ */ import_react8.default.createElement("span", { className: "sr-only" }, "Toggle theme"));
+    return /* @__PURE__ */ import_react9.default.createElement(Button, { variant: "ghost", size: "icon", onClick: () => setTheme(theme === "dark" ? "light" : "dark") }, /* @__PURE__ */ import_react9.default.createElement(Sun, { className: "h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" }), /* @__PURE__ */ import_react9.default.createElement(Moon, { className: "absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" }), /* @__PURE__ */ import_react9.default.createElement("span", { className: "sr-only" }, "Toggle theme"));
   }
 
   // internal/ui/src/app/App.tsx
   function App() {
-    return /* @__PURE__ */ import_react9.default.createElement("div", { className: "min-h-screen flex flex-col bg-background" }, /* @__PURE__ */ import_react9.default.createElement("header", { className: "border-b" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "container mx-auto px-4" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex h-16 items-center justify-between" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center" }, /* @__PURE__ */ import_react9.default.createElement(
+    return /* @__PURE__ */ import_react10.default.createElement("div", { className: "min-h-screen flex flex-col bg-background" }, /* @__PURE__ */ import_react10.default.createElement("header", { className: "border-b" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "container mx-auto px-4" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-16 items-center justify-between" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center" }, /* @__PURE__ */ import_react10.default.createElement(
       "a",
       {
         href: "/",
         className: "flex text-xl font-bold libertinus-math-regular"
       },
-      /* @__PURE__ */ import_react9.default.createElement("span", { className: "ml-2 mt-3" }, "\u{1D544}\u{1D540}\u211D\u211D\u{1D538}")
-    )), /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react9.default.createElement(ModeToggle, null))))), /* @__PURE__ */ import_react9.default.createElement("main", { className: "mx-auto flex-1" }, /* @__PURE__ */ import_react9.default.createElement(Routes, null, /* @__PURE__ */ import_react9.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react9.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react9.default.createElement(Route, { path: "/recordings", element: /* @__PURE__ */ import_react9.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react9.default.createElement(Route, { path: "/recordings/:id", element: /* @__PURE__ */ import_react9.default.createElement(Recording, null) }))), /* @__PURE__ */ import_react9.default.createElement("footer", { className: "border-t py-6" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "container mx-auto px-4 text-center text-sm text-muted-foreground h-8" })));
+      /* @__PURE__ */ import_react10.default.createElement("span", { className: "ml-2 mt-3" }, "\u{1D544}\u{1D540}\u211D\u211D\u{1D538}")
+    )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react10.default.createElement(ModeToggle, null))))), /* @__PURE__ */ import_react10.default.createElement("main", { className: "mx-auto flex-1" }, /* @__PURE__ */ import_react10.default.createElement(Routes, null, /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react10.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/recordings", element: /* @__PURE__ */ import_react10.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/recordings/:id", element: /* @__PURE__ */ import_react10.default.createElement(Recording, null) }))));
   }
   var App_default = App;
 
@@ -31321,13 +31286,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   setVerbosity(globalThis.__DEV__ !== !1 ? "log" : "silent");
 
   // internal/ui/src/node_modules/@apollo/client/react/context/ApolloContext.js
-  var React28 = __toESM(require_rehackt(), 1);
+  var React29 = __toESM(require_rehackt(), 1);
   var contextKey = canUseSymbol ? Symbol.for("__APOLLO_CONTEXT__") : "__APOLLO_CONTEXT__";
   function getApolloContext() {
-    invariant4("createContext" in React28, 69);
-    var context = React28.createContext[contextKey];
-    return context || (Object.defineProperty(React28.createContext, contextKey, {
-      value: context = React28.createContext({}),
+    invariant4("createContext" in React29, 69);
+    var context = React29.createContext[contextKey];
+    return context || (Object.defineProperty(React29.createContext, contextKey, {
+      value: context = React29.createContext({}),
       enumerable: !1,
       writable: !1,
       configurable: !0
@@ -31335,12 +31300,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   }
 
   // internal/ui/src/node_modules/@apollo/client/react/context/ApolloProvider.js
-  var React29 = __toESM(require_rehackt(), 1);
+  var React30 = __toESM(require_rehackt(), 1);
   var ApolloProvider = function(_a2) {
-    var client = _a2.client, children = _a2.children, ApolloContext = getApolloContext(), parentContext = React29.useContext(ApolloContext), context = React29.useMemo(function() {
+    var client = _a2.client, children = _a2.children, ApolloContext = getApolloContext(), parentContext = React30.useContext(ApolloContext), context = React30.useMemo(function() {
       return __assign(__assign({}, parentContext), { client: client || parentContext.client });
     }, [parentContext, client]);
-    return invariant4(context.client, 71), React29.createElement(ApolloContext.Provider, { value: context }, children);
+    return invariant4(context.client, 71), React30.createElement(ApolloContext.Provider, { value: context }, children);
   };
 
   // internal/ui/src/app/lib/apolloClient.ts
@@ -31377,7 +31342,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   // internal/ui/src/index.tsx
   var queryClient = new QueryClient();
   import_client2.default.createRoot(document.getElementById("root")).render(
-    /* @__PURE__ */ import_react10.default.createElement(import_react10.default.StrictMode, null, /* @__PURE__ */ import_react10.default.createElement(ApolloProvider, { client: apolloClient }, /* @__PURE__ */ import_react10.default.createElement(QueryClientProvider, { client: queryClient }, /* @__PURE__ */ import_react10.default.createElement(ThemeProvider, { defaultTheme: "system", storageKey: "vite-ui-theme" }, /* @__PURE__ */ import_react10.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react10.default.createElement(App_default, null))))))
+    /* @__PURE__ */ import_react11.default.createElement(import_react11.default.StrictMode, null, /* @__PURE__ */ import_react11.default.createElement(ApolloProvider, { client: apolloClient }, /* @__PURE__ */ import_react11.default.createElement(QueryClientProvider, { client: queryClient }, /* @__PURE__ */ import_react11.default.createElement(ThemeProvider, { defaultTheme: "system", storageKey: "vite-ui-theme" }, /* @__PURE__ */ import_react11.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react11.default.createElement(App_default, null))))))
   );
 })();
 /*! Bundled license information:

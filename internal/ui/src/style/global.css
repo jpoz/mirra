@@ -133,4 +133,39 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-} 
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.85 0.02 240); /* Light mode thumb */
+  border-radius: 5px;
+  border: 2px solid transparent; /* Creates padding effect */
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.75 0.02 240);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: oklch(0.36 0.03 240); /* Dark mode thumb (Nord2) */
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.42 0.03 240); /* Dark mode hover (Nord3) */
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
