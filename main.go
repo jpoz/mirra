@@ -5,15 +5,10 @@ import (
 	"flag"
 	"fmt"
 	"log/slog"
-	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
-
-	"github.com/llmite-ai/mirra/internal/api"
 	"github.com/llmite-ai/mirra/internal/commands"
 	"github.com/llmite-ai/mirra/internal/config"
 	"github.com/llmite-ai/mirra/internal/logger"
@@ -90,8 +85,8 @@ func startCommand(args []string) {
 	log := logger.NewLogger(cfg.Logging.Format, cfg.Logging.Level, os.Stdout)
 	slog.SetDefault(log)
 
-	srv := server.New(cfg)
-	uiManager := ui.NewManager()
+	uiManager := ui.NewManager(ui.WithLogger(log))
+	srv := server.New(cfg, log, uiManager)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -103,28 +98,6 @@ func startCommand(args []string) {
 		<-sigChan
 		slog.Info("shutting down")
 		cancel()
-	}()
-
-	go func() {
-		r := chi.NewRouter()
-		r.Use(middleware.Logger)
-
-		// API handlers
-		apiHandlers := api.NewHandlers(cfg, log, srv.GetRecorder())
-		r.Get("/api/recordings", apiHandlers.ListRecordings)
-		r.Get("/api/recordings/{id}/parse", apiHandlers.ParseRecording)
-		r.Get("/api/recordings/{id}", apiHandlers.GetRecording)
-
-		// UI static files
-		r.Get("/src/*", uiManager.SrcHandler("/src"))
-		r.Get("/*", uiManager.Static("internal/ui/static", "/"))
-
-		log.Info("starting ui server on :5678")
-
-		if err := http.ListenAndServe(":5678", r); err != nil {
-			slog.Error("ui server error", "error", err)
-			cancel()
-		}
 	}()
 
 	if err := srv.Start(ctx); err != nil {
@@ -141,13 +114,15 @@ Usage:
   mirra export [--from YYYY-MM-DD] [--to YYYY-MM-DD] [--provider claude|openai|gemini] [--output file.jsonl]
   mirra stats [--from YYYY-MM-DD] [--provider claude|openai|gemini]
   mirra view <recording-id>
+  mirra reindex [--recordings ./recordings]
   mirra help
 
 Commands:
-  start   - Start the proxy server
-  export  - Export recordings to a file
-  stats   - Show statistics about recordings
-  view    - View a specific recording
-  help    - Show this help message`
+  start    - Start the proxy server
+  export   - Export recordings to a file
+  stats    - Show statistics about recordings
+  view     - View a specific recording
+  reindex  - Rebuild the recording index for faster lookups
+  help     - Show this help message`
 	_, _ = fmt.Fprintln(os.Stdout, usage)
 }

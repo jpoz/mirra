@@ -15,7 +15,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-chi/chi/v5"
 	"github.com/llmite-ai/mirra/internal/config"
 	"github.com/llmite-ai/mirra/internal/recorder"
 	"github.com/llmite-ai/mirra/internal/sse"
@@ -123,7 +122,7 @@ func (h *Handlers) ListRecordings(w http.ResponseWriter, r *http.Request) {
 // GetRecording handles GET /api/recordings/:id
 func (h *Handlers) GetRecording(w http.ResponseWriter, r *http.Request) {
 	// Extract ID from URL parameter
-	id := chi.URLParam(r, "id")
+	id := r.PathValue("id")
 	if id == "" {
 		http.Error(w, "Recording ID required", http.StatusBadRequest)
 		return
@@ -185,7 +184,7 @@ type ParsedStreamResponse struct {
 // ParseRecording handles GET /api/recordings/:id/parse
 func (h *Handlers) ParseRecording(w http.ResponseWriter, r *http.Request) {
 	// Extract ID from URL parameter
-	id := chi.URLParam(r, "id")
+	id := r.PathValue("id")
 	if id == "" {
 		http.Error(w, "Recording ID required", http.StatusBadRequest)
 		return

@@ -96,5 +96,13 @@ func Load(path string) (*Config, error) {
 		cfg.Providers["gemini"] = Provider{UpstreamURL: geminiUpstream}
 	}
 
+	if logLevel := os.Getenv("LOG_LEVEL"); logLevel != "" {
+		cfg.Logging.Level = logLevel
+	}
+
+	if logFormat := os.Getenv("LOG_FORMAT"); logFormat != "" {
+		cfg.Logging.Format = logFormat
+	}
+
 	return cfg, nil
 }

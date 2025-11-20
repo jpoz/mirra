@@ -3,6 +3,7 @@ package ui
 import (
 	"bytes"
 	"embed"
+	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -16,7 +17,6 @@ import (
 	"time"
 
 	"github.com/evanw/esbuild/pkg/api"
-	"github.com/llmite-ai/mirra/internal/logger"
 )
 
 //go:embed static/*
@@ -27,19 +27,30 @@ var dist embed.FS
 
 type Manager struct {
 	env string
+	log *slog.Logger
 }
 
 type Option func(*Manager)
 
 func NewManager(opts ...Option) *Manager {
-	return &Manager{
+	m := &Manager{
 		env: os.Getenv("NODE_ENV"),
+		log: slog.Default(),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+func WithLogger(log *slog.Logger) Option {
+	return func(m *Manager) {
+		m.log = log
 	}
 }
 
 func (m *Manager) Static(root, remove string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log := logger.NewDefaultLogger()
 		trimmedPath := strings.TrimPrefix(r.URL.Path, remove)
 
 		var (
@@ -62,31 +73,40 @@ func (m *Manager) Static(root, remove string) http.HandlerFunc {
 
 			path = filepath.Join(workingDir, root, trimmedPath)
 
-			log.Debug("[assets] requested file", "path", path)
+			m.log.Debug("[assets] requested file", "path", path)
 
 			// Read the file content from the os file system.
 			data, err = os.ReadFile(path)
 			if err == nil {
-				log.Debug("[assets] os file", "path", path)
+				m.log.Debug("[assets] os file", "path", path)
 			}
 		}
 
 		if data == nil {
-			path := filepath.Join("static", filepath.Clean("/"+trimmedPath))
-			if strings.HasSuffix(r.URL.Path, "/") {
-				http.Error(w, "Not Found", http.StatusNotFound)
-				return
-			}
+			path = filepath.Join("static", filepath.Clean("/"+trimmedPath))
 
-			log.Debug("[assets] embedded file", "path", path)
+			m.log.Debug("[assets] embedded file", "path", path)
 
 			// Read the file content from the embedded file system.
 			data, err = fs.ReadFile(staticContent, path)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusNotFound)
-				return
+				if !errors.Is(err, fs.ErrNotExist) {
+					http.Error(w, err.Error(), http.StatusNotFound)
+					return
+				}
+
+				m.log.Debug("[assets] file not found, serving index.html", "path", path)
+				// load index.html for SPA routing
+				path = "static/index.html"
+				data, err = fs.ReadFile(staticContent, path)
+				if err != nil {
+					http.Error(w, err.Error(), http.StatusNotFound)
+					return
+				}
 			}
 		}
+
+		m.log.Debug("[assets] serving file", "path", path)
 
 		// Determine the content type of the file.
 		contentType := mime.TypeByExtension(filepath.Ext(path))
@@ -97,7 +117,7 @@ func (m *Manager) Static(root, remove string) http.HandlerFunc {
 		// Set the Content-Type header.
 		w.Header().Set("Content-Type", contentType)
 		if _, err := w.Write(data); err != nil {
-			log.Error("[assets] Failed to write response", "error", err)
+			m.log.Error("[assets] Failed to write response", "error", err)
 		}
 	}
 }
@@ -126,22 +146,21 @@ func (m *Manager) SrcHandler(root string) http.HandlerFunc {
 	}
 
 	responseWithEmbedded := func(w http.ResponseWriter, r *http.Request) {
-		log := logger.NewDefaultLogger()
 		urlPath := r.URL.Path
 		requestPath := strings.TrimPrefix(urlPath, root)
 		filePath := filepath.Join("dist", requestPath)
 
-		log.Info("Serving embedded file", "path", r.URL.Path, "filename", filePath)
+		m.log.Info("Serving embedded file", "path", r.URL.Path, "filename", filePath)
 
 		file, err := dist.Open(filePath)
 		if err != nil {
-			log.Error("Failed to open embedded file", "path", filePath, "error", err)
+			m.log.Error("Failed to open embedded file", "path", filePath, "error", err)
 			http.NotFound(w, r)
 			return
 		}
 		defer func() {
 			if closeErr := file.Close(); closeErr != nil {
-				log.Error("Failed to close file", "path", filePath, "error", closeErr)
+				m.log.Error("Failed to close file", "path", filePath, "error", closeErr)
 			}
 		}()
 
@@ -154,16 +173,14 @@ func (m *Manager) SrcHandler(root string) http.HandlerFunc {
 
 		_, copyErr := io.Copy(w, file)
 		if copyErr != nil {
-			log.Error("Failed to serve embedded file", "path", filePath, "error", copyErr)
+			m.log.Error("Failed to serve embedded file", "path", filePath, "error", copyErr)
 		} else {
-			log.Info("Served embedded file", "path", filePath)
+			m.log.Info("Served embedded file", "path", filePath)
 		}
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		log := logger.NewDefaultLogger()
-
-		log.Info("Serving file", "path", r.URL.Path)
+		m.log.Info("Serving file", "path", r.URL.Path)
 
 		if m.env == "production" {
 			responseWithEmbedded(w, r)
@@ -174,20 +191,20 @@ func (m *Manager) SrcHandler(root string) http.HandlerFunc {
 		requestPath := strings.TrimPrefix(urlPath, root)
 
 		if requestPath == "" || requestPath == "/" {
-			m.index(dist, w, r)
+			http.NotFound(w, r)
 			return
 		}
 
 		now := time.Now()
 		err := m.buildAndServerFromESBuild(buildOptions, requestPath, w, r)
-		log.Info("Built package", "filename", requestPath, "duration", time.Since(now))
+		m.log.Info("Built package", "filename", requestPath, "duration", time.Since(now))
 		if err != nil {
-			log.Error("Error building package", "filename", requestPath, "error", err)
+			m.log.Error("Error building package", "filename", requestPath, "error", err)
 			err = fmt.Errorf("failed to build %s: %v", requestPath, err)
 
 			w.Header().Set("Content-Type", "application/javascript")
 			if _, writeErr := w.Write([]byte(buildErrorScript(err))); writeErr != nil {
-				log.Error("Failed to write error response", "error", writeErr)
+				m.log.Error("Failed to write error response", "error", writeErr)
 			}
 		}
 	}
@@ -311,7 +328,4 @@ func buildErrorScript(err error) string {
   document.body.innerHTML += '<div style="color: red;">%s</div>';
 });
 		`, err.Error())
-}
-
-func (m *Manager) index(efs fs.FS, w http.ResponseWriter, _ *http.Request) {
 }
