@@ -49,7 +49,7 @@ interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
 export function TableRow({ children, className = '', onClick, ...props }: TableRowProps) {
   return (
     <tr
-      className={`border-b transition-colors hover:bg-gray-50 ${
+      className={`border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted ${
         onClick ? 'cursor-pointer' : ''
       } ${className}`}
       onClick={onClick}
@@ -67,7 +67,7 @@ interface TableHeadProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
 export function TableHead({ children, className = '', ...props }: TableHeadProps) {
   return (
     <th
-      className={`h-12 px-4 text-left align-middle font-medium text-gray-600 [&:has([role=checkbox])]:pr-0 ${className}`}
+      className={`h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 ${className}`}
       {...props}
     >
       {children}

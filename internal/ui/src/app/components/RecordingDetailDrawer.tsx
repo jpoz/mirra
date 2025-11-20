@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { ArrowLeft, Copy, Check, Loader2 } from 'lucide-react'
 import { Button } from './ui/button'
 import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'react-router'
 
 interface ParsedStream {
   text: string
@@ -80,10 +81,10 @@ function CompactRecordingItem({
   onClick: () => void
 }) {
   const getStatusColor = (status: number) => {
-    if (status >= 200 && status < 300) return 'text-green-600 bg-green-50'
-    if (status >= 400 && status < 500) return 'text-yellow-600 bg-yellow-50'
-    if (status >= 500) return 'text-red-600 bg-red-50'
-    return 'text-gray-600 bg-gray-50'
+    if (status >= 200 && status < 300) return 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
+    if (status >= 400 && status < 500) return 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20'
+    if (status >= 500) return 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20'
+    return 'text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800'
   }
 
   return (
@@ -94,17 +95,17 @@ function CompactRecordingItem({
         p-3 border-b cursor-pointer transition-colors
         ${
           isSelected
-            ? 'bg-blue-100 border-l-4 border-l-blue-500 pl-2'
-            : 'hover:bg-gray-100 border-l-4 border-l-transparent'
+            ? 'bg-blue-100 dark:bg-blue-900/30 border-l-4 border-l-blue-500 pl-2'
+            : 'hover:bg-muted border-l-4 border-l-transparent'
         }
       `}
     >
       {/* ID + Timestamp Row */}
       <div className="flex items-center justify-between mb-1">
-        <span className="text-xs font-mono text-gray-600">
+        <span className="text-xs font-mono text-muted-foreground">
           {recording.id.substring(0, 8)}
         </span>
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-muted-foreground">
           {format(new Date(recording.timestamp), 'HH:mm:ss')}
         </span>
       </div>
@@ -112,7 +113,7 @@ function CompactRecordingItem({
       {/* Method + Path Row */}
       <div className="text-sm font-mono mb-1 truncate">
         <span className="font-semibold">{recording.method}</span>{' '}
-        <span className="text-gray-700">{recording.path}</span>
+        <span className="text-foreground/80">{recording.path}</span>
       </div>
 
       {/* Status + Provider Row */}
@@ -122,12 +123,12 @@ function CompactRecordingItem({
         >
           {recording.status}
         </span>
-        <span className="text-xs text-gray-500">{recording.provider}</span>
+        <span className="text-xs text-muted-foreground">{recording.provider}</span>
       </div>
 
       {/* Error Indicator */}
       {recording.error && (
-        <div className="mt-1 text-xs text-red-600 flex items-center">
+        <div className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center">
           <span className="w-1.5 h-1.5 bg-red-500 rounded-full mr-1" />
           Error
         </div>
@@ -144,7 +145,19 @@ export default function RecordingDetailDrawer({
 }: RecordingDetailDrawerProps) {
   const [selectedId, setSelectedId] = useState(initialRecordingId)
   const [copiedSection, setCopiedSection] = useState<string | null>(null)
-  const [viewMode, setViewMode] = useState<'raw' | 'parsed'>('raw')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeTab = searchParams.get('tab') || 'request'
+
+  const setActiveTab = (tab: string) => {
+    setSearchParams(
+      (prev) => {
+        const newParams = new URLSearchParams(prev)
+        newParams.set('tab', tab)
+        return newParams
+      },
+      { replace: true }
+    )
+  }
 
   // Fetch full recording details for the selected ID
   const { data: recording, isLoading: isLoadingRecording } = useQuery({
@@ -161,7 +174,7 @@ export default function RecordingDetailDrawer({
   } = useQuery({
     queryKey: ['parsed', selectedId],
     queryFn: () => fetchParsedRecording(selectedId),
-    enabled: viewMode === 'parsed' && !!recording?.response.streaming,
+    enabled: activeTab === 'parsed' && !!recording?.response.streaming,
   })
 
   // Keyboard navigation
@@ -229,336 +242,350 @@ export default function RecordingDetailDrawer({
   }
 
   const getStatusColor = (status: number) => {
-    if (status >= 200 && status < 300) return 'text-green-600 bg-green-50'
-    if (status >= 400 && status < 500) return 'text-yellow-600 bg-yellow-50'
-    if (status >= 500) return 'text-red-600 bg-red-50'
-    return 'text-gray-600 bg-gray-50'
+    if (status >= 200 && status < 300) return 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
+    if (status >= 400 && status < 500) return 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20'
+    if (status >= 500) return 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20'
+    return 'text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800'
   }
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col bg-background text-foreground">
       {/* Header - spans both panes */}
-      <div className="flex items-center justify-between p-6 border-b bg-white">
+      <div className="flex items-center justify-between p-6 border-b bg-card">
         <div className="flex items-center gap-4">
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+            className="p-2 hover:bg-muted rounded-md transition-colors"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
           <div>
             <h2 className="text-xl font-bold">Recording Details</h2>
             {recording && (
-              <p className="text-sm text-gray-600 font-mono mt-1">{recording.id}</p>
+              <p className="text-sm text-muted-foreground font-mono mt-1">{recording.id}</p>
             )}
           </div>
         </div>
       </div>
 
-        {/* Main Content - Two Panes */}
-        <div className="flex flex-1 overflow-hidden">
-          {/* LEFT PANE - Compact List */}
-          <div className="w-80 border-r flex flex-col bg-gray-50">
-            <div className="p-3 border-b bg-white">
-              <h3 className="font-semibold text-sm">
-                Recordings ({recordings.length})
-              </h3>
-            </div>
-            <div className="flex-1 overflow-y-auto">
-              {recordings.map((rec) => (
-                <CompactRecordingItem
-                  key={rec.id}
-                  recording={rec}
-                  isSelected={rec.id === selectedId}
-                  onClick={() => {
-                    if (onNavigate) {
-                      onNavigate(rec.id)
-                    } else {
-                      setSelectedId(rec.id)
-                    }
-                  }}
-                />
-              ))}
-            </div>
+      {/* Main Content - Two Panes */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* LEFT PANE - Compact List */}
+        <div className="w-80 border-r flex flex-col bg-muted/30">
+          <div className="p-3 border-b bg-card">
+            <h3 className="font-semibold text-sm">
+              Recordings ({recordings.length})
+            </h3>
           </div>
-
-          {/* RIGHT PANE - Detail View */}
-          <div className="flex-1 flex flex-col overflow-hidden">
-            {isLoadingRecording && !recording ? (
-              <div className="flex-1 flex items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-                <span className="ml-2 text-gray-600">Loading recording...</span>
-              </div>
-            ) : recording ? (
-              <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {/* Metadata */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium text-gray-600">Timestamp</label>
-              <p className="text-sm mt-1">
-                {format(new Date(recording.timestamp), 'MMM d, yyyy HH:mm:ss')}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-600">Provider</label>
-              <p className="text-sm mt-1">
-                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100">
-                  {recording.provider}
-                </span>
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-600">Duration</label>
-              <p className="text-sm mt-1">{recording.timing.durationMs}ms</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-600">Status</label>
-              <p className="text-sm mt-1">
-                <span
-                  className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getStatusColor(
-                    recording.response.status
-                  )}`}
-                >
-                  {recording.response.status}
-                </span>
-              </p>
-            </div>
+          <div className="flex-1 overflow-y-auto">
+            {recordings.map((rec) => (
+              <CompactRecordingItem
+                key={rec.id}
+                recording={rec}
+                isSelected={rec.id === selectedId}
+                onClick={() => {
+                  if (onNavigate) {
+                    onNavigate(rec.id)
+                  } else {
+                    setSelectedId(rec.id)
+                  }
+                }}
+              />
+            ))}
           </div>
+        </div>
 
-          {/* Error */}
-          {recording.error && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-md">
-              <label className="text-sm font-medium text-red-800">Error</label>
-              <p className="text-sm text-red-700 mt-1 font-mono">{recording.error}</p>
+        {/* RIGHT PANE - Detail View */}
+        <div className="flex-1 flex flex-col overflow-hidden bg-background">
+          {isLoadingRecording && !recording ? (
+            <div className="flex-1 flex items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <span className="ml-2 text-muted-foreground">Loading recording...</span>
             </div>
-          )}
-
-          {/* Request */}
-          <div className="border rounded-md">
-            <div className="flex items-center justify-between p-3 bg-gray-50 border-b">
-              <h3 className="font-semibold">Request</h3>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() =>
-                  copyToClipboard(
-                    formatJSON({
-                      method: recording.request.method,
-                      path: recording.request.path,
-                      query: recording.request.query,
-                      headers: recording.request.headers,
-                      body: recording.request.body,
-                    }),
-                    'request'
-                  )
-                }
-              >
-                {copiedSection === 'request' ? (
-                  <>
-                    <Check className="h-4 w-4 mr-1" />
-                    Copied
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-4 w-4 mr-1" />
-                    Copy
-                  </>
-                )}
-              </Button>
-            </div>
-            <div className="p-4 space-y-3">
-              <div>
-                <label className="text-sm font-medium text-gray-600">Endpoint</label>
-                <p className="text-sm mt-1 font-mono">
-                  {recording.request.method} {recording.request.path}
-                  {recording.request.query && `?${recording.request.query}`}
-                </p>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-gray-600">Headers</label>
-                <pre className="text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto">
-                  {formatJSON(recording.request.headers)}
-                </pre>
-              </div>
-
-              {recording.request.body && (
-                <div>
-                  <label className="text-sm font-medium text-gray-600">Body</label>
-                  <pre className="text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto max-h-64 overflow-y-auto whitespace-pre-wrap">
-                    {formatBody(recording.request.body)}
-                  </pre>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Response */}
-          <div className="border rounded-md">
-            <div className="flex items-center justify-between p-3 bg-gray-50 border-b">
-              <div className="flex items-center gap-2">
-                <h3 className="font-semibold">Response</h3>
-                {recording.response.streaming && (
-                  <>
-                    <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
-                      Streaming
-                    </span>
-                    {/* Tab buttons for streaming responses */}
-                    <div className="flex ml-2 border rounded-md overflow-hidden">
-                      <button
-                        className={`px-3 py-1 text-xs ${
-                          viewMode === 'raw'
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-white text-gray-700 hover:bg-gray-100'
-                        }`}
-                        onClick={() => setViewMode('raw')}
-                      >
-                        Raw
-                      </button>
-                      <button
-                        className={`px-3 py-1 text-xs border-l ${
-                          viewMode === 'parsed'
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-white text-gray-700 hover:bg-gray-100'
-                        }`}
-                        onClick={() => setViewMode('parsed')}
-                      >
-                        Parsed
-                      </button>
+          ) : recording ? (
+            <>
+              {/* Metadata & Tabs Header */}
+              <div className="bg-card border-b">
+                <div className="p-6 pb-0">
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                      <label className="text-sm font-medium text-muted-foreground">Timestamp</label>
+                      <p className="text-sm mt-1">
+                        {format(new Date(recording.timestamp), 'MMM d, yyyy HH:mm:ss')}
+                      </p>
                     </div>
-                  </>
-                )}
-              </div>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() =>
-                  copyToClipboard(
-                    formatJSON({
-                      status: recording.response.status,
-                      headers: recording.response.headers,
-                      body: recording.response.body,
-                    }),
-                    'response'
-                  )
-                }
-              >
-                {copiedSection === 'response' ? (
-                  <>
-                    <Check className="h-4 w-4 mr-1" />
-                    Copied
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-4 w-4 mr-1" />
-                    Copy
-                  </>
-                )}
-              </Button>
-            </div>
-            <div className="p-4 space-y-3">
-              <div>
-                <label className="text-sm font-medium text-gray-600">Headers</label>
-                <pre className="text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto">
-                  {formatJSON(recording.response.headers)}
-                </pre>
+                    <div>
+                      <label className="text-sm font-medium text-muted-foreground">Provider</label>
+                      <p className="text-sm mt-1">
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground">
+                          {recording.provider}
+                        </span>
+                      </p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-muted-foreground">Duration</label>
+                      <p className="text-sm mt-1">{recording.timing.durationMs}ms</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-muted-foreground">Status</label>
+                      <p className="text-sm mt-1">
+                        <span
+                          className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getStatusColor(
+                            recording.response.status
+                          )}`}
+                        >
+                          {recording.response.status}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {recording.error && (
+                    <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md mb-6">
+                      <label className="text-sm font-medium text-red-800 dark:text-red-300">Error</label>
+                      <p className="text-sm text-red-700 dark:text-red-400 mt-1 font-mono">{recording.error}</p>
+                    </div>
+                  )}
+
+                  {/* Tabs */}
+                  <div className="flex gap-6 border-b -mb-px">
+                    {['request', 'response', 'parsed'].map((tab) => (
+                      <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`
+                          pb-3 text-sm font-medium transition-colors border-b-2
+                          ${
+                            activeTab === tab
+                              ? 'border-primary text-primary'
+                              : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+                          }
+                        `}
+                      >
+                        {tab.charAt(0).toUpperCase() + tab.slice(1) + (tab === 'parsed' ? ' Response' : '')}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              {recording.response.body && (
-                <div>
-                  <label className="text-sm font-medium text-gray-600">Body</label>
-                  {recording.response.streaming && viewMode === 'parsed' ? (
-                    // Parsed view for streaming responses
-                    <div className="mt-1">
-                      {isParsing && (
-                        <div className="flex items-center justify-center p-8">
-                          <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
-                          <span className="ml-2 text-gray-600">Parsing stream...</span>
-                        </div>
-                      )}
-                      {parseError && (
-                        <div className="p-4 bg-red-50 border border-red-200 rounded text-red-800 text-sm">
-                          Failed to parse stream: {(parseError as Error).message}
-                        </div>
-                      )}
-                      {parsedData && !isParsing && (
-                        <div className="space-y-4">
-                          {/* Reconstructed Output */}
-                          <div>
-                            <h4 className="text-sm font-semibold mb-2">Reconstructed Output</h4>
-                            <div className="p-3 bg-gray-50 rounded border">
-                              {parsedData.text ? (
-                                <p className="text-sm whitespace-pre-wrap">{parsedData.text}</p>
-                              ) : (
-                                <p className="text-sm text-gray-500 italic">No text content</p>
-                              )}
-                            </div>
-                          </div>
+              {/* Tab Content */}
+              <div className="flex-1 overflow-y-auto p-6 bg-muted/10">
+                {activeTab === 'request' && (
+                  <div className="bg-card border rounded-md">
+                    <div className="flex items-center justify-between p-3 bg-muted/30 border-b">
+                      <h3 className="font-semibold">Request</h3>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() =>
+                          copyToClipboard(
+                            formatJSON({
+                              method: recording.request.method,
+                              path: recording.request.path,
+                              query: recording.request.query,
+                              headers: recording.request.headers,
+                              body: recording.request.body,
+                            }),
+                            'request'
+                          )
+                        }
+                      >
+                        {copiedSection === 'request' ? (
+                          <>
+                            <Check className="h-4 w-4 mr-1" />
+                            Copied
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-4 w-4 mr-1" />
+                            Copy
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                    <div className="p-4 space-y-3">
+                      <div>
+                        <label className="text-sm font-medium text-muted-foreground">Endpoint</label>
+                        <p className="text-sm mt-1 font-mono">
+                          {recording.request.method} {recording.request.path}
+                          {recording.request.query && `?${recording.request.query}`}
+                        </p>
+                      </div>
 
-                          {/* Metadata */}
-                          {Object.keys(parsedData.metadata).length > 0 && (
-                            <div>
-                              <h4 className="text-sm font-semibold mb-2">Metadata</h4>
-                              <div className="grid grid-cols-2 gap-2">
-                                {Object.entries(parsedData.metadata).map(([key, value]) => (
-                                  <div key={key} className="p-2 bg-gray-50 rounded border">
-                                    <div className="text-xs font-medium text-gray-600">{key}</div>
-                                    <div className="text-sm mt-1">
-                                      {typeof value === 'object' ? (
-                                        <pre className="text-xs">{JSON.stringify(value, null, 2)}</pre>
-                                      ) : (
-                                        String(value)
-                                      )}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
+                      <div>
+                        <label className="text-sm font-medium text-muted-foreground">Headers</label>
+                        <pre className="text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto">
+                          {formatJSON(recording.request.headers)}
+                        </pre>
+                      </div>
+
+                      {recording.request.body && (
+                        <div>
+                          <label className="text-sm font-medium text-muted-foreground">Body</label>
+                          <pre className="text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto max-h-[500px] w-full whitespace-pre-wrap">
+                            {formatBody(recording.request.body)}
+                          </pre>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'response' && (
+                  <div className="bg-card border rounded-md">
+                    <div className="flex items-center justify-between p-3 bg-muted/30 border-b">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold">Response</h3>
+                        {recording.response.streaming && (
+                          <span className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
+                            Streaming
+                          </span>
+                        )}
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() =>
+                          copyToClipboard(
+                            formatJSON({
+                              status: recording.response.status,
+                              headers: recording.response.headers,
+                              body: recording.response.body,
+                            }),
+                            'response'
+                          )
+                        }
+                      >
+                        {copiedSection === 'response' ? (
+                          <>
+                            <Check className="h-4 w-4 mr-1" />
+                            Copied
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-4 w-4 mr-1" />
+                            Copy
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                    <div className="p-4 space-y-3">
+                      <div>
+                        <label className="text-sm font-medium text-muted-foreground">Headers</label>
+                        <pre className="text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto">
+                          {formatJSON(recording.response.headers)}
+                        </pre>
+                      </div>
+
+                      {recording.response.body && (
+                        <div>
+                          <label className="text-sm font-medium text-muted-foreground">Body</label>
+                          <pre className="text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto max-h-[500px] w-full whitespace-pre-wrap">
+                            {formatBody(recording.response.body)}
+                          </pre>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'parsed' && (
+                  <div className="bg-card border rounded-md">
+                     <div className="flex items-center justify-between p-3 bg-muted/30 border-b">
+                      <h3 className="font-semibold">Parsed Response</h3>
+                    </div>
+                    <div className="p-4">
+                      {!recording.response.streaming ? (
+                        <div className="text-center py-8 text-muted-foreground">
+                          This recording is not streaming, so there is no parsed view available.
+                        </div>
+                      ) : (
+                        <div className="mt-1">
+                          {isParsing && (
+                            <div className="flex items-center justify-center p-8">
+                              <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                              <span className="ml-2 text-muted-foreground">Parsing stream...</span>
                             </div>
                           )}
-
-                          {/* Event Summary */}
-                          {Object.keys(parsedData.eventCounts).length > 0 && (
-                            <div>
-                              <h4 className="text-sm font-semibold mb-2">Event Summary</h4>
-                              <div className="p-3 bg-gray-50 rounded border">
-                                <div className="flex flex-wrap gap-2">
-                                  {Object.entries(parsedData.eventCounts).map(([eventType, count]) => (
-                                    <span
-                                      key={eventType}
-                                      className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-700"
-                                    >
-                                      {eventType}: {count}
-                                    </span>
-                                  ))}
+                          {parseError && (
+                            <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-800 dark:text-red-300 text-sm">
+                              Failed to parse stream: {(parseError as Error).message}
+                            </div>
+                          )}
+                          {parsedData && !isParsing && (
+                            <div className="space-y-4">
+                              {/* Reconstructed Output */}
+                              <div>
+                                <h4 className="text-sm font-semibold mb-2">Reconstructed Output</h4>
+                                <div className="p-3 bg-muted/50 rounded border">
+                                  {parsedData.text ? (
+                                    <p className="text-sm whitespace-pre-wrap">{parsedData.text}</p>
+                                  ) : (
+                                    <p className="text-sm text-muted-foreground italic">No text content</p>
+                                  )}
                                 </div>
                               </div>
+
+                              {/* Metadata */}
+                              {Object.keys(parsedData.metadata).length > 0 && (
+                                <div>
+                                  <h4 className="text-sm font-semibold mb-2">Metadata</h4>
+                                  <div className="grid grid-cols-2 gap-2">
+                                    {Object.entries(parsedData.metadata).map(([key, value]) => (
+                                      <div key={key} className="p-2 bg-muted/50 rounded border">
+                                        <div className="text-xs font-medium text-muted-foreground">{key}</div>
+                                        <div className="text-sm mt-1">
+                                          {typeof value === 'object' ? (
+                                            <pre className="text-xs whitespace-pre-wrap overflow-x-auto">{JSON.stringify(value, null, 2)}</pre>
+                                          ) : (
+                                            String(value)
+                                          )}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Event Summary */}
+                              {Object.keys(parsedData.eventCounts).length > 0 && (
+                                <div>
+                                  <h4 className="text-sm font-semibold mb-2">Event Summary</h4>
+                                  <div className="p-3 bg-muted/50 rounded border">
+                                    <div className="flex flex-wrap gap-2">
+                                      {Object.entries(parsedData.eventCounts).map(([eventType, count]) => (
+                                        <span
+                                          key={eventType}
+                                          className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                                        >
+                                          {eventType}: {count}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
                       )}
                     </div>
-                  ) : (
-                    // Raw view
-                    <pre className="text-xs mt-1 p-3 bg-gray-50 rounded overflow-x-auto max-h-96 overflow-y-auto whitespace-pre-wrap">
-                      {formatBody(recording.response.body)}
-                    </pre>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
+                  </div>
+                )}
               </div>
-            ) : null}
-          </div>
+            </>
+          ) : null}
         </div>
+      </div>
 
-        {/* Footer - spans both panes */}
-        <div className="flex items-center justify-end gap-2 p-6 border-t bg-gray-50">
-          <Button variant="outline" onClick={onClose}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to List
-          </Button>
-        </div>
+      {/* Footer - spans both panes */}
+      <div className="flex items-center justify-end gap-2 p-6 border-t bg-muted/30">
+        <Button variant="outline" onClick={onClose}>
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to List
+        </Button>
+      </div>
     </div>
   )
 }

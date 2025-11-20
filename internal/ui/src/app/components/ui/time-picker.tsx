@@ -145,7 +145,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
           </Select>
         )}
 
-        <div className="text-sm text-gray-500 ml-2">
+        <div className="text-sm text-muted-foreground ml-2">
           {formatTime(value.hours, value.minutes)}
         </div>
       </div>

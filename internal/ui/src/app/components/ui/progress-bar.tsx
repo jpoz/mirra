@@ -28,10 +28,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ steps, currentStep }) => {
                   className={`
                     z-10 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full 
                     ${isCompleted
-                      ? 'bg-primary text-white'
+                      ? 'bg-primary text-primary-foreground'
                       : isActive
                         ? 'border-2 border-primary text-primary'
-                        : 'border-2 border-secondary text-gray-400'
+                        : 'border-2 border-secondary text-muted-foreground'
                     }
                     transition-colors duration-200
                   `}
@@ -49,7 +49,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ steps, currentStep }) => {
                   <span
                     className={`
                       text-xs md:text-sm font-medium
-                      ${isCompleted || isActive ? 'text-primary' : 'text-gray-500'}
+                      ${isCompleted || isActive ? 'text-primary' : 'text-muted-foreground'}
                     `}
                   >
                     {step.label}

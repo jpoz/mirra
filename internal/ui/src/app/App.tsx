@@ -4,6 +4,7 @@ import React from "react";
 import { Routes, Route } from "react-router";
 import Recordings from "./pages/Recordings";
 import Recording from "./pages/Recording";
+import { ModeToggle } from "./components/mode-toggle";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
               >
                 <span className="ml-2 mt-3">𝕄𝕀ℝℝ𝔸</span>
               </a>
+            </div>
+            <div className="flex items-center gap-4">
+              <ModeToggle />
             </div>
           </div>
         </div>

@@ -91,10 +91,10 @@ export default function Recordings() {
   };
 
   const getStatusColor = (status: number) => {
-    if (status >= 200 && status < 300) return "text-green-600";
-    if (status >= 400 && status < 500) return "text-yellow-600";
-    if (status >= 500) return "text-red-600";
-    return "text-gray-600";
+    if (status >= 200 && status < 300) return "text-green-600 dark:text-green-400";
+    if (status >= 400 && status < 500) return "text-yellow-600 dark:text-yellow-400";
+    if (status >= 500) return "text-red-600 dark:text-red-400";
+    return "text-muted-foreground";
   };
 
   const formatBytes = (bytes: number): string => {
@@ -108,18 +108,18 @@ export default function Recordings() {
     const tenKB = 10 * 1024;
     const oneMB = 1024 * 1024;
 
-    if (bytes < tenKB) return "text-green-600";
-    if (bytes < oneMB) return "text-yellow-600";
-    return "text-red-600";
+    if (bytes < tenKB) return "text-green-600 dark:text-green-400";
+    if (bytes < oneMB) return "text-yellow-600 dark:text-yellow-400";
+    return "text-red-600 dark:text-red-400";
   };
 
   return (
-    <div className="container space-y-4 p-4">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Recordings</h1>
-          <p className="text-sm text-gray-600">
+          <h1 className="text-2xl font-bold text-foreground">Recordings</h1>
+          <p className="text-sm text-muted-foreground">
             {data?.total ? `${data.total} total recordings` : "Loading..."}
           </p>
         </div>
@@ -138,7 +138,7 @@ export default function Recordings() {
       {/* Filters */}
       <div className="flex gap-4 items-end">
         <div className="flex-1">
-          <label className="text-sm font-medium mb-1 block">Search</label>
+          <label className="text-sm font-medium mb-1 block text-muted-foreground">Search</label>
           <div className="flex gap-2">
             <Input
               placeholder="Search by ID, path, or error..."
@@ -157,14 +157,14 @@ export default function Recordings() {
           </div>
         </div>
         <div className="w-48">
-          <label className="text-sm font-medium mb-1 block">Provider</label>
+          <label className="text-sm font-medium mb-1 block text-muted-foreground">Provider</label>
           <select
             value={provider}
             onChange={(e) => {
               setProvider(e.target.value);
               setPage(1);
             }}
-            className="w-full px-3 py-2 border rounded-md bg-white"
+            className="w-full px-3 py-2 border rounded-md bg-background text-foreground border-input"
           >
             <option value="">All Providers</option>
             <option value="openai">OpenAI</option>
@@ -181,7 +181,7 @@ export default function Recordings() {
 
       {/* Error State */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-md text-red-800">
+        <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md text-red-800 dark:text-red-300">
           Error loading recordings: {(error as Error).message}
         </div>
       )}
@@ -189,14 +189,14 @@ export default function Recordings() {
       {/* Loading State */}
       {isLoading && (
         <div className="flex items-center justify-center py-12">
-          <div className="text-gray-500">Loading recordings...</div>
+          <div className="text-muted-foreground">Loading recordings...</div>
         </div>
       )}
 
       {/* Table */}
       {!isLoading && data && (
         <>
-          <div className="border rounded-md">
+          <div className="border rounded-md bg-card">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -215,7 +215,7 @@ export default function Recordings() {
                   <TableRow>
                     <TableCell
                       colSpan={8}
-                      className="text-center py-8 text-gray-500"
+                      className="text-center py-8 text-muted-foreground"
                     >
                       No recordings found
                     </TableCell>
@@ -226,24 +226,24 @@ export default function Recordings() {
                       key={recording.id}
                       onClick={() => navigate(`/recordings/${recording.id}`)}
                     >
-                      <TableCell className="font-mono text-xs">
+                      <TableCell className="font-mono text-xs text-muted-foreground">
                         {truncateId(recording.id)}
                       </TableCell>
-                      <TableCell className="text-sm">
+                      <TableCell className="text-sm text-foreground">
                         {format(
                           new Date(recording.timestamp),
                           "MMM d, HH:mm:ss",
                         )}
                       </TableCell>
                       <TableCell>
-                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100">
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground">
                           {recording.provider}
                         </span>
                       </TableCell>
-                      <TableCell className="text-sm font-mono">
+                      <TableCell className="text-sm font-mono text-foreground">
                         {recording.method}
                       </TableCell>
-                      <TableCell className="text-sm font-mono max-w-xs truncate">
+                      <TableCell className="text-sm font-mono max-w-xs truncate text-foreground">
                         {recording.path}
                       </TableCell>
                       <TableCell
@@ -251,7 +251,7 @@ export default function Recordings() {
                       >
                         {recording.status}
                       </TableCell>
-                      <TableCell className="text-sm">
+                      <TableCell className="text-sm text-foreground">
                         {recording.duration}ms
                       </TableCell>
                       <TableCell
@@ -269,7 +269,7 @@ export default function Recordings() {
           {/* Pagination */}
           {data.recordings.length > 0 && (
             <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-muted-foreground">
                 Page {data.page} of {Math.ceil(data.total / data.limit)}
               </div>
               <div className="flex gap-2">
