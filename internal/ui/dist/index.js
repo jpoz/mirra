@@ -739,7 +739,7 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           }
           return dispatcher.useContext(Context);
         }
-        function useState10(initialState2) {
+        function useState11(initialState2) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState2);
         }
@@ -763,7 +763,7 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           var dispatcher = resolveDispatcher();
           return dispatcher.useLayoutEffect(create, deps);
         }
-        function useCallback6(callback, deps) {
+        function useCallback7(callback, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useCallback(callback, deps);
         }
@@ -1280,7 +1280,7 @@ Check the top-level render call using <` + parentName + ">.");
           toArray,
           only: onlyChild
         };
-        exports.Children = Children3, exports.Component = Component4, exports.Fragment = REACT_FRAGMENT_TYPE, exports.Profiler = REACT_PROFILER_TYPE, exports.PureComponent = PureComponent, exports.StrictMode = REACT_STRICT_MODE_TYPE, exports.Suspense = REACT_SUSPENSE_TYPE, exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals, exports.act = act, exports.cloneElement = cloneElement$1, exports.createContext = createContext10, exports.createElement = createElement$1, exports.createFactory = createFactory, exports.createRef = createRef, exports.forwardRef = forwardRef6, exports.isValidElement = isValidElement3, exports.lazy = lazy, exports.memo = memo2, exports.startTransition = startTransition3, exports.unstable_act = act, exports.useCallback = useCallback6, exports.useContext = useContext11, exports.useDebugValue = useDebugValue, exports.useDeferredValue = useDeferredValue, exports.useEffect = useEffect12, exports.useId = useId2, exports.useImperativeHandle = useImperativeHandle, exports.useInsertionEffect = useInsertionEffect, exports.useLayoutEffect = useLayoutEffect4, exports.useMemo = useMemo6, exports.useReducer = useReducer, exports.useRef = useRef6, exports.useState = useState10, exports.useSyncExternalStore = useSyncExternalStore2, exports.useTransition = useTransition2, exports.version = ReactVersion, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+        exports.Children = Children3, exports.Component = Component4, exports.Fragment = REACT_FRAGMENT_TYPE, exports.Profiler = REACT_PROFILER_TYPE, exports.PureComponent = PureComponent, exports.StrictMode = REACT_STRICT_MODE_TYPE, exports.Suspense = REACT_SUSPENSE_TYPE, exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals, exports.act = act, exports.cloneElement = cloneElement$1, exports.createContext = createContext10, exports.createElement = createElement$1, exports.createFactory = createFactory, exports.createRef = createRef, exports.forwardRef = forwardRef6, exports.isValidElement = isValidElement3, exports.lazy = lazy, exports.memo = memo2, exports.startTransition = startTransition3, exports.unstable_act = act, exports.useCallback = useCallback7, exports.useContext = useContext11, exports.useDebugValue = useDebugValue, exports.useDeferredValue = useDeferredValue, exports.useEffect = useEffect12, exports.useId = useId2, exports.useImperativeHandle = useImperativeHandle, exports.useInsertionEffect = useInsertionEffect, exports.useLayoutEffect = useLayoutEffect4, exports.useMemo = useMemo6, exports.useReducer = useReducer, exports.useRef = useRef6, exports.useState = useState11, exports.useSyncExternalStore = useSyncExternalStore2, exports.useTransition = useTransition2, exports.version = ReactVersion, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
       })();
     }
   });
@@ -23794,7 +23794,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }, handleRefresh = () => {
       refetch();
     }, truncateId = (id) => id.substring(0, 8), getStatusColor = (status) => status >= 200 && status < 300 ? "text-green-600 dark:text-green-400" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400" : status >= 500 ? "text-red-600 dark:text-red-400" : "text-muted-foreground", formatBytes = (bytes) => bytes === 0 ? "0 B" : bytes < 1024 ? `${bytes} B` : bytes < 1024 * 1024 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / (1024 * 1024)).toFixed(1)} MB`, getSizeColor = (bytes) => bytes < 10240 ? "text-green-600 dark:text-green-400" : bytes < 1048576 ? "text-yellow-600 dark:text-yellow-400" : "text-red-600 dark:text-red-400";
-    return /* @__PURE__ */ import_react4.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h1", { className: "text-2xl font-bold text-foreground" }, "Recordings"), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-sm text-muted-foreground" }, data2?.total ? `${data2.total} total recordings` : "Loading...")), /* @__PURE__ */ import_react4.default.createElement(
+    return /* @__PURE__ */ import_react4.default.createElement("div", { className: "mx-auto flex-1" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "space-y-4 w-full p-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h1", { className: "text-2xl font-bold text-foreground" }, "Recordings"), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-sm text-muted-foreground" }, data2?.total ? `${data2.total} total recordings` : "Loading...")), /* @__PURE__ */ import_react4.default.createElement(
       Button,
       {
         onClick: handleRefresh,
@@ -23818,7 +23818,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           e.key === "Enter" && handleSearch();
         }
       }
-    ), /* @__PURE__ */ import_react4.default.createElement(Button, { onClick: handleSearch, className: "flex items-center gap-2" }, /* @__PURE__ */ import_react4.default.createElement(Search, { className: "h-4 w-4" }), "Search"))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-48" }, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium mb-1 block text-muted-foreground" }, "Provider"), /* @__PURE__ */ import_react4.default.createElement(
+    ), /* @__PURE__ */ import_react4.default.createElement(
+      Button,
+      {
+        onClick: handleSearch,
+        className: "flex items-center gap-2"
+      },
+      /* @__PURE__ */ import_react4.default.createElement(Search, { className: "h-4 w-4" }),
+      "Search"
+    ))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-48" }, /* @__PURE__ */ import_react4.default.createElement("label", { className: "text-sm font-medium mb-1 block text-muted-foreground" }, "Provider"), /* @__PURE__ */ import_react4.default.createElement(
       "select",
       {
         value: provider,
@@ -23883,7 +23891,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         disabled: !data2.hasMore
       },
       "Next"
-    )))));
+    ))))));
   }
 
   // internal/ui/src/app/pages/Recording.tsx
@@ -23977,7 +23985,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         )
       },
       copiedSection === "request" ? /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy")
-    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Endpoint"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1 font-mono" }, recording.request.method, " ", recording.request.path, recording.request.query && `?${recording.request.query}`)), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto" }, formatJSON(recording.request.headers))), recording.request.body && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto max-h-[500px] w-full whitespace-pre-wrap" }, formatBody(recording.request.body))))), activeTab === "response" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold" }, "Response"), recording.response.streaming && /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded" }, "Streaming")), /* @__PURE__ */ import_react5.default.createElement(
+    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Endpoint"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1 font-mono" }, recording.request.method, " ", recording.request.path, recording.request.query && `?${recording.request.query}`)), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto" }, formatJSON(recording.request.headers))), recording.request.body && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto w-full whitespace-pre-wrap" }, formatBody(recording.request.body))))), activeTab === "response" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold" }, "Response"), recording.response.streaming && /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded" }, "Streaming")), /* @__PURE__ */ import_react5.default.createElement(
       Button,
       {
         size: "sm",
@@ -24019,7 +24027,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // internal/ui/src/app/components/RecordingSidebar.tsx
   var import_react6 = __toESM(require_react(), 1);
   function RecordingSidebar({ currentRecordingId }) {
-    let navigate = useNavigate(), scrollRef = (0, import_react6.useRef)(null), { data: data2, isLoading } = useQuery({
+    let navigate = useNavigate(), [searchParams] = useSearchParams(), scrollRef = (0, import_react6.useRef)(null), [width, setWidth] = (0, import_react6.useState)(320), [isResizing, setIsResizing] = (0, import_react6.useState)(!1), startResizing = (0, import_react6.useCallback)(() => {
+      setIsResizing(!0);
+    }, []), stopResizing = (0, import_react6.useCallback)(() => {
+      setIsResizing(!1);
+    }, []), resize = (0, import_react6.useCallback)(
+      (mouseMoveEvent) => {
+        let newWidth = mouseMoveEvent.clientX;
+        newWidth > 200 && newWidth < 800 && setWidth(newWidth);
+      },
+      []
+    );
+    (0, import_react6.useEffect)(() => (isResizing && (window.addEventListener("mousemove", resize), window.addEventListener("mouseup", stopResizing)), () => {
+      window.removeEventListener("mousemove", resize), window.removeEventListener("mouseup", stopResizing);
+    }), [isResizing, resize, stopResizing]);
+    let { data: data2, isLoading } = useQuery({
       queryKey: ["recordings", "sidebar"],
       queryFn: () => fetchRecordings(1, 100),
       // Fetch first 100 for the sidebar
@@ -24029,29 +24051,58 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       let handleKeyDown = (e) => {
         if (!recordings.length) return;
         let currentIndex = recordings.findIndex((r2) => r2.id === currentRecordingId);
-        currentIndex !== -1 && (e.key === "ArrowUp" || e.key === "ArrowLeft" ? (e.preventDefault(), currentIndex > 0 && navigate(`/recordings/${recordings[currentIndex - 1].id}`)) : (e.key === "ArrowDown" || e.key === "ArrowRight") && (e.preventDefault(), currentIndex < recordings.length - 1 && navigate(`/recordings/${recordings[currentIndex + 1].id}`)));
+        if (currentIndex === -1) return;
+        let search = searchParams.toString(), searchWithQuestionMark = search ? `?${search}` : "";
+        e.key === "ArrowUp" || e.key === "ArrowLeft" ? (e.preventDefault(), currentIndex > 0 && navigate({
+          pathname: `/recordings/${recordings[currentIndex - 1].id}`,
+          search: searchWithQuestionMark
+        })) : (e.key === "ArrowDown" || e.key === "ArrowRight") && (e.preventDefault(), currentIndex < recordings.length - 1 && navigate({
+          pathname: `/recordings/${recordings[currentIndex + 1].id}`,
+          search: searchWithQuestionMark
+        }));
       };
       return window.addEventListener("keydown", handleKeyDown), () => window.removeEventListener("keydown", handleKeyDown);
-    }, [currentRecordingId, recordings, navigate]), (0, import_react6.useEffect)(() => {
+    }, [currentRecordingId, recordings, navigate, searchParams]), (0, import_react6.useEffect)(() => {
       if (scrollRef.current) {
         let activeElement = scrollRef.current.querySelector('[data-active="true"]');
         activeElement && activeElement.scrollIntoView({ block: "nearest", behavior: "smooth" });
       }
-    }, [currentRecordingId, recordings]), isLoading ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-80 border-r bg-muted/10 flex items-center justify-center" }, /* @__PURE__ */ import_react6.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-muted-foreground" })) : /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-80 border-r bg-muted/10 flex flex-col h-full" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 border-b bg-background/50 backdrop-blur" }, /* @__PURE__ */ import_react6.default.createElement("h3", { className: "font-semibold text-sm text-muted-foreground uppercase tracking-wider" }, "Recent Recordings")), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex-1 overflow-y-auto", ref: scrollRef }, recordings.length === 0 ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 text-center text-muted-foreground text-sm" }, "No recordings found") : /* @__PURE__ */ import_react6.default.createElement("div", { className: "divide-y" }, recordings.map((recording) => {
-      let isActive = recording.id === currentRecordingId;
-      return /* @__PURE__ */ import_react6.default.createElement(
-        "button",
+    }, [currentRecordingId, recordings]), isLoading ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-80 border-r bg-muted/10 flex items-center justify-center" }, /* @__PURE__ */ import_react6.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-muted-foreground" })) : /* @__PURE__ */ import_react6.default.createElement(
+      "div",
+      {
+        className: "relative border-r bg-muted/10 flex flex-col h-full flex-shrink-0",
+        style: { width }
+      },
+      /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 border-b bg-background/50 backdrop-blur" }, /* @__PURE__ */ import_react6.default.createElement("h3", { className: "font-semibold text-sm text-muted-foreground uppercase tracking-wider" }, "Recent Recordings")),
+      /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex-1 overflow-y-auto", ref: scrollRef }, recordings.length === 0 ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 text-center text-muted-foreground text-sm" }, "No recordings found") : /* @__PURE__ */ import_react6.default.createElement("div", { className: "divide-y" }, recordings.map((recording) => {
+        let isActive = recording.id === currentRecordingId;
+        return /* @__PURE__ */ import_react6.default.createElement(
+          "button",
+          {
+            key: recording.id,
+            "data-active": isActive,
+            onClick: () => {
+              let search = searchParams.toString();
+              navigate({
+                pathname: `/recordings/${recording.id}`,
+                search: search ? `?${search}` : ""
+              });
+            },
+            className: `w-full text-left p-3 hover:bg-muted/50 transition-colors focus:outline-none ${isActive ? "bg-muted border-l-2 border-l-primary" : "border-l-2 border-l-transparent"}`
+          },
+          /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between mb-1" }, /* @__PURE__ */ import_react6.default.createElement("span", { className: `text-xs font-medium ${getStatusColor(recording.status)}` }, recording.status, " ", recording.method), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-muted-foreground" }, format(new Date(recording.timestamp), "HH:mm:ss"))),
+          /* @__PURE__ */ import_react6.default.createElement("div", { className: "text-xs font-mono truncate text-foreground/80 mb-1", title: recording.path }, recording.path),
+          /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between text-[10px] text-muted-foreground" }, /* @__PURE__ */ import_react6.default.createElement("span", null, recording.provider), /* @__PURE__ */ import_react6.default.createElement("span", null, recording.duration, "ms"))
+        );
+      }))),
+      /* @__PURE__ */ import_react6.default.createElement(
+        "div",
         {
-          key: recording.id,
-          "data-active": isActive,
-          onClick: () => navigate(`/recordings/${recording.id}`),
-          className: `w-full text-left p-3 hover:bg-muted/50 transition-colors focus:outline-none ${isActive ? "bg-muted border-l-2 border-l-primary" : "border-l-2 border-l-transparent"}`
-        },
-        /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between mb-1" }, /* @__PURE__ */ import_react6.default.createElement("span", { className: `text-xs font-medium ${getStatusColor(recording.status)}` }, recording.status, " ", recording.method), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-muted-foreground" }, format(new Date(recording.timestamp), "HH:mm:ss"))),
-        /* @__PURE__ */ import_react6.default.createElement("div", { className: "text-xs font-mono truncate text-foreground/80 mb-1", title: recording.path }, recording.path),
-        /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between text-[10px] text-muted-foreground" }, /* @__PURE__ */ import_react6.default.createElement("span", null, recording.provider), /* @__PURE__ */ import_react6.default.createElement("span", null, recording.duration, "ms"))
-      );
-    }))));
+          className: "absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary/50 active:bg-primary transition-colors z-10",
+          onMouseDown: startResizing
+        }
+      )
+    );
   }
 
   // internal/ui/src/app/pages/Recording.tsx
@@ -24108,14 +24159,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // internal/ui/src/app/App.tsx
   function App() {
-    return /* @__PURE__ */ import_react10.default.createElement("div", { className: "min-h-screen flex flex-col bg-background" }, /* @__PURE__ */ import_react10.default.createElement("header", { className: "border-b" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "container mx-auto px-4" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-16 items-center justify-between" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center" }, /* @__PURE__ */ import_react10.default.createElement(
+    return /* @__PURE__ */ import_react10.default.createElement("div", { className: "min-h-screen flex flex-col bg-background" }, /* @__PURE__ */ import_react10.default.createElement("header", { className: "border-b" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: " mx-auto px-4" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-16 items-center justify-between" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center" }, /* @__PURE__ */ import_react10.default.createElement(
       "a",
       {
         href: "/",
         className: "flex text-xl font-bold libertinus-math-regular"
       },
-      /* @__PURE__ */ import_react10.default.createElement("span", { className: "ml-2 mt-3" }, "\u{1D544}\u{1D540}\u211D\u211D\u{1D538}")
-    )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react10.default.createElement(ModeToggle, null))))), /* @__PURE__ */ import_react10.default.createElement("main", { className: "mx-auto flex-1" }, /* @__PURE__ */ import_react10.default.createElement(Routes, null, /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react10.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/recordings", element: /* @__PURE__ */ import_react10.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/recordings/:id", element: /* @__PURE__ */ import_react10.default.createElement(Recording, null) }))));
+      /* @__PURE__ */ import_react10.default.createElement("img", { src: "/logo.png", alt: "mirra", className: "h-8 mr-2" })
+    )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react10.default.createElement(ModeToggle, null))))), /* @__PURE__ */ import_react10.default.createElement("main", null, /* @__PURE__ */ import_react10.default.createElement(Routes, null, /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react10.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/recordings", element: /* @__PURE__ */ import_react10.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/recordings/:id", element: /* @__PURE__ */ import_react10.default.createElement(Recording, null) }))));
   }
   var App_default = App;
 

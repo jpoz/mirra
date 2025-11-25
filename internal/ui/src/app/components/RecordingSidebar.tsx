@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { format } from 'date-fns'
 import { Loader2 } from 'lucide-react'
 import { fetchRecordings } from '../lib/api'
@@ -11,7 +11,39 @@ interface RecordingSidebarProps {
 
 export default function RecordingSidebar({ currentRecordingId }: RecordingSidebarProps) {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const scrollRef = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(320)
+  const [isResizing, setIsResizing] = useState(false)
+
+  const startResizing = useCallback(() => {
+    setIsResizing(true)
+  }, [])
+
+  const stopResizing = useCallback(() => {
+    setIsResizing(false)
+  }, [])
+
+  const resize = useCallback(
+    (mouseMoveEvent: MouseEvent) => {
+      const newWidth = mouseMoveEvent.clientX
+      if (newWidth > 200 && newWidth < 800) {
+        setWidth(newWidth)
+      }
+    },
+    []
+  )
+
+  useEffect(() => {
+    if (isResizing) {
+      window.addEventListener('mousemove', resize)
+      window.addEventListener('mouseup', stopResizing)
+    }
+    return () => {
+      window.removeEventListener('mousemove', resize)
+      window.removeEventListener('mouseup', stopResizing)
+    }
+  }, [isResizing, resize, stopResizing])
   
   const { data, isLoading } = useQuery({
     queryKey: ['recordings', 'sidebar'],
@@ -36,22 +68,31 @@ export default function RecordingSidebar({ currentRecordingId }: RecordingSideba
       const currentIndex = recordings.findIndex((r) => r.id === currentRecordingId)
       if (currentIndex === -1) return
 
+      const search = searchParams.toString()
+      const searchWithQuestionMark = search ? `?${search}` : ''
+
       if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
         e.preventDefault()
         if (currentIndex > 0) {
-          navigate(`/recordings/${recordings[currentIndex - 1].id}`)
+          navigate({
+            pathname: `/recordings/${recordings[currentIndex - 1].id}`,
+            search: searchWithQuestionMark
+          })
         }
       } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
         e.preventDefault()
         if (currentIndex < recordings.length - 1) {
-          navigate(`/recordings/${recordings[currentIndex + 1].id}`)
+          navigate({
+            pathname: `/recordings/${recordings[currentIndex + 1].id}`,
+            search: searchWithQuestionMark
+          })
         }
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentRecordingId, recordings, navigate])
+  }, [currentRecordingId, recordings, navigate, searchParams])
 
   // Scroll to active item
   useEffect(() => {
@@ -72,7 +113,10 @@ export default function RecordingSidebar({ currentRecordingId }: RecordingSideba
   }
 
   return (
-    <div className="w-80 border-r bg-muted/10 flex flex-col h-full">
+    <div 
+      className="relative border-r bg-muted/10 flex flex-col h-full flex-shrink-0"
+      style={{ width }}
+    >
       <div className="p-4 border-b bg-background/50 backdrop-blur">
         <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider">Recent Recordings</h3>
       </div>
@@ -89,7 +133,13 @@ export default function RecordingSidebar({ currentRecordingId }: RecordingSideba
                 <button
                   key={recording.id}
                   data-active={isActive}
-                  onClick={() => navigate(`/recordings/${recording.id}`)}
+                  onClick={() => {
+                    const search = searchParams.toString()
+                    navigate({
+                      pathname: `/recordings/${recording.id}`,
+                      search: search ? `?${search}` : ''
+                    })
+                  }}
                   className={`w-full text-left p-3 hover:bg-muted/50 transition-colors focus:outline-none ${
                     isActive ? 'bg-muted border-l-2 border-l-primary' : 'border-l-2 border-l-transparent'
                   }`}
@@ -115,6 +165,10 @@ export default function RecordingSidebar({ currentRecordingId }: RecordingSideba
           </div>
         )}
       </div>
+      <div
+        className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary/50 active:bg-primary transition-colors z-10"
+        onMouseDown={startResizing}
+      />
     </div>
   )
 }

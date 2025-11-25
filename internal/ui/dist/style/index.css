@@ -289,14 +289,23 @@
   .relative {
     position: relative;
   }
+  .top-0 {
+    top: calc(var(--spacing) * 0);
+  }
   .top-1\/2 {
     top: 50%;
+  }
+  .right-0 {
+    right: calc(var(--spacing) * 0);
   }
   .right-1 {
     right: calc(var(--spacing) * 1);
   }
   .right-2 {
     right: calc(var(--spacing) * 2);
+  }
+  .bottom-0 {
+    bottom: calc(var(--spacing) * 0);
   }
   .left-1 {
     left: calc(var(--spacing) * 1);
@@ -312,34 +321,6 @@
   }
   .col-start-2 {
     grid-column-start: 2;
-  }
-  .container {
-    width: 100%;
-  }
-  @media (width >= 40rem) {
-    .container {
-      max-width: 40rem;
-    }
-  }
-  @media (width >= 48rem) {
-    .container {
-      max-width: 48rem;
-    }
-  }
-  @media (width >= 64rem) {
-    .container {
-      max-width: 64rem;
-    }
-  }
-  @media (width >= 80rem) {
-    .container {
-      max-width: 80rem;
-    }
-  }
-  @media (width >= 96rem) {
-    .container {
-      max-width: 96rem;
-    }
   }
   .-mx-1 {
     margin-inline: calc(var(--spacing) * -1);
@@ -362,11 +343,11 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
-  .mt-3 {
-    margin-top: calc(var(--spacing) * 3);
-  }
   .mr-1 {
     margin-right: calc(var(--spacing) * 1);
+  }
+  .mr-2 {
+    margin-right: calc(var(--spacing) * 2);
   }
   .-mb-px {
     margin-bottom: -1px;
@@ -497,6 +478,9 @@
   .min-h-screen {
     min-height: 100vh;
   }
+  .w-1 {
+    width: calc(var(--spacing) * 1);
+  }
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
@@ -551,6 +535,7 @@
   .flex-1 {
     flex: 1;
   }
+  .flex-shrink-0,
   .shrink-0 {
     flex-shrink: 0;
   }
@@ -592,11 +577,17 @@
   .animate-spin {
     animation: var(--animate-spin);
   }
+  .cursor-col-resize {
+    cursor: col-resize;
+  }
   .cursor-default {
     cursor: default;
   }
   .cursor-pointer {
     cursor: pointer;
+  }
+  .resize {
+    resize: both;
   }
   .scroll-my-1 {
     scroll-margin-block: calc(var(--spacing) * 1);
@@ -1309,6 +1300,16 @@
     }
   }
   @media (hover: hover) {
+    .hover\:bg-primary\/50:hover {
+      background-color: var(--primary);
+    }
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:bg-primary\/50:hover {
+        background-color: color-mix(in oklab, var(--primary) 50%, transparent);
+      }
+    }
+  }
+  @media (hover: hover) {
     .hover\:bg-primary\/90:hover {
       background-color: var(--primary);
     }
@@ -1412,6 +1413,9 @@
   .focus-visible\:outline-none:focus-visible {
     --tw-outline-style: none;
     outline-style: none;
+  }
+  .active\:bg-primary:active {
+    background-color: var(--primary);
   }
   .disabled\:pointer-events-none:disabled {
     pointer-events: none;

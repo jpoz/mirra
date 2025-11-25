@@ -11,14 +11,14 @@ function App() {
     <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
       <header className="border-b">
-        <div className="container mx-auto px-4">
+        <div className=" mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <a
                 href="/"
                 className="flex text-xl font-bold libertinus-math-regular"
               >
-                <span className="ml-2 mt-3">𝕄𝕀ℝℝ𝔸</span>
+                <img src="/logo.png" alt="mirra" className="h-8 mr-2" />
               </a>
             </div>
             <div className="flex items-center gap-4">
@@ -29,7 +29,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="mx-auto flex-1">
+      <main>
         <Routes>
           <Route path="/" element={<Recordings />} />
           <Route path="/recordings" element={<Recordings />} />

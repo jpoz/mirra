@@ -301,7 +301,7 @@ export default function RecordingDetail({ recordingId }: RecordingDetailProps) {
                     <label className="text-sm font-medium text-muted-foreground">
                       Body
                     </label>
-                    <pre className="text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto max-h-[500px] w-full whitespace-pre-wrap">
+                    <pre className="text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto w-full whitespace-pre-wrap">
                       {formatBody(recording.request.body)}
                     </pre>
                   </div>
