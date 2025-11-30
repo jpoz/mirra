@@ -23779,6 +23779,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return response.json();
   }
 
+  // internal/ui/src/app/lib/providers.ts
+  var providerStyles = {
+    gemini: "bg-blue-100 text-blue-800",
+    openai: "bg-green-100 text-green-800",
+    claude: "bg-orange-100 text-orange-800"
+  };
+  function getProviderStyles(provider) {
+    return provider in providerStyles ? providerStyles[provider] : "bg-gray-100 text-gray-800";
+  }
+
   // internal/ui/src/app/pages/Recordings.tsx
   function Recordings() {
     let navigate = useNavigate(), [page, setPage] = (0, import_react4.useState)(1), [limit] = (0, import_react4.useState)(50), [provider, setProvider] = (0, import_react4.useState)(""), [search, setSearch] = (0, import_react4.useState)(""), [searchInput, setSearchInput] = (0, import_react4.useState)(""), { data: data2, isLoading, error, refetch, isFetching } = useQuery({
@@ -23857,7 +23867,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         new Date(recording.timestamp),
         "MMM d, HH:mm:ss"
       )),
-      /* @__PURE__ */ import_react4.default.createElement(TableCell, null, /* @__PURE__ */ import_react4.default.createElement("span", { className: "inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground" }, recording.provider)),
+      /* @__PURE__ */ import_react4.default.createElement(TableCell, null, /* @__PURE__ */ import_react4.default.createElement(
+        "span",
+        {
+          className: "inline-flex items-center px-2 py-1 rounded text-xs font-medium " + getProviderStyles(recording.provider)
+        },
+        recording.provider
+      )),
       /* @__PURE__ */ import_react4.default.createElement(TableCell, { className: "text-sm font-mono text-foreground" }, recording.method),
       /* @__PURE__ */ import_react4.default.createElement(TableCell, { className: "text-sm font-mono max-w-xs truncate text-foreground" }, recording.path),
       /* @__PURE__ */ import_react4.default.createElement(
@@ -23941,17 +23957,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return String(obj);
       }
     }, formatBody = (body) => typeof body == "string" ? body : formatJSON(body), getStatusColor = (status) => status >= 200 && status < 300 ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20" : status >= 500 ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20" : "text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800";
-    return isLoadingRecording && !recording ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react5.default.createElement(LoaderCircle, { className: "h-8 w-8 animate-spin text-primary" }), /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Loading recording...")) : recording ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-full h-full flex flex-col bg-background text-foreground" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-6 border-b bg-card" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement(
+    return isLoadingRecording && !recording ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react5.default.createElement(LoaderCircle, { className: "h-8 w-8 animate-spin text-primary" }), /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Loading recording...")) : recording ? (console.log("RecordingDetail render", {
+      recordingId,
+      activeTab,
+      recording,
+      parsedData
+    }), /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-full h-full flex flex-col bg-background text-foreground" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-6 border-b bg-card" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement(
       "button",
       {
         onClick: () => navigate("/recordings"),
         className: "p-2 hover:bg-muted rounded-md transition-colors"
       },
       /* @__PURE__ */ import_react5.default.createElement(ArrowLeft, { className: "h-5 w-5" })
-    ), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-xl font-bold" }, "Recording Details"), recording && /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground font-mono mt-1" }, recording.id)))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex flex-col overflow-hidden bg-background" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border-b" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 pb-0" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-2 gap-4 mb-6" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Timestamp"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, format(
+    ), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-xl font-bold" }, "Recording Details"), recording && /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground font-mono mt-1" }, recording.id)))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex flex-col overflow-hidden bg-background" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border-b" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 pb-0" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-4 gap-4 mb-6" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Timestamp"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, format(
       new Date(recording.timestamp),
       "MMM d, yyyy HH:mm:ss"
-    ))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Provider"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground" }, recording.provider))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Duration"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, recording.timing.durationMs, "ms")), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Status"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement(
+    ))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Provider"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground" }, recording.provider))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Duration"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, recording.timing.duration_ms, "ms")), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Status"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement(
       "span",
       {
         className: `inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getStatusColor(recording.response.status)}`
@@ -24021,23 +24042,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ": ",
         count
       )
-    )))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-center py-8 text-muted-foreground" }, "This recording is not streaming, so there is no parsed view available.")))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Recording not found."));
+    )))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-center py-8 text-muted-foreground" }, "This recording is not streaming, so there is no parsed view available."))))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Recording not found."));
   }
 
   // internal/ui/src/app/components/RecordingSidebar.tsx
   var import_react6 = __toESM(require_react(), 1);
-  function RecordingSidebar({ currentRecordingId }) {
+  function RecordingSidebar({
+    currentRecordingId
+  }) {
     let navigate = useNavigate(), [searchParams] = useSearchParams(), scrollRef = (0, import_react6.useRef)(null), [width, setWidth] = (0, import_react6.useState)(320), [isResizing, setIsResizing] = (0, import_react6.useState)(!1), startResizing = (0, import_react6.useCallback)(() => {
       setIsResizing(!0);
     }, []), stopResizing = (0, import_react6.useCallback)(() => {
       setIsResizing(!1);
-    }, []), resize = (0, import_react6.useCallback)(
-      (mouseMoveEvent) => {
-        let newWidth = mouseMoveEvent.clientX;
-        newWidth > 200 && newWidth < 800 && setWidth(newWidth);
-      },
-      []
-    );
+    }, []), resize = (0, import_react6.useCallback)((mouseMoveEvent) => {
+      let newWidth = mouseMoveEvent.clientX;
+      newWidth > 200 && newWidth < 800 && setWidth(newWidth);
+    }, []);
     (0, import_react6.useEffect)(() => (isResizing && (window.addEventListener("mousemove", resize), window.addEventListener("mouseup", stopResizing)), () => {
       window.removeEventListener("mousemove", resize), window.removeEventListener("mouseup", stopResizing);
     }), [isResizing, resize, stopResizing]);
@@ -24050,7 +24070,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return (0, import_react6.useEffect)(() => {
       let handleKeyDown = (e) => {
         if (!recordings.length) return;
-        let currentIndex = recordings.findIndex((r2) => r2.id === currentRecordingId);
+        let currentIndex = recordings.findIndex(
+          (r2) => r2.id === currentRecordingId
+        );
         if (currentIndex === -1) return;
         let search = searchParams.toString(), searchWithQuestionMark = search ? `?${search}` : "";
         e.key === "ArrowUp" || e.key === "ArrowLeft" ? (e.preventDefault(), currentIndex > 0 && navigate({
@@ -24090,9 +24112,30 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             },
             className: `w-full text-left p-3 hover:bg-muted/50 transition-colors focus:outline-none ${isActive ? "bg-muted border-l-2 border-l-primary" : "border-l-2 border-l-transparent"}`
           },
-          /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between mb-1" }, /* @__PURE__ */ import_react6.default.createElement("span", { className: `text-xs font-medium ${getStatusColor(recording.status)}` }, recording.status, " ", recording.method), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-muted-foreground" }, format(new Date(recording.timestamp), "HH:mm:ss"))),
-          /* @__PURE__ */ import_react6.default.createElement("div", { className: "text-xs font-mono truncate text-foreground/80 mb-1", title: recording.path }, recording.path),
-          /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between text-[10px] text-muted-foreground" }, /* @__PURE__ */ import_react6.default.createElement("span", null, recording.provider), /* @__PURE__ */ import_react6.default.createElement("span", null, recording.duration, "ms"))
+          /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between mb-1" }, /* @__PURE__ */ import_react6.default.createElement(
+            "span",
+            {
+              className: `text-xs font-medium ${getStatusColor(recording.status)}`
+            },
+            recording.status,
+            " ",
+            recording.method
+          ), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-muted-foreground" }, format(new Date(recording.timestamp), "HH:mm:ss"))),
+          /* @__PURE__ */ import_react6.default.createElement(
+            "div",
+            {
+              className: "text-xs font-mono truncate text-foreground/80 mb-1",
+              title: recording.path
+            },
+            recording.path
+          ),
+          /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between text-[10px] text-muted-foreground" }, /* @__PURE__ */ import_react6.default.createElement(
+            "span",
+            {
+              className: getProviderStyles(recording.provider) + " px-1 py-0.5 rounded"
+            },
+            recording.provider
+          ), /* @__PURE__ */ import_react6.default.createElement("span", null, recording.duration, "ms"))
         );
       }))),
       /* @__PURE__ */ import_react6.default.createElement(

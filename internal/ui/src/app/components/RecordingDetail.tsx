@@ -31,7 +31,7 @@ interface Recording {
   timing: {
     startedAt: string;
     completedAt: string;
-    durationMs: number;
+    duration_ms: number;
   };
   error?: string;
 }
@@ -137,6 +137,13 @@ export default function RecordingDetail({ recordingId }: RecordingDetailProps) {
     );
   }
 
+  console.log("RecordingDetail render", {
+    recordingId,
+    activeTab,
+    recording,
+    parsedData,
+  });
+
   return (
     <div className="w-full h-full flex flex-col bg-background text-foreground">
       {/* Header */}
@@ -164,7 +171,7 @@ export default function RecordingDetail({ recordingId }: RecordingDetailProps) {
         {/* Metadata & Tabs Header */}
         <div className="bg-card border-b">
           <div className="p-6 pb-0">
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-4 gap-4 mb-6">
               <div>
                 <label className="text-sm font-medium text-muted-foreground">
                   Timestamp
@@ -190,7 +197,7 @@ export default function RecordingDetail({ recordingId }: RecordingDetailProps) {
                 <label className="text-sm font-medium text-muted-foreground">
                   Duration
                 </label>
-                <p className="text-sm mt-1">{recording.timing.durationMs}ms</p>
+                <p className="text-sm mt-1">{recording.timing.duration_ms}ms</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-muted-foreground">

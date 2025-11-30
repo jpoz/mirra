@@ -14,6 +14,7 @@ import {
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { fetchRecordings } from "../lib/api";
+import { getProviderStyles } from "@/lib/providers";
 
 export default function Recordings() {
   const navigate = useNavigate();
@@ -207,7 +208,12 @@ export default function Recordings() {
                           )}
                         </TableCell>
                         <TableCell>
-                          <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground">
+                          <span
+                            className={
+                              "inline-flex items-center px-2 py-1 rounded text-xs font-medium " +
+                              getProviderStyles(recording.provider)
+                            }
+                          >
                             {recording.provider}
                           </span>
                         </TableCell>
