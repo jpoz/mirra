@@ -34,9 +34,23 @@ type Option func(*Manager)
 
 func NewManager(opts ...Option) *Manager {
 	m := &Manager{
-		env: os.Getenv("NODE_ENV"),
+		env: "production",
 		log: slog.Default(),
 	}
+
+	// Heuristic: Check if we are in the source directory
+	wd, err := os.Getwd()
+	if err == nil {
+		if _, err := os.Stat(filepath.Join(wd, "internal/ui/src/index.tsx")); err == nil {
+			m.env = "development"
+		}
+	}
+
+	// Explicit override
+	if env := os.Getenv("MIRRA_ENV"); env != "" {
+		m.env = env
+	}
+
 	for _, opt := range opts {
 		opt(m)
 	}
@@ -240,7 +254,7 @@ func (m *Manager) buildOptions() (api.BuildOptions, error) {
 		},
 		Define: map[string]string{
 			"process.env.APP_HOST": `"` + os.Getenv("APP_HOST") + `"`,
-			"process.env.NODE_ENV": `"` + os.Getenv("NODE_ENV") + `"`,
+			"process.env.NODE_ENV": `"` + m.env + `"`,
 		},
 		Plugins: []api.Plugin{
 			{
