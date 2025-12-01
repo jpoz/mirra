@@ -25,7 +25,7 @@
 
   // internal/ui/src/node_modules/react/cjs/react.development.js
   var require_react_development = __commonJS({
-    "internal/ui/src/node_modules/react/cjs/react.development.js"(exports, module2) {
+    "internal/ui/src/node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
       (function() {
         "use strict";
@@ -167,7 +167,7 @@
           enqueueSetState: function(publicInstance, partialState, callback, callerName) {
             warnNoop(publicInstance, "setState");
           }
-        }, assign2 = Object.assign, emptyObject = {};
+        }, assign = Object.assign, emptyObject = {};
         Object.freeze(emptyObject);
         function Component4(props, context, updater) {
           this.props = props, this.context = context, this.refs = emptyObject, this.updater = updater || ReactNoopUpdateQueue;
@@ -200,7 +200,7 @@
           this.props = props, this.context = context, this.refs = emptyObject, this.updater = updater || ReactNoopUpdateQueue;
         }
         var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
-        pureComponentPrototype.constructor = PureComponent, assign2(pureComponentPrototype, Component4.prototype), pureComponentPrototype.isPureReactComponent = !0;
+        pureComponentPrototype.constructor = PureComponent, assign(pureComponentPrototype, Component4.prototype), pureComponentPrototype.isPureReactComponent = !0;
         function createRef() {
           var refObject = {
             current: null
@@ -208,7 +208,7 @@
           return Object.seal(refObject), refObject;
         }
         var isArrayImpl = Array.isArray;
-        function isArray2(a) {
+        function isArray(a) {
           return isArrayImpl(a);
         }
         function typeName(value) {
@@ -286,7 +286,7 @@
             }
           return null;
         }
-        var hasOwnProperty8 = Object.prototype.hasOwnProperty, RESERVED_PROPS = {
+        var hasOwnProperty = Object.prototype.hasOwnProperty, RESERVED_PROPS = {
           key: !0,
           ref: !0,
           __self: !0,
@@ -294,7 +294,7 @@
         }, specialPropKeyWarningShown, specialPropRefWarningShown, didWarnAboutStringRefs;
         didWarnAboutStringRefs = {};
         function hasValidRef(config) {
-          if (hasOwnProperty8.call(config, "ref")) {
+          if (hasOwnProperty.call(config, "ref")) {
             var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
             if (getter && getter.isReactWarning)
               return !1;
@@ -302,7 +302,7 @@
           return config.ref !== void 0;
         }
         function hasValidKey(config) {
-          if (hasOwnProperty8.call(config, "key")) {
+          if (hasOwnProperty.call(config, "key")) {
             var getter = Object.getOwnPropertyDescriptor(config, "key").get;
             if (getter && getter.isReactWarning)
               return !1;
@@ -333,7 +333,7 @@
             didWarnAboutStringRefs[componentName] || (error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', componentName, config.ref), didWarnAboutStringRefs[componentName] = !0);
           }
         }
-        var ReactElement = function(type, key, ref, self2, source, owner, props) {
+        var ReactElement = function(type, key, ref, self, source, owner, props) {
           var element = {
             // This tag allows us to uniquely identify this as a React Element
             $$typeof: REACT_ELEMENT_TYPE,
@@ -354,7 +354,7 @@
             configurable: !1,
             enumerable: !1,
             writable: !1,
-            value: self2
+            value: self
           }), Object.defineProperty(element, "_source", {
             configurable: !1,
             enumerable: !1,
@@ -362,12 +362,12 @@
             value: source
           }), Object.freeze && (Object.freeze(element.props), Object.freeze(element)), element;
         };
-        function createElement16(type, config, children) {
-          var propName, props = {}, key = null, ref = null, self2 = null, source = null;
+        function createElement15(type, config, children) {
+          var propName, props = {}, key = null, ref = null, self = null, source = null;
           if (config != null) {
-            hasValidRef(config) && (ref = config.ref, warnIfStringRefCannotBeAutoConverted(config)), hasValidKey(config) && (checkKeyStringCoercion(config.key), key = "" + config.key), self2 = config.__self === void 0 ? null : config.__self, source = config.__source === void 0 ? null : config.__source;
+            hasValidRef(config) && (ref = config.ref, warnIfStringRefCannotBeAutoConverted(config)), hasValidKey(config) && (checkKeyStringCoercion(config.key), key = "" + config.key), self = config.__self === void 0 ? null : config.__self, source = config.__source === void 0 ? null : config.__source;
             for (propName in config)
-              hasOwnProperty8.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName) && (props[propName] = config[propName]);
+              hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName) && (props[propName] = config[propName]);
           }
           var childrenLength = arguments.length - 2;
           if (childrenLength === 1)
@@ -386,7 +386,7 @@
             var displayName = typeof type == "function" ? type.displayName || type.name || "Unknown" : type;
             key && defineKeyPropWarningGetter(props, displayName), ref && defineRefPropWarningGetter(props, displayName);
           }
-          return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
+          return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
         }
         function cloneAndReplaceKey(oldElement, newKey) {
           var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
@@ -395,13 +395,13 @@
         function cloneElement3(element, config, children) {
           if (element == null)
             throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
-          var propName, props = assign2({}, element.props), key = element.key, ref = element.ref, self2 = element._self, source = element._source, owner = element._owner;
+          var propName, props = assign({}, element.props), key = element.key, ref = element.ref, self = element._self, source = element._source, owner = element._owner;
           if (config != null) {
             hasValidRef(config) && (ref = config.ref, owner = ReactCurrentOwner.current), hasValidKey(config) && (checkKeyStringCoercion(config.key), key = "" + config.key);
             var defaultProps;
             element.type && element.type.defaultProps && (defaultProps = element.type.defaultProps);
             for (propName in config)
-              hasOwnProperty8.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName) && (config[propName] === void 0 && defaultProps !== void 0 ? props[propName] = defaultProps[propName] : props[propName] = config[propName]);
+              hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName) && (config[propName] === void 0 && defaultProps !== void 0 ? props[propName] = defaultProps[propName] : props[propName] = config[propName]);
           }
           var childrenLength = arguments.length - 2;
           if (childrenLength === 1)
@@ -411,7 +411,7 @@
               childArray[i] = arguments[i + 2];
             props.children = childArray;
           }
-          return ReactElement(element.type, key, ref, self2, source, owner, props);
+          return ReactElement(element.type, key, ref, self, source, owner, props);
         }
         function isValidElement3(object) {
           return typeof object == "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
@@ -454,7 +454,7 @@
             }
           if (invokeCallback) {
             var _child = children, mappedChild = callback(_child), childKey = nameSoFar === "" ? SEPARATOR + getElementKey(_child, 0) : nameSoFar;
-            if (isArray2(mappedChild)) {
+            if (isArray(mappedChild)) {
               var escapedChildKey = "";
               childKey != null && (escapedChildKey = escapeUserProvidedKey(childKey) + "/"), mapIntoArray(mappedChild, array, escapedChildKey, "", function(c) {
                 return c;
@@ -473,7 +473,7 @@
             return 1;
           }
           var child, nextName, subtreeCount = 0, nextNamePrefix = nameSoFar === "" ? SEPARATOR : nameSoFar + SUBSEPARATOR;
-          if (isArray2(children))
+          if (isArray(children))
             for (var i = 0; i < children.length; i++)
               child = children[i], nextName = nextNamePrefix + getElementKey(child, i), subtreeCount += mapIntoArray(child, array, escapedPrefix, nextName, callback);
           else {
@@ -493,10 +493,10 @@
         function mapChildren(children, func, context) {
           if (children == null)
             return children;
-          var result2 = [], count = 0;
-          return mapIntoArray(children, result2, "", "", function(child) {
+          var result = [], count = 0;
+          return mapIntoArray(children, result, "", "", function(child) {
             return func.call(context, child, count++);
-          }), result2;
+          }), result;
         }
         function countChildren(children) {
           var n = 0;
@@ -519,7 +519,7 @@
             throw new Error("React.Children.only expected to receive a single React element child.");
           return children;
         }
-        function createContext10(defaultValue) {
+        function createContext9(defaultValue) {
           var context = {
             $$typeof: REACT_CONTEXT_TYPE,
             // As a workaround to support multiple concurrent renderers, we categorize
@@ -731,7 +731,7 @@ Your code should look like:
 3. You might have more than one copy of React in the same app
 See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.`), dispatcher;
         }
-        function useContext11(Context) {
+        function useContext10(Context) {
           var dispatcher = resolveDispatcher();
           if (Context._context !== void 0) {
             var realContext = Context._context;
@@ -739,7 +739,7 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           }
           return dispatcher.useContext(Context);
         }
-        function useState11(initialState2) {
+        function useState12(initialState2) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState2);
         }
@@ -751,7 +751,7 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect12(create, deps) {
+        function useEffect11(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create, deps);
         }
@@ -767,7 +767,7 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           var dispatcher = resolveDispatcher();
           return dispatcher.useCallback(callback, deps);
         }
-        function useMemo6(create, deps) {
+        function useMemo5(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useMemo(create, deps);
         }
@@ -833,25 +833,25 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
                 writable: !0
               };
               Object.defineProperties(console, {
-                log: assign2({}, props, {
+                log: assign({}, props, {
                   value: prevLog
                 }),
-                info: assign2({}, props, {
+                info: assign({}, props, {
                   value: prevInfo
                 }),
-                warn: assign2({}, props, {
+                warn: assign({}, props, {
                   value: prevWarn
                 }),
-                error: assign2({}, props, {
+                error: assign({}, props, {
                   value: prevError
                 }),
-                group: assign2({}, props, {
+                group: assign({}, props, {
                   value: prevGroup
                 }),
-                groupCollapsed: assign2({}, props, {
+                groupCollapsed: assign({}, props, {
                   value: prevGroupCollapsed
                 }),
-                groupEnd: assign2({}, props, {
+                groupEnd: assign({}, props, {
                   value: prevGroupEnd
                 })
               });
@@ -953,8 +953,8 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           return describeNativeComponentFrame(fn, !1);
         }
         function shouldConstruct(Component5) {
-          var prototype2 = Component5.prototype;
-          return !!(prototype2 && prototype2.isReactComponent);
+          var prototype = Component5.prototype;
+          return !!(prototype && prototype.isReactComponent);
         }
         function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
           if (type == null)
@@ -995,7 +995,7 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
         }
         function checkPropTypes(typeSpecs, values, location, componentName, element) {
           {
-            var has = Function.call.bind(hasOwnProperty8);
+            var has = Function.call.bind(hasOwnProperty);
             for (var typeSpecName in typeSpecs)
               if (has(typeSpecs, typeSpecName)) {
                 var error$1 = void 0;
@@ -1067,7 +1067,7 @@ Check the top-level render call using <` + parentName + ">.");
         }
         function validateChildKeys(node, parentType) {
           if (typeof node == "object") {
-            if (isArray2(node))
+            if (isArray(node))
               for (var i = 0; i < node.length; i++) {
                 var child = node[i];
                 isValidElement3(child) && validateExplicitKey(child, parentType);
@@ -1127,9 +1127,9 @@ Check the top-level render call using <` + parentName + ">.");
             var sourceInfo = getSourceInfoErrorAddendumForProps(props);
             sourceInfo ? info += sourceInfo : info += getDeclarationErrorAddendum();
             var typeString;
-            type === null ? typeString = "null" : isArray2(type) ? typeString = "array" : type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE ? (typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", info = " Did you accidentally export a JSX literal instead of a component?") : typeString = typeof type, error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
+            type === null ? typeString = "null" : isArray(type) ? typeString = "array" : type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE ? (typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", info = " Did you accidentally export a JSX literal instead of a component?") : typeString = typeof type, error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
           }
-          var element = createElement16.apply(this, arguments);
+          var element = createElement15.apply(this, arguments);
           if (element == null)
             return element;
           if (validType)
@@ -1172,8 +1172,8 @@ Check the top-level render call using <` + parentName + ">.");
         function enqueueTask(task) {
           if (enqueueTaskImpl === null)
             try {
-              var requireString = ("require" + Math.random()).slice(0, 7), nodeRequire = module2 && module2[requireString];
-              enqueueTaskImpl = nodeRequire.call(module2, "timers").setImmediate;
+              var requireString = ("require" + Math.random()).slice(0, 7), nodeRequire = module && module[requireString];
+              enqueueTaskImpl = nodeRequire.call(module, "timers").setImmediate;
             } catch {
               enqueueTaskImpl = function(callback) {
                 didWarnAboutMessageChannel === !1 && (didWarnAboutMessageChannel = !0, typeof MessageChannel > "u" && error("This browser does not have a MessageChannel implementation, so enqueuing tasks via await act(async () => ...) will fail. Please file an issue at https://github.com/facebook/react/issues if you encounter this warning."));
@@ -1188,9 +1188,9 @@ Check the top-level render call using <` + parentName + ">.");
           {
             var prevActScopeDepth = actScopeDepth;
             actScopeDepth++, ReactCurrentActQueue.current === null && (ReactCurrentActQueue.current = []);
-            var prevIsBatchingLegacy = ReactCurrentActQueue.isBatchingLegacy, result2;
+            var prevIsBatchingLegacy = ReactCurrentActQueue.isBatchingLegacy, result;
             try {
-              if (ReactCurrentActQueue.isBatchingLegacy = !0, result2 = callback(), !prevIsBatchingLegacy && ReactCurrentActQueue.didScheduleLegacyUpdate) {
+              if (ReactCurrentActQueue.isBatchingLegacy = !0, result = callback(), !prevIsBatchingLegacy && ReactCurrentActQueue.didScheduleLegacyUpdate) {
                 var queue = ReactCurrentActQueue.current;
                 queue !== null && (ReactCurrentActQueue.didScheduleLegacyUpdate = !1, flushActQueue(queue));
               }
@@ -1199,8 +1199,8 @@ Check the top-level render call using <` + parentName + ">.");
             } finally {
               ReactCurrentActQueue.isBatchingLegacy = prevIsBatchingLegacy;
             }
-            if (result2 !== null && typeof result2 == "object" && typeof result2.then == "function") {
-              var thenableResult = result2, wasAwaited = !1, thenable = {
+            if (result !== null && typeof result == "object" && typeof result.then == "function") {
+              var thenableResult = result, wasAwaited = !1, thenable = {
                 then: function(resolve, reject) {
                   wasAwaited = !0, thenableResult.then(function(returnValue2) {
                     popActScope(prevActScopeDepth), actScopeDepth === 0 ? recursivelyFlushAsyncActWork(returnValue2, resolve, reject) : resolve(returnValue2);
@@ -1214,7 +1214,7 @@ Check the top-level render call using <` + parentName + ">.");
                 wasAwaited || (didWarnNoAwaitAct = !0, error("You called act(async () => ...) without await. This could lead to unexpected testing behaviour, interleaving multiple act calls and mixing their scopes. You should - await act(async () => ...);"));
               }), thenable;
             } else {
-              var returnValue = result2;
+              var returnValue = result;
               if (popActScope(prevActScopeDepth), actScopeDepth === 0) {
                 var _queue = ReactCurrentActQueue.current;
                 _queue !== null && (flushActQueue(_queue), ReactCurrentActQueue.current = null);
@@ -1280,16 +1280,16 @@ Check the top-level render call using <` + parentName + ">.");
           toArray,
           only: onlyChild
         };
-        exports.Children = Children3, exports.Component = Component4, exports.Fragment = REACT_FRAGMENT_TYPE, exports.Profiler = REACT_PROFILER_TYPE, exports.PureComponent = PureComponent, exports.StrictMode = REACT_STRICT_MODE_TYPE, exports.Suspense = REACT_SUSPENSE_TYPE, exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals, exports.act = act, exports.cloneElement = cloneElement$1, exports.createContext = createContext10, exports.createElement = createElement$1, exports.createFactory = createFactory, exports.createRef = createRef, exports.forwardRef = forwardRef6, exports.isValidElement = isValidElement3, exports.lazy = lazy, exports.memo = memo2, exports.startTransition = startTransition3, exports.unstable_act = act, exports.useCallback = useCallback7, exports.useContext = useContext11, exports.useDebugValue = useDebugValue, exports.useDeferredValue = useDeferredValue, exports.useEffect = useEffect12, exports.useId = useId2, exports.useImperativeHandle = useImperativeHandle, exports.useInsertionEffect = useInsertionEffect, exports.useLayoutEffect = useLayoutEffect4, exports.useMemo = useMemo6, exports.useReducer = useReducer, exports.useRef = useRef6, exports.useState = useState11, exports.useSyncExternalStore = useSyncExternalStore2, exports.useTransition = useTransition2, exports.version = ReactVersion, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+        exports.Children = Children3, exports.Component = Component4, exports.Fragment = REACT_FRAGMENT_TYPE, exports.Profiler = REACT_PROFILER_TYPE, exports.PureComponent = PureComponent, exports.StrictMode = REACT_STRICT_MODE_TYPE, exports.Suspense = REACT_SUSPENSE_TYPE, exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals, exports.act = act, exports.cloneElement = cloneElement$1, exports.createContext = createContext9, exports.createElement = createElement$1, exports.createFactory = createFactory, exports.createRef = createRef, exports.forwardRef = forwardRef6, exports.isValidElement = isValidElement3, exports.lazy = lazy, exports.memo = memo2, exports.startTransition = startTransition3, exports.unstable_act = act, exports.useCallback = useCallback7, exports.useContext = useContext10, exports.useDebugValue = useDebugValue, exports.useDeferredValue = useDeferredValue, exports.useEffect = useEffect11, exports.useId = useId2, exports.useImperativeHandle = useImperativeHandle, exports.useInsertionEffect = useInsertionEffect, exports.useLayoutEffect = useLayoutEffect4, exports.useMemo = useMemo5, exports.useReducer = useReducer, exports.useRef = useRef6, exports.useState = useState12, exports.useSyncExternalStore = useSyncExternalStore2, exports.useTransition = useTransition2, exports.version = ReactVersion, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
       })();
     }
   });
 
   // internal/ui/src/node_modules/react/index.js
   var require_react = __commonJS({
-    "internal/ui/src/node_modules/react/index.js"(exports, module2) {
+    "internal/ui/src/node_modules/react/index.js"(exports, module) {
       "use strict";
-      module2.exports = require_react_development();
+      module.exports = require_react_development();
     }
   });
 
@@ -1571,9 +1571,9 @@ Check the top-level render call using <` + parentName + ">.");
 
   // internal/ui/src/node_modules/scheduler/index.js
   var require_scheduler = __commonJS({
-    "internal/ui/src/node_modules/scheduler/index.js"(exports, module2) {
+    "internal/ui/src/node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      module2.exports = require_scheduler_development();
+      module.exports = require_scheduler_development();
     }
   });
 
@@ -1584,7 +1584,7 @@ Check the top-level render call using <` + parentName + ">.");
       (function() {
         "use strict";
         typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
-        var React32 = require_react(), Scheduler = require_scheduler(), ReactSharedInternals = React32.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, suppressWarning = !1;
+        var React37 = require_react(), Scheduler = require_scheduler(), ReactSharedInternals = React37.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, suppressWarning = !1;
         function setSuppressWarning(newSuppressWarning) {
           suppressWarning = newSuppressWarning;
         }
@@ -1625,7 +1625,7 @@ Check the top-level render call using <` + parentName + ">.");
           for (var i = 0; i < dependencies.length; i++)
             allNativeEvents.add(dependencies[i]);
         }
-        var canUseDOM2 = typeof window < "u" && typeof window.document < "u" && typeof window.document.createElement < "u", hasOwnProperty8 = Object.prototype.hasOwnProperty;
+        var canUseDOM = typeof window < "u" && typeof window.document < "u" && typeof window.document.createElement < "u", hasOwnProperty = Object.prototype.hasOwnProperty;
         function typeName(value) {
           {
             var hasToStringTag = typeof Symbol == "function" && Symbol.toStringTag, type = hasToStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
@@ -1668,7 +1668,7 @@ Check the top-level render call using <` + parentName + ">.");
         }
         var RESERVED = 0, STRING = 1, BOOLEANISH_STRING = 2, BOOLEAN = 3, OVERLOADED_BOOLEAN = 4, NUMERIC = 5, POSITIVE_NUMERIC = 6, ATTRIBUTE_NAME_START_CHAR = ":A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD", ATTRIBUTE_NAME_CHAR = ATTRIBUTE_NAME_START_CHAR + "\\-.0-9\\u00B7\\u0300-\\u036F\\u203F-\\u2040", VALID_ATTRIBUTE_NAME_REGEX = new RegExp("^[" + ATTRIBUTE_NAME_START_CHAR + "][" + ATTRIBUTE_NAME_CHAR + "]*$"), illegalAttributeNameCache = {}, validatedAttributeNameCache = {};
         function isAttributeNameSafe(attributeName) {
-          return hasOwnProperty8.call(validatedAttributeNameCache, attributeName) ? !0 : hasOwnProperty8.call(illegalAttributeNameCache, attributeName) ? !1 : VALID_ATTRIBUTE_NAME_REGEX.test(attributeName) ? (validatedAttributeNameCache[attributeName] = !0, !0) : (illegalAttributeNameCache[attributeName] = !0, error("Invalid attribute name: `%s`", attributeName), !1);
+          return hasOwnProperty.call(validatedAttributeNameCache, attributeName) ? !0 : hasOwnProperty.call(illegalAttributeNameCache, attributeName) ? !1 : VALID_ATTRIBUTE_NAME_REGEX.test(attributeName) ? (validatedAttributeNameCache[attributeName] = !0, !0) : (illegalAttributeNameCache[attributeName] = !0, error("Invalid attribute name: `%s`", attributeName), !1);
         }
         function shouldIgnoreAttribute(name, propertyInfo, isCustomComponentTag) {
           return propertyInfo !== null ? propertyInfo.type === RESERVED : isCustomComponentTag ? !1 : name.length > 2 && (name[0] === "o" || name[0] === "O") && (name[1] === "n" || name[1] === "N");
@@ -2159,7 +2159,7 @@ Check the top-level render call using <` + parentName + ">.");
           var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
           return typeof maybeIterator == "function" ? maybeIterator : null;
         }
-        var assign2 = Object.assign, disabledDepth = 0, prevLog, prevInfo, prevWarn, prevError, prevGroup, prevGroupCollapsed, prevGroupEnd;
+        var assign = Object.assign, disabledDepth = 0, prevLog, prevInfo, prevWarn, prevError, prevGroup, prevGroupCollapsed, prevGroupEnd;
         function disabledLog() {
         }
         disabledLog.__reactDisabledLog = !0;
@@ -2195,25 +2195,25 @@ Check the top-level render call using <` + parentName + ">.");
                 writable: !0
               };
               Object.defineProperties(console, {
-                log: assign2({}, props, {
+                log: assign({}, props, {
                   value: prevLog
                 }),
-                info: assign2({}, props, {
+                info: assign({}, props, {
                   value: prevInfo
                 }),
-                warn: assign2({}, props, {
+                warn: assign({}, props, {
                   value: prevWarn
                 }),
-                error: assign2({}, props, {
+                error: assign({}, props, {
                   value: prevError
                 }),
-                group: assign2({}, props, {
+                group: assign({}, props, {
                   value: prevGroup
                 }),
-                groupCollapsed: assign2({}, props, {
+                groupCollapsed: assign({}, props, {
                   value: prevGroupCollapsed
                 }),
-                groupEnd: assign2({}, props, {
+                groupEnd: assign({}, props, {
                   value: prevGroupEnd
                 })
               });
@@ -2318,8 +2318,8 @@ Check the top-level render call using <` + parentName + ">.");
           return describeNativeComponentFrame(fn, !1);
         }
         function shouldConstruct(Component4) {
-          var prototype2 = Component4.prototype;
-          return !!(prototype2 && prototype2.isReactComponent);
+          var prototype = Component4.prototype;
+          return !!(prototype && prototype.isReactComponent);
         }
         function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
           if (type == null)
@@ -2530,7 +2530,7 @@ Error generating stack: ` + x.message + `
         function setIsRendering(rendering) {
           isRendering = rendering;
         }
-        function toString3(value) {
+        function toString(value) {
           return "" + value;
         }
         function getToStringValue(value) {
@@ -2630,7 +2630,7 @@ Error generating stack: ` + x.message + `
           return usesChecked ? props.checked != null : props.value != null;
         }
         function getHostProps(element, props) {
-          var node = element, checked = props.checked, hostProps = assign2({}, props, {
+          var node = element, checked = props.checked, hostProps = assign({}, props, {
             defaultChecked: void 0,
             defaultValue: void 0,
             value: void 0,
@@ -2662,7 +2662,7 @@ Error generating stack: ` + x.message + `
           if (value != null)
             type === "number" ? (value === 0 && node.value === "" || // We explicitly want to coerce to number here if possible.
             // eslint-disable-next-line
-            node.value != value) && (node.value = toString3(value)) : node.value !== toString3(value) && (node.value = toString3(value));
+            node.value != value) && (node.value = toString(value)) : node.value !== toString(value) && (node.value = toString(value));
           else if (type === "submit" || type === "reset") {
             node.removeAttribute("value");
             return;
@@ -2675,7 +2675,7 @@ Error generating stack: ` + x.message + `
             var type = props.type, isButton = type === "submit" || type === "reset";
             if (isButton && (props.value === void 0 || props.value === null))
               return;
-            var initialValue = toString3(node._wrapperState.initialValue);
+            var initialValue = toString(node._wrapperState.initialValue);
             isHydrating2 || initialValue !== node.value && (node.value = initialValue), node.defaultValue = initialValue;
           }
           var name = node.name;
@@ -2704,19 +2704,19 @@ Error generating stack: ` + x.message + `
         }
         function setDefaultValue(node, type, value) {
           // Focused number inputs synchronize on blur. See ChangeEventPlugin.js
-          (type !== "number" || getActiveElement(node.ownerDocument) !== node) && (value == null ? node.defaultValue = toString3(node._wrapperState.initialValue) : node.defaultValue !== toString3(value) && (node.defaultValue = toString3(value)));
+          (type !== "number" || getActiveElement(node.ownerDocument) !== node) && (value == null ? node.defaultValue = toString(node._wrapperState.initialValue) : node.defaultValue !== toString(value) && (node.defaultValue = toString(value)));
         }
         var didWarnSelectedSetOnOption = !1, didWarnInvalidChild = !1, didWarnInvalidInnerHTML = !1;
         function validateProps(element, props) {
-          props.value == null && (typeof props.children == "object" && props.children !== null ? React32.Children.forEach(props.children, function(child) {
+          props.value == null && (typeof props.children == "object" && props.children !== null ? React37.Children.forEach(props.children, function(child) {
             child != null && (typeof child == "string" || typeof child == "number" || didWarnInvalidChild || (didWarnInvalidChild = !0, error("Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>.")));
           }) : props.dangerouslySetInnerHTML != null && (didWarnInvalidInnerHTML || (didWarnInvalidInnerHTML = !0, error("Pass a `value` prop if you set dangerouslyInnerHTML so React knows which value should be selected.")))), props.selected != null && !didWarnSelectedSetOnOption && (error("Use the `defaultValue` or `value` props on <select> instead of setting `selected` on <option>."), didWarnSelectedSetOnOption = !0);
         }
         function postMountWrapper$1(element, props) {
-          props.value != null && element.setAttribute("value", toString3(getToStringValue(props.value)));
+          props.value != null && element.setAttribute("value", toString(getToStringValue(props.value)));
         }
         var isArrayImpl = Array.isArray;
-        function isArray2(a) {
+        function isArray(a) {
           return isArrayImpl(a);
         }
         var didWarnValueDefaultValue$1;
@@ -2734,7 +2734,7 @@ Check the render method of \`` + ownerName + "`." : "";
             for (var i = 0; i < valuePropNames.length; i++) {
               var propName = valuePropNames[i];
               if (props[propName] != null) {
-                var propNameIsArray = isArray2(props[propName]);
+                var propNameIsArray = isArray(props[propName]);
                 props.multiple && !propNameIsArray ? error("The `%s` prop supplied to <select> must be an array if `multiple` is true.%s", propName, getDeclarationErrorAddendum()) : !props.multiple && propNameIsArray && error("The `%s` prop supplied to <select> must be a scalar value if `multiple` is false.%s", propName, getDeclarationErrorAddendum());
               }
             }
@@ -2750,7 +2750,7 @@ Check the render method of \`` + ownerName + "`." : "";
               options2[_i].selected !== selected && (options2[_i].selected = selected), selected && setDefaultSelected && (options2[_i].defaultSelected = !0);
             }
           } else {
-            for (var _selectedValue = toString3(getToStringValue(propValue)), defaultSelected = null, _i2 = 0; _i2 < options2.length; _i2++) {
+            for (var _selectedValue = toString(getToStringValue(propValue)), defaultSelected = null, _i2 = 0; _i2 < options2.length; _i2++) {
               if (options2[_i2].value === _selectedValue) {
                 options2[_i2].selected = !0, setDefaultSelected && (options2[_i2].defaultSelected = !0);
                 return;
@@ -2761,7 +2761,7 @@ Check the render method of \`` + ownerName + "`." : "";
           }
         }
         function getHostProps$1(element, props) {
-          return assign2({}, props, {
+          return assign({}, props, {
             value: void 0
           });
         }
@@ -2792,10 +2792,10 @@ Check the render method of \`` + ownerName + "`." : "";
           var node = element;
           if (props.dangerouslySetInnerHTML != null)
             throw new Error("`dangerouslySetInnerHTML` does not make sense on <textarea>.");
-          var hostProps = assign2({}, props, {
+          var hostProps = assign({}, props, {
             value: void 0,
             defaultValue: void 0,
-            children: toString3(node._wrapperState.initialValue)
+            children: toString(node._wrapperState.initialValue)
           });
           return hostProps;
         }
@@ -2810,7 +2810,7 @@ Check the render method of \`` + ownerName + "`." : "";
               {
                 if (defaultValue != null)
                   throw new Error("If you supply `defaultValue` on a <textarea>, do not pass children.");
-                if (isArray2(children)) {
+                if (isArray(children)) {
                   if (children.length > 1)
                     throw new Error("<textarea> can only have at most one child.");
                   children = children[0];
@@ -2827,10 +2827,10 @@ Check the render method of \`` + ownerName + "`." : "";
         function updateWrapper$1(element, props) {
           var node = element, value = getToStringValue(props.value), defaultValue = getToStringValue(props.defaultValue);
           if (value != null) {
-            var newValue = toString3(value);
+            var newValue = toString(value);
             newValue !== node.value && (node.value = newValue), props.defaultValue == null && node.defaultValue !== newValue && (node.defaultValue = newValue);
           }
-          defaultValue != null && (node.defaultValue = toString3(defaultValue));
+          defaultValue != null && (node.defaultValue = toString(defaultValue));
         }
         function postMountWrapper$3(element, props) {
           var node = element, textContent = node.textContent;
@@ -2982,8 +2982,8 @@ Check the render method of \`` + ownerName + "`." : "";
           });
         });
         function dangerousStyleValue(name, value, isCustomProperty) {
-          var isEmpty2 = value == null || typeof value == "boolean" || value === "";
-          return isEmpty2 ? "" : !isCustomProperty && typeof value == "number" && value !== 0 && !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name]) ? value + "px" : (checkCSSPropertyStringCoercion(value, name), ("" + value).trim());
+          var isEmpty = value == null || typeof value == "boolean" || value === "";
+          return isEmpty ? "" : !isCustomProperty && typeof value == "number" && value !== 0 && !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name]) ? value + "px" : (checkCSSPropertyStringCoercion(value, name), ("" + value).trim());
         }
         var uppercasePattern = /([A-Z])/g, msPattern = /^ms-/;
         function hyphenateStyleName(name) {
@@ -3086,7 +3086,7 @@ Check the render method of \`` + ownerName + "`." : "";
           track: !0,
           wbr: !0
           // NOTE: menuitem's close tag should be omitted, but that causes problems.
-        }, voidElementTags = assign2({
+        }, voidElementTags = assign({
           menuitem: !0
         }, omittedCloseTags), HTML = "__html";
         function assertValidProps(tag, props) {
@@ -3673,7 +3673,7 @@ Check the render method of \`` + ownerName + "`." : "";
         }, warnedProperties = {}, rARIA = new RegExp("^(aria)-[" + ATTRIBUTE_NAME_CHAR + "]*$"), rARIACamel = new RegExp("^(aria)[A-Z][" + ATTRIBUTE_NAME_CHAR + "]*$");
         function validateProperty(tagName, name) {
           {
-            if (hasOwnProperty8.call(warnedProperties, name) && warnedProperties[name])
+            if (hasOwnProperty.call(warnedProperties, name) && warnedProperties[name])
               return !0;
             if (rARIACamel.test(name)) {
               var ariaName = "aria-" + name.slice(4).toLowerCase(), correctName = ariaProperties.hasOwnProperty(ariaName) ? ariaName : null;
@@ -3721,7 +3721,7 @@ Check the render method of \`` + ownerName + "`." : "";
         {
           var warnedProperties$1 = {}, EVENT_NAME_REGEX = /^on./, INVALID_EVENT_NAME_REGEX = /^on[^A-Z]/, rARIA$1 = new RegExp("^(aria)-[" + ATTRIBUTE_NAME_CHAR + "]*$"), rARIACamel$1 = new RegExp("^(aria)[A-Z][" + ATTRIBUTE_NAME_CHAR + "]*$");
           validateProperty$1 = function(tagName, name, value, eventRegistry) {
-            if (hasOwnProperty8.call(warnedProperties$1, name) && warnedProperties$1[name])
+            if (hasOwnProperty.call(warnedProperties$1, name) && warnedProperties$1[name])
               return !0;
             var lowerCasedName = name.toLowerCase();
             if (lowerCasedName === "onfocusin" || lowerCasedName === "onfocusout")
@@ -3874,7 +3874,7 @@ Check the render method of \`` + ownerName + "`." : "";
           return listener;
         }
         var passiveBrowserEventsSupported = !1;
-        if (canUseDOM2)
+        if (canUseDOM)
           try {
             var options = {};
             Object.defineProperty(options, "passive", {
@@ -4195,7 +4195,7 @@ Check the render method of \`` + ownerName + "`." : "";
           if (!hook.supportsFiber)
             return error("The installed version of React DevTools is too old and will not work with the current version of React. Please update React DevTools. https://reactjs.org/link/react-devtools"), !0;
           try {
-            enableSchedulingProfiler && (internals = assign2({}, internals, {
+            enableSchedulingProfiler && (internals = assign({}, internals, {
               getLaneLabelMap,
               injectProfilingHooks
             })), rendererID = hook.inject(internals), injectedHook = hook;
@@ -4204,18 +4204,18 @@ Check the render method of \`` + ownerName + "`." : "";
           }
           return !!hook.checkDCE;
         }
-        function onScheduleRoot(root3, children) {
+        function onScheduleRoot(root2, children) {
           if (injectedHook && typeof injectedHook.onScheduleFiberRoot == "function")
             try {
-              injectedHook.onScheduleFiberRoot(rendererID, root3, children);
+              injectedHook.onScheduleFiberRoot(rendererID, root2, children);
             } catch (err) {
               hasLoggedError || (hasLoggedError = !0, error("React instrumentation encountered an error: %s", err));
             }
         }
-        function onCommitRoot(root3, eventPriority) {
+        function onCommitRoot(root2, eventPriority) {
           if (injectedHook && typeof injectedHook.onCommitFiberRoot == "function")
             try {
-              var didError = (root3.current.flags & DidCapture) === DidCapture;
+              var didError = (root2.current.flags & DidCapture) === DidCapture;
               if (enableProfilerTimer) {
                 var schedulerPriority;
                 switch (eventPriority) {
@@ -4235,17 +4235,17 @@ Check the render method of \`` + ownerName + "`." : "";
                     schedulerPriority = NormalPriority;
                     break;
                 }
-                injectedHook.onCommitFiberRoot(rendererID, root3, schedulerPriority, didError);
+                injectedHook.onCommitFiberRoot(rendererID, root2, schedulerPriority, didError);
               } else
-                injectedHook.onCommitFiberRoot(rendererID, root3, void 0, didError);
+                injectedHook.onCommitFiberRoot(rendererID, root2, void 0, didError);
             } catch (err) {
               hasLoggedError || (hasLoggedError = !0, error("React instrumentation encountered an error: %s", err));
             }
         }
-        function onPostCommitRoot(root3) {
+        function onPostCommitRoot(root2) {
           if (injectedHook && typeof injectedHook.onPostCommitFiberRoot == "function")
             try {
-              injectedHook.onPostCommitFiberRoot(rendererID, root3);
+              injectedHook.onPostCommitFiberRoot(rendererID, root2);
             } catch (err) {
               hasLoggedError || (hasLoggedError = !0, error("React instrumentation encountered an error: %s", err));
             }
@@ -4557,11 +4557,11 @@ Check the render method of \`` + ownerName + "`." : "";
               return error("Should have found matching lanes. This is a bug in React."), lanes;
           }
         }
-        function getNextLanes(root3, wipLanes) {
-          var pendingLanes = root3.pendingLanes;
+        function getNextLanes(root2, wipLanes) {
+          var pendingLanes = root2.pendingLanes;
           if (pendingLanes === NoLanes)
             return NoLanes;
-          var nextLanes = NoLanes, suspendedLanes = root3.suspendedLanes, pingedLanes = root3.pingedLanes, nonIdlePendingLanes = pendingLanes & NonIdleLanes;
+          var nextLanes = NoLanes, suspendedLanes = root2.suspendedLanes, pingedLanes = root2.pingedLanes, nonIdlePendingLanes = pendingLanes & NonIdleLanes;
           if (nonIdlePendingLanes !== NoLanes) {
             var nonIdleUnblockedLanes = nonIdlePendingLanes & ~suspendedLanes;
             if (nonIdleUnblockedLanes !== NoLanes)
@@ -4591,16 +4591,16 @@ Check the render method of \`` + ownerName + "`." : "";
               return wipLanes;
           }
           (nextLanes & InputContinuousLane) !== NoLanes && (nextLanes |= pendingLanes & DefaultLane);
-          var entangledLanes = root3.entangledLanes;
+          var entangledLanes = root2.entangledLanes;
           if (entangledLanes !== NoLanes)
-            for (var entanglements = root3.entanglements, lanes = nextLanes & entangledLanes; lanes > 0; ) {
+            for (var entanglements = root2.entanglements, lanes = nextLanes & entangledLanes; lanes > 0; ) {
               var index2 = pickArbitraryLaneIndex(lanes), lane = 1 << index2;
               nextLanes |= entanglements[index2], lanes &= ~lane;
             }
           return nextLanes;
         }
-        function getMostRecentEventTime(root3, lanes) {
-          for (var eventTimes = root3.eventTimes, mostRecentEventTime = NoTimestamp; lanes > 0; ) {
+        function getMostRecentEventTime(root2, lanes) {
+          for (var eventTimes = root2.eventTimes, mostRecentEventTime = NoTimestamp; lanes > 0; ) {
             var index2 = pickArbitraryLaneIndex(lanes), lane = 1 << index2, eventTime = eventTimes[index2];
             eventTime > mostRecentEventTime && (mostRecentEventTime = eventTime), lanes &= ~lane;
           }
@@ -4647,17 +4647,17 @@ Check the render method of \`` + ownerName + "`." : "";
               return error("Should have found matching lanes. This is a bug in React."), NoTimestamp;
           }
         }
-        function markStarvedLanesAsExpired(root3, currentTime) {
-          for (var pendingLanes = root3.pendingLanes, suspendedLanes = root3.suspendedLanes, pingedLanes = root3.pingedLanes, expirationTimes = root3.expirationTimes, lanes = pendingLanes; lanes > 0; ) {
+        function markStarvedLanesAsExpired(root2, currentTime) {
+          for (var pendingLanes = root2.pendingLanes, suspendedLanes = root2.suspendedLanes, pingedLanes = root2.pingedLanes, expirationTimes = root2.expirationTimes, lanes = pendingLanes; lanes > 0; ) {
             var index2 = pickArbitraryLaneIndex(lanes), lane = 1 << index2, expirationTime = expirationTimes[index2];
-            expirationTime === NoTimestamp ? ((lane & suspendedLanes) === NoLanes || (lane & pingedLanes) !== NoLanes) && (expirationTimes[index2] = computeExpirationTime(lane, currentTime)) : expirationTime <= currentTime && (root3.expiredLanes |= lane), lanes &= ~lane;
+            expirationTime === NoTimestamp ? ((lane & suspendedLanes) === NoLanes || (lane & pingedLanes) !== NoLanes) && (expirationTimes[index2] = computeExpirationTime(lane, currentTime)) : expirationTime <= currentTime && (root2.expiredLanes |= lane), lanes &= ~lane;
           }
         }
-        function getHighestPriorityPendingLanes(root3) {
-          return getHighestPriorityLanes(root3.pendingLanes);
+        function getHighestPriorityPendingLanes(root2) {
+          return getHighestPriorityLanes(root2.pendingLanes);
         }
-        function getLanesToRetrySynchronouslyOnError(root3) {
-          var everythingButOffscreen = root3.pendingLanes & ~OffscreenLane;
+        function getLanesToRetrySynchronouslyOnError(root2) {
+          var everythingButOffscreen = root2.pendingLanes & ~OffscreenLane;
           return everythingButOffscreen !== NoLanes ? everythingButOffscreen : everythingButOffscreen & OffscreenLane ? OffscreenLane : NoLanes;
         }
         function includesSyncLane(lanes) {
@@ -4676,12 +4676,12 @@ Check the render method of \`` + ownerName + "`." : "";
         function includesOnlyTransitions(lanes) {
           return (lanes & TransitionLanes) === lanes;
         }
-        function includesBlockingLane(root3, lanes) {
+        function includesBlockingLane(root2, lanes) {
           var SyncDefaultLanes = InputContinuousHydrationLane | InputContinuousLane | DefaultHydrationLane | DefaultLane;
           return (lanes & SyncDefaultLanes) !== NoLanes;
         }
-        function includesExpiredLane(root3, lanes) {
-          return (lanes & root3.expiredLanes) !== NoLanes;
+        function includesExpiredLane(root2, lanes) {
+          return (lanes & root2.expiredLanes) !== NoLanes;
         }
         function isTransitionLane(lane) {
           return (lane & TransitionLanes) !== NoLanes;
@@ -4732,38 +4732,38 @@ Check the render method of \`` + ownerName + "`." : "";
             laneMap.push(initial);
           return laneMap;
         }
-        function markRootUpdated(root3, updateLane, eventTime) {
-          root3.pendingLanes |= updateLane, updateLane !== IdleLane && (root3.suspendedLanes = NoLanes, root3.pingedLanes = NoLanes);
-          var eventTimes = root3.eventTimes, index2 = laneToIndex(updateLane);
+        function markRootUpdated(root2, updateLane, eventTime) {
+          root2.pendingLanes |= updateLane, updateLane !== IdleLane && (root2.suspendedLanes = NoLanes, root2.pingedLanes = NoLanes);
+          var eventTimes = root2.eventTimes, index2 = laneToIndex(updateLane);
           eventTimes[index2] = eventTime;
         }
-        function markRootSuspended(root3, suspendedLanes) {
-          root3.suspendedLanes |= suspendedLanes, root3.pingedLanes &= ~suspendedLanes;
-          for (var expirationTimes = root3.expirationTimes, lanes = suspendedLanes; lanes > 0; ) {
+        function markRootSuspended(root2, suspendedLanes) {
+          root2.suspendedLanes |= suspendedLanes, root2.pingedLanes &= ~suspendedLanes;
+          for (var expirationTimes = root2.expirationTimes, lanes = suspendedLanes; lanes > 0; ) {
             var index2 = pickArbitraryLaneIndex(lanes), lane = 1 << index2;
             expirationTimes[index2] = NoTimestamp, lanes &= ~lane;
           }
         }
-        function markRootPinged(root3, pingedLanes, eventTime) {
-          root3.pingedLanes |= root3.suspendedLanes & pingedLanes;
+        function markRootPinged(root2, pingedLanes, eventTime) {
+          root2.pingedLanes |= root2.suspendedLanes & pingedLanes;
         }
-        function markRootFinished(root3, remainingLanes) {
-          var noLongerPendingLanes = root3.pendingLanes & ~remainingLanes;
-          root3.pendingLanes = remainingLanes, root3.suspendedLanes = NoLanes, root3.pingedLanes = NoLanes, root3.expiredLanes &= remainingLanes, root3.mutableReadLanes &= remainingLanes, root3.entangledLanes &= remainingLanes;
-          for (var entanglements = root3.entanglements, eventTimes = root3.eventTimes, expirationTimes = root3.expirationTimes, lanes = noLongerPendingLanes; lanes > 0; ) {
+        function markRootFinished(root2, remainingLanes) {
+          var noLongerPendingLanes = root2.pendingLanes & ~remainingLanes;
+          root2.pendingLanes = remainingLanes, root2.suspendedLanes = NoLanes, root2.pingedLanes = NoLanes, root2.expiredLanes &= remainingLanes, root2.mutableReadLanes &= remainingLanes, root2.entangledLanes &= remainingLanes;
+          for (var entanglements = root2.entanglements, eventTimes = root2.eventTimes, expirationTimes = root2.expirationTimes, lanes = noLongerPendingLanes; lanes > 0; ) {
             var index2 = pickArbitraryLaneIndex(lanes), lane = 1 << index2;
             entanglements[index2] = NoLanes, eventTimes[index2] = NoTimestamp, expirationTimes[index2] = NoTimestamp, lanes &= ~lane;
           }
         }
-        function markRootEntangled(root3, entangledLanes) {
-          for (var rootEntangledLanes = root3.entangledLanes |= entangledLanes, entanglements = root3.entanglements, lanes = rootEntangledLanes; lanes; ) {
+        function markRootEntangled(root2, entangledLanes) {
+          for (var rootEntangledLanes = root2.entangledLanes |= entangledLanes, entanglements = root2.entanglements, lanes = rootEntangledLanes; lanes; ) {
             var index2 = pickArbitraryLaneIndex(lanes), lane = 1 << index2;
             // Is this one of the newly entangled lanes?
             lane & entangledLanes | // Is this lane transitively entangled with the newly entangled lanes?
             entanglements[index2] & entangledLanes && (entanglements[index2] |= entangledLanes), lanes &= ~lane;
           }
         }
-        function getBumpedLaneForHydration(root3, renderLanes2) {
+        function getBumpedLaneForHydration(root2, renderLanes2) {
           var renderLane = getHighestPriorityLane(renderLanes2), lane;
           switch (renderLane) {
             case InputContinuousLane:
@@ -4802,18 +4802,18 @@ Check the render method of \`` + ownerName + "`." : "";
               lane = NoLane;
               break;
           }
-          return (lane & (root3.suspendedLanes | renderLanes2)) !== NoLane ? NoLane : lane;
+          return (lane & (root2.suspendedLanes | renderLanes2)) !== NoLane ? NoLane : lane;
         }
-        function addFiberToLanesMap(root3, fiber, lanes) {
+        function addFiberToLanesMap(root2, fiber, lanes) {
           if (isDevToolsPresent)
-            for (var pendingUpdatersLaneMap = root3.pendingUpdatersLaneMap; lanes > 0; ) {
+            for (var pendingUpdatersLaneMap = root2.pendingUpdatersLaneMap; lanes > 0; ) {
               var index2 = laneToIndex(lanes), lane = 1 << index2, updaters = pendingUpdatersLaneMap[index2];
               updaters.add(fiber), lanes &= ~lane;
             }
         }
-        function movePendingFibersToMemoized(root3, lanes) {
+        function movePendingFibersToMemoized(root2, lanes) {
           if (isDevToolsPresent)
-            for (var pendingUpdatersLaneMap = root3.pendingUpdatersLaneMap, memoizedUpdaters = root3.memoizedUpdaters; lanes > 0; ) {
+            for (var pendingUpdatersLaneMap = root2.pendingUpdatersLaneMap, memoizedUpdaters = root2.memoizedUpdaters; lanes > 0; ) {
               var index2 = laneToIndex(lanes), lane = 1 << index2, updaters = pendingUpdatersLaneMap[index2];
               updaters.size > 0 && (updaters.forEach(function(fiber) {
                 var alternate = fiber.alternate;
@@ -4821,7 +4821,7 @@ Check the render method of \`` + ownerName + "`." : "";
               }), updaters.clear()), lanes &= ~lane;
             }
         }
-        function getTransitionsForLanes(root3, lanes) {
+        function getTransitionsForLanes(root2, lanes) {
           return null;
         }
         var DiscreteEventPriority = SyncLane, ContinuousEventPriority = InputContinuousLane, DefaultEventPriority = DefaultLane, IdleEventPriority = IdleLane, currentUpdatePriority = NoLane;
@@ -4852,8 +4852,8 @@ Check the render method of \`` + ownerName + "`." : "";
           var lane = getHighestPriorityLane(lanes);
           return isHigherEventPriority(DiscreteEventPriority, lane) ? isHigherEventPriority(ContinuousEventPriority, lane) ? includesNonIdleWork(lane) ? DefaultEventPriority : IdleEventPriority : ContinuousEventPriority : DiscreteEventPriority;
         }
-        function isRootDehydrated(root3) {
-          var currentState = root3.current.memoizedState;
+        function isRootDehydrated(root2) {
+          var currentState = root2.current.memoizedState;
           return currentState.isDehydrated;
         }
         var _attemptSynchronousHydration;
@@ -5003,8 +5003,8 @@ Check the render method of \`` + ownerName + "`." : "";
                   return;
                 }
               } else if (tag === HostRoot) {
-                var root3 = nearestMounted.stateNode;
-                if (isRootDehydrated(root3)) {
+                var root2 = nearestMounted.stateNode;
+                if (isRootDehydrated(root2)) {
                   queuedTarget.blockedOn = getContainerFromFiber(nearestMounted);
                   return;
                 }
@@ -5155,8 +5155,8 @@ Check the render method of \`` + ownerName + "`." : "";
                   return instance;
                 targetInst = null;
               } else if (tag === HostRoot) {
-                var root3 = nearestMounted.stateNode;
-                if (isRootDehydrated(root3))
+                var root2 = nearestMounted.stateNode;
+                if (isRootDehydrated(root2))
                   return getContainerFromFiber(nearestMounted);
                 targetInst = null;
               } else nearestMounted !== targetInst && (targetInst = null);
@@ -5284,12 +5284,12 @@ Check the render method of \`` + ownerName + "`." : "";
             passive
           }), listener;
         }
-        var root2 = null, startText = null, fallbackText = null;
+        var root = null, startText = null, fallbackText = null;
         function initialize(nativeEventTarget) {
-          return root2 = nativeEventTarget, startText = getText(), !0;
+          return root = nativeEventTarget, startText = getText(), !0;
         }
         function reset() {
-          root2 = null, startText = null, fallbackText = null;
+          root = null, startText = null, fallbackText = null;
         }
         function getData() {
           if (fallbackText)
@@ -5304,7 +5304,7 @@ Check the render method of \`` + ownerName + "`." : "";
           return fallbackText = endValue.slice(start, sliceTail), fallbackText;
         }
         function getText() {
-          return "value" in root2 ? root2.value : root2.textContent;
+          return "value" in root ? root.value : root.textContent;
         }
         function getEventCharCode(nativeEvent) {
           var charCode, keyCode = nativeEvent.keyCode;
@@ -5321,13 +5321,13 @@ Check the render method of \`` + ownerName + "`." : "";
             this._reactName = reactName, this._targetInst = targetInst, this.type = reactEventType, this.nativeEvent = nativeEvent, this.target = nativeEventTarget, this.currentTarget = null;
             for (var _propName in Interface)
               if (Interface.hasOwnProperty(_propName)) {
-                var normalize2 = Interface[_propName];
-                normalize2 ? this[_propName] = normalize2(nativeEvent) : this[_propName] = nativeEvent[_propName];
+                var normalize = Interface[_propName];
+                normalize ? this[_propName] = normalize(nativeEvent) : this[_propName] = nativeEvent[_propName];
               }
             var defaultPrevented = nativeEvent.defaultPrevented != null ? nativeEvent.defaultPrevented : nativeEvent.returnValue === !1;
             return defaultPrevented ? this.isDefaultPrevented = functionThatReturnsTrue : this.isDefaultPrevented = functionThatReturnsFalse, this.isPropagationStopped = functionThatReturnsFalse, this;
           }
-          return assign2(SyntheticBaseEvent.prototype, {
+          return assign(SyntheticBaseEvent.prototype, {
             preventDefault: function() {
               this.defaultPrevented = !0;
               var event = this.nativeEvent;
@@ -5361,14 +5361,14 @@ Check the render method of \`` + ownerName + "`." : "";
           },
           defaultPrevented: 0,
           isTrusted: 0
-        }, SyntheticEvent = createSyntheticEvent(EventInterface), UIEventInterface = assign2({}, EventInterface, {
+        }, SyntheticEvent = createSyntheticEvent(EventInterface), UIEventInterface = assign({}, EventInterface, {
           view: 0,
           detail: 0
         }), SyntheticUIEvent = createSyntheticEvent(UIEventInterface), lastMovementX, lastMovementY, lastMouseEvent;
         function updateMouseMovementPolyfillState(event) {
           event !== lastMouseEvent && (lastMouseEvent && event.type === "mousemove" ? (lastMovementX = event.screenX - lastMouseEvent.screenX, lastMovementY = event.screenY - lastMouseEvent.screenY) : (lastMovementX = 0, lastMovementY = 0), lastMouseEvent = event);
         }
-        var MouseEventInterface = assign2({}, UIEventInterface, {
+        var MouseEventInterface = assign({}, UIEventInterface, {
           screenX: 0,
           screenY: 0,
           clientX: 0,
@@ -5391,19 +5391,19 @@ Check the render method of \`` + ownerName + "`." : "";
           movementY: function(event) {
             return "movementY" in event ? event.movementY : lastMovementY;
           }
-        }), SyntheticMouseEvent = createSyntheticEvent(MouseEventInterface), DragEventInterface = assign2({}, MouseEventInterface, {
+        }), SyntheticMouseEvent = createSyntheticEvent(MouseEventInterface), DragEventInterface = assign({}, MouseEventInterface, {
           dataTransfer: 0
-        }), SyntheticDragEvent = createSyntheticEvent(DragEventInterface), FocusEventInterface = assign2({}, UIEventInterface, {
+        }), SyntheticDragEvent = createSyntheticEvent(DragEventInterface), FocusEventInterface = assign({}, UIEventInterface, {
           relatedTarget: 0
-        }), SyntheticFocusEvent = createSyntheticEvent(FocusEventInterface), AnimationEventInterface = assign2({}, EventInterface, {
+        }), SyntheticFocusEvent = createSyntheticEvent(FocusEventInterface), AnimationEventInterface = assign({}, EventInterface, {
           animationName: 0,
           elapsedTime: 0,
           pseudoElement: 0
-        }), SyntheticAnimationEvent = createSyntheticEvent(AnimationEventInterface), ClipboardEventInterface = assign2({}, EventInterface, {
+        }), SyntheticAnimationEvent = createSyntheticEvent(AnimationEventInterface), ClipboardEventInterface = assign({}, EventInterface, {
           clipboardData: function(event) {
             return "clipboardData" in event ? event.clipboardData : window.clipboardData;
           }
-        }), SyntheticClipboardEvent = createSyntheticEvent(ClipboardEventInterface), CompositionEventInterface = assign2({}, EventInterface, {
+        }), SyntheticClipboardEvent = createSyntheticEvent(ClipboardEventInterface), CompositionEventInterface = assign({}, EventInterface, {
           data: 0
         }), SyntheticCompositionEvent = createSyntheticEvent(CompositionEventInterface), SyntheticInputEvent = SyntheticCompositionEvent, normalizeKey = {
           Esc: "Escape",
@@ -5484,7 +5484,7 @@ Check the render method of \`` + ownerName + "`." : "";
         function getEventModifierState(nativeEvent) {
           return modifierStateGetter;
         }
-        var KeyboardEventInterface = assign2({}, UIEventInterface, {
+        var KeyboardEventInterface = assign({}, UIEventInterface, {
           key: getEventKey,
           code: 0,
           location: 0,
@@ -5505,7 +5505,7 @@ Check the render method of \`` + ownerName + "`." : "";
           which: function(event) {
             return event.type === "keypress" ? getEventCharCode(event) : event.type === "keydown" || event.type === "keyup" ? event.keyCode : 0;
           }
-        }), SyntheticKeyboardEvent = createSyntheticEvent(KeyboardEventInterface), PointerEventInterface = assign2({}, MouseEventInterface, {
+        }), SyntheticKeyboardEvent = createSyntheticEvent(KeyboardEventInterface), PointerEventInterface = assign({}, MouseEventInterface, {
           pointerId: 0,
           width: 0,
           height: 0,
@@ -5516,7 +5516,7 @@ Check the render method of \`` + ownerName + "`." : "";
           twist: 0,
           pointerType: 0,
           isPrimary: 0
-        }), SyntheticPointerEvent = createSyntheticEvent(PointerEventInterface), TouchEventInterface = assign2({}, UIEventInterface, {
+        }), SyntheticPointerEvent = createSyntheticEvent(PointerEventInterface), TouchEventInterface = assign({}, UIEventInterface, {
           touches: 0,
           targetTouches: 0,
           changedTouches: 0,
@@ -5525,11 +5525,11 @@ Check the render method of \`` + ownerName + "`." : "";
           ctrlKey: 0,
           shiftKey: 0,
           getModifierState: getEventModifierState
-        }), SyntheticTouchEvent = createSyntheticEvent(TouchEventInterface), TransitionEventInterface = assign2({}, EventInterface, {
+        }), SyntheticTouchEvent = createSyntheticEvent(TouchEventInterface), TransitionEventInterface = assign({}, EventInterface, {
           propertyName: 0,
           elapsedTime: 0,
           pseudoElement: 0
-        }), SyntheticTransitionEvent = createSyntheticEvent(TransitionEventInterface), WheelEventInterface = assign2({}, MouseEventInterface, {
+        }), SyntheticTransitionEvent = createSyntheticEvent(TransitionEventInterface), WheelEventInterface = assign({}, MouseEventInterface, {
           deltaX: function(event) {
             return "deltaX" in event ? event.deltaX : (
               // Fallback to `wheelDeltaX` for Webkit and normalize (right is positive).
@@ -5551,9 +5551,9 @@ Check the render method of \`` + ownerName + "`." : "";
           // A good approximation of DOM_DELTA_LINE (1) is 5% of viewport size or
           // ~40 pixels, for DOM_DELTA_SCREEN (2) it is 87.5% of viewport size.
           deltaMode: 0
-        }), SyntheticWheelEvent = createSyntheticEvent(WheelEventInterface), END_KEYCODES = [9, 13, 27, 32], START_KEYCODE = 229, canUseCompositionEvent = canUseDOM2 && "CompositionEvent" in window, documentMode = null;
-        canUseDOM2 && "documentMode" in document && (documentMode = document.documentMode);
-        var canUseTextInputEvent = canUseDOM2 && "TextEvent" in window && !documentMode, useFallbackCompositionData = canUseDOM2 && (!canUseCompositionEvent || documentMode && documentMode > 8 && documentMode <= 11), SPACEBAR_CODE = 32, SPACEBAR_CHAR = String.fromCharCode(SPACEBAR_CODE);
+        }), SyntheticWheelEvent = createSyntheticEvent(WheelEventInterface), END_KEYCODES = [9, 13, 27, 32], START_KEYCODE = 229, canUseCompositionEvent = canUseDOM && "CompositionEvent" in window, documentMode = null;
+        canUseDOM && "documentMode" in document && (documentMode = document.documentMode);
+        var canUseTextInputEvent = canUseDOM && "TextEvent" in window && !documentMode, useFallbackCompositionData = canUseDOM && (!canUseCompositionEvent || documentMode && documentMode > 8 && documentMode <= 11), SPACEBAR_CODE = 32, SPACEBAR_CHAR = String.fromCharCode(SPACEBAR_CODE);
         function registerEvents() {
           registerTwoPhaseEvent("onBeforeInput", ["compositionend", "keypress", "textInput", "paste"]), registerTwoPhaseEvent("onCompositionEnd", ["compositionend", "focusout", "keydown", "keypress", "keyup", "mousedown"]), registerTwoPhaseEvent("onCompositionStart", ["compositionstart", "focusout", "keydown", "keypress", "keyup", "mousedown"]), registerTwoPhaseEvent("onCompositionUpdate", ["compositionupdate", "focusout", "keydown", "keypress", "keyup", "mousedown"]);
         }
@@ -5693,7 +5693,7 @@ Check the render method of \`` + ownerName + "`." : "";
           return nodeName === "input" ? !!supportedInputTypes[elem.type] : nodeName === "textarea";
         }
         function isEventSupported(eventNameSuffix) {
-          if (!canUseDOM2)
+          if (!canUseDOM)
             return !1;
           var eventName = "on" + eventNameSuffix, isSupported = eventName in document;
           if (!isSupported) {
@@ -5738,7 +5738,7 @@ Check the render method of \`` + ownerName + "`." : "";
             return targetInst;
         }
         var isInputEventSupported = !1;
-        canUseDOM2 && (isInputEventSupported = isEventSupported("input") && (!document.documentMode || document.documentMode > 9));
+        canUseDOM && (isInputEventSupported = isEventSupported("input") && (!document.documentMode || document.documentMode > 9));
         function startWatchingForValueChange(target, targetInst) {
           activeElement = target, activeElementInst = targetInst, activeElement.attachEvent("onpropertychange", handlePropertyChange);
         }
@@ -5837,7 +5837,7 @@ Check the render method of \`` + ownerName + "`." : "";
             return !1;
           for (var i = 0; i < keysA.length; i++) {
             var currentKey = keysA[i];
-            if (!hasOwnProperty8.call(objB, currentKey) || !objectIs(objA[currentKey], objB[currentKey]))
+            if (!hasOwnProperty.call(objB, currentKey) || !objectIs(objA[currentKey], objB[currentKey]))
               return !1;
           }
           return !0;
@@ -5854,8 +5854,8 @@ Check the render method of \`` + ownerName + "`." : "";
             node = node.parentNode;
           }
         }
-        function getNodeForCharacterOffset(root3, offset) {
-          for (var node = getLeafNode(root3), nodeStart = 0, nodeEnd = 0; node; ) {
+        function getNodeForCharacterOffset(root2, offset) {
+          for (var node = getLeafNode(root2), nodeStart = 0, nodeEnd = 0; node; ) {
             if (node.nodeType === TEXT_NODE) {
               if (nodeEnd = nodeStart + node.textContent.length, nodeStart <= offset && nodeEnd >= offset)
                 return {
@@ -5983,7 +5983,7 @@ Check the render method of \`` + ownerName + "`." : "";
           var start = offsets.start, end = offsets.end;
           end === void 0 && (end = start), "selectionStart" in input ? (input.selectionStart = start, input.selectionEnd = Math.min(end, input.value.length)) : setOffsets(input, offsets);
         }
-        var skipSelectionChangeEvent = canUseDOM2 && "documentMode" in document && document.documentMode <= 11;
+        var skipSelectionChangeEvent = canUseDOM && "documentMode" in document && document.documentMode <= 11;
         function registerEvents$3() {
           registerTwoPhaseEvent("onSelect", ["focusout", "contextmenu", "dragend", "focusin", "keydown", "keyup", "mousedown", "mouseup", "selectionchange"]);
         }
@@ -6070,7 +6070,7 @@ Check the render method of \`` + ownerName + "`." : "";
           animationstart: makePrefixMap("Animation", "AnimationStart"),
           transitionend: makePrefixMap("Transition", "TransitionEnd")
         }, prefixedEventNames = {}, style = {};
-        canUseDOM2 && (style = document.createElement("div").style, "AnimationEvent" in window || (delete vendorPrefixes.animationend.animation, delete vendorPrefixes.animationiteration.animation, delete vendorPrefixes.animationstart.animation), "TransitionEvent" in window || delete vendorPrefixes.transitionend.transition);
+        canUseDOM && (style = document.createElement("div").style, "AnimationEvent" in window || (delete vendorPrefixes.animationend.animation, delete vendorPrefixes.animationiteration.animation, delete vendorPrefixes.animationstart.animation), "TransitionEvent" in window || delete vendorPrefixes.transitionend.transition);
         function getVendorPrefixedEventName(eventName) {
           if (prefixedEventNames[eventName])
             return prefixedEventNames[eventName];
@@ -6408,7 +6408,7 @@ Check the render method of \`` + ownerName + "`." : "";
             registrationNameDependencies,
             possibleRegistrationNames
           });
-        }, canDiffStyleForHydrationWarning = canUseDOM2 && !document.documentMode, warnForPropDifference = function(propName, serverValue, clientValue) {
+        }, canDiffStyleForHydrationWarning = canUseDOM && !document.documentMode, warnForPropDifference = function(propName, serverValue, clientValue) {
           if (!didWarnInvalidHydration) {
             var normalizedClientValue = normalizeMarkupForTextOrAttribute(clientValue), normalizedServerValue = normalizeMarkupForTextOrAttribute(serverValue);
             normalizedServerValue !== normalizedClientValue && (didWarnInvalidHydration = !0, error("Prop `%s` did not match. Server: %s Client: %s", propName, JSON.stringify(normalizedServerValue), JSON.stringify(normalizedClientValue)));
@@ -6442,10 +6442,10 @@ Check the render method of \`` + ownerName + "`." : "";
         function getOwnerDocumentFromRootContainer(rootContainerElement) {
           return rootContainerElement.nodeType === DOCUMENT_NODE ? rootContainerElement : rootContainerElement.ownerDocument;
         }
-        function noop3() {
+        function noop2() {
         }
         function trapClickOnNonInteractiveElement(node) {
-          node.onclick = noop3;
+          node.onclick = noop2;
         }
         function setInitialDOMProperties(tag, domElement, rootContainerElement, nextProps, isCustomComponentTag) {
           for (var propKey in nextProps)
@@ -6470,7 +6470,7 @@ Check the render method of \`` + ownerName + "`." : "";
             propKey === STYLE ? setValueForStyles(domElement, propValue) : propKey === DANGEROUSLY_SET_INNER_HTML ? setInnerHTML(domElement, propValue) : propKey === CHILDREN ? setTextContent(domElement, propValue) : setValueForProperty(domElement, propKey, propValue, isCustomComponentTag);
           }
         }
-        function createElement16(type, props, rootContainerElement, parentNamespace) {
+        function createElement15(type, props, rootContainerElement, parentNamespace) {
           var isCustomComponentTag, ownerDocument = getOwnerDocumentFromRootContainer(rootContainerElement), domElement, namespaceURI = parentNamespace;
           if (namespaceURI === HTML_NAMESPACE && (namespaceURI = getIntrinsicNamespace(type)), namespaceURI === HTML_NAMESPACE) {
             if (isCustomComponentTag = isCustomComponent(type, props), !isCustomComponentTag && type !== type.toLowerCase() && error("<%s /> is using incorrect casing. Use PascalCase for React components, or lowercase for HTML elements.", type), type === "script") {
@@ -6488,7 +6488,7 @@ Check the render method of \`` + ownerName + "`." : "";
             }
           } else
             domElement = ownerDocument.createElementNS(namespaceURI, type);
-          return namespaceURI === HTML_NAMESPACE && !isCustomComponentTag && Object.prototype.toString.call(domElement) === "[object HTMLUnknownElement]" && !hasOwnProperty8.call(warnedUnknownTags, type) && (warnedUnknownTags[type] = !0, error("The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter.", type)), domElement;
+          return namespaceURI === HTML_NAMESPACE && !isCustomComponentTag && Object.prototype.toString.call(domElement) === "[object HTMLUnknownElement]" && !hasOwnProperty.call(warnedUnknownTags, type) && (warnedUnknownTags[type] = !0, error("The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter.", type)), domElement;
         }
         function createTextNode(text, rootContainerElement) {
           return getOwnerDocumentFromRootContainer(rootContainerElement).createTextNode(text);
@@ -6822,7 +6822,7 @@ Check the render method of \`` + ownerName + "`." : "";
             dlItemTagAutoclosing: null
           };
           updatedAncestorInfo = function(oldInfo, tag) {
-            var ancestorInfo = assign2({}, oldInfo || emptyAncestorInfo), info = {
+            var ancestorInfo = assign({}, oldInfo || emptyAncestorInfo), info = {
               tag
             };
             return inScopeTags.indexOf(tag) !== -1 && (ancestorInfo.aTagInScope = null, ancestorInfo.buttonTagInScope = null, ancestorInfo.nobrTagInScope = null), buttonScopeTags.indexOf(tag) !== -1 && (ancestorInfo.pTagInButtonScope = null), specialTags.indexOf(tag) !== -1 && tag !== "address" && tag !== "div" && tag !== "p" && (ancestorInfo.listItemTagAutoclosing = null, ancestorInfo.dlItemTagAutoclosing = null), ancestorInfo.current = info, tag === "form" && (ancestorInfo.formTag = info), tag === "a" && (ancestorInfo.aTagInScope = info), tag === "button" && (ancestorInfo.buttonTagInScope = info), tag === "nobr" && (ancestorInfo.nobrTagInScope = info), tag === "p" && (ancestorInfo.pTagInButtonScope = info), tag === "li" && (ancestorInfo.listItemTagAutoclosing = info), (tag === "dd" || tag === "dt") && (ancestorInfo.dlItemTagAutoclosing = info), ancestorInfo;
@@ -6975,8 +6975,8 @@ Check the render method of \`` + ownerName + "`." : "";
             case DOCUMENT_NODE:
             case DOCUMENT_FRAGMENT_NODE: {
               type = nodeType === DOCUMENT_NODE ? "#document" : "#fragment";
-              var root3 = rootContainerInstance.documentElement;
-              namespace = root3 ? root3.namespaceURI : getChildNamespace(null, "");
+              var root2 = rootContainerInstance.documentElement;
+              namespace = root2 ? root2.namespaceURI : getChildNamespace(null, "");
               break;
             }
             default: {
@@ -7023,7 +7023,7 @@ Check the render method of \`` + ownerName + "`." : "";
             }
             parentNamespace = hostContextDev.namespace;
           }
-          var domElement = createElement16(type, props, rootContainerInstance, parentNamespace);
+          var domElement = createElement15(type, props, rootContainerInstance, parentNamespace);
           return precacheFiberNode(internalInstanceHandle, domElement), updateFiberProps(domElement, props), domElement;
         }
         function appendInitialChild(parentInstance, child) {
@@ -7384,7 +7384,7 @@ Check the render method of \`` + ownerName + "`." : "";
         }
         function checkPropTypes(typeSpecs, values, location, componentName, element) {
           {
-            var has2 = Function.call.bind(hasOwnProperty8);
+            var has2 = Function.call.bind(hasOwnProperty);
             for (var typeSpecName in typeSpecs)
               if (has2(typeSpecs, typeSpecName)) {
                 var error$1 = void 0;
@@ -7484,14 +7484,14 @@ Check the render method of \`` + ownerName + "`." : "";
               return parentContext;
             }
             var childContext = instance.getChildContext();
-            for (var contextKey2 in childContext)
-              if (!(contextKey2 in childContextTypes))
-                throw new Error((getComponentNameFromFiber(fiber) || "Unknown") + '.getChildContext(): key "' + contextKey2 + '" is not defined in childContextTypes.');
+            for (var contextKey in childContext)
+              if (!(contextKey in childContextTypes))
+                throw new Error((getComponentNameFromFiber(fiber) || "Unknown") + '.getChildContext(): key "' + contextKey + '" is not defined in childContextTypes.');
             {
               var name = getComponentNameFromFiber(fiber) || "Unknown";
               checkPropTypes(childContextTypes, childContext, "child context", name);
             }
-            return assign2({}, parentContext, childContext);
+            return assign({}, parentContext, childContext);
           }
         }
         function pushContextProvider(workInProgress2) {
@@ -7580,12 +7580,12 @@ Check the render method of \`` + ownerName + "`." : "";
         }
         function pushTreeId(workInProgress2, totalChildren, index2) {
           warnIfNotHydrating(), idStack[idStackIndex++] = treeContextId, idStack[idStackIndex++] = treeContextOverflow, idStack[idStackIndex++] = treeContextProvider, treeContextProvider = workInProgress2;
-          var baseIdWithLeadingBit = treeContextId, baseOverflow = treeContextOverflow, baseLength = getBitLength(baseIdWithLeadingBit) - 1, baseId = baseIdWithLeadingBit & ~(1 << baseLength), slot2 = index2 + 1, length = getBitLength(totalChildren) + baseLength;
+          var baseIdWithLeadingBit = treeContextId, baseOverflow = treeContextOverflow, baseLength = getBitLength(baseIdWithLeadingBit) - 1, baseId = baseIdWithLeadingBit & ~(1 << baseLength), slot = index2 + 1, length = getBitLength(totalChildren) + baseLength;
           if (length > 30) {
-            var numberOfOverflowBits = baseLength - baseLength % 5, newOverflowBits = (1 << numberOfOverflowBits) - 1, newOverflow = (baseId & newOverflowBits).toString(32), restOfBaseId = baseId >> numberOfOverflowBits, restOfBaseLength = baseLength - numberOfOverflowBits, restOfLength = getBitLength(totalChildren) + restOfBaseLength, restOfNewBits = slot2 << restOfBaseLength, id = restOfNewBits | restOfBaseId, overflow = newOverflow + baseOverflow;
+            var numberOfOverflowBits = baseLength - baseLength % 5, newOverflowBits = (1 << numberOfOverflowBits) - 1, newOverflow = (baseId & newOverflowBits).toString(32), restOfBaseId = baseId >> numberOfOverflowBits, restOfBaseLength = baseLength - numberOfOverflowBits, restOfLength = getBitLength(totalChildren) + restOfBaseLength, restOfNewBits = slot << restOfBaseLength, id = restOfNewBits | restOfBaseId, overflow = newOverflow + baseOverflow;
             treeContextId = 1 << restOfLength | id, treeContextOverflow = overflow;
           } else {
-            var newBits = slot2 << baseLength, _id = newBits | baseId, _overflow = baseOverflow;
+            var newBits = slot << baseLength, _id = newBits | baseId, _overflow = baseOverflow;
             treeContextId = 1 << length | _id, treeContextOverflow = _overflow;
           }
         }
@@ -8204,7 +8204,7 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
                   return createChild(returnFiber, init(payload), lanes);
                 }
               }
-              if (isArray2(newChild) || getIteratorFn(newChild)) {
+              if (isArray(newChild) || getIteratorFn(newChild)) {
                 var _created3 = createFiberFromFragment(newChild, returnFiber.mode, lanes, null);
                 return _created3.return = returnFiber, _created3;
               }
@@ -8227,7 +8227,7 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
                   return updateSlot(returnFiber, oldFiber, init(payload), lanes);
                 }
               }
-              if (isArray2(newChild) || getIteratorFn(newChild))
+              if (isArray(newChild) || getIteratorFn(newChild))
                 return key !== null ? null : updateFragment2(returnFiber, oldFiber, newChild, lanes, null);
               throwOnInvalidObjectType(returnFiber, newChild);
             }
@@ -8252,7 +8252,7 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
                   var payload = newChild._payload, init = newChild._init;
                   return updateFromMap(existingChildren, returnFiber, newIdx, init(payload), lanes);
               }
-              if (isArray2(newChild) || getIteratorFn(newChild)) {
+              if (isArray(newChild) || getIteratorFn(newChild)) {
                 var _matchedFiber3 = existingChildren.get(newIdx) || null;
                 return updateFragment2(returnFiber, _matchedFiber3, newChild, lanes, null);
               }
@@ -8463,7 +8463,7 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
                   var payload = newChild._payload, init = newChild._init;
                   return reconcileChildFibers2(returnFiber, currentFirstChild, init(payload), lanes);
               }
-              if (isArray2(newChild))
+              if (isArray(newChild))
                 return reconcileChildrenArray(returnFiber, currentFirstChild, newChild, lanes);
               if (getIteratorFn(newChild))
                 return reconcileChildrenIterator(returnFiber, currentFirstChild, newChild, lanes);
@@ -8645,8 +8645,8 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
           for (var node = sourceFiber, parent = sourceFiber.return; parent !== null; )
             parent.childLanes = mergeLanes(parent.childLanes, lane), alternate = parent.alternate, alternate !== null ? alternate.childLanes = mergeLanes(alternate.childLanes, lane) : (parent.flags & (Placement | Hydrating)) !== NoFlags && warnAboutUpdateOnNotYetMountedFiberInDEV(sourceFiber), node = parent, parent = parent.return;
           if (node.tag === HostRoot) {
-            var root3 = node.stateNode;
-            return root3;
+            var root2 = node.stateNode;
+            return root2;
           } else
             return null;
         }
@@ -8701,15 +8701,15 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
           } else
             return enqueueConcurrentClassUpdate(fiber, sharedQueue, update, lane);
         }
-        function entangleTransitions(root3, fiber, lane) {
+        function entangleTransitions(root2, fiber, lane) {
           var updateQueue = fiber.updateQueue;
           if (updateQueue !== null) {
             var sharedQueue = updateQueue.shared;
             if (isTransitionLane(lane)) {
               var queueLanes = sharedQueue.lanes;
-              queueLanes = intersectLanes(queueLanes, root3.pendingLanes);
+              queueLanes = intersectLanes(queueLanes, root2.pendingLanes);
               var newQueueLanes = mergeLanes(queueLanes, lane);
-              sharedQueue.lanes = newQueueLanes, markRootEntangled(root3, newQueueLanes);
+              sharedQueue.lanes = newQueueLanes, markRootEntangled(root2, newQueueLanes);
             }
           }
         }
@@ -8790,7 +8790,7 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
                 }
               } else
                 partialState = _payload;
-              return partialState == null ? prevState : assign2({}, prevState, partialState);
+              return partialState == null ? prevState : assign({}, prevState, partialState);
             }
             case ForceUpdate:
               return hasForceUpdate = !0, prevState;
@@ -8996,9 +8996,9 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
           }
           workInProgressSources.length = 0;
         }
-        function registerMutableSourceForHydration(root3, mutableSource) {
-          var getVersion = mutableSource._getVersion, version2 = getVersion(mutableSource._source);
-          root3.mutableSourceEagerHydrationData == null ? root3.mutableSourceEagerHydrationData = [mutableSource, version2] : root3.mutableSourceEagerHydrationData.push(mutableSource, version2);
+        function registerMutableSourceForHydration(root2, mutableSource) {
+          var getVersion = mutableSource._getVersion, version = getVersion(mutableSource._source);
+          root2.mutableSourceEagerHydrationData == null ? root2.mutableSourceEagerHydrationData = [mutableSource, version] : root2.mutableSourceEagerHydrationData.push(mutableSource, version);
         }
         var ReactCurrentDispatcher$1 = ReactSharedInternals.ReactCurrentDispatcher, ReactCurrentBatchConfig$2 = ReactSharedInternals.ReactCurrentBatchConfig, didWarnAboutMismatchedHooksForComponent, didWarnUncachedGetSnapshot;
         didWarnAboutMismatchedHooksForComponent = /* @__PURE__ */ new Set();
@@ -9016,7 +9016,7 @@ See https://reactjs.org/link/refs-must-have-owner for more information.`);
           }
         }
         function checkDepsAreArrayDev(deps) {
-          deps != null && !isArray2(deps) && error("%s received a final argument that is not an array (instead, received `%s`). When specified, the final argument must be an array.", currentHookNameInDev, typeof deps);
+          deps != null && !isArray(deps) && error("%s received a final argument that is not an array (instead, received `%s`). When specified, the final argument must be an array.", currentHookNameInDev, typeof deps);
         }
         function warnOnHookMismatchInDev(currentHookName) {
           {
@@ -9250,10 +9250,10 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
               var cachedSnapshot = getSnapshot();
               objectIs(nextSnapshot, cachedSnapshot) || (error("The result of getSnapshot should be cached to avoid an infinite loop"), didWarnUncachedGetSnapshot = !0);
             }
-            var root3 = getWorkInProgressRoot();
-            if (root3 === null)
+            var root2 = getWorkInProgressRoot();
+            if (root2 === null)
               throw new Error("Expected a work-in-progress root. This is a bug in React. Please file an issue.");
-            includesBlockingLane(root3, renderLanes) || pushStoreConsistencyCheck(fiber, getSnapshot, nextSnapshot);
+            includesBlockingLane(root2, renderLanes) || pushStoreConsistencyCheck(fiber, getSnapshot, nextSnapshot);
           }
           hook.memoizedState = nextSnapshot;
           var inst = {
@@ -9275,24 +9275,24 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
           // checking whether we scheduled a subscription effect above.
           workInProgressHook !== null && workInProgressHook.memoizedState.tag & HasEffect) {
             fiber.flags |= Passive, pushEffect(HasEffect | Passive$1, updateStoreInstance.bind(null, fiber, inst, nextSnapshot, getSnapshot), void 0, null);
-            var root3 = getWorkInProgressRoot();
-            if (root3 === null)
+            var root2 = getWorkInProgressRoot();
+            if (root2 === null)
               throw new Error("Expected a work-in-progress root. This is a bug in React. Please file an issue.");
-            includesBlockingLane(root3, renderLanes) || pushStoreConsistencyCheck(fiber, getSnapshot, nextSnapshot);
+            includesBlockingLane(root2, renderLanes) || pushStoreConsistencyCheck(fiber, getSnapshot, nextSnapshot);
           }
           return nextSnapshot;
         }
         function pushStoreConsistencyCheck(fiber, getSnapshot, renderedSnapshot) {
           fiber.flags |= StoreConsistency;
-          var check2 = {
+          var check = {
             getSnapshot,
             value: renderedSnapshot
           }, componentUpdateQueue = currentlyRenderingFiber$1.updateQueue;
           if (componentUpdateQueue === null)
-            componentUpdateQueue = createFunctionComponentUpdateQueue(), currentlyRenderingFiber$1.updateQueue = componentUpdateQueue, componentUpdateQueue.stores = [check2];
+            componentUpdateQueue = createFunctionComponentUpdateQueue(), currentlyRenderingFiber$1.updateQueue = componentUpdateQueue, componentUpdateQueue.stores = [check];
           else {
             var stores = componentUpdateQueue.stores;
-            stores === null ? componentUpdateQueue.stores = [check2] : stores.push(check2);
+            stores === null ? componentUpdateQueue.stores = [check] : stores.push(check);
           }
         }
         function updateStoreInstance(fiber, inst, nextSnapshot, getSnapshot) {
@@ -9314,8 +9314,8 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
           }
         }
         function forceStoreRerender(fiber) {
-          var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-          root3 !== null && scheduleUpdateOnFiber(root3, fiber, SyncLane, NoTimestamp);
+          var root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+          root2 !== null && scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
         }
         function mountState(initialState2) {
           var hook = mountWorkInProgressHook();
@@ -9524,7 +9524,7 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
           return isUpdatingOpaqueValueInRenderPhase;
         }
         function mountId() {
-          var hook = mountWorkInProgressHook(), root3 = getWorkInProgressRoot(), identifierPrefix = root3.identifierPrefix, id;
+          var hook = mountWorkInProgressHook(), root2 = getWorkInProgressRoot(), identifierPrefix = root2.identifierPrefix, id;
           if (getIsHydrating()) {
             var treeId = getTreeId();
             id = ":" + identifierPrefix + "R" + treeId;
@@ -9552,10 +9552,10 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
           if (isRenderPhaseUpdate(fiber))
             enqueueRenderPhaseUpdate(queue, update);
           else {
-            var root3 = enqueueConcurrentHookUpdate(fiber, queue, update, lane);
-            if (root3 !== null) {
+            var root2 = enqueueConcurrentHookUpdate(fiber, queue, update, lane);
+            if (root2 !== null) {
               var eventTime = requestEventTime();
-              scheduleUpdateOnFiber(root3, fiber, lane, eventTime), entangleTransitionUpdate(root3, queue, lane);
+              scheduleUpdateOnFiber(root2, fiber, lane, eventTime), entangleTransitionUpdate(root2, queue, lane);
             }
           }
           markUpdateInDevTools(fiber, lane);
@@ -9590,10 +9590,10 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
                 }
               }
             }
-            var root3 = enqueueConcurrentHookUpdate(fiber, queue, update, lane);
-            if (root3 !== null) {
+            var root2 = enqueueConcurrentHookUpdate(fiber, queue, update, lane);
+            if (root2 !== null) {
               var eventTime = requestEventTime();
-              scheduleUpdateOnFiber(root3, fiber, lane, eventTime), entangleTransitionUpdate(root3, queue, lane);
+              scheduleUpdateOnFiber(root2, fiber, lane, eventTime), entangleTransitionUpdate(root2, queue, lane);
             }
           }
           markUpdateInDevTools(fiber, lane);
@@ -9607,12 +9607,12 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
           var pending = queue.pending;
           pending === null ? update.next = update : (update.next = pending.next, pending.next = update), queue.pending = update;
         }
-        function entangleTransitionUpdate(root3, queue, lane) {
+        function entangleTransitionUpdate(root2, queue, lane) {
           if (isTransitionLane(lane)) {
             var queueLanes = queue.lanes;
-            queueLanes = intersectLanes(queueLanes, root3.pendingLanes);
+            queueLanes = intersectLanes(queueLanes, root2.pendingLanes);
             var newQueueLanes = mergeLanes(queueLanes, lane);
-            queue.lanes = newQueueLanes, markRootEntangled(root3, newQueueLanes);
+            queue.lanes = newQueueLanes, markRootEntangled(root2, newQueueLanes);
           }
         }
         function markUpdateInDevTools(fiber, lane, action) {
@@ -10202,8 +10202,8 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
             for (var parentFiber = fiber.return; parentFiber !== null; ) {
               switch (parentFiber.tag) {
                 case HostRoot:
-                  var root3 = parentFiber.stateNode;
-                  root3.effectDuration += elapsedTime;
+                  var root2 = parentFiber.stateNode;
+                  root2.effectDuration += elapsedTime;
                   return;
                 case Profiler:
                   var parentStateNode = parentFiber.stateNode;
@@ -10221,8 +10221,8 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
             for (var parentFiber = fiber.return; parentFiber !== null; ) {
               switch (parentFiber.tag) {
                 case HostRoot:
-                  var root3 = parentFiber.stateNode;
-                  root3 !== null && (root3.passiveEffectDuration += elapsedTime);
+                  var root2 = parentFiber.stateNode;
+                  root2 !== null && (root2.passiveEffectDuration += elapsedTime);
                   return;
                 case Profiler:
                   var parentStateNode = parentFiber.stateNode;
@@ -10245,7 +10245,7 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
         }
         function resolveDefaultProps(Component4, baseProps) {
           if (Component4 && Component4.defaultProps) {
-            var props = assign2({}, baseProps), defaultProps = Component4.defaultProps;
+            var props = assign({}, baseProps), defaultProps = Component4.defaultProps;
             for (var propName in defaultProps)
               props[propName] === void 0 && (props[propName] = defaultProps[propName]);
             return props;
@@ -10286,7 +10286,7 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
             }
             warnOnUndefinedDerivedState(ctor, partialState);
           }
-          var memoizedState = partialState == null ? prevState : assign2({}, prevState, partialState);
+          var memoizedState = partialState == null ? prevState : assign({}, prevState, partialState);
           if (workInProgress2.memoizedState = memoizedState, workInProgress2.lanes === NoLanes) {
             var updateQueue = workInProgress2.updateQueue;
             updateQueue.baseState = memoizedState;
@@ -10297,20 +10297,20 @@ Incoming: %s`, currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + next
           enqueueSetState: function(inst, payload, callback) {
             var fiber = get(inst), eventTime = requestEventTime(), lane = requestUpdateLane(fiber), update = createUpdate(eventTime, lane);
             update.payload = payload, callback != null && (warnOnInvalidCallback(callback, "setState"), update.callback = callback);
-            var root3 = enqueueUpdate(fiber, update, lane);
-            root3 !== null && (scheduleUpdateOnFiber(root3, fiber, lane, eventTime), entangleTransitions(root3, fiber, lane)), markStateUpdateScheduled(fiber, lane);
+            var root2 = enqueueUpdate(fiber, update, lane);
+            root2 !== null && (scheduleUpdateOnFiber(root2, fiber, lane, eventTime), entangleTransitions(root2, fiber, lane)), markStateUpdateScheduled(fiber, lane);
           },
           enqueueReplaceState: function(inst, payload, callback) {
             var fiber = get(inst), eventTime = requestEventTime(), lane = requestUpdateLane(fiber), update = createUpdate(eventTime, lane);
             update.tag = ReplaceState, update.payload = payload, callback != null && (warnOnInvalidCallback(callback, "replaceState"), update.callback = callback);
-            var root3 = enqueueUpdate(fiber, update, lane);
-            root3 !== null && (scheduleUpdateOnFiber(root3, fiber, lane, eventTime), entangleTransitions(root3, fiber, lane)), markStateUpdateScheduled(fiber, lane);
+            var root2 = enqueueUpdate(fiber, update, lane);
+            root2 !== null && (scheduleUpdateOnFiber(root2, fiber, lane, eventTime), entangleTransitions(root2, fiber, lane)), markStateUpdateScheduled(fiber, lane);
           },
           enqueueForceUpdate: function(inst, callback) {
             var fiber = get(inst), eventTime = requestEventTime(), lane = requestUpdateLane(fiber), update = createUpdate(eventTime, lane);
             update.tag = ForceUpdate, callback != null && (warnOnInvalidCallback(callback, "forceUpdate"), update.callback = callback);
-            var root3 = enqueueUpdate(fiber, update, lane);
-            root3 !== null && (scheduleUpdateOnFiber(root3, fiber, lane, eventTime), entangleTransitions(root3, fiber, lane)), markForceUpdateScheduled(fiber, lane);
+            var root2 = enqueueUpdate(fiber, update, lane);
+            root2 !== null && (scheduleUpdateOnFiber(root2, fiber, lane, eventTime), entangleTransitions(root2, fiber, lane)), markForceUpdateScheduled(fiber, lane);
           }
         };
         function checkShouldComponentUpdate(workInProgress2, ctor, oldProps, newProps, oldState, newState, nextContext) {
@@ -10348,7 +10348,7 @@ Learn more about this warning here: https://reactjs.org/link/legacy-context`, na
             var hasMutatedProps = instance.props !== newProps;
             instance.props !== void 0 && hasMutatedProps && error("%s(...): When calling super() in `%s`, make sure to pass up the same props that your component's constructor was passed.", name, name), instance.defaultProps && error("Setting defaultProps as an instance property on %s is not supported and will be ignored. Instead, define defaultProps as a static property on %s.", name, name), typeof instance.getSnapshotBeforeUpdate == "function" && typeof instance.componentDidUpdate != "function" && !didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate.has(ctor) && (didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate.add(ctor), error("%s: getSnapshotBeforeUpdate() should be used with componentDidUpdate(). This component defines getSnapshotBeforeUpdate() only.", getComponentNameFromType(ctor))), typeof instance.getDerivedStateFromProps == "function" && error("%s: getDerivedStateFromProps() is defined as an instance method and will be ignored. Instead, declare it as a static method.", name), typeof instance.getDerivedStateFromError == "function" && error("%s: getDerivedStateFromError() is defined as an instance method and will be ignored. Instead, declare it as a static method.", name), typeof ctor.getSnapshotBeforeUpdate == "function" && error("%s: getSnapshotBeforeUpdate() is defined as a static method and will be ignored. Instead, declare it as an instance method.", name);
             var _state = instance.state;
-            _state && (typeof _state != "object" || isArray2(_state)) && error("%s.state: must be set to an object or null", name), typeof instance.getChildContext == "function" && typeof ctor.childContextTypes != "object" && error("%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().", name);
+            _state && (typeof _state != "object" || isArray(_state)) && error("%s.state: must be set to an object or null", name), typeof instance.getChildContext == "function" && typeof ctor.childContextTypes != "object" && error("%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().", name);
           }
         }
         function adoptClassInstance(workInProgress2, instance) {
@@ -10589,15 +10589,15 @@ Visit https://reactjs.org/link/error-boundaries to learn more about error bounda
             }), typeof getDerivedStateFromError != "function" && (includesSomeLane(fiber.lanes, SyncLane) || error("%s: Error boundaries should implement getDerivedStateFromError(). In that method, return a state update to display an error message or fallback UI.", getComponentNameFromFiber(fiber) || "Unknown"));
           }), update;
         }
-        function attachPingListener(root3, wakeable, lanes) {
-          var pingCache = root3.pingCache, threadIDs;
-          if (pingCache === null ? (pingCache = root3.pingCache = new PossiblyWeakMap$1(), threadIDs = /* @__PURE__ */ new Set(), pingCache.set(wakeable, threadIDs)) : (threadIDs = pingCache.get(wakeable), threadIDs === void 0 && (threadIDs = /* @__PURE__ */ new Set(), pingCache.set(wakeable, threadIDs))), !threadIDs.has(lanes)) {
+        function attachPingListener(root2, wakeable, lanes) {
+          var pingCache = root2.pingCache, threadIDs;
+          if (pingCache === null ? (pingCache = root2.pingCache = new PossiblyWeakMap$1(), threadIDs = /* @__PURE__ */ new Set(), pingCache.set(wakeable, threadIDs)) : (threadIDs = pingCache.get(wakeable), threadIDs === void 0 && (threadIDs = /* @__PURE__ */ new Set(), pingCache.set(wakeable, threadIDs))), !threadIDs.has(lanes)) {
             threadIDs.add(lanes);
-            var ping = pingSuspendedRoot.bind(null, root3, wakeable, lanes);
-            isDevToolsPresent && restorePendingUpdaters(root3, lanes), wakeable.then(ping, ping);
+            var ping = pingSuspendedRoot.bind(null, root2, wakeable, lanes);
+            isDevToolsPresent && restorePendingUpdaters(root2, lanes), wakeable.then(ping, ping);
           }
         }
-        function attachRetryListener(suspenseBoundary, root3, wakeable, lanes) {
+        function attachRetryListener(suspenseBoundary, root2, wakeable, lanes) {
           var wakeables = suspenseBoundary.updateQueue;
           if (wakeables === null) {
             var updateQueue = /* @__PURE__ */ new Set();
@@ -10621,7 +10621,7 @@ Visit https://reactjs.org/link/error-boundaries to learn more about error bounda
           } while (node !== null);
           return null;
         }
-        function markSuspenseBoundaryShouldCapture(suspenseBoundary, returnFiber, sourceFiber, root3, rootRenderLanes) {
+        function markSuspenseBoundaryShouldCapture(suspenseBoundary, returnFiber, sourceFiber, root2, rootRenderLanes) {
           if ((suspenseBoundary.mode & ConcurrentMode) === NoMode) {
             if (suspenseBoundary === returnFiber)
               suspenseBoundary.flags |= ShouldCapture;
@@ -10641,17 +10641,17 @@ Visit https://reactjs.org/link/error-boundaries to learn more about error bounda
           }
           return suspenseBoundary.flags |= ShouldCapture, suspenseBoundary.lanes = rootRenderLanes, suspenseBoundary;
         }
-        function throwException(root3, returnFiber, sourceFiber, value, rootRenderLanes) {
-          if (sourceFiber.flags |= Incomplete, isDevToolsPresent && restorePendingUpdaters(root3, rootRenderLanes), value !== null && typeof value == "object" && typeof value.then == "function") {
+        function throwException(root2, returnFiber, sourceFiber, value, rootRenderLanes) {
+          if (sourceFiber.flags |= Incomplete, isDevToolsPresent && restorePendingUpdaters(root2, rootRenderLanes), value !== null && typeof value == "object" && typeof value.then == "function") {
             var wakeable = value;
             resetSuspendedComponent(sourceFiber), getIsHydrating() && sourceFiber.mode & ConcurrentMode && markDidThrowWhileHydratingDEV();
             var suspenseBoundary = getNearestSuspenseBoundaryToCapture(returnFiber);
             if (suspenseBoundary !== null) {
-              suspenseBoundary.flags &= ~ForceClientRender, markSuspenseBoundaryShouldCapture(suspenseBoundary, returnFiber, sourceFiber, root3, rootRenderLanes), suspenseBoundary.mode & ConcurrentMode && attachPingListener(root3, wakeable, rootRenderLanes), attachRetryListener(suspenseBoundary, root3, wakeable);
+              suspenseBoundary.flags &= ~ForceClientRender, markSuspenseBoundaryShouldCapture(suspenseBoundary, returnFiber, sourceFiber, root2, rootRenderLanes), suspenseBoundary.mode & ConcurrentMode && attachPingListener(root2, wakeable, rootRenderLanes), attachRetryListener(suspenseBoundary, root2, wakeable);
               return;
             } else {
               if (!includesSyncLane(rootRenderLanes)) {
-                attachPingListener(root3, wakeable, rootRenderLanes), renderDidSuspendDelayIfPossible();
+                attachPingListener(root2, wakeable, rootRenderLanes), renderDidSuspendDelayIfPossible();
                 return;
               }
               var uncaughtSuspenseError = new Error("A component suspended while responding to synchronous input. This will cause the UI to be replaced with a loading indicator. To fix, updates that suspend should be wrapped with startTransition.");
@@ -10661,7 +10661,7 @@ Visit https://reactjs.org/link/error-boundaries to learn more about error bounda
             markDidThrowWhileHydratingDEV();
             var _suspenseBoundary = getNearestSuspenseBoundaryToCapture(returnFiber);
             if (_suspenseBoundary !== null) {
-              (_suspenseBoundary.flags & ShouldCapture) === NoFlags && (_suspenseBoundary.flags |= ForceClientRender), markSuspenseBoundaryShouldCapture(_suspenseBoundary, returnFiber, sourceFiber, root3, rootRenderLanes), queueHydrationError(createCapturedValueAtFiber(value, sourceFiber));
+              (_suspenseBoundary.flags & ShouldCapture) === NoFlags && (_suspenseBoundary.flags |= ForceClientRender), markSuspenseBoundaryShouldCapture(_suspenseBoundary, returnFiber, sourceFiber, root2, rootRenderLanes), queueHydrationError(createCapturedValueAtFiber(value, sourceFiber));
               return;
             }
           }
@@ -10965,15 +10965,15 @@ Visit https://reactjs.org/link/error-boundaries to learn more about error bounda
           return workInProgress2.flags |= PerformedWork, current2 !== null && didCaptureError ? forceUnmountCurrentAndReconcile(current2, workInProgress2, nextChildren, renderLanes2) : reconcileChildren(current2, workInProgress2, nextChildren, renderLanes2), workInProgress2.memoizedState = instance.state, hasContext && invalidateContextProvider(workInProgress2, Component4, !0), workInProgress2.child;
         }
         function pushHostRootContext(workInProgress2) {
-          var root3 = workInProgress2.stateNode;
-          root3.pendingContext ? pushTopLevelContextObject(workInProgress2, root3.pendingContext, root3.pendingContext !== root3.context) : root3.context && pushTopLevelContextObject(workInProgress2, root3.context, !1), pushHostContainer(workInProgress2, root3.containerInfo);
+          var root2 = workInProgress2.stateNode;
+          root2.pendingContext ? pushTopLevelContextObject(workInProgress2, root2.pendingContext, root2.pendingContext !== root2.context) : root2.context && pushTopLevelContextObject(workInProgress2, root2.context, !1), pushHostContainer(workInProgress2, root2.containerInfo);
         }
         function updateHostRoot(current2, workInProgress2, renderLanes2) {
           if (pushHostRootContext(workInProgress2), current2 === null)
             throw new Error("Should have a current fiber. This is a bug in React.");
           var nextProps = workInProgress2.pendingProps, prevState = workInProgress2.memoizedState, prevChildren = prevState.element;
           cloneUpdateQueue(current2, workInProgress2), processUpdateQueue(workInProgress2, nextProps, null, renderLanes2);
-          var nextState = workInProgress2.memoizedState, root3 = workInProgress2.stateNode, nextChildren = nextState.element;
+          var nextState = workInProgress2.memoizedState, root2 = workInProgress2.stateNode, nextChildren = nextState.element;
           if (prevState.isDehydrated) {
             var overrideState = {
               element: nextChildren,
@@ -11293,13 +11293,13 @@ Check the render method of \`` + ownerName + "`.");
             }
             var hasContextChanged2 = includesSomeLane(renderLanes2, current2.childLanes);
             if (didReceiveUpdate || hasContextChanged2) {
-              var root3 = getWorkInProgressRoot();
-              if (root3 !== null) {
-                var attemptHydrationAtLane = getBumpedLaneForHydration(root3, renderLanes2);
+              var root2 = getWorkInProgressRoot();
+              if (root2 !== null) {
+                var attemptHydrationAtLane = getBumpedLaneForHydration(root2, renderLanes2);
                 if (attemptHydrationAtLane !== NoLane && attemptHydrationAtLane !== suspenseState.retryLane) {
                   suspenseState.retryLane = attemptHydrationAtLane;
                   var eventTime = NoTimestamp;
-                  enqueueConcurrentRenderForLane(current2, attemptHydrationAtLane), scheduleUpdateOnFiber(root3, current2, attemptHydrationAtLane, eventTime);
+                  enqueueConcurrentRenderForLane(current2, attemptHydrationAtLane), scheduleUpdateOnFiber(root2, current2, attemptHydrationAtLane, eventTime);
                 }
               }
               renderDidSuspendDelayIfPossible();
@@ -11376,7 +11376,7 @@ Check the render method of \`` + ownerName + "`.");
         }
         function validateSuspenseListNestedChild(childSlot, index2) {
           {
-            var isAnArray = isArray2(childSlot), isIterable = !isAnArray && typeof getIteratorFn(childSlot) == "function";
+            var isAnArray = isArray(childSlot), isIterable = !isAnArray && typeof getIteratorFn(childSlot) == "function";
             if (isAnArray || isIterable) {
               var type = isAnArray ? "array" : "iterable";
               return error("A nested %s was passed to row #%s in <SuspenseList />. Wrap it in an additional SuspenseList to configure its revealOrder: <SuspenseList revealOrder=...> ... <SuspenseList revealOrder=...>{%s}</SuspenseList> ... </SuspenseList>", type, index2, type), !1;
@@ -11386,7 +11386,7 @@ Check the render method of \`` + ownerName + "`.");
         }
         function validateSuspenseListChildren(children, revealOrder) {
           if ((revealOrder === "forwards" || revealOrder === "backwards") && children !== void 0 && children !== null && children !== !1)
-            if (isArray2(children)) {
+            if (isArray(children)) {
               for (var i = 0; i < children.length; i++)
                 if (!validateSuspenseListNestedChild(children[i], i))
                   return;
@@ -11553,7 +11553,7 @@ Check the render method of \`` + ownerName + "`.");
           switch (workInProgress2.tag) {
             case HostRoot:
               pushHostRootContext(workInProgress2);
-              var root3 = workInProgress2.stateNode;
+              var root2 = workInProgress2.stateNode;
               resetHydrationState();
               break;
             case HostComponent:
@@ -11990,7 +11990,7 @@ Check the render method of \`` + ownerName + "`.");
               return flags & ShouldCapture ? (workInProgress2.flags = flags & ~ShouldCapture | DidCapture, (workInProgress2.mode & ProfileMode) !== NoMode && transferActualDuration(workInProgress2), workInProgress2) : null;
             }
             case HostRoot: {
-              var root3 = workInProgress2.stateNode;
+              var root2 = workInProgress2.stateNode;
               popHostContainer(workInProgress2), popTopLevelContextObject(workInProgress2), resetWorkInProgressVersions();
               var _flags = workInProgress2.flags;
               return (_flags & ShouldCapture) !== NoFlags && (_flags & DidCapture) === NoFlags ? (workInProgress2.flags = _flags & ~ShouldCapture | DidCapture, workInProgress2) : null;
@@ -12032,7 +12032,7 @@ Check the render method of \`` + ownerName + "`.");
               break;
             }
             case HostRoot: {
-              var root3 = interruptedWork.stateNode;
+              var root2 = interruptedWork.stateNode;
               popHostContainer(interruptedWork), popTopLevelContextObject(interruptedWork), resetWorkInProgressVersions();
               break;
             }
@@ -12134,8 +12134,8 @@ Check the render method of \`` + ownerName + "`.");
           }
         }
         var focusedInstanceHandle = null, shouldFireAfterActiveInstanceBlur = !1;
-        function commitBeforeMutationEffects(root3, firstChild) {
-          focusedInstanceHandle = prepareForCommit(root3.containerInfo), nextEffect = firstChild, commitBeforeMutationEffects_begin();
+        function commitBeforeMutationEffects(root2, firstChild) {
+          focusedInstanceHandle = prepareForCommit(root2.containerInfo), nextEffect = firstChild, commitBeforeMutationEffects_begin();
           var shouldFire = shouldFireAfterActiveInstanceBlur;
           return shouldFireAfterActiveInstanceBlur = !1, focusedInstanceHandle = null, shouldFire;
         }
@@ -12186,8 +12186,8 @@ Check the render method of \`` + ownerName + "`.");
               }
               case HostRoot: {
                 {
-                  var root3 = finishedWork.stateNode;
-                  clearContainer(root3.containerInfo);
+                  var root2 = finishedWork.stateNode;
+                  clearContainer(root2.containerInfo);
                 }
                 break;
               }
@@ -12261,8 +12261,8 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
                 outer: for (; parentFiber !== null; ) {
                   switch (parentFiber.tag) {
                     case HostRoot:
-                      var root3 = parentFiber.stateNode;
-                      root3.passiveEffectDuration += passiveEffectDuration;
+                      var root2 = parentFiber.stateNode;
+                      root2.passiveEffectDuration += passiveEffectDuration;
                       break outer;
                     case Profiler:
                       var parentStateNode = parentFiber.stateNode;
@@ -12358,8 +12358,8 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
                     outer: for (; parentFiber !== null; ) {
                       switch (parentFiber.tag) {
                         case HostRoot:
-                          var root3 = parentFiber.stateNode;
-                          root3.effectDuration += effectDuration;
+                          var root2 = parentFiber.stateNode;
+                          root2.effectDuration += effectDuration;
                           break outer;
                         case Profiler:
                           var parentStateNode = parentFiber.stateNode;
@@ -12569,7 +12569,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
           }
         }
         var hostParent = null, hostParentIsContainer = !1;
-        function commitDeletionEffects(root3, returnFiber, deletedFiber) {
+        function commitDeletionEffects(root2, returnFiber, deletedFiber) {
           {
             var parent = returnFiber;
             findParent: for (; parent !== null; ) {
@@ -12591,7 +12591,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             }
             if (hostParent === null)
               throw new Error("Expected to find a host parent. This error is likely caused by a bug in React. Please file an issue.");
-            commitDeletionEffectsOnFiber(root3, returnFiber, deletedFiber), hostParent = null, hostParentIsContainer = !1;
+            commitDeletionEffectsOnFiber(root2, returnFiber, deletedFiber), hostParent = null, hostParentIsContainer = !1;
           }
           detachFiberMutation(deletedFiber);
         }
@@ -12706,16 +12706,16 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             });
           }
         }
-        function commitMutationEffects(root3, finishedWork, committedLanes) {
-          inProgressLanes = committedLanes, inProgressRoot = root3, setCurrentFiber(finishedWork), commitMutationEffectsOnFiber(finishedWork, root3), setCurrentFiber(finishedWork), inProgressLanes = null, inProgressRoot = null;
+        function commitMutationEffects(root2, finishedWork, committedLanes) {
+          inProgressLanes = committedLanes, inProgressRoot = root2, setCurrentFiber(finishedWork), commitMutationEffectsOnFiber(finishedWork, root2), setCurrentFiber(finishedWork), inProgressLanes = null, inProgressRoot = null;
         }
-        function recursivelyTraverseMutationEffects(root3, parentFiber, lanes) {
+        function recursivelyTraverseMutationEffects(root2, parentFiber, lanes) {
           var deletions = parentFiber.deletions;
           if (deletions !== null)
             for (var i = 0; i < deletions.length; i++) {
               var childToDelete = deletions[i];
               try {
-                commitDeletionEffects(root3, parentFiber, childToDelete);
+                commitDeletionEffects(root2, parentFiber, childToDelete);
               } catch (error2) {
                 captureCommitPhaseError(childToDelete, parentFiber, error2);
               }
@@ -12723,17 +12723,17 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
           var prevDebugFiber = getCurrentFiber();
           if (parentFiber.subtreeFlags & MutationMask)
             for (var child = parentFiber.child; child !== null; )
-              setCurrentFiber(child), commitMutationEffectsOnFiber(child, root3), child = child.sibling;
+              setCurrentFiber(child), commitMutationEffectsOnFiber(child, root2), child = child.sibling;
           setCurrentFiber(prevDebugFiber);
         }
-        function commitMutationEffectsOnFiber(finishedWork, root3, lanes) {
+        function commitMutationEffectsOnFiber(finishedWork, root2, lanes) {
           var current2 = finishedWork.alternate, flags = finishedWork.flags;
           switch (finishedWork.tag) {
             case FunctionComponent:
             case ForwardRef:
             case MemoComponent:
             case SimpleMemoComponent: {
-              if (recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork), flags & Update) {
+              if (recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork), flags & Update) {
                 try {
                   commitHookEffectListUnmount(Insertion | HasEffect, finishedWork, finishedWork.return), commitHookEffectListMount(Insertion | HasEffect, finishedWork);
                 } catch (error2) {
@@ -12756,11 +12756,11 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
               return;
             }
             case ClassComponent: {
-              recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork), flags & Ref && current2 !== null && safelyDetachRef(current2, current2.return);
+              recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork), flags & Ref && current2 !== null && safelyDetachRef(current2, current2.return);
               return;
             }
             case HostComponent: {
-              recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork), flags & Ref && current2 !== null && safelyDetachRef(current2, current2.return);
+              recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork), flags & Ref && current2 !== null && safelyDetachRef(current2, current2.return);
               {
                 if (finishedWork.flags & ContentReset) {
                   var instance = finishedWork.stateNode;
@@ -12786,7 +12786,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
               return;
             }
             case HostText: {
-              if (recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork), flags & Update) {
+              if (recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork), flags & Update) {
                 if (finishedWork.stateNode === null)
                   throw new Error("This should have a text node initialized. This error is likely caused by a bug in React. Please file an issue.");
                 var textInstance = finishedWork.stateNode, newText = finishedWork.memoizedProps, oldText = current2 !== null ? current2.memoizedProps : newText;
@@ -12799,11 +12799,11 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
               return;
             }
             case HostRoot: {
-              if (recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork), flags & Update && current2 !== null) {
+              if (recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork), flags & Update && current2 !== null) {
                 var prevRootState = current2.memoizedState;
                 if (prevRootState.isDehydrated)
                   try {
-                    commitHydratedContainer(root3.containerInfo);
+                    commitHydratedContainer(root2.containerInfo);
                   } catch (error2) {
                     captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                   }
@@ -12811,11 +12811,11 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
               return;
             }
             case HostPortal: {
-              recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork);
+              recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork);
               return;
             }
             case SuspenseComponent: {
-              recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork);
+              recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork);
               var offscreenFiber = finishedWork.child;
               if (offscreenFiber.flags & Visibility) {
                 var offscreenInstance = offscreenFiber.stateNode, newState = offscreenFiber.memoizedState, isHidden = newState !== null;
@@ -12841,9 +12841,9 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
                 finishedWork.mode & ConcurrentMode
               ) {
                 var prevOffscreenSubtreeWasHidden = offscreenSubtreeWasHidden;
-                offscreenSubtreeWasHidden = prevOffscreenSubtreeWasHidden || _wasHidden, recursivelyTraverseMutationEffects(root3, finishedWork), offscreenSubtreeWasHidden = prevOffscreenSubtreeWasHidden;
+                offscreenSubtreeWasHidden = prevOffscreenSubtreeWasHidden || _wasHidden, recursivelyTraverseMutationEffects(root2, finishedWork), offscreenSubtreeWasHidden = prevOffscreenSubtreeWasHidden;
               } else
-                recursivelyTraverseMutationEffects(root3, finishedWork);
+                recursivelyTraverseMutationEffects(root2, finishedWork);
               if (commitReconciliationEffects(finishedWork), flags & Visibility) {
                 var _offscreenInstance = finishedWork.stateNode, _newState = finishedWork.memoizedState, _isHidden = _newState !== null, offscreenBoundary = finishedWork;
                 if (_offscreenInstance.isHidden = _isHidden, _isHidden && !_wasHidden && (offscreenBoundary.mode & ConcurrentMode) !== NoMode) {
@@ -12856,13 +12856,13 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
               return;
             }
             case SuspenseListComponent: {
-              recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork), flags & Update && attachSuspenseRetryListeners(finishedWork);
+              recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork), flags & Update && attachSuspenseRetryListeners(finishedWork);
               return;
             }
             case ScopeComponent:
               return;
             default: {
-              recursivelyTraverseMutationEffects(root3, finishedWork), commitReconciliationEffects(finishedWork);
+              recursivelyTraverseMutationEffects(root2, finishedWork), commitReconciliationEffects(finishedWork);
               return;
             }
           }
@@ -12879,16 +12879,16 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
           }
           flags & Hydrating && (finishedWork.flags &= ~Hydrating);
         }
-        function commitLayoutEffects(finishedWork, root3, committedLanes) {
-          inProgressLanes = committedLanes, inProgressRoot = root3, nextEffect = finishedWork, commitLayoutEffects_begin(finishedWork, root3, committedLanes), inProgressLanes = null, inProgressRoot = null;
+        function commitLayoutEffects(finishedWork, root2, committedLanes) {
+          inProgressLanes = committedLanes, inProgressRoot = root2, nextEffect = finishedWork, commitLayoutEffects_begin(finishedWork, root2, committedLanes), inProgressLanes = null, inProgressRoot = null;
         }
-        function commitLayoutEffects_begin(subtreeRoot, root3, committedLanes) {
+        function commitLayoutEffects_begin(subtreeRoot, root2, committedLanes) {
           for (var isModernRoot = (subtreeRoot.mode & ConcurrentMode) !== NoMode; nextEffect !== null; ) {
             var fiber = nextEffect, firstChild = fiber.child;
             if (fiber.tag === OffscreenComponent && isModernRoot) {
               var isHidden = fiber.memoizedState !== null, newOffscreenSubtreeIsHidden = isHidden || offscreenSubtreeIsHidden;
               if (newOffscreenSubtreeIsHidden) {
-                commitLayoutMountEffects_complete(subtreeRoot, root3, committedLanes);
+                commitLayoutMountEffects_complete(subtreeRoot, root2, committedLanes);
                 continue;
               } else {
                 var current2 = fiber.alternate, wasHidden = current2 !== null && current2.memoizedState !== null, newOffscreenSubtreeWasHidden = wasHidden || offscreenSubtreeWasHidden, prevOffscreenSubtreeIsHidden = offscreenSubtreeIsHidden, prevOffscreenSubtreeWasHidden = offscreenSubtreeWasHidden;
@@ -12897,24 +12897,24 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
                   nextEffect = child, commitLayoutEffects_begin(
                     child,
                     // New root; bubble back up to here and stop.
-                    root3,
+                    root2,
                     committedLanes
                   ), child = child.sibling;
-                nextEffect = fiber, offscreenSubtreeIsHidden = prevOffscreenSubtreeIsHidden, offscreenSubtreeWasHidden = prevOffscreenSubtreeWasHidden, commitLayoutMountEffects_complete(subtreeRoot, root3, committedLanes);
+                nextEffect = fiber, offscreenSubtreeIsHidden = prevOffscreenSubtreeIsHidden, offscreenSubtreeWasHidden = prevOffscreenSubtreeWasHidden, commitLayoutMountEffects_complete(subtreeRoot, root2, committedLanes);
                 continue;
               }
             }
-            (fiber.subtreeFlags & LayoutMask) !== NoFlags && firstChild !== null ? (firstChild.return = fiber, nextEffect = firstChild) : commitLayoutMountEffects_complete(subtreeRoot, root3, committedLanes);
+            (fiber.subtreeFlags & LayoutMask) !== NoFlags && firstChild !== null ? (firstChild.return = fiber, nextEffect = firstChild) : commitLayoutMountEffects_complete(subtreeRoot, root2, committedLanes);
           }
         }
-        function commitLayoutMountEffects_complete(subtreeRoot, root3, committedLanes) {
+        function commitLayoutMountEffects_complete(subtreeRoot, root2, committedLanes) {
           for (; nextEffect !== null; ) {
             var fiber = nextEffect;
             if ((fiber.flags & LayoutMask) !== NoFlags) {
               var current2 = fiber.alternate;
               setCurrentFiber(fiber);
               try {
-                commitLayoutEffectOnFiber(root3, current2, fiber, committedLanes);
+                commitLayoutEffectOnFiber(root2, current2, fiber, committedLanes);
               } catch (error2) {
                 captureCommitPhaseError(fiber, fiber.return, error2);
               }
@@ -13021,22 +13021,22 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             nextEffect = fiber.return;
           }
         }
-        function commitPassiveMountEffects(root3, finishedWork, committedLanes, committedTransitions) {
-          nextEffect = finishedWork, commitPassiveMountEffects_begin(finishedWork, root3, committedLanes, committedTransitions);
+        function commitPassiveMountEffects(root2, finishedWork, committedLanes, committedTransitions) {
+          nextEffect = finishedWork, commitPassiveMountEffects_begin(finishedWork, root2, committedLanes, committedTransitions);
         }
-        function commitPassiveMountEffects_begin(subtreeRoot, root3, committedLanes, committedTransitions) {
+        function commitPassiveMountEffects_begin(subtreeRoot, root2, committedLanes, committedTransitions) {
           for (; nextEffect !== null; ) {
             var fiber = nextEffect, firstChild = fiber.child;
-            (fiber.subtreeFlags & PassiveMask) !== NoFlags && firstChild !== null ? (firstChild.return = fiber, nextEffect = firstChild) : commitPassiveMountEffects_complete(subtreeRoot, root3, committedLanes, committedTransitions);
+            (fiber.subtreeFlags & PassiveMask) !== NoFlags && firstChild !== null ? (firstChild.return = fiber, nextEffect = firstChild) : commitPassiveMountEffects_complete(subtreeRoot, root2, committedLanes, committedTransitions);
           }
         }
-        function commitPassiveMountEffects_complete(subtreeRoot, root3, committedLanes, committedTransitions) {
+        function commitPassiveMountEffects_complete(subtreeRoot, root2, committedLanes, committedTransitions) {
           for (; nextEffect !== null; ) {
             var fiber = nextEffect;
             if ((fiber.flags & Passive) !== NoFlags) {
               setCurrentFiber(fiber);
               try {
-                commitPassiveMountOnFiber(root3, fiber, committedLanes, committedTransitions);
+                commitPassiveMountOnFiber(root2, fiber, committedLanes, committedTransitions);
               } catch (error2) {
                 captureCommitPhaseError(fiber, fiber.return, error2);
               }
@@ -13306,13 +13306,13 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
           var mode = fiber.mode;
           return (mode & ConcurrentMode) === NoMode ? SyncLane : claimNextRetryLane();
         }
-        function scheduleUpdateOnFiber(root3, fiber, lane, eventTime) {
-          checkForNestedUpdates(), isRunningInsertionEffect && error("useInsertionEffect must not schedule updates."), isFlushingPassiveEffects && (didScheduleUpdateDuringPassiveEffects = !0), markRootUpdated(root3, lane, eventTime), (executionContext & RenderContext) !== NoLanes && root3 === workInProgressRoot ? warnAboutRenderPhaseUpdatesInDEV(fiber) : (isDevToolsPresent && addFiberToLanesMap(root3, fiber, lane), warnIfUpdatesNotWrappedWithActDEV(fiber), root3 === workInProgressRoot && ((executionContext & RenderContext) === NoContext && (workInProgressRootInterleavedUpdatedLanes = mergeLanes(workInProgressRootInterleavedUpdatedLanes, lane)), workInProgressRootExitStatus === RootSuspendedWithDelay && markRootSuspended$1(root3, workInProgressRootRenderLanes)), ensureRootIsScheduled(root3, eventTime), lane === SyncLane && executionContext === NoContext && (fiber.mode & ConcurrentMode) === NoMode && // Treat `act` as if it's inside `batchedUpdates`, even in legacy mode.
+        function scheduleUpdateOnFiber(root2, fiber, lane, eventTime) {
+          checkForNestedUpdates(), isRunningInsertionEffect && error("useInsertionEffect must not schedule updates."), isFlushingPassiveEffects && (didScheduleUpdateDuringPassiveEffects = !0), markRootUpdated(root2, lane, eventTime), (executionContext & RenderContext) !== NoLanes && root2 === workInProgressRoot ? warnAboutRenderPhaseUpdatesInDEV(fiber) : (isDevToolsPresent && addFiberToLanesMap(root2, fiber, lane), warnIfUpdatesNotWrappedWithActDEV(fiber), root2 === workInProgressRoot && ((executionContext & RenderContext) === NoContext && (workInProgressRootInterleavedUpdatedLanes = mergeLanes(workInProgressRootInterleavedUpdatedLanes, lane)), workInProgressRootExitStatus === RootSuspendedWithDelay && markRootSuspended$1(root2, workInProgressRootRenderLanes)), ensureRootIsScheduled(root2, eventTime), lane === SyncLane && executionContext === NoContext && (fiber.mode & ConcurrentMode) === NoMode && // Treat `act` as if it's inside `batchedUpdates`, even in legacy mode.
           !ReactCurrentActQueue$1.isBatchingLegacy && (resetRenderTimer(), flushSyncCallbacksOnlyInLegacyMode()));
         }
-        function scheduleInitialHydrationOnRoot(root3, lane, eventTime) {
-          var current2 = root3.current;
-          current2.lanes = lane, markRootUpdated(root3, lane, eventTime), ensureRootIsScheduled(root3, eventTime);
+        function scheduleInitialHydrationOnRoot(root2, lane, eventTime) {
+          var current2 = root2.current;
+          current2.lanes = lane, markRootUpdated(root2, lane, eventTime), ensureRootIsScheduled(root2, eventTime);
         }
         function isUnsafeClassRenderPhaseUpdate(fiber) {
           return (
@@ -13321,15 +13321,15 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             (executionContext & RenderContext) !== NoContext
           );
         }
-        function ensureRootIsScheduled(root3, currentTime) {
-          var existingCallbackNode = root3.callbackNode;
-          markStarvedLanesAsExpired(root3, currentTime);
-          var nextLanes = getNextLanes(root3, root3 === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes);
+        function ensureRootIsScheduled(root2, currentTime) {
+          var existingCallbackNode = root2.callbackNode;
+          markStarvedLanesAsExpired(root2, currentTime);
+          var nextLanes = getNextLanes(root2, root2 === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes);
           if (nextLanes === NoLanes) {
-            existingCallbackNode !== null && cancelCallback$1(existingCallbackNode), root3.callbackNode = null, root3.callbackPriority = NoLane;
+            existingCallbackNode !== null && cancelCallback$1(existingCallbackNode), root2.callbackNode = null, root2.callbackPriority = NoLane;
             return;
           }
-          var newCallbackPriority = getHighestPriorityLane(nextLanes), existingCallbackPriority = root3.callbackPriority;
+          var newCallbackPriority = getHighestPriorityLane(nextLanes), existingCallbackPriority = root2.callbackPriority;
           if (existingCallbackPriority === newCallbackPriority && // Special case related to `act`. If the currently scheduled task is a
           // Scheduler task, rather than an `act` task, cancel it and re-scheduled
           // on the `act` queue.
@@ -13340,7 +13340,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
           existingCallbackNode != null && cancelCallback$1(existingCallbackNode);
           var newCallbackNode;
           if (newCallbackPriority === SyncLane)
-            root3.tag === LegacyRoot ? (ReactCurrentActQueue$1.isBatchingLegacy !== null && (ReactCurrentActQueue$1.didScheduleLegacyUpdate = !0), scheduleLegacySyncCallback(performSyncWorkOnRoot.bind(null, root3))) : scheduleSyncCallback(performSyncWorkOnRoot.bind(null, root3)), ReactCurrentActQueue$1.current !== null ? ReactCurrentActQueue$1.current.push(flushSyncCallbacks) : scheduleMicrotask(function() {
+            root2.tag === LegacyRoot ? (ReactCurrentActQueue$1.isBatchingLegacy !== null && (ReactCurrentActQueue$1.didScheduleLegacyUpdate = !0), scheduleLegacySyncCallback(performSyncWorkOnRoot.bind(null, root2))) : scheduleSyncCallback(performSyncWorkOnRoot.bind(null, root2)), ReactCurrentActQueue$1.current !== null ? ReactCurrentActQueue$1.current.push(flushSyncCallbacks) : scheduleMicrotask(function() {
               (executionContext & (RenderContext | CommitContext)) === NoContext && flushSyncCallbacks();
             }), newCallbackNode = null;
           else {
@@ -13362,55 +13362,55 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
                 schedulerPriorityLevel = NormalPriority;
                 break;
             }
-            newCallbackNode = scheduleCallback$1(schedulerPriorityLevel, performConcurrentWorkOnRoot.bind(null, root3));
+            newCallbackNode = scheduleCallback$1(schedulerPriorityLevel, performConcurrentWorkOnRoot.bind(null, root2));
           }
-          root3.callbackPriority = newCallbackPriority, root3.callbackNode = newCallbackNode;
+          root2.callbackPriority = newCallbackPriority, root2.callbackNode = newCallbackNode;
         }
-        function performConcurrentWorkOnRoot(root3, didTimeout) {
+        function performConcurrentWorkOnRoot(root2, didTimeout) {
           if (resetNestedUpdateFlag(), currentEventTime = NoTimestamp, currentEventTransitionLane = NoLanes, (executionContext & (RenderContext | CommitContext)) !== NoContext)
             throw new Error("Should not already be working.");
-          var originalCallbackNode = root3.callbackNode, didFlushPassiveEffects = flushPassiveEffects();
-          if (didFlushPassiveEffects && root3.callbackNode !== originalCallbackNode)
+          var originalCallbackNode = root2.callbackNode, didFlushPassiveEffects = flushPassiveEffects();
+          if (didFlushPassiveEffects && root2.callbackNode !== originalCallbackNode)
             return null;
-          var lanes = getNextLanes(root3, root3 === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes);
+          var lanes = getNextLanes(root2, root2 === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes);
           if (lanes === NoLanes)
             return null;
-          var shouldTimeSlice = !includesBlockingLane(root3, lanes) && !includesExpiredLane(root3, lanes) && !didTimeout, exitStatus = shouldTimeSlice ? renderRootConcurrent(root3, lanes) : renderRootSync(root3, lanes);
+          var shouldTimeSlice = !includesBlockingLane(root2, lanes) && !includesExpiredLane(root2, lanes) && !didTimeout, exitStatus = shouldTimeSlice ? renderRootConcurrent(root2, lanes) : renderRootSync(root2, lanes);
           if (exitStatus !== RootInProgress) {
             if (exitStatus === RootErrored) {
-              var errorRetryLanes = getLanesToRetrySynchronouslyOnError(root3);
-              errorRetryLanes !== NoLanes && (lanes = errorRetryLanes, exitStatus = recoverFromConcurrentError(root3, errorRetryLanes));
+              var errorRetryLanes = getLanesToRetrySynchronouslyOnError(root2);
+              errorRetryLanes !== NoLanes && (lanes = errorRetryLanes, exitStatus = recoverFromConcurrentError(root2, errorRetryLanes));
             }
             if (exitStatus === RootFatalErrored) {
               var fatalError = workInProgressRootFatalError;
-              throw prepareFreshStack(root3, NoLanes), markRootSuspended$1(root3, lanes), ensureRootIsScheduled(root3, now()), fatalError;
+              throw prepareFreshStack(root2, NoLanes), markRootSuspended$1(root2, lanes), ensureRootIsScheduled(root2, now()), fatalError;
             }
             if (exitStatus === RootDidNotComplete)
-              markRootSuspended$1(root3, lanes);
+              markRootSuspended$1(root2, lanes);
             else {
-              var renderWasConcurrent = !includesBlockingLane(root3, lanes), finishedWork = root3.current.alternate;
+              var renderWasConcurrent = !includesBlockingLane(root2, lanes), finishedWork = root2.current.alternate;
               if (renderWasConcurrent && !isRenderConsistentWithExternalStores(finishedWork)) {
-                if (exitStatus = renderRootSync(root3, lanes), exitStatus === RootErrored) {
-                  var _errorRetryLanes = getLanesToRetrySynchronouslyOnError(root3);
-                  _errorRetryLanes !== NoLanes && (lanes = _errorRetryLanes, exitStatus = recoverFromConcurrentError(root3, _errorRetryLanes));
+                if (exitStatus = renderRootSync(root2, lanes), exitStatus === RootErrored) {
+                  var _errorRetryLanes = getLanesToRetrySynchronouslyOnError(root2);
+                  _errorRetryLanes !== NoLanes && (lanes = _errorRetryLanes, exitStatus = recoverFromConcurrentError(root2, _errorRetryLanes));
                 }
                 if (exitStatus === RootFatalErrored) {
                   var _fatalError = workInProgressRootFatalError;
-                  throw prepareFreshStack(root3, NoLanes), markRootSuspended$1(root3, lanes), ensureRootIsScheduled(root3, now()), _fatalError;
+                  throw prepareFreshStack(root2, NoLanes), markRootSuspended$1(root2, lanes), ensureRootIsScheduled(root2, now()), _fatalError;
                 }
               }
-              root3.finishedWork = finishedWork, root3.finishedLanes = lanes, finishConcurrentRender(root3, exitStatus, lanes);
+              root2.finishedWork = finishedWork, root2.finishedLanes = lanes, finishConcurrentRender(root2, exitStatus, lanes);
             }
           }
-          return ensureRootIsScheduled(root3, now()), root3.callbackNode === originalCallbackNode ? performConcurrentWorkOnRoot.bind(null, root3) : null;
+          return ensureRootIsScheduled(root2, now()), root2.callbackNode === originalCallbackNode ? performConcurrentWorkOnRoot.bind(null, root2) : null;
         }
-        function recoverFromConcurrentError(root3, errorRetryLanes) {
+        function recoverFromConcurrentError(root2, errorRetryLanes) {
           var errorsFromFirstAttempt = workInProgressRootConcurrentErrors;
-          if (isRootDehydrated(root3)) {
-            var rootWorkInProgress = prepareFreshStack(root3, errorRetryLanes);
-            rootWorkInProgress.flags |= ForceClientRender, errorHydratingContainer(root3.containerInfo);
+          if (isRootDehydrated(root2)) {
+            var rootWorkInProgress = prepareFreshStack(root2, errorRetryLanes);
+            rootWorkInProgress.flags |= ForceClientRender, errorHydratingContainer(root2.containerInfo);
           }
-          var exitStatus = renderRootSync(root3, errorRetryLanes);
+          var exitStatus = renderRootSync(root2, errorRetryLanes);
           if (exitStatus !== RootErrored) {
             var errorsFromSecondAttempt = workInProgressRootRecoverableErrors;
             workInProgressRootRecoverableErrors = errorsFromFirstAttempt, errorsFromSecondAttempt !== null && queueRecoverableErrors(errorsFromSecondAttempt);
@@ -13420,7 +13420,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
         function queueRecoverableErrors(errors) {
           workInProgressRootRecoverableErrors === null ? workInProgressRootRecoverableErrors = errors : workInProgressRootRecoverableErrors.push.apply(workInProgressRootRecoverableErrors, errors);
         }
-        function finishConcurrentRender(root3, exitStatus, lanes) {
+        function finishConcurrentRender(root2, exitStatus, lanes) {
           switch (exitStatus) {
             case RootInProgress:
             case RootFatalErrored:
@@ -13429,45 +13429,45 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             // statement, but eslint doesn't know about invariant, so it complains
             // if I do. eslint-disable-next-line no-fallthrough
             case RootErrored: {
-              commitRoot(root3, workInProgressRootRecoverableErrors, workInProgressTransitions);
+              commitRoot(root2, workInProgressRootRecoverableErrors, workInProgressTransitions);
               break;
             }
             case RootSuspended: {
-              if (markRootSuspended$1(root3, lanes), includesOnlyRetries(lanes) && // do not delay if we're inside an act() scope
+              if (markRootSuspended$1(root2, lanes), includesOnlyRetries(lanes) && // do not delay if we're inside an act() scope
               !shouldForceFlushFallbacksInDEV()) {
                 var msUntilTimeout = globalMostRecentFallbackTime + FALLBACK_THROTTLE_MS - now();
                 if (msUntilTimeout > 10) {
-                  var nextLanes = getNextLanes(root3, NoLanes);
+                  var nextLanes = getNextLanes(root2, NoLanes);
                   if (nextLanes !== NoLanes)
                     break;
-                  var suspendedLanes = root3.suspendedLanes;
+                  var suspendedLanes = root2.suspendedLanes;
                   if (!isSubsetOfLanes(suspendedLanes, lanes)) {
                     var eventTime = requestEventTime();
-                    markRootPinged(root3, suspendedLanes);
+                    markRootPinged(root2, suspendedLanes);
                     break;
                   }
-                  root3.timeoutHandle = scheduleTimeout(commitRoot.bind(null, root3, workInProgressRootRecoverableErrors, workInProgressTransitions), msUntilTimeout);
+                  root2.timeoutHandle = scheduleTimeout(commitRoot.bind(null, root2, workInProgressRootRecoverableErrors, workInProgressTransitions), msUntilTimeout);
                   break;
                 }
               }
-              commitRoot(root3, workInProgressRootRecoverableErrors, workInProgressTransitions);
+              commitRoot(root2, workInProgressRootRecoverableErrors, workInProgressTransitions);
               break;
             }
             case RootSuspendedWithDelay: {
-              if (markRootSuspended$1(root3, lanes), includesOnlyTransitions(lanes))
+              if (markRootSuspended$1(root2, lanes), includesOnlyTransitions(lanes))
                 break;
               if (!shouldForceFlushFallbacksInDEV()) {
-                var mostRecentEventTime = getMostRecentEventTime(root3, lanes), eventTimeMs = mostRecentEventTime, timeElapsedMs = now() - eventTimeMs, _msUntilTimeout = jnd(timeElapsedMs) - timeElapsedMs;
+                var mostRecentEventTime = getMostRecentEventTime(root2, lanes), eventTimeMs = mostRecentEventTime, timeElapsedMs = now() - eventTimeMs, _msUntilTimeout = jnd(timeElapsedMs) - timeElapsedMs;
                 if (_msUntilTimeout > 10) {
-                  root3.timeoutHandle = scheduleTimeout(commitRoot.bind(null, root3, workInProgressRootRecoverableErrors, workInProgressTransitions), _msUntilTimeout);
+                  root2.timeoutHandle = scheduleTimeout(commitRoot.bind(null, root2, workInProgressRootRecoverableErrors, workInProgressTransitions), _msUntilTimeout);
                   break;
                 }
               }
-              commitRoot(root3, workInProgressRootRecoverableErrors, workInProgressTransitions);
+              commitRoot(root2, workInProgressRootRecoverableErrors, workInProgressTransitions);
               break;
             }
             case RootCompleted: {
-              commitRoot(root3, workInProgressRootRecoverableErrors, workInProgressTransitions);
+              commitRoot(root2, workInProgressRootRecoverableErrors, workInProgressTransitions);
               break;
             }
             default:
@@ -13482,7 +13482,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
                 var checks = updateQueue.stores;
                 if (checks !== null)
                   for (var i = 0; i < checks.length; i++) {
-                    var check2 = checks[i], getSnapshot = check2.getSnapshot, renderedValue = check2.value;
+                    var check = checks[i], getSnapshot = check.getSnapshot, renderedValue = check.value;
                     try {
                       if (!objectIs(getSnapshot(), renderedValue))
                         return !1;
@@ -13508,32 +13508,32 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
           }
           return !0;
         }
-        function markRootSuspended$1(root3, suspendedLanes) {
-          suspendedLanes = removeLanes(suspendedLanes, workInProgressRootPingedLanes), suspendedLanes = removeLanes(suspendedLanes, workInProgressRootInterleavedUpdatedLanes), markRootSuspended(root3, suspendedLanes);
+        function markRootSuspended$1(root2, suspendedLanes) {
+          suspendedLanes = removeLanes(suspendedLanes, workInProgressRootPingedLanes), suspendedLanes = removeLanes(suspendedLanes, workInProgressRootInterleavedUpdatedLanes), markRootSuspended(root2, suspendedLanes);
         }
-        function performSyncWorkOnRoot(root3) {
+        function performSyncWorkOnRoot(root2) {
           if (syncNestedUpdateFlag(), (executionContext & (RenderContext | CommitContext)) !== NoContext)
             throw new Error("Should not already be working.");
           flushPassiveEffects();
-          var lanes = getNextLanes(root3, NoLanes);
+          var lanes = getNextLanes(root2, NoLanes);
           if (!includesSomeLane(lanes, SyncLane))
-            return ensureRootIsScheduled(root3, now()), null;
-          var exitStatus = renderRootSync(root3, lanes);
-          if (root3.tag !== LegacyRoot && exitStatus === RootErrored) {
-            var errorRetryLanes = getLanesToRetrySynchronouslyOnError(root3);
-            errorRetryLanes !== NoLanes && (lanes = errorRetryLanes, exitStatus = recoverFromConcurrentError(root3, errorRetryLanes));
+            return ensureRootIsScheduled(root2, now()), null;
+          var exitStatus = renderRootSync(root2, lanes);
+          if (root2.tag !== LegacyRoot && exitStatus === RootErrored) {
+            var errorRetryLanes = getLanesToRetrySynchronouslyOnError(root2);
+            errorRetryLanes !== NoLanes && (lanes = errorRetryLanes, exitStatus = recoverFromConcurrentError(root2, errorRetryLanes));
           }
           if (exitStatus === RootFatalErrored) {
             var fatalError = workInProgressRootFatalError;
-            throw prepareFreshStack(root3, NoLanes), markRootSuspended$1(root3, lanes), ensureRootIsScheduled(root3, now()), fatalError;
+            throw prepareFreshStack(root2, NoLanes), markRootSuspended$1(root2, lanes), ensureRootIsScheduled(root2, now()), fatalError;
           }
           if (exitStatus === RootDidNotComplete)
             throw new Error("Root did not complete. This is a bug in React.");
-          var finishedWork = root3.current.alternate;
-          return root3.finishedWork = finishedWork, root3.finishedLanes = lanes, commitRoot(root3, workInProgressRootRecoverableErrors, workInProgressTransitions), ensureRootIsScheduled(root3, now()), null;
+          var finishedWork = root2.current.alternate;
+          return root2.finishedWork = finishedWork, root2.finishedLanes = lanes, commitRoot(root2, workInProgressRootRecoverableErrors, workInProgressTransitions), ensureRootIsScheduled(root2, now()), null;
         }
-        function flushRoot(root3, lanes) {
-          lanes !== NoLanes && (markRootEntangled(root3, mergeLanes(lanes, SyncLane)), ensureRootIsScheduled(root3, now()), (executionContext & (RenderContext | CommitContext)) === NoContext && (resetRenderTimer(), flushSyncCallbacks()));
+        function flushRoot(root2, lanes) {
+          lanes !== NoLanes && (markRootEntangled(root2, mergeLanes(lanes, SyncLane)), ensureRootIsScheduled(root2, now()), (executionContext & (RenderContext | CommitContext)) === NoContext && (resetRenderTimer(), flushSyncCallbacks()));
         }
         function batchedUpdates$1(fn, a) {
           var prevExecutionContext = executionContext;
@@ -13573,19 +13573,19 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
         function popRenderLanes(fiber) {
           subtreeRenderLanes = subtreeRenderLanesCursor.current, pop(subtreeRenderLanesCursor, fiber);
         }
-        function prepareFreshStack(root3, lanes) {
-          root3.finishedWork = null, root3.finishedLanes = NoLanes;
-          var timeoutHandle = root3.timeoutHandle;
-          if (timeoutHandle !== noTimeout && (root3.timeoutHandle = noTimeout, cancelTimeout(timeoutHandle)), workInProgress !== null)
+        function prepareFreshStack(root2, lanes) {
+          root2.finishedWork = null, root2.finishedLanes = NoLanes;
+          var timeoutHandle = root2.timeoutHandle;
+          if (timeoutHandle !== noTimeout && (root2.timeoutHandle = noTimeout, cancelTimeout(timeoutHandle)), workInProgress !== null)
             for (var interruptedWork = workInProgress.return; interruptedWork !== null; ) {
               var current2 = interruptedWork.alternate;
               unwindInterruptedWork(current2, interruptedWork), interruptedWork = interruptedWork.return;
             }
-          workInProgressRoot = root3;
-          var rootWorkInProgress = createWorkInProgress(root3.current, null);
+          workInProgressRoot = root2;
+          var rootWorkInProgress = createWorkInProgress(root2.current, null);
           return workInProgress = rootWorkInProgress, workInProgressRootRenderLanes = subtreeRenderLanes = workInProgressRootIncludedLanes = lanes, workInProgressRootExitStatus = RootInProgress, workInProgressRootFatalError = null, workInProgressRootSkippedLanes = NoLanes, workInProgressRootInterleavedUpdatedLanes = NoLanes, workInProgressRootPingedLanes = NoLanes, workInProgressRootConcurrentErrors = null, workInProgressRootRecoverableErrors = null, finishQueueingConcurrentUpdates(), ReactStrictModeWarnings.discardPendingWarnings(), rootWorkInProgress;
         }
-        function handleError2(root3, thrownValue) {
+        function handleError(root2, thrownValue) {
           do {
             var erroredWork = workInProgress;
             try {
@@ -13599,7 +13599,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
                   markComponentSuspended(erroredWork, wakeable, workInProgressRootRenderLanes);
                 } else
                   markComponentErrored(erroredWork, thrownValue, workInProgressRootRenderLanes);
-              throwException(root3, erroredWork.return, erroredWork, thrownValue, workInProgressRootRenderLanes), completeUnitOfWork(erroredWork);
+              throwException(root2, erroredWork.return, erroredWork, thrownValue, workInProgressRootRenderLanes), completeUnitOfWork(erroredWork);
             } catch (yetAnotherThrownValue) {
               thrownValue = yetAnotherThrownValue, workInProgress === erroredWork && erroredWork !== null ? (erroredWork = erroredWork.return, workInProgress = erroredWork) : erroredWork = workInProgress;
               continue;
@@ -13632,16 +13632,16 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
         function renderHasNotSuspendedYet() {
           return workInProgressRootExitStatus === RootInProgress;
         }
-        function renderRootSync(root3, lanes) {
+        function renderRootSync(root2, lanes) {
           var prevExecutionContext = executionContext;
           executionContext |= RenderContext;
           var prevDispatcher = pushDispatcher();
-          if (workInProgressRoot !== root3 || workInProgressRootRenderLanes !== lanes) {
+          if (workInProgressRoot !== root2 || workInProgressRootRenderLanes !== lanes) {
             if (isDevToolsPresent) {
-              var memoizedUpdaters = root3.memoizedUpdaters;
-              memoizedUpdaters.size > 0 && (restorePendingUpdaters(root3, workInProgressRootRenderLanes), memoizedUpdaters.clear()), movePendingFibersToMemoized(root3, lanes);
+              var memoizedUpdaters = root2.memoizedUpdaters;
+              memoizedUpdaters.size > 0 && (restorePendingUpdaters(root2, workInProgressRootRenderLanes), memoizedUpdaters.clear()), movePendingFibersToMemoized(root2, lanes);
             }
-            workInProgressTransitions = getTransitionsForLanes(), prepareFreshStack(root3, lanes);
+            workInProgressTransitions = getTransitionsForLanes(), prepareFreshStack(root2, lanes);
           }
           markRenderStarted(lanes);
           do
@@ -13649,7 +13649,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
               workLoopSync();
               break;
             } catch (thrownValue) {
-              handleError2(root3, thrownValue);
+              handleError(root2, thrownValue);
             }
           while (!0);
           if (resetContextDependencies(), executionContext = prevExecutionContext, popDispatcher(prevDispatcher), workInProgress !== null)
@@ -13660,16 +13660,16 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
           for (; workInProgress !== null; )
             performUnitOfWork(workInProgress);
         }
-        function renderRootConcurrent(root3, lanes) {
+        function renderRootConcurrent(root2, lanes) {
           var prevExecutionContext = executionContext;
           executionContext |= RenderContext;
           var prevDispatcher = pushDispatcher();
-          if (workInProgressRoot !== root3 || workInProgressRootRenderLanes !== lanes) {
+          if (workInProgressRoot !== root2 || workInProgressRootRenderLanes !== lanes) {
             if (isDevToolsPresent) {
-              var memoizedUpdaters = root3.memoizedUpdaters;
-              memoizedUpdaters.size > 0 && (restorePendingUpdaters(root3, workInProgressRootRenderLanes), memoizedUpdaters.clear()), movePendingFibersToMemoized(root3, lanes);
+              var memoizedUpdaters = root2.memoizedUpdaters;
+              memoizedUpdaters.size > 0 && (restorePendingUpdaters(root2, workInProgressRootRenderLanes), memoizedUpdaters.clear()), movePendingFibersToMemoized(root2, lanes);
             }
-            workInProgressTransitions = getTransitionsForLanes(), resetRenderTimer(), prepareFreshStack(root3, lanes);
+            workInProgressTransitions = getTransitionsForLanes(), resetRenderTimer(), prepareFreshStack(root2, lanes);
           }
           markRenderStarted(lanes);
           do
@@ -13677,7 +13677,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
               workLoopConcurrent();
               break;
             } catch (thrownValue) {
-              handleError2(root3, thrownValue);
+              handleError(root2, thrownValue);
             }
           while (!0);
           return resetContextDependencies(), popDispatcher(prevDispatcher), executionContext = prevExecutionContext, workInProgress !== null ? (markRenderYielded(), RootInProgress) : (markRenderStopped(), workInProgressRoot = null, workInProgressRootRenderLanes = NoLanes, workInProgressRootExitStatus);
@@ -13731,29 +13731,29 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
           } while (completedWork !== null);
           workInProgressRootExitStatus === RootInProgress && (workInProgressRootExitStatus = RootCompleted);
         }
-        function commitRoot(root3, recoverableErrors, transitions) {
+        function commitRoot(root2, recoverableErrors, transitions) {
           var previousUpdateLanePriority = getCurrentUpdatePriority(), prevTransition = ReactCurrentBatchConfig$3.transition;
           try {
-            ReactCurrentBatchConfig$3.transition = null, setCurrentUpdatePriority(DiscreteEventPriority), commitRootImpl(root3, recoverableErrors, transitions, previousUpdateLanePriority);
+            ReactCurrentBatchConfig$3.transition = null, setCurrentUpdatePriority(DiscreteEventPriority), commitRootImpl(root2, recoverableErrors, transitions, previousUpdateLanePriority);
           } finally {
             ReactCurrentBatchConfig$3.transition = prevTransition, setCurrentUpdatePriority(previousUpdateLanePriority);
           }
           return null;
         }
-        function commitRootImpl(root3, recoverableErrors, transitions, renderPriorityLevel) {
+        function commitRootImpl(root2, recoverableErrors, transitions, renderPriorityLevel) {
           do
             flushPassiveEffects();
           while (rootWithPendingPassiveEffects !== null);
           if (flushRenderPhaseStrictModeWarningsInDEV(), (executionContext & (RenderContext | CommitContext)) !== NoContext)
             throw new Error("Should not already be working.");
-          var finishedWork = root3.finishedWork, lanes = root3.finishedLanes;
+          var finishedWork = root2.finishedWork, lanes = root2.finishedLanes;
           if (markCommitStarted(lanes), finishedWork === null)
             return markCommitStopped(), null;
-          if (lanes === NoLanes && error("root.finishedLanes should not be empty during a commit. This is a bug in React."), root3.finishedWork = null, root3.finishedLanes = NoLanes, finishedWork === root3.current)
+          if (lanes === NoLanes && error("root.finishedLanes should not be empty during a commit. This is a bug in React."), root2.finishedWork = null, root2.finishedLanes = NoLanes, finishedWork === root2.current)
             throw new Error("Cannot commit the same tree as before. This error is likely caused by a bug in React. Please file an issue.");
-          root3.callbackNode = null, root3.callbackPriority = NoLane;
+          root2.callbackNode = null, root2.callbackPriority = NoLane;
           var remainingLanes = mergeLanes(finishedWork.lanes, finishedWork.childLanes);
-          markRootFinished(root3, remainingLanes), root3 === workInProgressRoot && (workInProgressRoot = null, workInProgress = null, workInProgressRootRenderLanes = NoLanes), ((finishedWork.subtreeFlags & PassiveMask) !== NoFlags || (finishedWork.flags & PassiveMask) !== NoFlags) && (rootDoesHavePassiveEffects || (rootDoesHavePassiveEffects = !0, pendingPassiveTransitions = transitions, scheduleCallback$1(NormalPriority, function() {
+          markRootFinished(root2, remainingLanes), root2 === workInProgressRoot && (workInProgressRoot = null, workInProgress = null, workInProgressRootRenderLanes = NoLanes), ((finishedWork.subtreeFlags & PassiveMask) !== NoFlags || (finishedWork.flags & PassiveMask) !== NoFlags) && (rootDoesHavePassiveEffects || (rootDoesHavePassiveEffects = !0, pendingPassiveTransitions = transitions, scheduleCallback$1(NormalPriority, function() {
             return flushPassiveEffects(), null;
           })));
           var subtreeHasEffects = (finishedWork.subtreeFlags & (BeforeMutationMask | MutationMask | LayoutMask | PassiveMask)) !== NoFlags, rootHasEffect = (finishedWork.flags & (BeforeMutationMask | MutationMask | LayoutMask | PassiveMask)) !== NoFlags;
@@ -13764,13 +13764,13 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             setCurrentUpdatePriority(DiscreteEventPriority);
             var prevExecutionContext = executionContext;
             executionContext |= CommitContext, ReactCurrentOwner$2.current = null;
-            var shouldFireAfterActiveInstanceBlur2 = commitBeforeMutationEffects(root3, finishedWork);
-            recordCommitTime(), commitMutationEffects(root3, finishedWork, lanes), resetAfterCommit(root3.containerInfo), root3.current = finishedWork, markLayoutEffectsStarted(lanes), commitLayoutEffects(finishedWork, root3, lanes), markLayoutEffectsStopped(), requestPaint(), executionContext = prevExecutionContext, setCurrentUpdatePriority(previousPriority), ReactCurrentBatchConfig$3.transition = prevTransition;
+            var shouldFireAfterActiveInstanceBlur2 = commitBeforeMutationEffects(root2, finishedWork);
+            recordCommitTime(), commitMutationEffects(root2, finishedWork, lanes), resetAfterCommit(root2.containerInfo), root2.current = finishedWork, markLayoutEffectsStarted(lanes), commitLayoutEffects(finishedWork, root2, lanes), markLayoutEffectsStopped(), requestPaint(), executionContext = prevExecutionContext, setCurrentUpdatePriority(previousPriority), ReactCurrentBatchConfig$3.transition = prevTransition;
           } else
-            root3.current = finishedWork, recordCommitTime();
+            root2.current = finishedWork, recordCommitTime();
           var rootDidHavePassiveEffects = rootDoesHavePassiveEffects;
-          if (rootDoesHavePassiveEffects ? (rootDoesHavePassiveEffects = !1, rootWithPendingPassiveEffects = root3, pendingPassiveEffectsLanes = lanes) : (nestedPassiveUpdateCount = 0, rootWithPassiveNestedUpdates = null), remainingLanes = root3.pendingLanes, remainingLanes === NoLanes && (legacyErrorBoundariesThatAlreadyFailed = null), rootDidHavePassiveEffects || commitDoubleInvokeEffectsInDEV(root3.current, !1), onCommitRoot(finishedWork.stateNode, renderPriorityLevel), isDevToolsPresent && root3.memoizedUpdaters.clear(), onCommitRoot$1(), ensureRootIsScheduled(root3, now()), recoverableErrors !== null)
-            for (var onRecoverableError = root3.onRecoverableError, i = 0; i < recoverableErrors.length; i++) {
+          if (rootDoesHavePassiveEffects ? (rootDoesHavePassiveEffects = !1, rootWithPendingPassiveEffects = root2, pendingPassiveEffectsLanes = lanes) : (nestedPassiveUpdateCount = 0, rootWithPassiveNestedUpdates = null), remainingLanes = root2.pendingLanes, remainingLanes === NoLanes && (legacyErrorBoundariesThatAlreadyFailed = null), rootDidHavePassiveEffects || commitDoubleInvokeEffectsInDEV(root2.current, !1), onCommitRoot(finishedWork.stateNode, renderPriorityLevel), isDevToolsPresent && root2.memoizedUpdaters.clear(), onCommitRoot$1(), ensureRootIsScheduled(root2, now()), recoverableErrors !== null)
+            for (var onRecoverableError = root2.onRecoverableError, i = 0; i < recoverableErrors.length; i++) {
               var recoverableError = recoverableErrors[i], componentStack = recoverableError.stack, digest = recoverableError.digest;
               onRecoverableError(recoverableError.value, {
                 componentStack,
@@ -13782,7 +13782,7 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             var error$1 = firstUncaughtError;
             throw firstUncaughtError = null, error$1;
           }
-          return includesSomeLane(pendingPassiveEffectsLanes, SyncLane) && root3.tag !== LegacyRoot && flushPassiveEffects(), remainingLanes = root3.pendingLanes, includesSomeLane(remainingLanes, SyncLane) ? (markNestedUpdateScheduled(), root3 === rootWithNestedUpdates ? nestedUpdateCount++ : (nestedUpdateCount = 0, rootWithNestedUpdates = root3)) : nestedUpdateCount = 0, flushSyncCallbacks(), markCommitStopped(), null;
+          return includesSomeLane(pendingPassiveEffectsLanes, SyncLane) && root2.tag !== LegacyRoot && flushPassiveEffects(), remainingLanes = root2.pendingLanes, includesSomeLane(remainingLanes, SyncLane) ? (markNestedUpdateScheduled(), root2 === rootWithNestedUpdates ? nestedUpdateCount++ : (nestedUpdateCount = 0, rootWithNestedUpdates = root2)) : nestedUpdateCount = 0, flushSyncCallbacks(), markCommitStopped(), null;
         }
         function flushPassiveEffects() {
           if (rootWithPendingPassiveEffects !== null) {
@@ -13805,23 +13805,23 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             return !1;
           var transitions = pendingPassiveTransitions;
           pendingPassiveTransitions = null;
-          var root3 = rootWithPendingPassiveEffects, lanes = pendingPassiveEffectsLanes;
+          var root2 = rootWithPendingPassiveEffects, lanes = pendingPassiveEffectsLanes;
           if (rootWithPendingPassiveEffects = null, pendingPassiveEffectsLanes = NoLanes, (executionContext & (RenderContext | CommitContext)) !== NoContext)
             throw new Error("Cannot flush passive effects while already rendering.");
           isFlushingPassiveEffects = !0, didScheduleUpdateDuringPassiveEffects = !1, markPassiveEffectsStarted(lanes);
           var prevExecutionContext = executionContext;
-          executionContext |= CommitContext, commitPassiveUnmountEffects(root3.current), commitPassiveMountEffects(root3, root3.current, lanes, transitions);
+          executionContext |= CommitContext, commitPassiveUnmountEffects(root2.current), commitPassiveMountEffects(root2, root2.current, lanes, transitions);
           {
             var profilerEffects = pendingPassiveProfilerEffects;
             pendingPassiveProfilerEffects = [];
             for (var i = 0; i < profilerEffects.length; i++) {
               var _fiber = profilerEffects[i];
-              commitPassiveEffectDurations(root3, _fiber);
+              commitPassiveEffectDurations(root2, _fiber);
             }
           }
-          markPassiveEffectsStopped(), commitDoubleInvokeEffectsInDEV(root3.current, !0), executionContext = prevExecutionContext, flushSyncCallbacks(), didScheduleUpdateDuringPassiveEffects ? root3 === rootWithPassiveNestedUpdates ? nestedPassiveUpdateCount++ : (nestedPassiveUpdateCount = 0, rootWithPassiveNestedUpdates = root3) : nestedPassiveUpdateCount = 0, isFlushingPassiveEffects = !1, didScheduleUpdateDuringPassiveEffects = !1, onPostCommitRoot(root3);
+          markPassiveEffectsStopped(), commitDoubleInvokeEffectsInDEV(root2.current, !0), executionContext = prevExecutionContext, flushSyncCallbacks(), didScheduleUpdateDuringPassiveEffects ? root2 === rootWithPassiveNestedUpdates ? nestedPassiveUpdateCount++ : (nestedPassiveUpdateCount = 0, rootWithPassiveNestedUpdates = root2) : nestedPassiveUpdateCount = 0, isFlushingPassiveEffects = !1, didScheduleUpdateDuringPassiveEffects = !1, onPostCommitRoot(root2);
           {
-            var stateNode = root3.current.stateNode;
+            var stateNode = root2.current.stateNode;
             stateNode.effectDuration = 0, stateNode.passiveEffectDuration = 0;
           }
           return !0;
@@ -13837,8 +13837,8 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
         }
         var onUncaughtError = prepareToThrowUncaughtError;
         function captureCommitPhaseErrorOnRoot(rootFiber, sourceFiber, error2) {
-          var errorInfo = createCapturedValueAtFiber(error2, sourceFiber), update = createRootErrorUpdate(rootFiber, errorInfo, SyncLane), root3 = enqueueUpdate(rootFiber, update, SyncLane), eventTime = requestEventTime();
-          root3 !== null && (markRootUpdated(root3, SyncLane, eventTime), ensureRootIsScheduled(root3, eventTime));
+          var errorInfo = createCapturedValueAtFiber(error2, sourceFiber), update = createRootErrorUpdate(rootFiber, errorInfo, SyncLane), root2 = enqueueUpdate(rootFiber, update, SyncLane), eventTime = requestEventTime();
+          root2 !== null && (markRootUpdated(root2, SyncLane, eventTime), ensureRootIsScheduled(root2, eventTime));
         }
         function captureCommitPhaseError(sourceFiber, nearestMountedAncestor, error$1) {
           if (reportUncaughtErrorInDEV(error$1), setIsRunningInsertionEffect(!1), sourceFiber.tag === HostRoot) {
@@ -13853,8 +13853,8 @@ Learn more about data fetching with Hooks: https://reactjs.org/link/hooks-data-f
             } else if (fiber.tag === ClassComponent) {
               var ctor = fiber.type, instance = fiber.stateNode;
               if (typeof ctor.getDerivedStateFromError == "function" || typeof instance.componentDidCatch == "function" && !isAlreadyFailedLegacyErrorBoundary(instance)) {
-                var errorInfo = createCapturedValueAtFiber(error$1, sourceFiber), update = createClassErrorUpdate(fiber, errorInfo, SyncLane), root3 = enqueueUpdate(fiber, update, SyncLane), eventTime = requestEventTime();
-                root3 !== null && (markRootUpdated(root3, SyncLane, eventTime), ensureRootIsScheduled(root3, eventTime));
+                var errorInfo = createCapturedValueAtFiber(error$1, sourceFiber), update = createClassErrorUpdate(fiber, errorInfo, SyncLane), root2 = enqueueUpdate(fiber, update, SyncLane), eventTime = requestEventTime();
+                root2 !== null && (markRootUpdated(root2, SyncLane, eventTime), ensureRootIsScheduled(root2, eventTime));
                 return;
               }
             }
@@ -13866,16 +13866,16 @@ Error message:
 
 %s`, error$1);
         }
-        function pingSuspendedRoot(root3, wakeable, pingedLanes) {
-          var pingCache = root3.pingCache;
+        function pingSuspendedRoot(root2, wakeable, pingedLanes) {
+          var pingCache = root2.pingCache;
           pingCache !== null && pingCache.delete(wakeable);
           var eventTime = requestEventTime();
-          markRootPinged(root3, pingedLanes), warnIfSuspenseResolutionNotWrappedWithActDEV(root3), workInProgressRoot === root3 && isSubsetOfLanes(workInProgressRootRenderLanes, pingedLanes) && (workInProgressRootExitStatus === RootSuspendedWithDelay || workInProgressRootExitStatus === RootSuspended && includesOnlyRetries(workInProgressRootRenderLanes) && now() - globalMostRecentFallbackTime < FALLBACK_THROTTLE_MS ? prepareFreshStack(root3, NoLanes) : workInProgressRootPingedLanes = mergeLanes(workInProgressRootPingedLanes, pingedLanes)), ensureRootIsScheduled(root3, eventTime);
+          markRootPinged(root2, pingedLanes), warnIfSuspenseResolutionNotWrappedWithActDEV(root2), workInProgressRoot === root2 && isSubsetOfLanes(workInProgressRootRenderLanes, pingedLanes) && (workInProgressRootExitStatus === RootSuspendedWithDelay || workInProgressRootExitStatus === RootSuspended && includesOnlyRetries(workInProgressRootRenderLanes) && now() - globalMostRecentFallbackTime < FALLBACK_THROTTLE_MS ? prepareFreshStack(root2, NoLanes) : workInProgressRootPingedLanes = mergeLanes(workInProgressRootPingedLanes, pingedLanes)), ensureRootIsScheduled(root2, eventTime);
         }
         function retryTimedOutBoundary(boundaryFiber, retryLane) {
           retryLane === NoLane && (retryLane = requestRetryLane(boundaryFiber));
-          var eventTime = requestEventTime(), root3 = enqueueConcurrentRenderForLane(boundaryFiber, retryLane);
-          root3 !== null && (markRootUpdated(root3, retryLane, eventTime), ensureRootIsScheduled(root3, eventTime));
+          var eventTime = requestEventTime(), root2 = enqueueConcurrentRenderForLane(boundaryFiber, retryLane);
+          root2 !== null && (markRootUpdated(root2, retryLane, eventTime), ensureRootIsScheduled(root2, eventTime));
         }
         function retryDehydratedSuspenseBoundary(boundaryFiber) {
           var suspenseState = boundaryFiber.memoizedState, retryLane = NoLane;
@@ -13980,11 +13980,11 @@ Error message:
               }
             }
         }
-        function restorePendingUpdaters(root3, lanes) {
+        function restorePendingUpdaters(root2, lanes) {
           if (isDevToolsPresent) {
-            var memoizedUpdaters = root3.memoizedUpdaters;
+            var memoizedUpdaters = root2.memoizedUpdaters;
             memoizedUpdaters.forEach(function(schedulingFiber) {
-              addFiberToLanesMap(root3, schedulingFiber, lanes);
+              addFiberToLanesMap(root2, schedulingFiber, lanes);
             });
           }
         }
@@ -14028,8 +14028,8 @@ This ensures that you're testing the behavior the user would see in the browser.
             }
           }
         }
-        function warnIfSuspenseResolutionNotWrappedWithActDEV(root3) {
-          root3.tag !== LegacyRoot && isConcurrentActEnvironment() && ReactCurrentActQueue$1.current === null && error(`A suspended resource finished loading inside a test, but the event was not wrapped in act(...).
+        function warnIfSuspenseResolutionNotWrappedWithActDEV(root2) {
+          root2.tag !== LegacyRoot && isConcurrentActEnvironment() && ReactCurrentActQueue$1.current === null && error(`A suspended resource finished loading inside a test, but the event was not wrapped in act(...).
 
 When testing, code that resolves suspended data should be wrapped into act(...):
 
@@ -14119,21 +14119,21 @@ This ensures that you're testing the behavior the user would see in the browser.
             failedBoundaries === null && (failedBoundaries = /* @__PURE__ */ new WeakSet()), failedBoundaries.add(fiber);
           }
         }
-        var scheduleRefresh = function(root3, update) {
+        var scheduleRefresh = function(root2, update) {
           {
             if (resolveFamily === null)
               return;
             var staleFamilies = update.staleFamilies, updatedFamilies = update.updatedFamilies;
             flushPassiveEffects(), flushSync(function() {
-              scheduleFibersWithFamiliesRecursively(root3.current, updatedFamilies, staleFamilies);
+              scheduleFibersWithFamiliesRecursively(root2.current, updatedFamilies, staleFamilies);
             });
           }
-        }, scheduleRoot = function(root3, element) {
+        }, scheduleRoot = function(root2, element) {
           {
-            if (root3.context !== emptyContextObject)
+            if (root2.context !== emptyContextObject)
               return;
             flushPassiveEffects(), flushSync(function() {
-              updateContainer(element, root3, null, null);
+              updateContainer(element, root2, null, null);
             });
           }
         };
@@ -14164,12 +14164,12 @@ This ensures that you're testing the behavior the user would see in the browser.
             child !== null && !needsRemount && scheduleFibersWithFamiliesRecursively(child, updatedFamilies, staleFamilies), sibling !== null && scheduleFibersWithFamiliesRecursively(sibling, updatedFamilies, staleFamilies);
           }
         }
-        var findHostInstancesForRefresh = function(root3, families) {
+        var findHostInstancesForRefresh = function(root2, families) {
           {
             var hostInstances = /* @__PURE__ */ new Set(), types = new Set(families.map(function(family) {
               return family.current;
             }));
-            return findHostInstancesForMatchingFibersRecursively(root3.current, types, hostInstances), hostInstances;
+            return findHostInstancesForMatchingFibersRecursively(root2.current, types, hostInstances), hostInstances;
           }
         };
         function findHostInstancesForMatchingFibersRecursively(fiber, types, hostInstances) {
@@ -14247,8 +14247,8 @@ This ensures that you're testing the behavior the user would see in the browser.
           return new FiberNode(tag, pendingProps, key, mode);
         };
         function shouldConstruct$1(Component4) {
-          var prototype2 = Component4.prototype;
-          return !!(prototype2 && prototype2.isReactComponent);
+          var prototype = Component4.prototype;
+          return !!(prototype && prototype.isReactComponent);
         }
         function isSimpleFunctionComponent(type) {
           return typeof type == "function" && !shouldConstruct$1(type) && type.defaultProps === void 0;
@@ -14445,8 +14445,8 @@ Check the render method of \`` + ownerName + "`.");
           }
         }
         function createFiberRoot(containerInfo, tag, hydrate2, initialChildren, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError, transitionCallbacks) {
-          var root3 = new FiberRootNode(containerInfo, tag, hydrate2, identifierPrefix, onRecoverableError), uninitializedFiber = createHostRootFiber(tag, isStrictMode);
-          root3.current = uninitializedFiber, uninitializedFiber.stateNode = root3;
+          var root2 = new FiberRootNode(containerInfo, tag, hydrate2, identifierPrefix, onRecoverableError), uninitializedFiber = createHostRootFiber(tag, isStrictMode);
+          root2.current = uninitializedFiber, uninitializedFiber.stateNode = root2;
           {
             var _initialState = {
               element: initialChildren,
@@ -14458,7 +14458,7 @@ Check the render method of \`` + ownerName + "`.");
             };
             uninitializedFiber.memoizedState = _initialState;
           }
-          return initializeUpdateQueue(uninitializedFiber), root3;
+          return initializeUpdateQueue(uninitializedFiber), root2;
         }
         var ReactVersion = "18.3.1";
         function createPortal(children, containerInfo, implementation) {
@@ -14517,10 +14517,10 @@ Check the render method of \`` + ownerName + "`.");
           return createFiberRoot(containerInfo, tag, hydrate2, initialChildren, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
         }
         function createHydrationContainer(initialChildren, callback, containerInfo, tag, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError, transitionCallbacks) {
-          var hydrate2 = !0, root3 = createFiberRoot(containerInfo, tag, hydrate2, initialChildren, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
-          root3.context = getContextForSubtree(null);
-          var current2 = root3.current, eventTime = requestEventTime(), lane = requestUpdateLane(current2), update = createUpdate(eventTime, lane);
-          return update.callback = callback ?? null, enqueueUpdate(current2, update, lane), scheduleInitialHydrationOnRoot(root3, lane, eventTime), root3;
+          var hydrate2 = !0, root2 = createFiberRoot(containerInfo, tag, hydrate2, initialChildren, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
+          root2.context = getContextForSubtree(null);
+          var current2 = root2.current, eventTime = requestEventTime(), lane = requestUpdateLane(current2), update = createUpdate(eventTime, lane);
+          return update.callback = callback ?? null, enqueueUpdate(current2, update, lane), scheduleInitialHydrationOnRoot(root2, lane, eventTime), root2;
         }
         function updateContainer(element, container, parentComponent, callback) {
           onScheduleRoot(container, element);
@@ -14534,8 +14534,8 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
           update.payload = {
             element
           }, callback = callback === void 0 ? null : callback, callback !== null && (typeof callback != "function" && error("render(...): Expected the last optional `callback` argument to be a function. Instead received: %s.", callback), update.callback = callback);
-          var root3 = enqueueUpdate(current$1, update, lane);
-          return root3 !== null && (scheduleUpdateOnFiber(root3, current$1, lane, eventTime), entangleTransitions(root3, current$1, lane)), lane;
+          var root2 = enqueueUpdate(current$1, update, lane);
+          return root2 !== null && (scheduleUpdateOnFiber(root2, current$1, lane, eventTime), entangleTransitions(root2, current$1, lane)), lane;
         }
         function getPublicRootInstance(container) {
           var containerFiber = container.current;
@@ -14551,19 +14551,19 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
         function attemptSynchronousHydration$1(fiber) {
           switch (fiber.tag) {
             case HostRoot: {
-              var root3 = fiber.stateNode;
-              if (isRootDehydrated(root3)) {
-                var lanes = getHighestPriorityPendingLanes(root3);
-                flushRoot(root3, lanes);
+              var root2 = fiber.stateNode;
+              if (isRootDehydrated(root2)) {
+                var lanes = getHighestPriorityPendingLanes(root2);
+                flushRoot(root2, lanes);
               }
               break;
             }
             case SuspenseComponent: {
               flushSync(function() {
-                var root4 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-                if (root4 !== null) {
+                var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+                if (root3 !== null) {
                   var eventTime = requestEventTime();
-                  scheduleUpdateOnFiber(root4, fiber, SyncLane, eventTime);
+                  scheduleUpdateOnFiber(root3, fiber, SyncLane, eventTime);
                 }
               });
               var retryLane = SyncLane;
@@ -14583,20 +14583,20 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
         }
         function attemptContinuousHydration$1(fiber) {
           if (fiber.tag === SuspenseComponent) {
-            var lane = SelectiveHydrationLane, root3 = enqueueConcurrentRenderForLane(fiber, lane);
-            if (root3 !== null) {
+            var lane = SelectiveHydrationLane, root2 = enqueueConcurrentRenderForLane(fiber, lane);
+            if (root2 !== null) {
               var eventTime = requestEventTime();
-              scheduleUpdateOnFiber(root3, fiber, lane, eventTime);
+              scheduleUpdateOnFiber(root2, fiber, lane, eventTime);
             }
             markRetryLaneIfNotHydrated(fiber, lane);
           }
         }
         function attemptHydrationAtCurrentPriority$1(fiber) {
           if (fiber.tag === SuspenseComponent) {
-            var lane = requestUpdateLane(fiber), root3 = enqueueConcurrentRenderForLane(fiber, lane);
-            if (root3 !== null) {
+            var lane = requestUpdateLane(fiber), root2 = enqueueConcurrentRenderForLane(fiber, lane);
+            if (root2 !== null) {
               var eventTime = requestEventTime();
-              scheduleUpdateOnFiber(root3, fiber, lane, eventTime);
+              scheduleUpdateOnFiber(root2, fiber, lane, eventTime);
             }
             markRetryLaneIfNotHydrated(fiber, lane);
           }
@@ -14620,15 +14620,15 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
         var overrideHookState = null, overrideHookStateDeletePath = null, overrideHookStateRenamePath = null, overrideProps = null, overridePropsDeletePath = null, overridePropsRenamePath = null, scheduleUpdate = null, setErrorHandler = null, setSuspenseHandler = null;
         {
           var copyWithDeleteImpl = function(obj, path, index2) {
-            var key = path[index2], updated = isArray2(obj) ? obj.slice() : assign2({}, obj);
-            return index2 + 1 === path.length ? (isArray2(updated) ? updated.splice(key, 1) : delete updated[key], updated) : (updated[key] = copyWithDeleteImpl(obj[key], path, index2 + 1), updated);
+            var key = path[index2], updated = isArray(obj) ? obj.slice() : assign({}, obj);
+            return index2 + 1 === path.length ? (isArray(updated) ? updated.splice(key, 1) : delete updated[key], updated) : (updated[key] = copyWithDeleteImpl(obj[key], path, index2 + 1), updated);
           }, copyWithDelete = function(obj, path) {
             return copyWithDeleteImpl(obj, path, 0);
           }, copyWithRenameImpl = function(obj, oldPath, newPath, index2) {
-            var oldKey = oldPath[index2], updated = isArray2(obj) ? obj.slice() : assign2({}, obj);
+            var oldKey = oldPath[index2], updated = isArray(obj) ? obj.slice() : assign({}, obj);
             if (index2 + 1 === oldPath.length) {
               var newKey = newPath[index2];
-              updated[newKey] = updated[oldKey], isArray2(updated) ? updated.splice(oldKey, 1) : delete updated[oldKey];
+              updated[newKey] = updated[oldKey], isArray(updated) ? updated.splice(oldKey, 1) : delete updated[oldKey];
             } else
               updated[oldKey] = copyWithRenameImpl(
                 // $FlowFixMe number or string is fine here
@@ -14652,7 +14652,7 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
           }, copyWithSetImpl = function(obj, path, index2, value) {
             if (index2 >= path.length)
               return value;
-            var key = path[index2], updated = isArray2(obj) ? obj.slice() : assign2({}, obj);
+            var key = path[index2], updated = isArray(obj) ? obj.slice() : assign({}, obj);
             return updated[key] = copyWithSetImpl(obj[key], path, index2 + 1, value), updated;
           }, copyWithSet = function(obj, path, value) {
             return copyWithSetImpl(obj, path, 0, value);
@@ -14665,41 +14665,41 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
             var hook = findHook(fiber, id);
             if (hook !== null) {
               var newState = copyWithSet(hook.memoizedState, path, value);
-              hook.memoizedState = newState, hook.baseState = newState, fiber.memoizedProps = assign2({}, fiber.memoizedProps);
-              var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-              root3 !== null && scheduleUpdateOnFiber(root3, fiber, SyncLane, NoTimestamp);
+              hook.memoizedState = newState, hook.baseState = newState, fiber.memoizedProps = assign({}, fiber.memoizedProps);
+              var root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+              root2 !== null && scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
             }
           }, overrideHookStateDeletePath = function(fiber, id, path) {
             var hook = findHook(fiber, id);
             if (hook !== null) {
               var newState = copyWithDelete(hook.memoizedState, path);
-              hook.memoizedState = newState, hook.baseState = newState, fiber.memoizedProps = assign2({}, fiber.memoizedProps);
-              var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-              root3 !== null && scheduleUpdateOnFiber(root3, fiber, SyncLane, NoTimestamp);
+              hook.memoizedState = newState, hook.baseState = newState, fiber.memoizedProps = assign({}, fiber.memoizedProps);
+              var root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+              root2 !== null && scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
             }
           }, overrideHookStateRenamePath = function(fiber, id, oldPath, newPath) {
             var hook = findHook(fiber, id);
             if (hook !== null) {
               var newState = copyWithRename(hook.memoizedState, oldPath, newPath);
-              hook.memoizedState = newState, hook.baseState = newState, fiber.memoizedProps = assign2({}, fiber.memoizedProps);
-              var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-              root3 !== null && scheduleUpdateOnFiber(root3, fiber, SyncLane, NoTimestamp);
+              hook.memoizedState = newState, hook.baseState = newState, fiber.memoizedProps = assign({}, fiber.memoizedProps);
+              var root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+              root2 !== null && scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
             }
           }, overrideProps = function(fiber, path, value) {
             fiber.pendingProps = copyWithSet(fiber.memoizedProps, path, value), fiber.alternate && (fiber.alternate.pendingProps = fiber.pendingProps);
-            var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-            root3 !== null && scheduleUpdateOnFiber(root3, fiber, SyncLane, NoTimestamp);
+            var root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+            root2 !== null && scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
           }, overridePropsDeletePath = function(fiber, path) {
             fiber.pendingProps = copyWithDelete(fiber.memoizedProps, path), fiber.alternate && (fiber.alternate.pendingProps = fiber.pendingProps);
-            var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-            root3 !== null && scheduleUpdateOnFiber(root3, fiber, SyncLane, NoTimestamp);
+            var root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+            root2 !== null && scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
           }, overridePropsRenamePath = function(fiber, oldPath, newPath) {
             fiber.pendingProps = copyWithRename(fiber.memoizedProps, oldPath, newPath), fiber.alternate && (fiber.alternate.pendingProps = fiber.pendingProps);
-            var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-            root3 !== null && scheduleUpdateOnFiber(root3, fiber, SyncLane, NoTimestamp);
+            var root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+            root2 !== null && scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
           }, scheduleUpdate = function(fiber) {
-            var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
-            root3 !== null && scheduleUpdateOnFiber(root3, fiber, SyncLane, NoTimestamp);
+            var root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+            root2 !== null && scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
           }, setErrorHandler = function(newShouldErrorImpl) {
             shouldErrorImpl = newShouldErrorImpl;
           }, setSuspenseHandler = function(newShouldSuspendImpl) {
@@ -14758,26 +14758,26 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
           this._internalRoot = internalRoot;
         }
         ReactDOMHydrationRoot.prototype.render = ReactDOMRoot.prototype.render = function(children) {
-          var root3 = this._internalRoot;
-          if (root3 === null)
+          var root2 = this._internalRoot;
+          if (root2 === null)
             throw new Error("Cannot update an unmounted root.");
           {
             typeof arguments[1] == "function" ? error("render(...): does not support the second callback argument. To execute a side effect after rendering, declare it in a component body with useEffect().") : isValidContainer(arguments[1]) ? error("You passed a container to the second argument of root.render(...). You don't need to pass it again since you already passed it to create the root.") : typeof arguments[1] < "u" && error("You passed a second argument to root.render(...) but it only accepts one argument.");
-            var container = root3.containerInfo;
+            var container = root2.containerInfo;
             if (container.nodeType !== COMMENT_NODE) {
-              var hostInstance = findHostInstanceWithNoPortals(root3.current);
+              var hostInstance = findHostInstanceWithNoPortals(root2.current);
               hostInstance && hostInstance.parentNode !== container && error("render(...): It looks like the React-rendered content of the root container was removed without using React. This is not supported and will cause errors. Instead, call root.unmount() to empty a root's container.");
             }
           }
-          updateContainer(children, root3, null, null);
+          updateContainer(children, root2, null, null);
         }, ReactDOMHydrationRoot.prototype.unmount = ReactDOMRoot.prototype.unmount = function() {
           typeof arguments[0] == "function" && error("unmount(...): does not support a callback argument. To execute a side effect after rendering, declare it in a component body with useEffect().");
-          var root3 = this._internalRoot;
-          if (root3 !== null) {
+          var root2 = this._internalRoot;
+          if (root2 !== null) {
             this._internalRoot = null;
-            var container = root3.containerInfo;
+            var container = root2.containerInfo;
             isAlreadyRendering() && error("Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition."), flushSync(function() {
-              updateContainer(null, root3, null, null);
+              updateContainer(null, root2, null, null);
             }), unmarkContainerAsRoot(container);
           }
         };
@@ -14790,10 +14790,10 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
 
   let root = createRoot(domContainer);
   root.render(<App />);`), options2.unstable_strictMode === !0 && (isStrictMode = !0), options2.identifierPrefix !== void 0 && (identifierPrefix = options2.identifierPrefix), options2.onRecoverableError !== void 0 && (onRecoverableError = options2.onRecoverableError), options2.transitionCallbacks !== void 0 && (transitionCallbacks = options2.transitionCallbacks));
-          var root3 = createContainer(container, ConcurrentRoot, null, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
-          markContainerAsRoot(root3.current, container);
+          var root2 = createContainer(container, ConcurrentRoot, null, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
+          markContainerAsRoot(root2.current, container);
           var rootContainerElement = container.nodeType === COMMENT_NODE ? container.parentNode : container;
-          return listenToAllSupportedEvents(rootContainerElement), new ReactDOMRoot(root3);
+          return listenToAllSupportedEvents(rootContainerElement), new ReactDOMRoot(root2);
         }
         function ReactDOMHydrationRoot(internalRoot) {
           this._internalRoot = internalRoot;
@@ -14808,13 +14808,13 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
           warnIfReactDOMContainerInDEV(container), initialChildren === void 0 && error("Must provide initial children as second argument to hydrateRoot. Example usage: hydrateRoot(domContainer, <App />)");
           var hydrationCallbacks = options2 ?? null, mutableSources = options2 != null && options2.hydratedSources || null, isStrictMode = !1, concurrentUpdatesByDefaultOverride = !1, identifierPrefix = "", onRecoverableError = defaultOnRecoverableError;
           options2 != null && (options2.unstable_strictMode === !0 && (isStrictMode = !0), options2.identifierPrefix !== void 0 && (identifierPrefix = options2.identifierPrefix), options2.onRecoverableError !== void 0 && (onRecoverableError = options2.onRecoverableError));
-          var root3 = createHydrationContainer(initialChildren, null, container, ConcurrentRoot, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
-          if (markContainerAsRoot(root3.current, container), listenToAllSupportedEvents(container), mutableSources)
+          var root2 = createHydrationContainer(initialChildren, null, container, ConcurrentRoot, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
+          if (markContainerAsRoot(root2.current, container), listenToAllSupportedEvents(container), mutableSources)
             for (var i = 0; i < mutableSources.length; i++) {
               var mutableSource = mutableSources[i];
-              registerMutableSourceForHydration(root3, mutableSource);
+              registerMutableSourceForHydration(root2, mutableSource);
             }
-          return new ReactDOMHydrationRoot(root3);
+          return new ReactDOMHydrationRoot(root2);
         }
         function isValidContainer(node) {
           return !!(node && (node.nodeType === ELEMENT_NODE || node.nodeType === DOCUMENT_NODE || node.nodeType === DOCUMENT_FRAGMENT_NODE || !disableCommentsAsDOMContainers));
@@ -14844,11 +14844,11 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
             if (typeof callback == "function") {
               var originalCallback = callback;
               callback = function() {
-                var instance = getPublicRootInstance(root3);
+                var instance = getPublicRootInstance(root2);
                 originalCallback.call(instance);
               };
             }
-            var root3 = createHydrationContainer(
+            var root2 = createHydrationContainer(
               initialChildren,
               callback,
               container,
@@ -14863,9 +14863,9 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
               // identifierPrefix
               noopOnRecoverableError
             );
-            container._reactRootContainer = root3, markContainerAsRoot(root3.current, container);
+            container._reactRootContainer = root2, markContainerAsRoot(root2.current, container);
             var rootContainerElement = container.nodeType === COMMENT_NODE ? container.parentNode : container;
-            return listenToAllSupportedEvents(rootContainerElement), flushSync(), root3;
+            return listenToAllSupportedEvents(rootContainerElement), flushSync(), root2;
           } else {
             for (var rootSibling; rootSibling = container.lastChild; )
               container.removeChild(rootSibling);
@@ -14901,20 +14901,20 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
         }
         function legacyRenderSubtreeIntoContainer(parentComponent, children, container, forceHydrate, callback) {
           topLevelUpdateWarnings(container), warnOnInvalidCallback$1(callback === void 0 ? null : callback, "render");
-          var maybeRoot = container._reactRootContainer, root3;
+          var maybeRoot = container._reactRootContainer, root2;
           if (!maybeRoot)
-            root3 = legacyCreateRootFromDOMContainer(container, children, parentComponent, callback, forceHydrate);
+            root2 = legacyCreateRootFromDOMContainer(container, children, parentComponent, callback, forceHydrate);
           else {
-            if (root3 = maybeRoot, typeof callback == "function") {
+            if (root2 = maybeRoot, typeof callback == "function") {
               var originalCallback = callback;
               callback = function() {
-                var instance = getPublicRootInstance(root3);
+                var instance = getPublicRootInstance(root2);
                 originalCallback.call(instance);
               };
             }
-            updateContainer(children, root3, parentComponent, callback);
+            updateContainer(children, root2, parentComponent, callback);
           }
-          return getPublicRootInstance(root3);
+          return getPublicRootInstance(root2);
         }
         var didWarnAboutFindDOMNode = !1;
         function findDOMNode(componentOrElement) {
@@ -15012,7 +15012,7 @@ Check the render method of %s.`, getComponentNameFromFiber(current) || "Unknown"
           version: ReactVersion,
           rendererPackageName: "react-dom"
         });
-        if (!foundDevTools && canUseDOM2 && window.top === window.self && (navigator.userAgent.indexOf("Chrome") > -1 && navigator.userAgent.indexOf("Edge") === -1 || navigator.userAgent.indexOf("Firefox") > -1)) {
+        if (!foundDevTools && canUseDOM && window.top === window.self && (navigator.userAgent.indexOf("Chrome") > -1 && navigator.userAgent.indexOf("Edge") === -1 || navigator.userAgent.indexOf("Firefox") > -1)) {
           var protocol = window.location.protocol;
           /^(https?|file):$/.test(protocol) && console.info("%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools" + (protocol === "file:" ? `
 You might need to use a local HTTP server (instead of file://): https://reactjs.org/link/react-devtools-faq` : ""), "font-weight:bold");
@@ -15024,9 +15024,9 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
 
   // internal/ui/src/node_modules/react-dom/index.js
   var require_react_dom = __commonJS({
-    "internal/ui/src/node_modules/react-dom/index.js"(exports, module2) {
+    "internal/ui/src/node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      module2.exports = require_react_dom_development();
+      module.exports = require_react_dom_development();
     }
   });
 
@@ -15060,14 +15060,14 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
       "use strict";
       (function() {
         "use strict";
-        var React32 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_PROVIDER_TYPE = Symbol.for("react.provider"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE2 = Symbol.for("react.lazy"), REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator, FAUX_ITERATOR_SYMBOL = "@@iterator";
+        var React37 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_PROVIDER_TYPE = Symbol.for("react.provider"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE2 = Symbol.for("react.lazy"), REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator, FAUX_ITERATOR_SYMBOL = "@@iterator";
         function getIteratorFn(maybeIterable) {
           if (maybeIterable === null || typeof maybeIterable != "object")
             return null;
           var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
           return typeof maybeIterator == "function" ? maybeIterator : null;
         }
-        var ReactSharedInternals = React32.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React37.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         function error(format2) {
           {
             for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++)
@@ -15149,7 +15149,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
             }
           return null;
         }
-        var assign2 = Object.assign, disabledDepth = 0, prevLog, prevInfo, prevWarn, prevError, prevGroup, prevGroupCollapsed, prevGroupEnd;
+        var assign = Object.assign, disabledDepth = 0, prevLog, prevInfo, prevWarn, prevError, prevGroup, prevGroupCollapsed, prevGroupEnd;
         function disabledLog() {
         }
         disabledLog.__reactDisabledLog = !0;
@@ -15185,25 +15185,25 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
                 writable: !0
               };
               Object.defineProperties(console, {
-                log: assign2({}, props, {
+                log: assign({}, props, {
                   value: prevLog
                 }),
-                info: assign2({}, props, {
+                info: assign({}, props, {
                   value: prevInfo
                 }),
-                warn: assign2({}, props, {
+                warn: assign({}, props, {
                   value: prevWarn
                 }),
-                error: assign2({}, props, {
+                error: assign({}, props, {
                   value: prevError
                 }),
-                group: assign2({}, props, {
+                group: assign({}, props, {
                   value: prevGroup
                 }),
-                groupCollapsed: assign2({}, props, {
+                groupCollapsed: assign({}, props, {
                   value: prevGroupCollapsed
                 }),
-                groupEnd: assign2({}, props, {
+                groupEnd: assign({}, props, {
                   value: prevGroupEnd
                 })
               });
@@ -15305,8 +15305,8 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
           return describeNativeComponentFrame(fn, !1);
         }
         function shouldConstruct(Component4) {
-          var prototype2 = Component4.prototype;
-          return !!(prototype2 && prototype2.isReactComponent);
+          var prototype = Component4.prototype;
+          return !!(prototype && prototype.isReactComponent);
         }
         function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
           if (type == null)
@@ -15337,7 +15337,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
             }
           return "";
         }
-        var hasOwnProperty8 = Object.prototype.hasOwnProperty, loggedTypeFailures = {}, ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+        var hasOwnProperty = Object.prototype.hasOwnProperty, loggedTypeFailures = {}, ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
         function setCurrentlyValidatingElement(element) {
           if (element) {
             var owner = element._owner, stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
@@ -15347,7 +15347,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
         }
         function checkPropTypes(typeSpecs, values, location, componentName, element) {
           {
-            var has = Function.call.bind(hasOwnProperty8);
+            var has = Function.call.bind(hasOwnProperty);
             for (var typeSpecName in typeSpecs)
               if (has(typeSpecs, typeSpecName)) {
                 var error$1 = void 0;
@@ -15365,7 +15365,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
           }
         }
         var isArrayImpl = Array.isArray;
-        function isArray2(a) {
+        function isArray(a) {
           return isArrayImpl(a);
         }
         function typeName(value) {
@@ -15396,7 +15396,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
         }, specialPropKeyWarningShown, specialPropRefWarningShown, didWarnAboutStringRefs;
         didWarnAboutStringRefs = {};
         function hasValidRef(config) {
-          if (hasOwnProperty8.call(config, "ref")) {
+          if (hasOwnProperty.call(config, "ref")) {
             var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
             if (getter && getter.isReactWarning)
               return !1;
@@ -15404,15 +15404,15 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
           return config.ref !== void 0;
         }
         function hasValidKey(config) {
-          if (hasOwnProperty8.call(config, "key")) {
+          if (hasOwnProperty.call(config, "key")) {
             var getter = Object.getOwnPropertyDescriptor(config, "key").get;
             if (getter && getter.isReactWarning)
               return !1;
           }
           return config.key !== void 0;
         }
-        function warnIfStringRefCannotBeAutoConverted(config, self2) {
-          if (typeof config.ref == "string" && ReactCurrentOwner.current && self2 && ReactCurrentOwner.current.stateNode !== self2) {
+        function warnIfStringRefCannotBeAutoConverted(config, self) {
+          if (typeof config.ref == "string" && ReactCurrentOwner.current && self && ReactCurrentOwner.current.stateNode !== self) {
             var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
             didWarnAboutStringRefs[componentName] || (error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config.ref), didWarnAboutStringRefs[componentName] = !0);
           }
@@ -15439,7 +15439,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
             });
           }
         }
-        var ReactElement = function(type, key, ref, self2, source, owner, props) {
+        var ReactElement = function(type, key, ref, self, source, owner, props) {
           var element = {
             // This tag allows us to uniquely identify this as a React Element
             $$typeof: REACT_ELEMENT_TYPE,
@@ -15460,7 +15460,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
             configurable: !1,
             enumerable: !1,
             writable: !1,
-            value: self2
+            value: self
           }), Object.defineProperty(element, "_source", {
             configurable: !1,
             enumerable: !1,
@@ -15468,12 +15468,12 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
             value: source
           }), Object.freeze && (Object.freeze(element.props), Object.freeze(element)), element;
         };
-        function jsxDEV(type, config, maybeKey, source, self2) {
+        function jsxDEV(type, config, maybeKey, source, self) {
           {
             var propName, props = {}, key = null, ref = null;
-            maybeKey !== void 0 && (checkKeyStringCoercion(maybeKey), key = "" + maybeKey), hasValidKey(config) && (checkKeyStringCoercion(config.key), key = "" + config.key), hasValidRef(config) && (ref = config.ref, warnIfStringRefCannotBeAutoConverted(config, self2));
+            maybeKey !== void 0 && (checkKeyStringCoercion(maybeKey), key = "" + maybeKey), hasValidKey(config) && (checkKeyStringCoercion(config.key), key = "" + config.key), hasValidRef(config) && (ref = config.ref, warnIfStringRefCannotBeAutoConverted(config, self));
             for (propName in config)
-              hasOwnProperty8.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName) && (props[propName] = config[propName]);
+              hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName) && (props[propName] = config[propName]);
             if (type && type.defaultProps) {
               var defaultProps = type.defaultProps;
               for (propName in defaultProps)
@@ -15483,7 +15483,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
               var displayName = typeof type == "function" ? type.displayName || type.name || "Unknown" : type;
               key && defineKeyPropWarningGetter(props, displayName), ref && defineRefPropWarningGetter(props, displayName);
             }
-            return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
+            return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
           }
         }
         var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner, ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
@@ -15552,7 +15552,7 @@ Check the top-level render call using <` + parentName + ">.");
           {
             if (typeof node != "object")
               return;
-            if (isArray2(node))
+            if (isArray(node))
               for (var i = 0; i < node.length; i++) {
                 var child = node[i];
                 isValidElement3(child) && validateExplicitKey(child, parentType);
@@ -15605,7 +15605,7 @@ Check the top-level render call using <` + parentName + ">.");
           }
         }
         var didWarnAboutKeySpread = {};
-        function jsxWithValidation(type, props, key, isStaticChildren, source, self2) {
+        function jsxWithValidation(type, props, key, isStaticChildren, source, self) {
           {
             var validType = isValidElementType(type);
             if (!validType) {
@@ -15614,16 +15614,16 @@ Check the top-level render call using <` + parentName + ">.");
               var sourceInfo = getSourceInfoErrorAddendum(source);
               sourceInfo ? info += sourceInfo : info += getDeclarationErrorAddendum();
               var typeString;
-              type === null ? typeString = "null" : isArray2(type) ? typeString = "array" : type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE ? (typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", info = " Did you accidentally export a JSX literal instead of a component?") : typeString = typeof type, error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
+              type === null ? typeString = "null" : isArray(type) ? typeString = "array" : type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE ? (typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", info = " Did you accidentally export a JSX literal instead of a component?") : typeString = typeof type, error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
             }
-            var element = jsxDEV(type, props, key, source, self2);
+            var element = jsxDEV(type, props, key, source, self);
             if (element == null)
               return element;
             if (validType) {
               var children = props.children;
               if (children !== void 0)
                 if (isStaticChildren)
-                  if (isArray2(children)) {
+                  if (isArray(children)) {
                     for (var i = 0; i < children.length; i++)
                       validateChildKeys(children[i], type);
                     Object.freeze && Object.freeze(children);
@@ -15632,7 +15632,7 @@ Check the top-level render call using <` + parentName + ">.");
                 else
                   validateChildKeys(children, type);
             }
-            if (hasOwnProperty8.call(props, "key")) {
+            if (hasOwnProperty.call(props, "key")) {
               var componentName = getComponentNameFromType(type), keys = Object.keys(props).filter(function(k) {
                 return k !== "key";
               }), beforeExample = keys.length > 0 ? "{key: someKey, " + keys.join(": ..., ") + ": ...}" : "{key: someKey}";
@@ -15663,28 +15663,17 @@ React keys must be passed directly to JSX without using spread:
 
   // internal/ui/src/node_modules/react/jsx-runtime.js
   var require_jsx_runtime = __commonJS({
-    "internal/ui/src/node_modules/react/jsx-runtime.js"(exports, module2) {
+    "internal/ui/src/node_modules/react/jsx-runtime.js"(exports, module) {
       "use strict";
-      module2.exports = require_react_jsx_runtime_development();
-    }
-  });
-
-  // internal/ui/src/node_modules/rehackt/index.js
-  var require_rehackt = __commonJS({
-    "internal/ui/src/node_modules/rehackt/index.js"(exports, module2) {
-      "use strict";
-      module2.exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = void 0;
-      module2.exports.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = void 0;
-      module2.exports.__SERVER_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = void 0;
-      Object.assign(module2.exports, require_react());
+      module.exports = require_react_jsx_runtime_development();
     }
   });
 
   // internal/ui/src/index.tsx
-  var import_react11 = __toESM(require_react(), 1), import_client2 = __toESM(require_client(), 1);
+  var import_react18 = __toESM(require_react(), 1), import_client = __toESM(require_client(), 1);
 
   // internal/ui/src/app/App.tsx
-  var import_react10 = __toESM(require_react(), 1);
+  var import_react17 = __toESM(require_react(), 1);
 
   // internal/ui/src/node_modules/react-router/dist/development/chunk-UIGDSWPH.mjs
   var React = __toESM(require_react(), 1), React2 = __toESM(require_react(), 1), React3 = __toESM(require_react(), 1), React4 = __toESM(require_react(), 1), React9 = __toESM(require_react(), 1), React8 = __toESM(require_react(), 1), React7 = __toESM(require_react(), 1), React6 = __toESM(require_react(), 1), React5 = __toESM(require_react(), 1), React10 = __toESM(require_react(), 1), React11 = __toESM(require_react(), 1), import_meta = {};
@@ -15764,7 +15753,7 @@ React keys must be passed directly to JSX without using spread:
     }
     return parsedPath;
   }
-  function getUrlBasedHistory(getLocation2, createHref2, validateLocation, options = {}) {
+  function getUrlBasedHistory(getLocation, createHref2, validateLocation, options = {}) {
     let { window: window2 = document.defaultView, v5Compat = !1 } = options, globalHistory = window2.history, action = "POP", listener = null, index = getIndex();
     index == null && (index = 0, globalHistory.replaceState({ ...globalHistory.state, idx: index }, ""));
     function getIndex() {
@@ -15804,7 +15793,7 @@ React keys must be passed directly to JSX without using spread:
         return action;
       },
       get location() {
-        return getLocation2(window2, globalHistory);
+        return getLocation(window2, globalHistory);
       },
       listen(fn) {
         if (listener)
@@ -15920,12 +15909,12 @@ React keys must be passed directly to JSX without using spread:
     let [first, ...rest] = segments, isOptional = first.endsWith("?"), required = first.replace(/\?$/, "");
     if (rest.length === 0)
       return isOptional ? [required, ""] : [required];
-    let restExploded = explodeOptionalSegments(rest.join("/")), result2 = [];
-    return result2.push(
+    let restExploded = explodeOptionalSegments(rest.join("/")), result = [];
+    return result.push(
       ...restExploded.map(
         (subpath) => subpath === "" ? required : [required, subpath].join("/")
       )
-    ), isOptional && result2.push(...restExploded), result2.map(
+    ), isOptional && result.push(...restExploded), result.map(
       (exploded) => path.startsWith("/") && exploded === "" ? "/" : exploded
     );
   }
@@ -17633,7 +17622,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function hashKey(queryKey) {
     return JSON.stringify(
       queryKey,
-      (_, val) => isPlainObject(val) ? Object.keys(val).sort().reduce((result2, key) => (result2[key] = val[key], result2), {}) : val
+      (_, val) => isPlainObject(val) ? Object.keys(val).sort().reduce((result, key) => (result[key] = val[key], result), {}) : val
     );
   }
   function partialMatchKey(a, b) {
@@ -17792,7 +17781,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       callback();
     }, batchNotifyFn = (callback) => {
       callback();
-    }, scheduleFn = defaultScheduler, schedule2 = (callback) => {
+    }, scheduleFn = defaultScheduler, schedule = (callback) => {
       transactions ? queue.push(callback) : scheduleFn(() => {
         notifyFn(callback);
       });
@@ -17808,24 +17797,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
     return {
       batch: (callback) => {
-        let result2;
+        let result;
         transactions++;
         try {
-          result2 = callback();
+          result = callback();
         } finally {
           transactions--, transactions || flush();
         }
-        return result2;
+        return result;
       },
       /**
        * All calls to the wrapped function will be batched.
        */
       batchCalls: (callback) => (...args) => {
-        schedule2(() => {
+        schedule(() => {
           callback(...args);
         });
       },
-      schedule: schedule2,
+      schedule,
       /**
        * Use this method to set a custom notify function.
        * This can be used to for example wrap notifications with `React.act` while running tests.
@@ -18341,14 +18330,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       mounted && (this.#currentQuery !== prevQuery || resolveEnabled(this.options.enabled, this.#currentQuery) !== resolveEnabled(prevOptions.enabled, this.#currentQuery) || nextRefetchInterval !== this.#currentRefetchInterval) && this.#updateRefetchInterval(nextRefetchInterval);
     }
     getOptimisticResult(options) {
-      let query = this.#client.getQueryCache().build(this.#client, options), result2 = this.createResult(query, options);
-      return shouldAssignObserverCurrentProperties(this, result2) && (this.#currentResult = result2, this.#currentResultOptions = this.options, this.#currentResultState = this.#currentQuery.state), result2;
+      let query = this.#client.getQueryCache().build(this.#client, options), result = this.createResult(query, options);
+      return shouldAssignObserverCurrentProperties(this, result) && (this.#currentResult = result, this.#currentResultOptions = this.options, this.#currentResultState = this.#currentQuery.state), result;
     }
     getCurrentResult() {
       return this.#currentResult;
     }
-    trackResult(result2, onPropTracked) {
-      return new Proxy(result2, {
+    trackResult(result, onPropTracked) {
+      return new Proxy(result, {
         get: (target, key) => (this.trackProp(key), onPropTracked?.(key), key === "promise" && (this.trackProp("data"), !this.options.experimental_prefetchInRender && this.#currentThenable.status === "pending" && this.#currentThenable.reject(
           new Error(
             "experimental_prefetchInRender feature flag is not enabled"
@@ -18566,7 +18555,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function infiniteQueryBehavior(pages) {
     return {
       onFetch: (context, query) => {
-        let options = context.options, direction = context.fetchOptions?.meta?.fetchMore?.direction, oldPages = context.state.data?.pages || [], oldPageParams = context.state.data?.pageParams || [], result2 = { pages: [], pageParams: [] }, currentPage = 0, fetchFn = async () => {
+        let options = context.options, direction = context.fetchOptions?.meta?.fetchMore?.direction, oldPages = context.state.data?.pages || [], oldPageParams = context.state.data?.pageParams || [], result = { pages: [], pageParams: [] }, currentPage = 0, fetchFn = async () => {
           let cancelled = !1, addSignalProperty = (object) => {
             Object.defineProperty(object, "signal", {
               enumerable: !0,
@@ -18599,17 +18588,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               pages: oldPages,
               pageParams: oldPageParams
             }, param = pageParamFn(options, oldData);
-            result2 = await fetchPage(oldData, param, previous);
+            result = await fetchPage(oldData, param, previous);
           } else {
             let remainingPages = pages ?? oldPages.length;
             do {
-              let param = currentPage === 0 ? oldPageParams[0] ?? options.initialPageParam : getNextPageParam(options, result2);
+              let param = currentPage === 0 ? oldPageParams[0] ?? options.initialPageParam : getNextPageParam(options, result);
               if (currentPage > 0 && param == null)
                 break;
-              result2 = await fetchPage(result2, param), currentPage++;
+              result = await fetchPage(result, param), currentPage++;
             } while (currentPage < remainingPages);
           }
-          return result2;
+          return result;
         };
         context.options.persister ? context.fetchFn = () => context.options.persister?.(
           fetchFn,
@@ -19184,10 +19173,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       });
     }
     getQueryDefaults(queryKey) {
-      let defaults = [...this.#queryDefaults.values()], result2 = {};
+      let defaults = [...this.#queryDefaults.values()], result = {};
       return defaults.forEach((queryDefault) => {
-        partialMatchKey(queryKey, queryDefault.queryKey) && Object.assign(result2, queryDefault.defaultOptions);
-      }), result2;
+        partialMatchKey(queryKey, queryDefault.queryKey) && Object.assign(result, queryDefault.defaultOptions);
+      }), result;
     }
     setMutationDefaults(mutationKey, options) {
       this.#mutationDefaults.set(hashKey(mutationKey), {
@@ -19196,10 +19185,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       });
     }
     getMutationDefaults(mutationKey) {
-      let defaults = [...this.#mutationDefaults.values()], result2 = {};
+      let defaults = [...this.#mutationDefaults.values()], result = {};
       return defaults.forEach((queryDefault) => {
-        partialMatchKey(mutationKey, queryDefault.mutationKey) && Object.assign(result2, queryDefault.defaultOptions);
-      }), result2;
+        partialMatchKey(mutationKey, queryDefault.mutationKey) && Object.assign(result, queryDefault.defaultOptions);
+      }), result;
     }
     defaultQueryOptions(options) {
       if (options._defaulted)
@@ -19273,12 +19262,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       errorResetBoundary.clearReset();
     }, [errorResetBoundary]);
   }, getHasError = ({
-    result: result2,
+    result,
     errorResetBoundary,
     throwOnError,
     query,
     suspense
-  }) => result2.isError && !errorResetBoundary.isReset() && !result2.isFetching && query && (suspense && result2.data === void 0 || shouldThrowError(throwOnError, [result2.error, query]));
+  }) => result.isError && !errorResetBoundary.isReset() && !result.isFetching && query && (suspense && result.data === void 0 || shouldThrowError(throwOnError, [result.error, query]));
 
   // internal/ui/src/node_modules/@tanstack/react-query/build/modern/suspense.js
   var ensureSuspenseTimers = (defaultedOptions) => {
@@ -19289,7 +19278,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         1e3
       ));
     }
-  }, willFetch = (result2, isRestoring) => result2.isLoading && result2.isFetching && !isRestoring, shouldSuspend = (defaultedOptions, result2) => defaultedOptions?.suspense && result2.isPending, fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => observer.fetchOptimistic(defaultedOptions).catch(() => {
+  }, willFetch = (result, isRestoring) => result.isLoading && result.isFetching && !isRestoring, shouldSuspend = (defaultedOptions, result) => defaultedOptions?.suspense && result.isPending, fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => observer.fetchOptimistic(defaultedOptions).catch(() => {
     errorResetBoundary.clearReset();
   });
 
@@ -19311,7 +19300,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         client,
         defaultedOptions
       )
-    ), result2 = observer.getOptimisticResult(defaultedOptions), shouldSubscribe = !isRestoring && options.subscribed !== !1;
+    ), result = observer.getOptimisticResult(defaultedOptions), shouldSubscribe = !isRestoring && options.subscribed !== !1;
     if (React16.useSyncExternalStore(
       React16.useCallback(
         (onStoreChange) => {
@@ -19324,20 +19313,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       () => observer.getCurrentResult()
     ), React16.useEffect(() => {
       observer.setOptions(defaultedOptions);
-    }, [defaultedOptions, observer]), shouldSuspend(defaultedOptions, result2))
+    }, [defaultedOptions, observer]), shouldSuspend(defaultedOptions, result))
       throw fetchOptimistic(defaultedOptions, observer, errorResetBoundary);
     if (getHasError({
-      result: result2,
+      result,
       errorResetBoundary,
       throwOnError: defaultedOptions.throwOnError,
       query: client.getQueryCache().get(defaultedOptions.queryHash),
       suspense: defaultedOptions.suspense
     }))
-      throw result2.error;
+      throw result.error;
     return client.getDefaultOptions().queries?._experimental_afterQuery?.(
       defaultedOptions,
-      result2
-    ), defaultedOptions.experimental_prefetchInRender && !isServer && willFetch(result2, isRestoring) && (isNewCacheEntry ? (
+      result
+    ), defaultedOptions.experimental_prefetchInRender && !isServer && willFetch(result, isRestoring) && (isNewCacheEntry ? (
       // Fetch immediately on render in order to ensure `.promise` is resolved even if the component is unmounted
       fetchOptimistic(defaultedOptions, observer, errorResetBoundary)
     ) : (
@@ -19345,7 +19334,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       client.getQueryCache().get(defaultedOptions.queryHash)?.promise
     ))?.catch(noop).finally(() => {
       observer.updateResult();
-    }), defaultedOptions.notifyOnChangeProps ? result2 : observer.trackResult(result2);
+    }), defaultedOptions.notifyOnChangeProps ? result : observer.trackResult(result);
   }
 
   // internal/ui/src/node_modules/@tanstack/react-query/build/modern/useQuery.js
@@ -19377,7 +19366,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // internal/ui/src/node_modules/date-fns/startOfWeek.mjs
   function startOfWeek(date, options) {
-    let defaultOptions3 = getDefaultOptions(), weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions3.weekStartsOn ?? defaultOptions3.locale?.options?.weekStartsOn ?? 0, _date = toDate(date), day = _date.getDay(), diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+    let defaultOptions2 = getDefaultOptions(), weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0, _date = toDate(date), day = _date.getDay(), diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
     return _date.setDate(_date.getDate() - diff), _date.setHours(0, 0, 0, 0), _date;
   }
 
@@ -19513,8 +19502,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       other: "almost {{count}} years"
     }
   }, formatDistance = (token, count, options) => {
-    let result2, tokenValue = formatDistanceLocale[token];
-    return typeof tokenValue == "string" ? result2 = tokenValue : count === 1 ? result2 = tokenValue.one : result2 = tokenValue.other.replace("{{count}}", count.toString()), options?.addSuffix ? options.comparison && options.comparison > 0 ? "in " + result2 : result2 + " ago" : result2;
+    let result, tokenValue = formatDistanceLocale[token];
+    return typeof tokenValue == "string" ? result = tokenValue : count === 1 ? result = tokenValue.one : result = tokenValue.other.replace("{{count}}", count.toString()), options?.addSuffix ? options.comparison && options.comparison > 0 ? "in " + result : result + " ago" : result;
   };
 
   // internal/ui/src/node_modules/date-fns/locale/_lib/buildFormatLongFn.mjs
@@ -19913,7 +19902,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // internal/ui/src/node_modules/date-fns/getWeekYear.mjs
   function getWeekYear(date, options) {
-    let _date = toDate(date), year = _date.getFullYear(), defaultOptions3 = getDefaultOptions(), firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions3.firstWeekContainsDate ?? defaultOptions3.locale?.options?.firstWeekContainsDate ?? 1, firstWeekOfNextYear = constructFrom(date, 0);
+    let _date = toDate(date), year = _date.getFullYear(), defaultOptions2 = getDefaultOptions(), firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions2.firstWeekContainsDate ?? defaultOptions2.locale?.options?.firstWeekContainsDate ?? 1, firstWeekOfNextYear = constructFrom(date, 0);
     firstWeekOfNextYear.setFullYear(year + 1, 0, firstWeekContainsDate), firstWeekOfNextYear.setHours(0, 0, 0, 0);
     let startOfNextYear = startOfWeek(firstWeekOfNextYear, options), firstWeekOfThisYear = constructFrom(date, 0);
     firstWeekOfThisYear.setFullYear(year, 0, firstWeekContainsDate), firstWeekOfThisYear.setHours(0, 0, 0, 0);
@@ -19923,7 +19912,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // internal/ui/src/node_modules/date-fns/startOfWeekYear.mjs
   function startOfWeekYear(date, options) {
-    let defaultOptions3 = getDefaultOptions(), firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions3.firstWeekContainsDate ?? defaultOptions3.locale?.options?.firstWeekContainsDate ?? 1, year = getWeekYear(date, options), firstWeek = constructFrom(date, 0);
+    let defaultOptions2 = getDefaultOptions(), firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions2.firstWeekContainsDate ?? defaultOptions2.locale?.options?.firstWeekContainsDate ?? 1, year = getWeekYear(date, options), firstWeek = constructFrom(date, 0);
     return firstWeek.setFullYear(year, 0, firstWeekContainsDate), firstWeek.setHours(0, 0, 0, 0), startOfWeek(firstWeek, options);
   }
 
@@ -20643,7 +20632,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // internal/ui/src/node_modules/date-fns/format.mjs
   var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g, longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g, escapedStringRegExp = /^'([^]*?)'?$/, doubleQuoteRegExp = /''/g, unescapedLatinCharacterRegExp = /[a-zA-Z]/;
   function format(date, formatStr, options) {
-    let defaultOptions3 = getDefaultOptions(), locale = options?.locale ?? defaultOptions3.locale ?? enUS, firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions3.firstWeekContainsDate ?? defaultOptions3.locale?.options?.firstWeekContainsDate ?? 1, weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions3.weekStartsOn ?? defaultOptions3.locale?.options?.weekStartsOn ?? 0, originalDate = toDate(date);
+    let defaultOptions2 = getDefaultOptions(), locale = options?.locale ?? defaultOptions2.locale ?? enUS, firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions2.firstWeekContainsDate ?? defaultOptions2.locale?.options?.firstWeekContainsDate ?? 1, weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0, originalDate = toDate(date);
     if (!isValid(originalDate))
       throw new RangeError("Invalid time value");
     let parts = formatStr.match(longFormattingTokensRegExp).map((substring) => {
@@ -20890,7 +20879,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   // @__NO_SIDE_EFFECTS__
   function createSlot(ownerName) {
-    let SlotClone = /* @__PURE__ */ createSlotClone(ownerName), Slot22 = React19.forwardRef((props, forwardedRef) => {
+    let SlotClone = /* @__PURE__ */ createSlotClone(ownerName), Slot2 = React19.forwardRef((props, forwardedRef) => {
       let { children, ...slotProps } = props;
       isLazyComponent(children) && typeof use == "function" && (children = use(children._payload));
       let childrenArray = React19.Children.toArray(children), slottable = childrenArray.find(isSlottable);
@@ -20900,7 +20889,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children });
     });
-    return Slot22.displayName = `${ownerName}.Slot`, Slot22;
+    return Slot2.displayName = `${ownerName}.Slot`, Slot2;
   }
   var Slot = /* @__PURE__ */ createSlot("Slot");
   // @__NO_SIDE_EFFECTS__
@@ -20924,8 +20913,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     for (let propName in childProps) {
       let slotPropValue = slotProps[propName], childPropValue = childProps[propName];
       /^on[A-Z]/.test(propName) ? slotPropValue && childPropValue ? overrideProps[propName] = (...args) => {
-        let result2 = childPropValue(...args);
-        return slotPropValue(...args), result2;
+        let result = childPropValue(...args);
+        return slotPropValue(...args), result;
       } : slotPropValue && (overrideProps[propName] = slotPropValue) : propName === "style" ? overrideProps[propName] = { ...slotPropValue, ...childPropValue } : propName === "className" && (overrideProps[propName] = [slotPropValue, childPropValue].filter(Boolean).join(" "));
     }
     return { ...slotProps, ...overrideProps };
@@ -21148,7 +21137,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       getClassGroupId,
       getConflictingClassGroupIds,
       sortModifiers
-    } = configUtils, classGroupsInConflict = [], classNames = classList.trim().split(SPLIT_CLASSES_REGEX), result2 = "";
+    } = configUtils, classGroupsInConflict = [], classNames = classList.trim().split(SPLIT_CLASSES_REGEX), result = "";
     for (let index = classNames.length - 1; index >= 0; index -= 1) {
       let originalClassName = classNames[index], {
         isExternal,
@@ -21158,17 +21147,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         maybePostfixModifierPosition
       } = parseClassName(originalClassName);
       if (isExternal) {
-        result2 = originalClassName + (result2.length > 0 ? " " + result2 : result2);
+        result = originalClassName + (result.length > 0 ? " " + result : result);
         continue;
       }
       let hasPostfixModifier = !!maybePostfixModifierPosition, classGroupId = getClassGroupId(hasPostfixModifier ? baseClassName.substring(0, maybePostfixModifierPosition) : baseClassName);
       if (!classGroupId) {
         if (!hasPostfixModifier) {
-          result2 = originalClassName + (result2.length > 0 ? " " + result2 : result2);
+          result = originalClassName + (result.length > 0 ? " " + result : result);
           continue;
         }
         if (classGroupId = getClassGroupId(baseClassName), !classGroupId) {
-          result2 = originalClassName + (result2.length > 0 ? " " + result2 : result2);
+          result = originalClassName + (result.length > 0 ? " " + result : result);
           continue;
         }
         hasPostfixModifier = !1;
@@ -21182,9 +21171,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         let group = conflictGroups[i];
         classGroupsInConflict.push(modifierId + group);
       }
-      result2 = originalClassName + (result2.length > 0 ? " " + result2 : result2);
+      result = originalClassName + (result.length > 0 ? " " + result : result);
     }
-    return result2;
+    return result;
   };
   function twJoin() {
     let index = 0, argument, resolvedValue, string = "";
@@ -21210,8 +21199,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       let cachedResult = cacheGet(classList);
       if (cachedResult)
         return cachedResult;
-      let result2 = mergeClassList(classList, configUtils);
-      return cacheSet(classList, result2), result2;
+      let result = mergeClassList(classList, configUtils);
+      return cacheSet(classList, result), result;
     }
     return function() {
       return functionToCall(twJoin.apply(null, arguments));
@@ -21226,11 +21215,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     // I could also use lookbehind assertion in `lengthUnitRegex` but that isn't supported widely enough.
     lengthUnitRegex.test(value) && !colorFunctionRegex.test(value)
   ), isNever = () => !1, isShadow = (value) => shadowRegex.test(value), isImage = (value) => imageRegex.test(value), isAnyNonArbitrary = (value) => !isArbitraryValue(value) && !isArbitraryVariable(value), isArbitrarySize = (value) => getIsArbitraryValue(value, isLabelSize, isNever), isArbitraryValue = (value) => arbitraryValueRegex.test(value), isArbitraryLength = (value) => getIsArbitraryValue(value, isLabelLength, isLengthOnly), isArbitraryNumber = (value) => getIsArbitraryValue(value, isLabelNumber, isNumber), isArbitraryPosition = (value) => getIsArbitraryValue(value, isLabelPosition, isNever), isArbitraryImage = (value) => getIsArbitraryValue(value, isLabelImage, isImage), isArbitraryShadow = (value) => getIsArbitraryValue(value, isLabelShadow, isShadow), isArbitraryVariable = (value) => arbitraryVariableRegex.test(value), isArbitraryVariableLength = (value) => getIsArbitraryVariable(value, isLabelLength), isArbitraryVariableFamilyName = (value) => getIsArbitraryVariable(value, isLabelFamilyName), isArbitraryVariablePosition = (value) => getIsArbitraryVariable(value, isLabelPosition), isArbitraryVariableSize = (value) => getIsArbitraryVariable(value, isLabelSize), isArbitraryVariableImage = (value) => getIsArbitraryVariable(value, isLabelImage), isArbitraryVariableShadow = (value) => getIsArbitraryVariable(value, isLabelShadow, !0), getIsArbitraryValue = (value, testLabel, testValue) => {
-    let result2 = arbitraryValueRegex.exec(value);
-    return result2 ? result2[1] ? testLabel(result2[1]) : testValue(result2[2]) : !1;
+    let result = arbitraryValueRegex.exec(value);
+    return result ? result[1] ? testLabel(result[1]) : testValue(result[2]) : !1;
   }, getIsArbitraryVariable = (value, testLabel, shouldMatchNoLabel = !1) => {
-    let result2 = arbitraryVariableRegex.exec(value);
-    return result2 ? result2[1] ? testLabel(result2[1]) : shouldMatchNoLabel : !1;
+    let result = arbitraryVariableRegex.exec(value);
+    return result ? result[1] ? testLabel(result[1]) : shouldMatchNoLabel : !1;
   }, isLabelPosition = (label) => label === "position" || label === "percentage", isLabelImage = (label) => label === "image" || label === "url", isLabelSize = (label) => label === "length" || label === "size" || label === "bg-size", isLabelLength = (label) => label === "length", isLabelNumber = (label) => label === "number", isLabelFamilyName = (label) => label === "family-name", isLabelShadow = (label) => label === "shadow";
   var getDefaultConfig = () => {
     let themeColor = fromTheme("color"), themeFont = fromTheme("font"), themeText = fromTheme("text"), themeFontWeight = fromTheme("font-weight"), themeTracking = fromTheme("tracking"), themeLeading = fromTheme("leading"), themeBreakpoint = fromTheme("breakpoint"), themeContainer = fromTheme("container"), themeSpacing = fromTheme("spacing"), themeRadius = fromTheme("radius"), themeShadow = fromTheme("shadow"), themeInsetShadow = fromTheme("inset-shadow"), themeTextShadow = fromTheme("text-shadow"), themeDropShadow = fromTheme("drop-shadow"), themeBlur = fromTheme("blur"), themePerspective = fromTheme("perspective"), themeAspect = fromTheme("aspect"), themeEase = fromTheme("ease"), themeAnimate = fromTheme("animate"), scaleBreak = () => ["auto", "avoid", "all", "avoid-page", "page", "left", "right", "column"], scalePosition = () => [
@@ -23778,15 +23767,55 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       throw new Error("Failed to fetch recordings");
     return response.json();
   }
+  async function fetchRecording(id) {
+    let response = await fetch(`/api/recordings/${id}`);
+    if (!response.ok)
+      throw new Error(`Failed to fetch recording: ${response.statusText}`);
+    return response.json();
+  }
+  async function fetchParsedRecording(id) {
+    let response = await fetch(`/api/recordings/${id}/parse`);
+    if (!response.ok)
+      throw new Error(`Failed to parse recording: ${response.statusText}`);
+    return response.json();
+  }
 
-  // internal/ui/src/app/lib/providers.ts
-  var providerStyles = {
-    gemini: "bg-blue-100 text-blue-800",
-    openai: "bg-green-100 text-green-800",
-    claude: "bg-orange-100 text-orange-800"
+  // internal/ui/src/app/lib/styles.ts
+  function getStatusColor(status) {
+    return status >= 200 && status < 300 ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20" : status >= 500 ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20" : "text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800";
+  }
+  function getStatusTextColor(status) {
+    return status >= 200 && status < 300 ? "text-green-600 dark:text-green-400" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400" : status >= 500 ? "text-red-600 dark:text-red-400" : "text-muted-foreground";
+  }
+  var PROVIDER_STYLES = {
+    gemini: "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300",
+    openai: "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300",
+    claude: "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-300"
   };
   function getProviderStyles(provider) {
-    return provider in providerStyles ? providerStyles[provider] : "bg-gray-100 text-gray-800";
+    let normalized = provider.toLowerCase();
+    return normalized in PROVIDER_STYLES ? PROVIDER_STYLES[normalized] : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300";
+  }
+  function getSizeColor(bytes) {
+    return bytes < 10240 ? "text-green-600 dark:text-green-400" : bytes < 1048576 ? "text-yellow-600 dark:text-yellow-400" : "text-red-600 dark:text-red-400";
+  }
+
+  // internal/ui/src/app/lib/formatters.ts
+  function formatBytes(bytes) {
+    return bytes === 0 ? "0 B" : bytes < 1024 ? `${bytes} B` : bytes < 1024 * 1024 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  }
+  function truncateId(id, length = 8) {
+    return id.substring(0, length);
+  }
+  function formatJSON(obj) {
+    try {
+      return JSON.stringify(obj, null, 2);
+    } catch {
+      return String(obj);
+    }
+  }
+  function formatBody(body) {
+    return typeof body == "string" ? body : formatJSON(body);
   }
 
   // internal/ui/src/app/pages/Recordings.tsx
@@ -23803,7 +23832,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       setProvider(""), setSearch(""), setSearchInput(""), setPage(1);
     }, handleRefresh = () => {
       refetch();
-    }, truncateId = (id) => id.substring(0, 8), getStatusColor = (status) => status >= 200 && status < 300 ? "text-green-600 dark:text-green-400" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400" : status >= 500 ? "text-red-600 dark:text-red-400" : "text-muted-foreground", formatBytes = (bytes) => bytes === 0 ? "0 B" : bytes < 1024 ? `${bytes} B` : bytes < 1024 * 1024 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / (1024 * 1024)).toFixed(1)} MB`, getSizeColor = (bytes) => bytes < 10240 ? "text-green-600 dark:text-green-400" : bytes < 1048576 ? "text-yellow-600 dark:text-yellow-400" : "text-red-600 dark:text-red-400";
+    };
     return /* @__PURE__ */ import_react4.default.createElement("div", { className: "mx-auto flex-1" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "space-y-4 w-full p-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h1", { className: "text-2xl font-bold text-foreground" }, "Recordings"), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-sm text-muted-foreground" }, data2?.total ? `${data2.total} total recordings` : "Loading...")), /* @__PURE__ */ import_react4.default.createElement(
       Button,
       {
@@ -23879,7 +23908,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       /* @__PURE__ */ import_react4.default.createElement(
         TableCell,
         {
-          className: `font-medium ${getStatusColor(recording.status)}`
+          className: `font-medium ${getStatusTextColor(recording.status)}`
         },
         recording.status
       ),
@@ -23911,24 +23940,141 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // internal/ui/src/app/pages/Recording.tsx
-  var import_react7 = __toESM(require_react(), 1);
+  var import_react14 = __toESM(require_react(), 1);
 
-  // internal/ui/src/app/components/RecordingDetail.tsx
+  // internal/ui/src/app/components/recording/RecordingDetail.tsx
+  var import_react12 = __toESM(require_react(), 1);
+
+  // internal/ui/src/app/components/recording/RecordingHeader.tsx
   var import_react5 = __toESM(require_react(), 1);
-  async function fetchRecording(id) {
-    let response = await fetch(`/api/recordings/${id}`);
-    if (!response.ok)
-      throw new Error("Failed to fetch recording");
-    return response.json();
+  function RecordingHeader({ recordingId }) {
+    let navigate = useNavigate();
+    return /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-6 border-b bg-card" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement(
+      "button",
+      {
+        onClick: () => navigate("/recordings"),
+        className: "p-2 hover:bg-muted rounded-md transition-colors",
+        "aria-label": "Back to recordings list"
+      },
+      /* @__PURE__ */ import_react5.default.createElement(ArrowLeft, { className: "h-5 w-5" })
+    ), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-xl font-bold" }, "Recording Details"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground font-mono mt-1" }, recordingId))));
   }
-  async function fetchParsedRecording(id) {
-    let response = await fetch(`/api/recordings/${id}/parse`);
-    if (!response.ok)
-      throw new Error("Failed to parse recording");
-    return response.json();
+
+  // internal/ui/src/app/components/recording/RecordingMetadata.tsx
+  var import_react6 = __toESM(require_react(), 1);
+  function RecordingMetadata({ recording }) {
+    return /* @__PURE__ */ import_react6.default.createElement("div", { className: "grid grid-cols-4 gap-4 mb-6" }, /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Timestamp"), /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-sm mt-1" }, format(new Date(recording.timestamp), "MMM d, yyyy HH:mm:ss"))), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Provider"), /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react6.default.createElement(
+      "span",
+      {
+        className: `inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getProviderStyles(recording.provider)}`
+      },
+      recording.provider
+    ))), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Duration"), /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-sm mt-1" }, recording.timing.duration_ms, "ms")), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Status"), /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react6.default.createElement(
+      "span",
+      {
+        className: `inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getStatusColor(recording.response.status)}`
+      },
+      recording.response.status
+    ))));
   }
+
+  // internal/ui/src/app/components/recording/RecordingError.tsx
+  var import_react7 = __toESM(require_react(), 1);
+  function RecordingError({ error }) {
+    return /* @__PURE__ */ import_react7.default.createElement("div", { className: "p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md mb-6" }, /* @__PURE__ */ import_react7.default.createElement("label", { className: "text-sm font-medium text-red-800 dark:text-red-300" }, "Error"), /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-sm text-red-700 dark:text-red-400 mt-1 font-mono" }, error));
+  }
+
+  // internal/ui/src/app/components/recording/RecordingTabs.tsx
+  var import_react8 = __toESM(require_react(), 1);
+  function RecordingTabs({
+    activeTab,
+    onTabChange,
+    tabs
+  }) {
+    return /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex gap-6 border-b -mb-px" }, tabs.map((tab) => /* @__PURE__ */ import_react8.default.createElement(
+      "button",
+      {
+        key: tab.id,
+        onClick: () => onTabChange(tab.id),
+        className: `
+            pb-3 text-sm font-medium transition-colors border-b-2
+            ${activeTab === tab.id ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"}
+          `
+      },
+      tab.label
+    )));
+  }
+
+  // internal/ui/src/app/components/recording/RequestPanel.tsx
+  var import_react9 = __toESM(require_react(), 1);
+  function RequestPanel({ recording }) {
+    let [copied, setCopied] = (0, import_react9.useState)(!1);
+    return /* @__PURE__ */ import_react9.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react9.default.createElement("h3", { className: "font-semibold" }, "Request"), /* @__PURE__ */ import_react9.default.createElement(Button, { size: "sm", variant: "ghost", onClick: () => {
+      let requestData = formatJSON({
+        method: recording.request.method,
+        path: recording.request.path,
+        query: recording.request.query,
+        headers: recording.request.headers,
+        body: recording.request.body
+      });
+      navigator.clipboard.writeText(requestData), setCopied(!0), setTimeout(() => setCopied(!1), 2e3);
+    } }, copied ? /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy"))), /* @__PURE__ */ import_react9.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Endpoint"), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-sm mt-1 font-mono" }, recording.request.method, " ", recording.request.path, recording.request.query && `?${recording.request.query}`)), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react9.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono" }, formatJSON(recording.request.headers))), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react9.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono max-h-96" }, formatBody(recording.request.body)))));
+  }
+
+  // internal/ui/src/app/components/recording/ResponsePanel.tsx
+  var import_react10 = __toESM(require_react(), 1);
+  function ResponsePanel({ recording }) {
+    let [copied, setCopied] = (0, import_react10.useState)(!1);
+    return /* @__PURE__ */ import_react10.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react10.default.createElement("h3", { className: "font-semibold" }, "Response"), /* @__PURE__ */ import_react10.default.createElement(Button, { size: "sm", variant: "ghost", onClick: () => {
+      let responseData = formatJSON({
+        status: recording.response.status,
+        headers: recording.response.headers,
+        body: recording.response.body
+      });
+      navigator.clipboard.writeText(responseData), setCopied(!0), setTimeout(() => setCopied(!1), 2e3);
+    } }, copied ? /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy"))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react10.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono" }, formatJSON(recording.response.headers))), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react10.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono max-h-96" }, formatBody(recording.response.body)))));
+  }
+
+  // internal/ui/src/app/components/recording/ParsedResponsePanel.tsx
+  var import_react11 = __toESM(require_react(), 1);
+  function ParsedResponsePanel({
+    recording,
+    parsedData,
+    isLoading,
+    error
+  }) {
+    return /* @__PURE__ */ import_react11.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react11.default.createElement("h3", { className: "font-semibold" }, "Parsed Response")), /* @__PURE__ */ import_react11.default.createElement("div", { className: "p-4" }, recording.response.streaming ? /* @__PURE__ */ import_react11.default.createElement("div", { className: "mt-1" }, isLoading && /* @__PURE__ */ import_react11.default.createElement("div", { className: "flex items-center justify-center p-8" }, /* @__PURE__ */ import_react11.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-primary" }), /* @__PURE__ */ import_react11.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Parsing stream...")), error && /* @__PURE__ */ import_react11.default.createElement("div", { className: "p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-800 dark:text-red-300 text-sm" }, "Failed to parse stream: ", error.message), parsedData && !isLoading && /* @__PURE__ */ import_react11.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Reconstructed Output"), /* @__PURE__ */ import_react11.default.createElement("div", { className: "p-3 bg-muted/50 rounded border" }, parsedData.text ? /* @__PURE__ */ import_react11.default.createElement("p", { className: "text-sm whitespace-pre-wrap" }, parsedData.text) : /* @__PURE__ */ import_react11.default.createElement("p", { className: "text-sm text-muted-foreground italic" }, "No text content"))), Object.keys(parsedData.metadata).length > 0 && /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Metadata"), /* @__PURE__ */ import_react11.default.createElement("div", { className: "grid grid-cols-2 gap-2" }, Object.entries(parsedData.metadata).map(
+      ([key, value]) => /* @__PURE__ */ import_react11.default.createElement(
+        "div",
+        {
+          key,
+          className: "p-2 bg-muted/50 rounded border"
+        },
+        /* @__PURE__ */ import_react11.default.createElement("div", { className: "text-xs font-medium text-muted-foreground" }, key),
+        /* @__PURE__ */ import_react11.default.createElement("div", { className: "text-sm mt-1" }, typeof value == "object" ? /* @__PURE__ */ import_react11.default.createElement("pre", { className: "text-xs whitespace-pre-wrap overflow-x-auto" }, JSON.stringify(value, null, 2)) : String(value))
+      )
+    ))), Object.keys(parsedData.eventCounts).length > 0 && /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Event Summary"), /* @__PURE__ */ import_react11.default.createElement("div", { className: "p-3 bg-muted/50 rounded border" }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "flex flex-wrap gap-2" }, Object.entries(parsedData.eventCounts).map(
+      ([eventType, count]) => /* @__PURE__ */ import_react11.default.createElement(
+        "span",
+        {
+          key: eventType,
+          className: "inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+        },
+        eventType,
+        ": ",
+        count
+      )
+    )))))) : /* @__PURE__ */ import_react11.default.createElement("div", { className: "text-center py-8 text-muted-foreground" }, "This recording is not streaming, so there is no parsed view available.")));
+  }
+
+  // internal/ui/src/app/components/recording/RecordingDetail.tsx
+  var TABS = [
+    { id: "request", label: "Request" },
+    { id: "response", label: "Response" },
+    { id: "parsed", label: "Parsed Response" }
+  ];
   function RecordingDetail({ recordingId }) {
-    let [copiedSection, setCopiedSection] = (0, import_react5.useState)(null), [searchParams, setSearchParams] = useSearchParams(), activeTab = searchParams.get("tab") || "request", navigate = useNavigate(), setActiveTab = (tab) => {
+    let [searchParams, setSearchParams] = useSearchParams(), activeTab = searchParams.get("tab") || "request", setActiveTab = (tab) => {
       setSearchParams(
         (prev) => {
           let newParams = new URLSearchParams(prev);
@@ -23948,117 +24094,39 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       queryKey: ["parsed", recordingId],
       queryFn: () => fetchParsedRecording(recordingId),
       enabled: activeTab === "parsed" && !!recording?.response.streaming
-    }), copyToClipboard = (text, section) => {
-      navigator.clipboard.writeText(text), setCopiedSection(section), setTimeout(() => setCopiedSection(null), 2e3);
-    }, formatJSON = (obj) => {
-      try {
-        return JSON.stringify(obj, null, 2);
-      } catch {
-        return String(obj);
+    });
+    return isLoadingRecording && !recording ? /* @__PURE__ */ import_react12.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react12.default.createElement(LoaderCircle, { className: "h-8 w-8 animate-spin text-primary" }), /* @__PURE__ */ import_react12.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Loading recording...")) : recording ? /* @__PURE__ */ import_react12.default.createElement("div", { className: "w-full h-full flex flex-col bg-background text-foreground" }, /* @__PURE__ */ import_react12.default.createElement(RecordingHeader, { recordingId }), /* @__PURE__ */ import_react12.default.createElement("div", { className: "flex-1 flex flex-col overflow-hidden bg-background" }, /* @__PURE__ */ import_react12.default.createElement("div", { className: "bg-card border-b" }, /* @__PURE__ */ import_react12.default.createElement("div", { className: "p-6 pb-0" }, /* @__PURE__ */ import_react12.default.createElement(RecordingMetadata, { recording }), recording.error && /* @__PURE__ */ import_react12.default.createElement(RecordingError, { error: recording.error }), /* @__PURE__ */ import_react12.default.createElement(
+      RecordingTabs,
+      {
+        activeTab,
+        onTabChange: setActiveTab,
+        tabs: TABS
       }
-    }, formatBody = (body) => typeof body == "string" ? body : formatJSON(body), getStatusColor = (status) => status >= 200 && status < 300 ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20" : status >= 500 ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20" : "text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800";
-    return isLoadingRecording && !recording ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react5.default.createElement(LoaderCircle, { className: "h-8 w-8 animate-spin text-primary" }), /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Loading recording...")) : recording ? (console.log("RecordingDetail render", {
-      recordingId,
-      activeTab,
-      recording,
-      parsedData
-    }), /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-full h-full flex flex-col bg-background text-foreground" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-6 border-b bg-card" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement(
-      "button",
+    ))), /* @__PURE__ */ import_react12.default.createElement("div", { className: "flex-1 overflow-y-auto p-6 bg-muted/10" }, activeTab === "request" && /* @__PURE__ */ import_react12.default.createElement(RequestPanel, { recording }), activeTab === "response" && /* @__PURE__ */ import_react12.default.createElement(ResponsePanel, { recording }), activeTab === "parsed" && /* @__PURE__ */ import_react12.default.createElement(
+      ParsedResponsePanel,
       {
-        onClick: () => navigate("/recordings"),
-        className: "p-2 hover:bg-muted rounded-md transition-colors"
-      },
-      /* @__PURE__ */ import_react5.default.createElement(ArrowLeft, { className: "h-5 w-5" })
-    ), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-xl font-bold" }, "Recording Details"), recording && /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground font-mono mt-1" }, recording.id)))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex flex-col overflow-hidden bg-background" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border-b" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 pb-0" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-4 gap-4 mb-6" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Timestamp"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, format(
-      new Date(recording.timestamp),
-      "MMM d, yyyy HH:mm:ss"
-    ))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Provider"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground" }, recording.provider))), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Duration"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, recording.timing.duration_ms, "ms")), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Status"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1" }, /* @__PURE__ */ import_react5.default.createElement(
-      "span",
-      {
-        className: `inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getStatusColor(recording.response.status)}`
-      },
-      recording.response.status
-    )))), recording.error && /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md mb-6" }, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-red-800 dark:text-red-300" }, "Error"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-red-700 dark:text-red-400 mt-1 font-mono" }, recording.error)), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex gap-6 border-b -mb-px" }, ["request", "response", "parsed"].map((tab) => /* @__PURE__ */ import_react5.default.createElement(
-      "button",
-      {
-        key: tab,
-        onClick: () => setActiveTab(tab),
-        className: `
-                    pb-3 text-sm font-medium transition-colors border-b-2
-                    ${activeTab === tab ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"}
-                  `
-      },
-      tab.charAt(0).toUpperCase() + tab.slice(1) + (tab === "parsed" ? " Response" : "")
-    ))))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 overflow-y-auto p-6 bg-muted/10" }, activeTab === "request" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold" }, "Request"), /* @__PURE__ */ import_react5.default.createElement(
-      Button,
-      {
-        size: "sm",
-        variant: "ghost",
-        onClick: () => copyToClipboard(
-          formatJSON({
-            method: recording.request.method,
-            path: recording.request.path,
-            query: recording.request.query,
-            headers: recording.request.headers,
-            body: recording.request.body
-          }),
-          "request"
-        )
-      },
-      copiedSection === "request" ? /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy")
-    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Endpoint"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm mt-1 font-mono" }, recording.request.method, " ", recording.request.path, recording.request.query && `?${recording.request.query}`)), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto" }, formatJSON(recording.request.headers))), recording.request.body && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto w-full whitespace-pre-wrap" }, formatBody(recording.request.body))))), activeTab === "response" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold" }, "Response"), recording.response.streaming && /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded" }, "Streaming")), /* @__PURE__ */ import_react5.default.createElement(
-      Button,
-      {
-        size: "sm",
-        variant: "ghost",
-        onClick: () => copyToClipboard(
-          formatJSON({
-            status: recording.response.status,
-            headers: recording.response.headers,
-            body: recording.response.body
-          }),
-          "response"
-        )
-      },
-      copiedSection === "response" ? /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy")
-    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto" }, formatJSON(recording.response.headers))), recording.response.body && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs mt-1 p-3 bg-muted/50 rounded overflow-x-auto overflow-y-auto max-h-[500px] w-full whitespace-pre-wrap" }, formatBody(recording.response.body))))), activeTab === "parsed" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "font-semibold" }, "Parsed Response")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4" }, recording.response.streaming ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "mt-1" }, isParsing && /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-center p-8" }, /* @__PURE__ */ import_react5.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-primary" }), /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Parsing stream...")), parseError && /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-800 dark:text-red-300 text-sm" }, "Failed to parse stream: ", parseError.message), parsedData && !isParsing && /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Reconstructed Output"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-3 bg-muted/50 rounded border" }, parsedData.text ? /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm whitespace-pre-wrap" }, parsedData.text) : /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground italic" }, "No text content"))), Object.keys(parsedData.metadata).length > 0 && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Metadata"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-2 gap-2" }, Object.entries(parsedData.metadata).map(
-      ([key, value]) => /* @__PURE__ */ import_react5.default.createElement(
-        "div",
-        {
-          key,
-          className: "p-2 bg-muted/50 rounded border"
-        },
-        /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-xs font-medium text-muted-foreground" }, key),
-        /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-sm mt-1" }, typeof value == "object" ? /* @__PURE__ */ import_react5.default.createElement("pre", { className: "text-xs whitespace-pre-wrap overflow-x-auto" }, JSON.stringify(value, null, 2)) : String(value))
-      )
-    ))), Object.keys(parsedData.eventCounts).length > 0 && /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-sm font-semibold mb-2" }, "Event Summary"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-3 bg-muted/50 rounded border" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex flex-wrap gap-2" }, Object.entries(parsedData.eventCounts).map(
-      ([eventType, count]) => /* @__PURE__ */ import_react5.default.createElement(
-        "span",
-        {
-          key: eventType,
-          className: "inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
-        },
-        eventType,
-        ": ",
-        count
-      )
-    )))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-center py-8 text-muted-foreground" }, "This recording is not streaming, so there is no parsed view available."))))))) : /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Recording not found."));
+        recording,
+        parsedData,
+        isLoading: isParsing,
+        error: parseError
+      }
+    )))) : /* @__PURE__ */ import_react12.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react12.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Recording not found."));
   }
 
   // internal/ui/src/app/components/RecordingSidebar.tsx
-  var import_react6 = __toESM(require_react(), 1);
+  var import_react13 = __toESM(require_react(), 1);
   function RecordingSidebar({
     currentRecordingId
   }) {
-    let navigate = useNavigate(), [searchParams] = useSearchParams(), scrollRef = (0, import_react6.useRef)(null), [width, setWidth] = (0, import_react6.useState)(320), [isResizing, setIsResizing] = (0, import_react6.useState)(!1), startResizing = (0, import_react6.useCallback)(() => {
+    let navigate = useNavigate(), [searchParams] = useSearchParams(), scrollRef = (0, import_react13.useRef)(null), [width, setWidth] = (0, import_react13.useState)(320), [isResizing, setIsResizing] = (0, import_react13.useState)(!1), startResizing = (0, import_react13.useCallback)(() => {
       setIsResizing(!0);
-    }, []), stopResizing = (0, import_react6.useCallback)(() => {
+    }, []), stopResizing = (0, import_react13.useCallback)(() => {
       setIsResizing(!1);
-    }, []), resize = (0, import_react6.useCallback)((mouseMoveEvent) => {
+    }, []), resize = (0, import_react13.useCallback)((mouseMoveEvent) => {
       let newWidth = mouseMoveEvent.clientX;
       newWidth > 200 && newWidth < 800 && setWidth(newWidth);
     }, []);
-    (0, import_react6.useEffect)(() => (isResizing && (window.addEventListener("mousemove", resize), window.addEventListener("mouseup", stopResizing)), () => {
+    (0, import_react13.useEffect)(() => (isResizing && (window.addEventListener("mousemove", resize), window.addEventListener("mouseup", stopResizing)), () => {
       window.removeEventListener("mousemove", resize), window.removeEventListener("mouseup", stopResizing);
     }), [isResizing, resize, stopResizing]);
     let { data: data2, isLoading } = useQuery({
@@ -24066,8 +24134,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       queryFn: () => fetchRecordings(1, 100),
       // Fetch first 100 for the sidebar
       refetchInterval: 5e3
-    }), recordings = data2?.recordings || [], getStatusColor = (status) => status >= 200 && status < 300 ? "text-green-600 dark:text-green-400" : status >= 400 && status < 500 ? "text-yellow-600 dark:text-yellow-400" : status >= 500 ? "text-red-600 dark:text-red-400" : "text-muted-foreground";
-    return (0, import_react6.useEffect)(() => {
+    }), recordings = data2?.recordings || [];
+    return (0, import_react13.useEffect)(() => {
       let handleKeyDown = (e) => {
         if (!recordings.length) return;
         let currentIndex = recordings.findIndex(
@@ -24084,21 +24152,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }));
       };
       return window.addEventListener("keydown", handleKeyDown), () => window.removeEventListener("keydown", handleKeyDown);
-    }, [currentRecordingId, recordings, navigate, searchParams]), (0, import_react6.useEffect)(() => {
+    }, [currentRecordingId, recordings, navigate, searchParams]), (0, import_react13.useEffect)(() => {
       if (scrollRef.current) {
         let activeElement = scrollRef.current.querySelector('[data-active="true"]');
         activeElement && activeElement.scrollIntoView({ block: "nearest", behavior: "smooth" });
       }
-    }, [currentRecordingId, recordings]), isLoading ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-80 border-r bg-muted/10 flex items-center justify-center" }, /* @__PURE__ */ import_react6.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-muted-foreground" })) : /* @__PURE__ */ import_react6.default.createElement(
+    }, [currentRecordingId, recordings]), isLoading ? /* @__PURE__ */ import_react13.default.createElement("div", { className: "w-80 border-r bg-muted/10 flex items-center justify-center" }, /* @__PURE__ */ import_react13.default.createElement(LoaderCircle, { className: "h-6 w-6 animate-spin text-muted-foreground" })) : /* @__PURE__ */ import_react13.default.createElement(
       "div",
       {
         className: "relative border-r bg-muted/10 flex flex-col h-full flex-shrink-0",
         style: { width }
       },
-      /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 border-b bg-background/50 backdrop-blur" }, /* @__PURE__ */ import_react6.default.createElement("h3", { className: "font-semibold text-sm text-muted-foreground uppercase tracking-wider" }, "Recent Recordings")),
-      /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex-1 overflow-y-auto", ref: scrollRef }, recordings.length === 0 ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 text-center text-muted-foreground text-sm" }, "No recordings found") : /* @__PURE__ */ import_react6.default.createElement("div", { className: "divide-y" }, recordings.map((recording) => {
+      /* @__PURE__ */ import_react13.default.createElement("div", { className: "p-4 border-b bg-background/50 backdrop-blur" }, /* @__PURE__ */ import_react13.default.createElement("h3", { className: "font-semibold text-sm text-muted-foreground uppercase tracking-wider" }, "Recent Recordings")),
+      /* @__PURE__ */ import_react13.default.createElement("div", { className: "flex-1 overflow-y-auto", ref: scrollRef }, recordings.length === 0 ? /* @__PURE__ */ import_react13.default.createElement("div", { className: "p-4 text-center text-muted-foreground text-sm" }, "No recordings found") : /* @__PURE__ */ import_react13.default.createElement("div", { className: "divide-y" }, recordings.map((recording) => {
         let isActive = recording.id === currentRecordingId;
-        return /* @__PURE__ */ import_react6.default.createElement(
+        return /* @__PURE__ */ import_react13.default.createElement(
           "button",
           {
             key: recording.id,
@@ -24112,16 +24180,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             },
             className: `w-full text-left p-3 hover:bg-muted/50 transition-colors focus:outline-none ${isActive ? "bg-muted border-l-2 border-l-primary" : "border-l-2 border-l-transparent"}`
           },
-          /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between mb-1" }, /* @__PURE__ */ import_react6.default.createElement(
+          /* @__PURE__ */ import_react13.default.createElement("div", { className: "flex items-center justify-between mb-1" }, /* @__PURE__ */ import_react13.default.createElement(
             "span",
             {
-              className: `text-xs font-medium ${getStatusColor(recording.status)}`
+              className: `text-xs font-medium ${getStatusTextColor(recording.status)}`
             },
             recording.status,
             " ",
             recording.method
-          ), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-muted-foreground" }, format(new Date(recording.timestamp), "HH:mm:ss"))),
-          /* @__PURE__ */ import_react6.default.createElement(
+          ), /* @__PURE__ */ import_react13.default.createElement("span", { className: "text-[10px] text-muted-foreground" }, format(new Date(recording.timestamp), "HH:mm:ss"))),
+          /* @__PURE__ */ import_react13.default.createElement(
             "div",
             {
               className: "text-xs font-mono truncate text-foreground/80 mb-1",
@@ -24129,16 +24197,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             },
             recording.path
           ),
-          /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between text-[10px] text-muted-foreground" }, /* @__PURE__ */ import_react6.default.createElement(
+          /* @__PURE__ */ import_react13.default.createElement("div", { className: "flex items-center justify-between text-[10px] text-muted-foreground" }, /* @__PURE__ */ import_react13.default.createElement(
             "span",
             {
               className: getProviderStyles(recording.provider) + " px-1 py-0.5 rounded"
             },
             recording.provider
-          ), /* @__PURE__ */ import_react6.default.createElement("span", null, recording.duration, "ms"))
+          ), /* @__PURE__ */ import_react13.default.createElement("span", null, recording.duration, "ms"))
         );
       }))),
-      /* @__PURE__ */ import_react6.default.createElement(
+      /* @__PURE__ */ import_react13.default.createElement(
         "div",
         {
           className: "absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary/50 active:bg-primary transition-colors z-10",
@@ -24151,33 +24219,33 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // internal/ui/src/app/pages/Recording.tsx
   function Recording() {
     let { id } = useParams(), navigate = useNavigate();
-    return id ? /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex h-[calc(100vh-4rem)] w-full border-b" }, /* @__PURE__ */ import_react7.default.createElement(RecordingSidebar, { currentRecordingId: id }), /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex-1 min-w-0 h-full" }, /* @__PURE__ */ import_react7.default.createElement(RecordingDetail, { recordingId: id }))) : (navigate("/recordings"), null);
+    return id ? /* @__PURE__ */ import_react14.default.createElement("div", { className: "flex h-[calc(100vh-4rem)] w-full border-b" }, /* @__PURE__ */ import_react14.default.createElement(RecordingSidebar, { currentRecordingId: id }), /* @__PURE__ */ import_react14.default.createElement("div", { className: "flex-1 min-w-0 h-full" }, /* @__PURE__ */ import_react14.default.createElement(RecordingDetail, { recordingId: id }))) : (navigate("/recordings"), null);
   }
 
   // internal/ui/src/app/components/mode-toggle.tsx
-  var import_react9 = __toESM(require_react(), 1);
+  var import_react16 = __toESM(require_react(), 1);
 
   // internal/ui/src/app/components/theme-provider.tsx
-  var import_react8 = __toESM(require_react(), 1), initialState = {
+  var import_react15 = __toESM(require_react(), 1), initialState = {
     theme: "system",
     setTheme: () => null
-  }, ThemeProviderContext = (0, import_react8.createContext)(initialState);
+  }, ThemeProviderContext = (0, import_react15.createContext)(initialState);
   function ThemeProvider({
     children,
     defaultTheme = "system",
     storageKey = "vite-ui-theme"
   }) {
-    let [theme, setTheme] = (0, import_react8.useState)(
+    let [theme, setTheme] = (0, import_react15.useState)(
       () => localStorage.getItem(storageKey) || defaultTheme
     );
-    (0, import_react8.useEffect)(() => {
-      let root2 = window.document.documentElement;
-      if (root2.classList.remove("light", "dark"), theme === "system") {
+    (0, import_react15.useEffect)(() => {
+      let root = window.document.documentElement;
+      if (root.classList.remove("light", "dark"), theme === "system") {
         let systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        root2.classList.add(systemTheme);
+        root.classList.add(systemTheme);
         return;
       }
-      root2.classList.add(theme);
+      root.classList.add(theme);
     }, [theme]);
     let value = {
       theme,
@@ -24185,10 +24253,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         localStorage.setItem(storageKey, theme2), setTheme(theme2);
       }
     };
-    return /* @__PURE__ */ import_react8.default.createElement(ThemeProviderContext.Provider, { value }, children);
+    return /* @__PURE__ */ import_react15.default.createElement(ThemeProviderContext.Provider, { value }, children);
   }
   var useTheme = () => {
-    let context = (0, import_react8.useContext)(ThemeProviderContext);
+    let context = (0, import_react15.useContext)(ThemeProviderContext);
     if (context === void 0)
       throw new Error("useTheme must be used within a ThemeProvider");
     return context;
@@ -24197,7246 +24265,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // internal/ui/src/app/components/mode-toggle.tsx
   function ModeToggle() {
     let { theme, setTheme } = useTheme();
-    return /* @__PURE__ */ import_react9.default.createElement(Button, { variant: "ghost", size: "icon", onClick: () => setTheme(theme === "dark" ? "light" : "dark") }, /* @__PURE__ */ import_react9.default.createElement(Sun, { className: "h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" }), /* @__PURE__ */ import_react9.default.createElement(Moon, { className: "absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" }), /* @__PURE__ */ import_react9.default.createElement("span", { className: "sr-only" }, "Toggle theme"));
+    return /* @__PURE__ */ import_react16.default.createElement(Button, { variant: "ghost", size: "icon", onClick: () => setTheme(theme === "dark" ? "light" : "dark") }, /* @__PURE__ */ import_react16.default.createElement(Sun, { className: "h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" }), /* @__PURE__ */ import_react16.default.createElement(Moon, { className: "absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" }), /* @__PURE__ */ import_react16.default.createElement("span", { className: "sr-only" }, "Toggle theme"));
   }
 
   // internal/ui/src/app/App.tsx
   function App() {
-    return /* @__PURE__ */ import_react10.default.createElement("div", { className: "min-h-screen flex flex-col bg-background" }, /* @__PURE__ */ import_react10.default.createElement("header", { className: "border-b" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: " mx-auto px-4" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-16 items-center justify-between" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center" }, /* @__PURE__ */ import_react10.default.createElement(
+    return /* @__PURE__ */ import_react17.default.createElement("div", { className: "min-h-screen flex flex-col bg-background" }, /* @__PURE__ */ import_react17.default.createElement("header", { className: "border-b" }, /* @__PURE__ */ import_react17.default.createElement("div", { className: " mx-auto px-4" }, /* @__PURE__ */ import_react17.default.createElement("div", { className: "flex h-16 items-center justify-between" }, /* @__PURE__ */ import_react17.default.createElement("div", { className: "flex items-center" }, /* @__PURE__ */ import_react17.default.createElement(
       "a",
       {
         href: "/",
         className: "flex text-xl font-bold libertinus-math-regular"
       },
-      /* @__PURE__ */ import_react10.default.createElement("img", { src: "/logo.png", alt: "mirra", className: "h-8 mr-2" })
-    )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react10.default.createElement(ModeToggle, null))))), /* @__PURE__ */ import_react10.default.createElement("main", null, /* @__PURE__ */ import_react10.default.createElement(Routes, null, /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react10.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/recordings", element: /* @__PURE__ */ import_react10.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react10.default.createElement(Route, { path: "/recordings/:id", element: /* @__PURE__ */ import_react10.default.createElement(Recording, null) }))));
+      /* @__PURE__ */ import_react17.default.createElement("img", { src: "/logo.png", alt: "mirra", className: "h-8 mr-2" })
+    )), /* @__PURE__ */ import_react17.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react17.default.createElement(ModeToggle, null))))), /* @__PURE__ */ import_react17.default.createElement("main", null, /* @__PURE__ */ import_react17.default.createElement(Routes, null, /* @__PURE__ */ import_react17.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react17.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react17.default.createElement(Route, { path: "/recordings", element: /* @__PURE__ */ import_react17.default.createElement(Recordings, null) }), /* @__PURE__ */ import_react17.default.createElement(Route, { path: "/recordings/:id", element: /* @__PURE__ */ import_react17.default.createElement(Recording, null) }))));
   }
   var App_default = App;
 
-  // internal/ui/src/node_modules/tslib/tslib.es6.mjs
-  var extendStatics = function(d, b) {
-    return extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
-      d2.__proto__ = b2;
-    } || function(d2, b2) {
-      for (var p in b2) Object.prototype.hasOwnProperty.call(b2, p) && (d2[p] = b2[p]);
-    }, extendStatics(d, b);
-  };
-  function __extends(d, b) {
-    if (typeof b != "function" && b !== null)
-      throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  }
-  var __assign = function() {
-    return __assign = Object.assign || function(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) Object.prototype.hasOwnProperty.call(s, p) && (t[p] = s[p]);
-      }
-      return t;
-    }, __assign.apply(this, arguments);
-  };
-  function __rest(s, e) {
-    var t = {};
-    for (var p in s) Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0 && (t[p] = s[p]);
-    if (s != null && typeof Object.getOwnPropertySymbols == "function")
-      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++)
-        e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]) && (t[p[i]] = s[p[i]]);
-    return t;
-  }
-  function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) {
-      return value instanceof P ? value : new P(function(resolve) {
-        resolve(value);
-      });
-    }
-    return new (P || (P = Promise))(function(resolve, reject) {
-      function fulfilled(value) {
-        try {
-          step(generator.next(value));
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function rejected(value) {
-        try {
-          step(generator.throw(value));
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function step(result2) {
-        result2.done ? resolve(result2.value) : adopt(result2.value).then(fulfilled, rejected);
-      }
-      step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-  }
-  function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator == "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g.throw = verb(1), g.return = verb(2), typeof Symbol == "function" && (g[Symbol.iterator] = function() {
-      return this;
-    }), g;
-    function verb(n) {
-      return function(v) {
-        return step([n, v]);
-      };
-    }
-    function step(op) {
-      if (f) throw new TypeError("Generator is already executing.");
-      for (; g && (g = 0, op[0] && (_ = 0)), _; ) try {
-        if (f = 1, y && (t = op[0] & 2 ? y.return : op[0] ? y.throw || ((t = y.return) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        switch (y = 0, t && (op = [op[0] & 2, t.value]), op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-          case 4:
-            return _.label++, { value: op[1], done: !1 };
-          case 5:
-            _.label++, y = op[1], op = [0];
-            continue;
-          case 7:
-            op = _.ops.pop(), _.trys.pop();
-            continue;
-          default:
-            if (t = _.trys, !(t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1], t = op;
-              break;
-            }
-            if (t && _.label < t[2]) {
-              _.label = t[2], _.ops.push(op);
-              break;
-            }
-            t[2] && _.ops.pop(), _.trys.pop();
-            continue;
-        }
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e], y = 0;
-      } finally {
-        f = t = 0;
-      }
-      if (op[0] & 5) throw op[1];
-      return { value: op[0] ? op[1] : void 0, done: !0 };
-    }
-  }
-  function __spreadArray(to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++)
-      (ar || !(i in from)) && (ar || (ar = Array.prototype.slice.call(from, 0, i)), ar[i] = from[i]);
-    return to.concat(ar || Array.prototype.slice.call(from));
-  }
-
-  // internal/ui/src/node_modules/ts-invariant/lib/invariant.js
-  var genericMessage = "Invariant Violation", _a = Object.setPrototypeOf, setPrototypeOf = _a === void 0 ? function(obj, proto) {
-    return obj.__proto__ = proto, obj;
-  } : _a, InvariantError = (
-    /** @class */
-    (function(_super) {
-      __extends(InvariantError2, _super);
-      function InvariantError2(message2) {
-        message2 === void 0 && (message2 = genericMessage);
-        var _this = _super.call(this, typeof message2 == "number" ? genericMessage + ": " + message2 + " (see https://github.com/apollographql/invariant-packages)" : message2) || this;
-        return _this.framesToPop = 1, _this.name = genericMessage, setPrototypeOf(_this, InvariantError2.prototype), _this;
-      }
-      return InvariantError2;
-    })(Error)
-  );
-  function invariant3(condition, message2) {
-    if (!condition)
-      throw new InvariantError(message2);
-  }
-  var verbosityLevels = ["debug", "log", "warn", "error", "silent"], verbosityLevel = verbosityLevels.indexOf("log");
-  function wrapConsoleMethod(name) {
-    return function() {
-      if (verbosityLevels.indexOf(name) >= verbosityLevel) {
-        var method = console[name] || console.log;
-        return method.apply(console, arguments);
-      }
-    };
-  }
-  (function(invariant6) {
-    invariant6.debug = wrapConsoleMethod("debug"), invariant6.log = wrapConsoleMethod("log"), invariant6.warn = wrapConsoleMethod("warn"), invariant6.error = wrapConsoleMethod("error");
-  })(invariant3 || (invariant3 = {}));
-  function setVerbosity(level) {
-    var old = verbosityLevels[verbosityLevel];
-    return verbosityLevel = Math.max(0, verbosityLevels.indexOf(level)), old;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/version.js
-  var version = "3.14.0";
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/globals/maybe.js
-  function maybe(thunk) {
-    try {
-      return thunk();
-    } catch {
-    }
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/globals/global.js
-  var global_default = maybe(function() {
-    return globalThis;
-  }) || maybe(function() {
-    return window;
-  }) || maybe(function() {
-    return self;
-  }) || maybe(function() {
-    return global;
-  }) || // We don't expect the Function constructor ever to be invoked at runtime, as
-  // long as at least one of globalThis, window, self, or global is defined, so
-  // we are under no obligation to make it easy for static analysis tools to
-  // detect syntactic usage of the Function constructor. If you think you can
-  // improve your static analysis to detect this obfuscation, think again. This
-  // is an arms race you cannot win, at least not in JavaScript.
-  maybe(function() {
-    return maybe.constructor("return this")();
-  });
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/makeUniqueId.js
-  var prefixCounts = /* @__PURE__ */ new Map();
-  function makeUniqueId(prefix) {
-    var count = prefixCounts.get(prefix) || 1;
-    return prefixCounts.set(prefix, count + 1), "".concat(prefix, ":").concat(count, ":").concat(Math.random().toString(36).slice(2));
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/stringifyForDisplay.js
-  function stringifyForDisplay(value, space) {
-    space === void 0 && (space = 0);
-    var undefId = makeUniqueId("stringifyForDisplay");
-    return JSON.stringify(value, function(key, value2) {
-      return value2 === void 0 ? undefId : value2;
-    }, space).split(JSON.stringify(undefId)).join("<undefined>");
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/globals/invariantWrappers.js
-  function wrap(fn) {
-    return function(message2) {
-      for (var args = [], _i = 1; _i < arguments.length; _i++)
-        args[_i - 1] = arguments[_i];
-      if (typeof message2 == "number") {
-        var arg0 = message2;
-        message2 = getHandledErrorMsg(arg0), message2 || (message2 = getFallbackErrorMsg(arg0, args), args = []);
-      }
-      fn.apply(void 0, [message2].concat(args));
-    };
-  }
-  var invariant4 = Object.assign(function(condition, message2) {
-    for (var args = [], _i = 2; _i < arguments.length; _i++)
-      args[_i - 2] = arguments[_i];
-    condition || invariant3(condition, getHandledErrorMsg(message2, args) || getFallbackErrorMsg(message2, args));
-  }, {
-    debug: wrap(invariant3.debug),
-    log: wrap(invariant3.log),
-    warn: wrap(invariant3.warn),
-    error: wrap(invariant3.error)
-  });
-  function newInvariantError(message2) {
-    for (var optionalParams = [], _i = 1; _i < arguments.length; _i++)
-      optionalParams[_i - 1] = arguments[_i];
-    return new InvariantError(getHandledErrorMsg(message2, optionalParams) || getFallbackErrorMsg(message2, optionalParams));
-  }
-  var ApolloErrorMessageHandler = Symbol.for("ApolloErrorMessageHandler_" + version);
-  function stringify(arg) {
-    if (typeof arg == "string")
-      return arg;
-    try {
-      return stringifyForDisplay(arg, 2).slice(0, 1e3);
-    } catch {
-      return "<non-serializable>";
-    }
-  }
-  function getHandledErrorMsg(message2, messageArgs) {
-    if (messageArgs === void 0 && (messageArgs = []), !!message2)
-      return global_default[ApolloErrorMessageHandler] && global_default[ApolloErrorMessageHandler](message2, messageArgs.map(stringify));
-  }
-  function getFallbackErrorMsg(message2, messageArgs) {
-    if (messageArgs === void 0 && (messageArgs = []), !!message2)
-      return "An error occurred! For more details, see the full error text at https://go.apollo.dev/c/err#".concat(encodeURIComponent(JSON.stringify({
-        version,
-        message: message2,
-        args: messageArgs.map(stringify)
-      })));
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/globals/index.js
-  var DEV = globalThis.__DEV__ !== !1;
-
-  // internal/ui/src/node_modules/graphql/jsutils/devAssert.mjs
-  function devAssert(condition, message2) {
-    if (!!!condition)
-      throw new Error(message2);
-  }
-
-  // internal/ui/src/node_modules/graphql/language/ast.mjs
-  var QueryDocumentKeys = {
-    Name: [],
-    Document: ["definitions"],
-    OperationDefinition: [
-      "description",
-      "name",
-      "variableDefinitions",
-      "directives",
-      "selectionSet"
-    ],
-    VariableDefinition: [
-      "description",
-      "variable",
-      "type",
-      "defaultValue",
-      "directives"
-    ],
-    Variable: ["name"],
-    SelectionSet: ["selections"],
-    Field: ["alias", "name", "arguments", "directives", "selectionSet"],
-    Argument: ["name", "value"],
-    FragmentSpread: ["name", "directives"],
-    InlineFragment: ["typeCondition", "directives", "selectionSet"],
-    FragmentDefinition: [
-      "description",
-      "name",
-      // Note: fragment variable definitions are deprecated and will removed in v17.0.0
-      "variableDefinitions",
-      "typeCondition",
-      "directives",
-      "selectionSet"
-    ],
-    IntValue: [],
-    FloatValue: [],
-    StringValue: [],
-    BooleanValue: [],
-    NullValue: [],
-    EnumValue: [],
-    ListValue: ["values"],
-    ObjectValue: ["fields"],
-    ObjectField: ["name", "value"],
-    Directive: ["name", "arguments"],
-    NamedType: ["name"],
-    ListType: ["type"],
-    NonNullType: ["type"],
-    SchemaDefinition: ["description", "directives", "operationTypes"],
-    OperationTypeDefinition: ["type"],
-    ScalarTypeDefinition: ["description", "name", "directives"],
-    ObjectTypeDefinition: [
-      "description",
-      "name",
-      "interfaces",
-      "directives",
-      "fields"
-    ],
-    FieldDefinition: ["description", "name", "arguments", "type", "directives"],
-    InputValueDefinition: [
-      "description",
-      "name",
-      "type",
-      "defaultValue",
-      "directives"
-    ],
-    InterfaceTypeDefinition: [
-      "description",
-      "name",
-      "interfaces",
-      "directives",
-      "fields"
-    ],
-    UnionTypeDefinition: ["description", "name", "directives", "types"],
-    EnumTypeDefinition: ["description", "name", "directives", "values"],
-    EnumValueDefinition: ["description", "name", "directives"],
-    InputObjectTypeDefinition: ["description", "name", "directives", "fields"],
-    DirectiveDefinition: ["description", "name", "arguments", "locations"],
-    SchemaExtension: ["directives", "operationTypes"],
-    ScalarTypeExtension: ["name", "directives"],
-    ObjectTypeExtension: ["name", "interfaces", "directives", "fields"],
-    InterfaceTypeExtension: ["name", "interfaces", "directives", "fields"],
-    UnionTypeExtension: ["name", "directives", "types"],
-    EnumTypeExtension: ["name", "directives", "values"],
-    InputObjectTypeExtension: ["name", "directives", "fields"],
-    TypeCoordinate: ["name"],
-    MemberCoordinate: ["name", "memberName"],
-    ArgumentCoordinate: ["name", "fieldName", "argumentName"],
-    DirectiveCoordinate: ["name"],
-    DirectiveArgumentCoordinate: ["name", "argumentName"]
-  }, kindValues = new Set(Object.keys(QueryDocumentKeys));
-  function isNode(maybeNode) {
-    let maybeKind = maybeNode?.kind;
-    return typeof maybeKind == "string" && kindValues.has(maybeKind);
-  }
-  var OperationTypeNode;
-  (function(OperationTypeNode2) {
-    OperationTypeNode2.QUERY = "query", OperationTypeNode2.MUTATION = "mutation", OperationTypeNode2.SUBSCRIPTION = "subscription";
-  })(OperationTypeNode || (OperationTypeNode = {}));
-
-  // internal/ui/src/node_modules/graphql/language/kinds.mjs
-  var Kind;
-  (function(Kind2) {
-    Kind2.NAME = "Name", Kind2.DOCUMENT = "Document", Kind2.OPERATION_DEFINITION = "OperationDefinition", Kind2.VARIABLE_DEFINITION = "VariableDefinition", Kind2.SELECTION_SET = "SelectionSet", Kind2.FIELD = "Field", Kind2.ARGUMENT = "Argument", Kind2.FRAGMENT_SPREAD = "FragmentSpread", Kind2.INLINE_FRAGMENT = "InlineFragment", Kind2.FRAGMENT_DEFINITION = "FragmentDefinition", Kind2.VARIABLE = "Variable", Kind2.INT = "IntValue", Kind2.FLOAT = "FloatValue", Kind2.STRING = "StringValue", Kind2.BOOLEAN = "BooleanValue", Kind2.NULL = "NullValue", Kind2.ENUM = "EnumValue", Kind2.LIST = "ListValue", Kind2.OBJECT = "ObjectValue", Kind2.OBJECT_FIELD = "ObjectField", Kind2.DIRECTIVE = "Directive", Kind2.NAMED_TYPE = "NamedType", Kind2.LIST_TYPE = "ListType", Kind2.NON_NULL_TYPE = "NonNullType", Kind2.SCHEMA_DEFINITION = "SchemaDefinition", Kind2.OPERATION_TYPE_DEFINITION = "OperationTypeDefinition", Kind2.SCALAR_TYPE_DEFINITION = "ScalarTypeDefinition", Kind2.OBJECT_TYPE_DEFINITION = "ObjectTypeDefinition", Kind2.FIELD_DEFINITION = "FieldDefinition", Kind2.INPUT_VALUE_DEFINITION = "InputValueDefinition", Kind2.INTERFACE_TYPE_DEFINITION = "InterfaceTypeDefinition", Kind2.UNION_TYPE_DEFINITION = "UnionTypeDefinition", Kind2.ENUM_TYPE_DEFINITION = "EnumTypeDefinition", Kind2.ENUM_VALUE_DEFINITION = "EnumValueDefinition", Kind2.INPUT_OBJECT_TYPE_DEFINITION = "InputObjectTypeDefinition", Kind2.DIRECTIVE_DEFINITION = "DirectiveDefinition", Kind2.SCHEMA_EXTENSION = "SchemaExtension", Kind2.SCALAR_TYPE_EXTENSION = "ScalarTypeExtension", Kind2.OBJECT_TYPE_EXTENSION = "ObjectTypeExtension", Kind2.INTERFACE_TYPE_EXTENSION = "InterfaceTypeExtension", Kind2.UNION_TYPE_EXTENSION = "UnionTypeExtension", Kind2.ENUM_TYPE_EXTENSION = "EnumTypeExtension", Kind2.INPUT_OBJECT_TYPE_EXTENSION = "InputObjectTypeExtension", Kind2.TYPE_COORDINATE = "TypeCoordinate", Kind2.MEMBER_COORDINATE = "MemberCoordinate", Kind2.ARGUMENT_COORDINATE = "ArgumentCoordinate", Kind2.DIRECTIVE_COORDINATE = "DirectiveCoordinate", Kind2.DIRECTIVE_ARGUMENT_COORDINATE = "DirectiveArgumentCoordinate";
-  })(Kind || (Kind = {}));
-
-  // internal/ui/src/node_modules/graphql/language/characterClasses.mjs
-  function isWhiteSpace(code) {
-    return code === 9 || code === 32;
-  }
-
-  // internal/ui/src/node_modules/graphql/language/blockString.mjs
-  function printBlockString(value, options) {
-    let escapedValue = value.replace(/"""/g, '\\"""'), lines = escapedValue.split(/\r\n|[\n\r]/g), isSingleLine = lines.length === 1, forceLeadingNewLine = lines.length > 1 && lines.slice(1).every((line) => line.length === 0 || isWhiteSpace(line.charCodeAt(0))), hasTrailingTripleQuotes = escapedValue.endsWith('\\"""'), hasTrailingQuote = value.endsWith('"') && !hasTrailingTripleQuotes, hasTrailingSlash = value.endsWith("\\"), forceTrailingNewline = hasTrailingQuote || hasTrailingSlash, printAsMultipleLines = !(options != null && options.minimize) && // add leading and trailing new lines only if it improves readability
-    (!isSingleLine || value.length > 70 || forceTrailingNewline || forceLeadingNewLine || hasTrailingTripleQuotes), result2 = "", skipLeadingNewLine = isSingleLine && isWhiteSpace(value.charCodeAt(0));
-    return (printAsMultipleLines && !skipLeadingNewLine || forceLeadingNewLine) && (result2 += `
-`), result2 += escapedValue, (printAsMultipleLines || forceTrailingNewline) && (result2 += `
-`), '"""' + result2 + '"""';
-  }
-
-  // internal/ui/src/node_modules/graphql/jsutils/inspect.mjs
-  function inspect(value) {
-    return formatValue(value, []);
-  }
-  function formatValue(value, seenValues) {
-    switch (typeof value) {
-      case "string":
-        return JSON.stringify(value);
-      case "function":
-        return value.name ? `[function ${value.name}]` : "[function]";
-      case "object":
-        return formatObjectValue(value, seenValues);
-      default:
-        return String(value);
-    }
-  }
-  function formatObjectValue(value, previouslySeenValues) {
-    if (value === null)
-      return "null";
-    if (previouslySeenValues.includes(value))
-      return "[Circular]";
-    let seenValues = [...previouslySeenValues, value];
-    if (isJSONable(value)) {
-      let jsonValue = value.toJSON();
-      if (jsonValue !== value)
-        return typeof jsonValue == "string" ? jsonValue : formatValue(jsonValue, seenValues);
-    } else if (Array.isArray(value))
-      return formatArray(value, seenValues);
-    return formatObject(value, seenValues);
-  }
-  function isJSONable(value) {
-    return typeof value.toJSON == "function";
-  }
-  function formatObject(object, seenValues) {
-    let entries = Object.entries(object);
-    return entries.length === 0 ? "{}" : seenValues.length > 2 ? "[" + getObjectTag(object) + "]" : "{ " + entries.map(
-      ([key, value]) => key + ": " + formatValue(value, seenValues)
-    ).join(", ") + " }";
-  }
-  function formatArray(array, seenValues) {
-    if (array.length === 0)
-      return "[]";
-    if (seenValues.length > 2)
-      return "[Array]";
-    let len = Math.min(10, array.length), remaining = array.length - len, items = [];
-    for (let i = 0; i < len; ++i)
-      items.push(formatValue(array[i], seenValues));
-    return remaining === 1 ? items.push("... 1 more item") : remaining > 1 && items.push(`... ${remaining} more items`), "[" + items.join(", ") + "]";
-  }
-  function getObjectTag(object) {
-    let tag = Object.prototype.toString.call(object).replace(/^\[object /, "").replace(/]$/, "");
-    if (tag === "Object" && typeof object.constructor == "function") {
-      let name = object.constructor.name;
-      if (typeof name == "string" && name !== "")
-        return name;
-    }
-    return tag;
-  }
-
-  // internal/ui/src/node_modules/graphql/language/printString.mjs
-  function printString(str) {
-    return `"${str.replace(escapedRegExp, escapedReplacer)}"`;
-  }
-  var escapedRegExp = /[\x00-\x1f\x22\x5c\x7f-\x9f]/g;
-  function escapedReplacer(str) {
-    return escapeSequences[str.charCodeAt(0)];
-  }
-  var escapeSequences = [
-    "\\u0000",
-    "\\u0001",
-    "\\u0002",
-    "\\u0003",
-    "\\u0004",
-    "\\u0005",
-    "\\u0006",
-    "\\u0007",
-    "\\b",
-    "\\t",
-    "\\n",
-    "\\u000B",
-    "\\f",
-    "\\r",
-    "\\u000E",
-    "\\u000F",
-    "\\u0010",
-    "\\u0011",
-    "\\u0012",
-    "\\u0013",
-    "\\u0014",
-    "\\u0015",
-    "\\u0016",
-    "\\u0017",
-    "\\u0018",
-    "\\u0019",
-    "\\u001A",
-    "\\u001B",
-    "\\u001C",
-    "\\u001D",
-    "\\u001E",
-    "\\u001F",
-    "",
-    "",
-    '\\"',
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    // 2F
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    // 3F
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    // 4F
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "\\\\",
-    "",
-    "",
-    "",
-    // 5F
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    // 6F
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "\\u007F",
-    "\\u0080",
-    "\\u0081",
-    "\\u0082",
-    "\\u0083",
-    "\\u0084",
-    "\\u0085",
-    "\\u0086",
-    "\\u0087",
-    "\\u0088",
-    "\\u0089",
-    "\\u008A",
-    "\\u008B",
-    "\\u008C",
-    "\\u008D",
-    "\\u008E",
-    "\\u008F",
-    "\\u0090",
-    "\\u0091",
-    "\\u0092",
-    "\\u0093",
-    "\\u0094",
-    "\\u0095",
-    "\\u0096",
-    "\\u0097",
-    "\\u0098",
-    "\\u0099",
-    "\\u009A",
-    "\\u009B",
-    "\\u009C",
-    "\\u009D",
-    "\\u009E",
-    "\\u009F"
-  ];
-
-  // internal/ui/src/node_modules/graphql/language/visitor.mjs
-  var BREAK = Object.freeze({});
-  function visit(root2, visitor, visitorKeys = QueryDocumentKeys) {
-    let enterLeaveMap = /* @__PURE__ */ new Map();
-    for (let kind of Object.values(Kind))
-      enterLeaveMap.set(kind, getEnterLeaveForKind(visitor, kind));
-    let stack, inArray = Array.isArray(root2), keys = [root2], index = -1, edits = [], node = root2, key, parent, path = [], ancestors = [];
-    do {
-      index++;
-      let isLeaving = index === keys.length, isEdited = isLeaving && edits.length !== 0;
-      if (isLeaving) {
-        if (key = ancestors.length === 0 ? void 0 : path[path.length - 1], node = parent, parent = ancestors.pop(), isEdited)
-          if (inArray) {
-            node = node.slice();
-            let editOffset = 0;
-            for (let [editKey, editValue] of edits) {
-              let arrayKey = editKey - editOffset;
-              editValue === null ? (node.splice(arrayKey, 1), editOffset++) : node[arrayKey] = editValue;
-            }
-          } else {
-            node = { ...node };
-            for (let [editKey, editValue] of edits)
-              node[editKey] = editValue;
-          }
-        index = stack.index, keys = stack.keys, edits = stack.edits, inArray = stack.inArray, stack = stack.prev;
-      } else if (parent) {
-        if (key = inArray ? index : keys[index], node = parent[key], node == null)
-          continue;
-        path.push(key);
-      }
-      let result2;
-      if (!Array.isArray(node)) {
-        var _enterLeaveMap$get, _enterLeaveMap$get2;
-        isNode(node) || devAssert(!1, `Invalid AST Node: ${inspect(node)}.`);
-        let visitFn = isLeaving ? (_enterLeaveMap$get = enterLeaveMap.get(node.kind)) === null || _enterLeaveMap$get === void 0 ? void 0 : _enterLeaveMap$get.leave : (_enterLeaveMap$get2 = enterLeaveMap.get(node.kind)) === null || _enterLeaveMap$get2 === void 0 ? void 0 : _enterLeaveMap$get2.enter;
-        if (result2 = visitFn?.call(visitor, node, key, parent, path, ancestors), result2 === BREAK)
-          break;
-        if (result2 === !1) {
-          if (!isLeaving) {
-            path.pop();
-            continue;
-          }
-        } else if (result2 !== void 0 && (edits.push([key, result2]), !isLeaving))
-          if (isNode(result2))
-            node = result2;
-          else {
-            path.pop();
-            continue;
-          }
-      }
-      if (result2 === void 0 && isEdited && edits.push([key, node]), isLeaving)
-        path.pop();
-      else {
-        var _node$kind;
-        stack = {
-          inArray,
-          index,
-          keys,
-          edits,
-          prev: stack
-        }, inArray = Array.isArray(node), keys = inArray ? node : (_node$kind = visitorKeys[node.kind]) !== null && _node$kind !== void 0 ? _node$kind : [], index = -1, edits = [], parent && ancestors.push(parent), parent = node;
-      }
-    } while (stack !== void 0);
-    return edits.length !== 0 ? edits[edits.length - 1][1] : root2;
-  }
-  function getEnterLeaveForKind(visitor, kind) {
-    let kindVisitor = visitor[kind];
-    return typeof kindVisitor == "object" ? kindVisitor : typeof kindVisitor == "function" ? {
-      enter: kindVisitor,
-      leave: void 0
-    } : {
-      enter: visitor.enter,
-      leave: visitor.leave
-    };
-  }
-
-  // internal/ui/src/node_modules/graphql/language/printer.mjs
-  function print(ast) {
-    return visit(ast, printDocASTReducer);
-  }
-  var MAX_LINE_LENGTH = 80, printDocASTReducer = {
-    Name: {
-      leave: (node) => node.value
-    },
-    Variable: {
-      leave: (node) => "$" + node.name
-    },
-    // Document
-    Document: {
-      leave: (node) => join(node.definitions, `
-
-`)
-    },
-    OperationDefinition: {
-      leave(node) {
-        let varDefs = hasMultilineItems(node.variableDefinitions) ? wrap2(`(
-`, join(node.variableDefinitions, `
-`), `
-)`) : wrap2("(", join(node.variableDefinitions, ", "), ")"), prefix = wrap2("", node.description, `
-`) + join(
-          [
-            node.operation,
-            join([node.name, varDefs]),
-            join(node.directives, " ")
-          ],
-          " "
-        );
-        return (prefix === "query" ? "" : prefix + " ") + node.selectionSet;
-      }
-    },
-    VariableDefinition: {
-      leave: ({ variable, type, defaultValue, directives, description }) => wrap2("", description, `
-`) + variable + ": " + type + wrap2(" = ", defaultValue) + wrap2(" ", join(directives, " "))
-    },
-    SelectionSet: {
-      leave: ({ selections }) => block(selections)
-    },
-    Field: {
-      leave({ alias, name, arguments: args, directives, selectionSet }) {
-        let prefix = wrap2("", alias, ": ") + name, argsLine = prefix + wrap2("(", join(args, ", "), ")");
-        return argsLine.length > MAX_LINE_LENGTH && (argsLine = prefix + wrap2(`(
-`, indent(join(args, `
-`)), `
-)`)), join([argsLine, join(directives, " "), selectionSet], " ");
-      }
-    },
-    Argument: {
-      leave: ({ name, value }) => name + ": " + value
-    },
-    // Fragments
-    FragmentSpread: {
-      leave: ({ name, directives }) => "..." + name + wrap2(" ", join(directives, " "))
-    },
-    InlineFragment: {
-      leave: ({ typeCondition, directives, selectionSet }) => join(
-        [
-          "...",
-          wrap2("on ", typeCondition),
-          join(directives, " "),
-          selectionSet
-        ],
-        " "
-      )
-    },
-    FragmentDefinition: {
-      leave: ({
-        name,
-        typeCondition,
-        variableDefinitions,
-        directives,
-        selectionSet,
-        description
-      }) => wrap2("", description, `
-`) + // Note: fragment variable definitions are experimental and may be changed
-      // or removed in the future.
-      `fragment ${name}${wrap2("(", join(variableDefinitions, ", "), ")")} on ${typeCondition} ${wrap2("", join(directives, " "), " ")}` + selectionSet
-    },
-    // Value
-    IntValue: {
-      leave: ({ value }) => value
-    },
-    FloatValue: {
-      leave: ({ value }) => value
-    },
-    StringValue: {
-      leave: ({ value, block: isBlockString }) => isBlockString ? printBlockString(value) : printString(value)
-    },
-    BooleanValue: {
-      leave: ({ value }) => value ? "true" : "false"
-    },
-    NullValue: {
-      leave: () => "null"
-    },
-    EnumValue: {
-      leave: ({ value }) => value
-    },
-    ListValue: {
-      leave: ({ values }) => "[" + join(values, ", ") + "]"
-    },
-    ObjectValue: {
-      leave: ({ fields }) => "{" + join(fields, ", ") + "}"
-    },
-    ObjectField: {
-      leave: ({ name, value }) => name + ": " + value
-    },
-    // Directive
-    Directive: {
-      leave: ({ name, arguments: args }) => "@" + name + wrap2("(", join(args, ", "), ")")
-    },
-    // Type
-    NamedType: {
-      leave: ({ name }) => name
-    },
-    ListType: {
-      leave: ({ type }) => "[" + type + "]"
-    },
-    NonNullType: {
-      leave: ({ type }) => type + "!"
-    },
-    // Type System Definitions
-    SchemaDefinition: {
-      leave: ({ description, directives, operationTypes }) => wrap2("", description, `
-`) + join(["schema", join(directives, " "), block(operationTypes)], " ")
-    },
-    OperationTypeDefinition: {
-      leave: ({ operation, type }) => operation + ": " + type
-    },
-    ScalarTypeDefinition: {
-      leave: ({ description, name, directives }) => wrap2("", description, `
-`) + join(["scalar", name, join(directives, " ")], " ")
-    },
-    ObjectTypeDefinition: {
-      leave: ({ description, name, interfaces, directives, fields }) => wrap2("", description, `
-`) + join(
-        [
-          "type",
-          name,
-          wrap2("implements ", join(interfaces, " & ")),
-          join(directives, " "),
-          block(fields)
-        ],
-        " "
-      )
-    },
-    FieldDefinition: {
-      leave: ({ description, name, arguments: args, type, directives }) => wrap2("", description, `
-`) + name + (hasMultilineItems(args) ? wrap2(`(
-`, indent(join(args, `
-`)), `
-)`) : wrap2("(", join(args, ", "), ")")) + ": " + type + wrap2(" ", join(directives, " "))
-    },
-    InputValueDefinition: {
-      leave: ({ description, name, type, defaultValue, directives }) => wrap2("", description, `
-`) + join(
-        [name + ": " + type, wrap2("= ", defaultValue), join(directives, " ")],
-        " "
-      )
-    },
-    InterfaceTypeDefinition: {
-      leave: ({ description, name, interfaces, directives, fields }) => wrap2("", description, `
-`) + join(
-        [
-          "interface",
-          name,
-          wrap2("implements ", join(interfaces, " & ")),
-          join(directives, " "),
-          block(fields)
-        ],
-        " "
-      )
-    },
-    UnionTypeDefinition: {
-      leave: ({ description, name, directives, types }) => wrap2("", description, `
-`) + join(
-        ["union", name, join(directives, " "), wrap2("= ", join(types, " | "))],
-        " "
-      )
-    },
-    EnumTypeDefinition: {
-      leave: ({ description, name, directives, values }) => wrap2("", description, `
-`) + join(["enum", name, join(directives, " "), block(values)], " ")
-    },
-    EnumValueDefinition: {
-      leave: ({ description, name, directives }) => wrap2("", description, `
-`) + join([name, join(directives, " ")], " ")
-    },
-    InputObjectTypeDefinition: {
-      leave: ({ description, name, directives, fields }) => wrap2("", description, `
-`) + join(["input", name, join(directives, " "), block(fields)], " ")
-    },
-    DirectiveDefinition: {
-      leave: ({ description, name, arguments: args, repeatable, locations }) => wrap2("", description, `
-`) + "directive @" + name + (hasMultilineItems(args) ? wrap2(`(
-`, indent(join(args, `
-`)), `
-)`) : wrap2("(", join(args, ", "), ")")) + (repeatable ? " repeatable" : "") + " on " + join(locations, " | ")
-    },
-    SchemaExtension: {
-      leave: ({ directives, operationTypes }) => join(
-        ["extend schema", join(directives, " "), block(operationTypes)],
-        " "
-      )
-    },
-    ScalarTypeExtension: {
-      leave: ({ name, directives }) => join(["extend scalar", name, join(directives, " ")], " ")
-    },
-    ObjectTypeExtension: {
-      leave: ({ name, interfaces, directives, fields }) => join(
-        [
-          "extend type",
-          name,
-          wrap2("implements ", join(interfaces, " & ")),
-          join(directives, " "),
-          block(fields)
-        ],
-        " "
-      )
-    },
-    InterfaceTypeExtension: {
-      leave: ({ name, interfaces, directives, fields }) => join(
-        [
-          "extend interface",
-          name,
-          wrap2("implements ", join(interfaces, " & ")),
-          join(directives, " "),
-          block(fields)
-        ],
-        " "
-      )
-    },
-    UnionTypeExtension: {
-      leave: ({ name, directives, types }) => join(
-        [
-          "extend union",
-          name,
-          join(directives, " "),
-          wrap2("= ", join(types, " | "))
-        ],
-        " "
-      )
-    },
-    EnumTypeExtension: {
-      leave: ({ name, directives, values }) => join(["extend enum", name, join(directives, " "), block(values)], " ")
-    },
-    InputObjectTypeExtension: {
-      leave: ({ name, directives, fields }) => join(["extend input", name, join(directives, " "), block(fields)], " ")
-    },
-    // Schema Coordinates
-    TypeCoordinate: {
-      leave: ({ name }) => name
-    },
-    MemberCoordinate: {
-      leave: ({ name, memberName }) => join([name, wrap2(".", memberName)])
-    },
-    ArgumentCoordinate: {
-      leave: ({ name, fieldName, argumentName }) => join([name, wrap2(".", fieldName), wrap2("(", argumentName, ":)")])
-    },
-    DirectiveCoordinate: {
-      leave: ({ name }) => join(["@", name])
-    },
-    DirectiveArgumentCoordinate: {
-      leave: ({ name, argumentName }) => join(["@", name, wrap2("(", argumentName, ":)")])
-    }
-  };
-  function join(maybeArray, separator = "") {
-    var _maybeArray$filter$jo;
-    return (_maybeArray$filter$jo = maybeArray?.filter((x) => x).join(separator)) !== null && _maybeArray$filter$jo !== void 0 ? _maybeArray$filter$jo : "";
-  }
-  function block(array) {
-    return wrap2(`{
-`, indent(join(array, `
-`)), `
-}`);
-  }
-  function wrap2(start, maybeString, end = "") {
-    return maybeString != null && maybeString !== "" ? start + maybeString + end : "";
-  }
-  function indent(str) {
-    return wrap2("  ", str.replace(/\n/g, `
-  `));
-  }
-  function hasMultilineItems(maybeArray) {
-    var _maybeArray$some;
-    return (_maybeArray$some = maybeArray?.some((str) => str.includes(`
-`))) !== null && _maybeArray$some !== void 0 ? _maybeArray$some : !1;
-  }
-
-  // internal/ui/src/node_modules/graphql/language/predicates.mjs
-  function isSelectionNode(node) {
-    return node.kind === Kind.FIELD || node.kind === Kind.FRAGMENT_SPREAD || node.kind === Kind.INLINE_FRAGMENT;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/graphql/directives.js
-  function shouldInclude(_a2, variables) {
-    var directives = _a2.directives;
-    return !directives || !directives.length ? !0 : getInclusionDirectives(directives).every(function(_a3) {
-      var directive = _a3.directive, ifArgument = _a3.ifArgument, evaledValue = !1;
-      return ifArgument.value.kind === "Variable" ? (evaledValue = variables && variables[ifArgument.value.name.value], invariant4(evaledValue !== void 0, 106, directive.name.value)) : evaledValue = ifArgument.value.value, directive.name.value === "skip" ? !evaledValue : evaledValue;
-    });
-  }
-  function hasDirectives(names, root2, all) {
-    var nameSet = new Set(names), uniqueCount = nameSet.size;
-    return visit(root2, {
-      Directive: function(node) {
-        if (nameSet.delete(node.name.value) && (!all || !nameSet.size))
-          return BREAK;
-      }
-    }), all ? !nameSet.size : nameSet.size < uniqueCount;
-  }
-  function hasClientExports(document2) {
-    return document2 && hasDirectives(["client", "export"], document2, !0);
-  }
-  function isInclusionDirective(_a2) {
-    var value = _a2.name.value;
-    return value === "skip" || value === "include";
-  }
-  function getInclusionDirectives(directives) {
-    var result2 = [];
-    return directives && directives.length && directives.forEach(function(directive) {
-      if (isInclusionDirective(directive)) {
-        var directiveArguments = directive.arguments, directiveName = directive.name.value;
-        invariant4(directiveArguments && directiveArguments.length === 1, 107, directiveName);
-        var ifArgument = directiveArguments[0];
-        invariant4(ifArgument.name && ifArgument.name.value === "if", 108, directiveName);
-        var ifValue = ifArgument.value;
-        invariant4(ifValue && (ifValue.kind === "Variable" || ifValue.kind === "BooleanValue"), 109, directiveName), result2.push({ directive, ifArgument });
-      }
-    }), result2;
-  }
-  function getFragmentMaskMode(fragment) {
-    var _a2, _b, directive = (_a2 = fragment.directives) === null || _a2 === void 0 ? void 0 : _a2.find(function(_a3) {
-      var name = _a3.name;
-      return name.value === "unmask";
-    });
-    if (!directive)
-      return "mask";
-    var modeArg = (_b = directive.arguments) === null || _b === void 0 ? void 0 : _b.find(function(_a3) {
-      var name = _a3.name;
-      return name.value === "mode";
-    });
-    return globalThis.__DEV__ !== !1 && modeArg && (modeArg.value.kind === Kind.VARIABLE ? globalThis.__DEV__ !== !1 && invariant4.warn(110) : modeArg.value.kind !== Kind.STRING ? globalThis.__DEV__ !== !1 && invariant4.warn(111) : modeArg.value.value !== "migrate" && globalThis.__DEV__ !== !1 && invariant4.warn(112, modeArg.value.value)), modeArg && "value" in modeArg.value && modeArg.value.value === "migrate" ? "migrate" : "unmask";
-  }
-
-  // internal/ui/src/node_modules/@wry/trie/lib/index.js
-  var defaultMakeData = () => /* @__PURE__ */ Object.create(null), { forEach, slice } = Array.prototype, { hasOwnProperty } = Object.prototype, Trie = class _Trie {
-    constructor(weakness = !0, makeData = defaultMakeData) {
-      this.weakness = weakness, this.makeData = makeData;
-    }
-    lookup() {
-      return this.lookupArray(arguments);
-    }
-    lookupArray(array) {
-      let node = this;
-      return forEach.call(array, (key) => node = node.getChildTrie(key)), hasOwnProperty.call(node, "data") ? node.data : node.data = this.makeData(slice.call(array));
-    }
-    peek() {
-      return this.peekArray(arguments);
-    }
-    peekArray(array) {
-      let node = this;
-      for (let i = 0, len = array.length; node && i < len; ++i) {
-        let map = node.mapFor(array[i], !1);
-        node = map && map.get(array[i]);
-      }
-      return node && node.data;
-    }
-    remove() {
-      return this.removeArray(arguments);
-    }
-    removeArray(array) {
-      let data2;
-      if (array.length) {
-        let head = array[0], map = this.mapFor(head, !1), child = map && map.get(head);
-        child && (data2 = child.removeArray(slice.call(array, 1)), !child.data && !child.weak && !(child.strong && child.strong.size) && map.delete(head));
-      } else
-        data2 = this.data, delete this.data;
-      return data2;
-    }
-    getChildTrie(key) {
-      let map = this.mapFor(key, !0), child = map.get(key);
-      return child || map.set(key, child = new _Trie(this.weakness, this.makeData)), child;
-    }
-    mapFor(key, create) {
-      return this.weakness && isObjRef(key) ? this.weak || (create ? this.weak = /* @__PURE__ */ new WeakMap() : void 0) : this.strong || (create ? this.strong = /* @__PURE__ */ new Map() : void 0);
-    }
-  };
-  function isObjRef(value) {
-    switch (typeof value) {
-      case "object":
-        if (value === null)
-          break;
-      // Fall through to return true...
-      case "function":
-        return !0;
-    }
-    return !1;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/canUse.js
-  var isReactNative = maybe(function() {
-    return navigator.product;
-  }) == "ReactNative", canUseWeakMap = typeof WeakMap == "function" && !(isReactNative && !global.HermesInternal), canUseWeakSet = typeof WeakSet == "function", canUseSymbol = typeof Symbol == "function" && typeof Symbol.for == "function", canUseAsyncIteratorSymbol = canUseSymbol && Symbol.asyncIterator, canUseDOM = typeof maybe(function() {
-    return window.document.createElement;
-  }) == "function", usingJSDOM = (
-    // Following advice found in this comment from @domenic (maintainer of jsdom):
-    // https://github.com/jsdom/jsdom/issues/1537#issuecomment-229405327
-    //
-    // Since we control the version of Jest and jsdom used when running Apollo
-    // Client tests, and that version is recent enought to include " jsdom/x.y.z"
-    // at the end of the user agent string, I believe this case is all we need to
-    // check. Testing for "Node.js" was recommended for backwards compatibility
-    // with older version of jsdom, but we don't have that problem.
-    maybe(function() {
-      return navigator.userAgent.indexOf("jsdom") >= 0;
-    }) || !1
-  );
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/objects.js
-  function isNonNullObject(obj) {
-    return obj !== null && typeof obj == "object";
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/graphql/fragments.js
-  function getFragmentQueryDocument(document2, fragmentName) {
-    var actualFragmentName = fragmentName, fragments = [];
-    document2.definitions.forEach(function(definition) {
-      if (definition.kind === "OperationDefinition")
-        throw newInvariantError(
-          113,
-          definition.operation,
-          definition.name ? " named '".concat(definition.name.value, "'") : ""
-        );
-      definition.kind === "FragmentDefinition" && fragments.push(definition);
-    }), typeof actualFragmentName > "u" && (invariant4(fragments.length === 1, 114, fragments.length), actualFragmentName = fragments[0].name.value);
-    var query = __assign(__assign({}, document2), { definitions: __spreadArray([
-      {
-        kind: "OperationDefinition",
-        // OperationTypeNode is an enum
-        operation: "query",
-        selectionSet: {
-          kind: "SelectionSet",
-          selections: [
-            {
-              kind: "FragmentSpread",
-              name: {
-                kind: "Name",
-                value: actualFragmentName
-              }
-            }
-          ]
-        }
-      }
-    ], document2.definitions, !0) });
-    return query;
-  }
-  function createFragmentMap(fragments) {
-    fragments === void 0 && (fragments = []);
-    var symTable = {};
-    return fragments.forEach(function(fragment) {
-      symTable[fragment.name.value] = fragment;
-    }), symTable;
-  }
-  function getFragmentFromSelection(selection, fragmentMap) {
-    switch (selection.kind) {
-      case "InlineFragment":
-        return selection;
-      case "FragmentSpread": {
-        var fragmentName = selection.name.value;
-        if (typeof fragmentMap == "function")
-          return fragmentMap(fragmentName);
-        var fragment = fragmentMap && fragmentMap[fragmentName];
-        return invariant4(fragment, 115, fragmentName), fragment || null;
-      }
-      default:
-        return null;
-    }
-  }
-  function isFullyUnmaskedOperation(document2) {
-    var isUnmasked = !0;
-    return visit(document2, {
-      FragmentSpread: function(node) {
-        if (isUnmasked = !!node.directives && node.directives.some(function(directive) {
-          return directive.name.value === "unmask";
-        }), !isUnmasked)
-          return BREAK;
-      }
-    }), isUnmasked;
-  }
-
-  // internal/ui/src/node_modules/@wry/caches/lib/strong.js
-  function defaultDispose() {
-  }
-  var StrongCache = class {
-    constructor(max = 1 / 0, dispose = defaultDispose) {
-      this.max = max, this.dispose = dispose, this.map = /* @__PURE__ */ new Map(), this.newest = null, this.oldest = null;
-    }
-    has(key) {
-      return this.map.has(key);
-    }
-    get(key) {
-      let node = this.getNode(key);
-      return node && node.value;
-    }
-    get size() {
-      return this.map.size;
-    }
-    getNode(key) {
-      let node = this.map.get(key);
-      if (node && node !== this.newest) {
-        let { older, newer } = node;
-        newer && (newer.older = older), older && (older.newer = newer), node.older = this.newest, node.older.newer = node, node.newer = null, this.newest = node, node === this.oldest && (this.oldest = newer);
-      }
-      return node;
-    }
-    set(key, value) {
-      let node = this.getNode(key);
-      return node ? node.value = value : (node = {
-        key,
-        value,
-        newer: null,
-        older: this.newest
-      }, this.newest && (this.newest.newer = node), this.newest = node, this.oldest = this.oldest || node, this.map.set(key, node), node.value);
-    }
-    clean() {
-      for (; this.oldest && this.map.size > this.max; )
-        this.delete(this.oldest.key);
-    }
-    delete(key) {
-      let node = this.map.get(key);
-      return node ? (node === this.newest && (this.newest = node.older), node === this.oldest && (this.oldest = node.newer), node.newer && (node.newer.older = node.older), node.older && (node.older.newer = node.newer), this.map.delete(key), this.dispose(node.value, key), !0) : !1;
-    }
-  };
-
-  // internal/ui/src/node_modules/@wry/caches/lib/weak.js
-  function noop2() {
-  }
-  var defaultDispose2 = noop2, _WeakRef = typeof WeakRef < "u" ? WeakRef : function(value) {
-    return { deref: () => value };
-  }, _WeakMap = typeof WeakMap < "u" ? WeakMap : Map, _FinalizationRegistry = typeof FinalizationRegistry < "u" ? FinalizationRegistry : function() {
-    return {
-      register: noop2,
-      unregister: noop2
-    };
-  }, finalizationBatchSize = 10024, WeakCache = class {
-    constructor(max = 1 / 0, dispose = defaultDispose2) {
-      this.max = max, this.dispose = dispose, this.map = new _WeakMap(), this.newest = null, this.oldest = null, this.unfinalizedNodes = /* @__PURE__ */ new Set(), this.finalizationScheduled = !1, this.size = 0, this.finalize = () => {
-        let iterator = this.unfinalizedNodes.values();
-        for (let i = 0; i < finalizationBatchSize; i++) {
-          let node = iterator.next().value;
-          if (!node)
-            break;
-          this.unfinalizedNodes.delete(node);
-          let key = node.key;
-          delete node.key, node.keyRef = new _WeakRef(key), this.registry.register(key, node, node);
-        }
-        this.unfinalizedNodes.size > 0 ? queueMicrotask(this.finalize) : this.finalizationScheduled = !1;
-      }, this.registry = new _FinalizationRegistry(this.deleteNode.bind(this));
-    }
-    has(key) {
-      return this.map.has(key);
-    }
-    get(key) {
-      let node = this.getNode(key);
-      return node && node.value;
-    }
-    getNode(key) {
-      let node = this.map.get(key);
-      if (node && node !== this.newest) {
-        let { older, newer } = node;
-        newer && (newer.older = older), older && (older.newer = newer), node.older = this.newest, node.older.newer = node, node.newer = null, this.newest = node, node === this.oldest && (this.oldest = newer);
-      }
-      return node;
-    }
-    set(key, value) {
-      let node = this.getNode(key);
-      return node ? node.value = value : (node = {
-        key,
-        value,
-        newer: null,
-        older: this.newest
-      }, this.newest && (this.newest.newer = node), this.newest = node, this.oldest = this.oldest || node, this.scheduleFinalization(node), this.map.set(key, node), this.size++, node.value);
-    }
-    clean() {
-      for (; this.oldest && this.size > this.max; )
-        this.deleteNode(this.oldest);
-    }
-    deleteNode(node) {
-      node === this.newest && (this.newest = node.older), node === this.oldest && (this.oldest = node.newer), node.newer && (node.newer.older = node.older), node.older && (node.older.newer = node.newer), this.size--;
-      let key = node.key || node.keyRef && node.keyRef.deref();
-      this.dispose(node.value, key), node.keyRef ? this.registry.unregister(node) : this.unfinalizedNodes.delete(node), key && this.map.delete(key);
-    }
-    delete(key) {
-      let node = this.map.get(key);
-      return node ? (this.deleteNode(node), !0) : !1;
-    }
-    scheduleFinalization(node) {
-      this.unfinalizedNodes.add(node), this.finalizationScheduled || (this.finalizationScheduled = !0, queueMicrotask(this.finalize));
-    }
-  };
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/caching/caches.js
-  var scheduledCleanup = /* @__PURE__ */ new WeakSet();
-  function schedule(cache) {
-    cache.size <= (cache.max || -1) || scheduledCleanup.has(cache) || (scheduledCleanup.add(cache), setTimeout(function() {
-      cache.clean(), scheduledCleanup.delete(cache);
-    }, 100));
-  }
-  var AutoCleanedWeakCache = function(max, dispose) {
-    var cache = new WeakCache(max, dispose);
-    return cache.set = function(key, value) {
-      var ret = WeakCache.prototype.set.call(this, key, value);
-      return schedule(this), ret;
-    }, cache;
-  }, AutoCleanedStrongCache = function(max, dispose) {
-    var cache = new StrongCache(max, dispose);
-    return cache.set = function(key, value) {
-      var ret = StrongCache.prototype.set.call(this, key, value);
-      return schedule(this), ret;
-    }, cache;
-  };
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/caching/sizes.js
-  var cacheSizeSymbol = Symbol.for("apollo.cacheSize"), cacheSizes = __assign({}, global_default[cacheSizeSymbol]);
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/caching/getMemoryInternals.js
-  var globalCaches = {};
-  function registerGlobalCache(name, getSize) {
-    globalCaches[name] = getSize;
-  }
-  var getApolloClientMemoryInternals = globalThis.__DEV__ !== !1 ? _getApolloClientMemoryInternals : void 0, getInMemoryCacheMemoryInternals = globalThis.__DEV__ !== !1 ? _getInMemoryCacheMemoryInternals : void 0, getApolloCacheMemoryInternals = globalThis.__DEV__ !== !1 ? _getApolloCacheMemoryInternals : void 0;
-  function getCurrentCacheSizes() {
-    var defaults = {
-      parser: 1e3,
-      canonicalStringify: 1e3,
-      print: 2e3,
-      "documentTransform.cache": 2e3,
-      "queryManager.getDocumentInfo": 2e3,
-      "PersistedQueryLink.persistedQueryHashes": 2e3,
-      "fragmentRegistry.transform": 2e3,
-      "fragmentRegistry.lookup": 1e3,
-      "fragmentRegistry.findFragmentSpreads": 4e3,
-      "cache.fragmentQueryDocuments": 1e3,
-      "removeTypenameFromVariables.getVariableDefinitions": 2e3,
-      "inMemoryCache.maybeBroadcastWatch": 5e3,
-      "inMemoryCache.executeSelectionSet": 5e4,
-      "inMemoryCache.executeSubSelectedArray": 1e4
-    };
-    return Object.fromEntries(Object.entries(defaults).map(function(_a2) {
-      var k = _a2[0], v = _a2[1];
-      return [
-        k,
-        cacheSizes[k] || v
-      ];
-    }));
-  }
-  function _getApolloClientMemoryInternals() {
-    var _a2, _b, _c, _d, _e;
-    if (globalThis.__DEV__ === !1)
-      throw new Error("only supported in development mode");
-    return {
-      limits: getCurrentCacheSizes(),
-      sizes: __assign({ print: (_a2 = globalCaches.print) === null || _a2 === void 0 ? void 0 : _a2.call(globalCaches), parser: (_b = globalCaches.parser) === null || _b === void 0 ? void 0 : _b.call(globalCaches), canonicalStringify: (_c = globalCaches.canonicalStringify) === null || _c === void 0 ? void 0 : _c.call(globalCaches), links: linkInfo(this.link), queryManager: {
-        getDocumentInfo: this.queryManager.transformCache.size,
-        documentTransforms: transformInfo(this.queryManager.documentTransform)
-      } }, (_e = (_d = this.cache).getMemoryInternals) === null || _e === void 0 ? void 0 : _e.call(_d))
-    };
-  }
-  function _getApolloCacheMemoryInternals() {
-    return {
-      cache: {
-        fragmentQueryDocuments: getWrapperInformation(this.getFragmentDoc)
-      }
-    };
-  }
-  function _getInMemoryCacheMemoryInternals() {
-    var fragments = this.config.fragments;
-    return __assign(__assign({}, _getApolloCacheMemoryInternals.apply(this)), { addTypenameDocumentTransform: transformInfo(this.addTypenameTransform), inMemoryCache: {
-      executeSelectionSet: getWrapperInformation(this.storeReader.executeSelectionSet),
-      executeSubSelectedArray: getWrapperInformation(this.storeReader.executeSubSelectedArray),
-      maybeBroadcastWatch: getWrapperInformation(this.maybeBroadcastWatch)
-    }, fragmentRegistry: {
-      findFragmentSpreads: getWrapperInformation(fragments?.findFragmentSpreads),
-      lookup: getWrapperInformation(fragments?.lookup),
-      transform: getWrapperInformation(fragments?.transform)
-    } });
-  }
-  function isWrapper(f) {
-    return !!f && "dirtyKey" in f;
-  }
-  function getWrapperInformation(f) {
-    return isWrapper(f) ? f.size : void 0;
-  }
-  function isDefined(value) {
-    return value != null;
-  }
-  function transformInfo(transform) {
-    return recurseTransformInfo(transform).map(function(cache) {
-      return { cache };
-    });
-  }
-  function recurseTransformInfo(transform) {
-    return transform ? __spreadArray(__spreadArray([
-      getWrapperInformation(transform?.performWork)
-    ], recurseTransformInfo(transform?.left), !0), recurseTransformInfo(transform?.right), !0).filter(isDefined) : [];
-  }
-  function linkInfo(link) {
-    var _a2;
-    return link ? __spreadArray(__spreadArray([
-      (_a2 = link?.getMemoryInternals) === null || _a2 === void 0 ? void 0 : _a2.call(link)
-    ], linkInfo(link?.left), !0), linkInfo(link?.right), !0).filter(isDefined) : [];
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/canonicalStringify.js
-  var canonicalStringify = Object.assign(function(value) {
-    return JSON.stringify(value, stableObjectReplacer);
-  }, {
-    reset: function() {
-      sortingMap = new AutoCleanedStrongCache(
-        cacheSizes.canonicalStringify || 1e3
-        /* defaultCacheSizes.canonicalStringify */
-      );
-    }
-  });
-  globalThis.__DEV__ !== !1 && registerGlobalCache("canonicalStringify", function() {
-    return sortingMap.size;
-  });
-  var sortingMap;
-  canonicalStringify.reset();
-  function stableObjectReplacer(key, value) {
-    if (value && typeof value == "object") {
-      var proto = Object.getPrototypeOf(value);
-      if (proto === Object.prototype || proto === null) {
-        var keys = Object.keys(value);
-        if (keys.every(everyKeyInOrder))
-          return value;
-        var unsortedKey = JSON.stringify(keys), sortedKeys = sortingMap.get(unsortedKey);
-        if (!sortedKeys) {
-          keys.sort();
-          var sortedKey = JSON.stringify(keys);
-          sortedKeys = sortingMap.get(sortedKey) || keys, sortingMap.set(unsortedKey, sortedKeys), sortingMap.set(sortedKey, sortedKeys);
-        }
-        var sortedObject_1 = Object.create(proto);
-        return sortedKeys.forEach(function(key2) {
-          sortedObject_1[key2] = value[key2];
-        }), sortedObject_1;
-      }
-    }
-    return value;
-  }
-  function everyKeyInOrder(key, i, keys) {
-    return i === 0 || keys[i - 1] <= key;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/graphql/storeUtils.js
-  function makeReference(id) {
-    return { __ref: String(id) };
-  }
-  function isReference(obj) {
-    return !!(obj && typeof obj == "object" && typeof obj.__ref == "string");
-  }
-  function isDocumentNode(value) {
-    return isNonNullObject(value) && value.kind === "Document" && Array.isArray(value.definitions);
-  }
-  function isStringValue(value) {
-    return value.kind === "StringValue";
-  }
-  function isBooleanValue(value) {
-    return value.kind === "BooleanValue";
-  }
-  function isIntValue(value) {
-    return value.kind === "IntValue";
-  }
-  function isFloatValue(value) {
-    return value.kind === "FloatValue";
-  }
-  function isVariable(value) {
-    return value.kind === "Variable";
-  }
-  function isObjectValue(value) {
-    return value.kind === "ObjectValue";
-  }
-  function isListValue(value) {
-    return value.kind === "ListValue";
-  }
-  function isEnumValue(value) {
-    return value.kind === "EnumValue";
-  }
-  function isNullValue(value) {
-    return value.kind === "NullValue";
-  }
-  function valueToObjectRepresentation(argObj, name, value, variables) {
-    if (isIntValue(value) || isFloatValue(value))
-      argObj[name.value] = Number(value.value);
-    else if (isBooleanValue(value) || isStringValue(value))
-      argObj[name.value] = value.value;
-    else if (isObjectValue(value)) {
-      var nestedArgObj_1 = {};
-      value.fields.map(function(obj) {
-        return valueToObjectRepresentation(nestedArgObj_1, obj.name, obj.value, variables);
-      }), argObj[name.value] = nestedArgObj_1;
-    } else if (isVariable(value)) {
-      var variableValue = (variables || {})[value.name.value];
-      argObj[name.value] = variableValue;
-    } else if (isListValue(value))
-      argObj[name.value] = value.values.map(function(listValue) {
-        var nestedArgArrayObj = {};
-        return valueToObjectRepresentation(nestedArgArrayObj, name, listValue, variables), nestedArgArrayObj[name.value];
-      });
-    else if (isEnumValue(value))
-      argObj[name.value] = value.value;
-    else if (isNullValue(value))
-      argObj[name.value] = null;
-    else
-      throw newInvariantError(124, name.value, value.kind);
-  }
-  function storeKeyNameFromField(field, variables) {
-    var directivesObj = null;
-    field.directives && (directivesObj = {}, field.directives.forEach(function(directive) {
-      directivesObj[directive.name.value] = {}, directive.arguments && directive.arguments.forEach(function(_a2) {
-        var name = _a2.name, value = _a2.value;
-        return valueToObjectRepresentation(directivesObj[directive.name.value], name, value, variables);
-      });
-    }));
-    var argObj = null;
-    return field.arguments && field.arguments.length && (argObj = {}, field.arguments.forEach(function(_a2) {
-      var name = _a2.name, value = _a2.value;
-      return valueToObjectRepresentation(argObj, name, value, variables);
-    })), getStoreKeyName(field.name.value, argObj, directivesObj);
-  }
-  var KNOWN_DIRECTIVES = [
-    "connection",
-    "include",
-    "skip",
-    "client",
-    "rest",
-    "export",
-    "nonreactive"
-  ], storeKeyNameStringify = canonicalStringify, getStoreKeyName = Object.assign(function(fieldName, args, directives) {
-    if (args && directives && directives.connection && directives.connection.key)
-      if (directives.connection.filter && directives.connection.filter.length > 0) {
-        var filterKeys = directives.connection.filter ? directives.connection.filter : [];
-        filterKeys.sort();
-        var filteredArgs_1 = {};
-        return filterKeys.forEach(function(key) {
-          filteredArgs_1[key] = args[key];
-        }), "".concat(directives.connection.key, "(").concat(storeKeyNameStringify(filteredArgs_1), ")");
-      } else
-        return directives.connection.key;
-    var completeFieldName = fieldName;
-    if (args) {
-      var stringifiedArgs = storeKeyNameStringify(args);
-      completeFieldName += "(".concat(stringifiedArgs, ")");
-    }
-    return directives && Object.keys(directives).forEach(function(key) {
-      KNOWN_DIRECTIVES.indexOf(key) === -1 && (directives[key] && Object.keys(directives[key]).length ? completeFieldName += "@".concat(key, "(").concat(storeKeyNameStringify(directives[key]), ")") : completeFieldName += "@".concat(key));
-    }), completeFieldName;
-  }, {
-    setStringify: function(s) {
-      var previous = storeKeyNameStringify;
-      return storeKeyNameStringify = s, previous;
-    }
-  });
-  function argumentsObjectFromField(field, variables) {
-    if (field.arguments && field.arguments.length) {
-      var argObj_1 = {};
-      return field.arguments.forEach(function(_a2) {
-        var name = _a2.name, value = _a2.value;
-        return valueToObjectRepresentation(argObj_1, name, value, variables);
-      }), argObj_1;
-    }
-    return null;
-  }
-  function resultKeyNameFromField(field) {
-    return field.alias ? field.alias.value : field.name.value;
-  }
-  function getTypenameFromResult(result2, selectionSet, fragmentMap) {
-    for (var fragments, _i = 0, _a2 = selectionSet.selections; _i < _a2.length; _i++) {
-      var selection = _a2[_i];
-      if (isField(selection)) {
-        if (selection.name.value === "__typename")
-          return result2[resultKeyNameFromField(selection)];
-      } else fragments ? fragments.push(selection) : fragments = [selection];
-    }
-    if (typeof result2.__typename == "string")
-      return result2.__typename;
-    if (fragments)
-      for (var _b = 0, fragments_1 = fragments; _b < fragments_1.length; _b++) {
-        var selection = fragments_1[_b], typename = getTypenameFromResult(result2, getFragmentFromSelection(selection, fragmentMap).selectionSet, fragmentMap);
-        if (typeof typename == "string")
-          return typename;
-      }
-  }
-  function isField(selection) {
-    return selection.kind === "Field";
-  }
-  function isInlineFragment(selection) {
-    return selection.kind === "InlineFragment";
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/graphql/getFromAST.js
-  function checkDocument(doc) {
-    invariant4(doc && doc.kind === "Document", 116);
-    var operations = doc.definitions.filter(function(d) {
-      return d.kind !== "FragmentDefinition";
-    }).map(function(definition) {
-      if (definition.kind !== "OperationDefinition")
-        throw newInvariantError(117, definition.kind);
-      return definition;
-    });
-    return invariant4(operations.length <= 1, 118, operations.length), doc;
-  }
-  function getOperationDefinition(doc) {
-    return checkDocument(doc), doc.definitions.filter(function(definition) {
-      return definition.kind === "OperationDefinition";
-    })[0];
-  }
-  function getOperationName(doc) {
-    return doc.definitions.filter(function(definition) {
-      return definition.kind === "OperationDefinition" && !!definition.name;
-    }).map(function(x) {
-      return x.name.value;
-    })[0] || null;
-  }
-  function getFragmentDefinitions(doc) {
-    return doc.definitions.filter(function(definition) {
-      return definition.kind === "FragmentDefinition";
-    });
-  }
-  function getQueryDefinition(doc) {
-    var queryDef = getOperationDefinition(doc);
-    return invariant4(queryDef && queryDef.operation === "query", 119), queryDef;
-  }
-  function getFragmentDefinition(doc) {
-    invariant4(doc.kind === "Document", 120), invariant4(doc.definitions.length <= 1, 121);
-    var fragmentDef = doc.definitions[0];
-    return invariant4(fragmentDef.kind === "FragmentDefinition", 122), fragmentDef;
-  }
-  function getMainDefinition(queryDoc) {
-    checkDocument(queryDoc);
-    for (var fragmentDefinition, _i = 0, _a2 = queryDoc.definitions; _i < _a2.length; _i++) {
-      var definition = _a2[_i];
-      if (definition.kind === "OperationDefinition") {
-        var operation = definition.operation;
-        if (operation === "query" || operation === "mutation" || operation === "subscription")
-          return definition;
-      }
-      definition.kind === "FragmentDefinition" && !fragmentDefinition && (fragmentDefinition = definition);
-    }
-    if (fragmentDefinition)
-      return fragmentDefinition;
-    throw newInvariantError(123);
-  }
-  function getDefaultValues(definition) {
-    var defaultValues = /* @__PURE__ */ Object.create(null), defs = definition && definition.variableDefinitions;
-    return defs && defs.length && defs.forEach(function(def) {
-      def.defaultValue && valueToObjectRepresentation(defaultValues, def.variable.name, def.defaultValue);
-    }), defaultValues;
-  }
-
-  // internal/ui/src/node_modules/@wry/context/lib/slot.js
-  var currentContext = null, MISSING_VALUE = {}, idCounter = 1, makeSlotClass = () => class {
-    constructor() {
-      this.id = [
-        "slot",
-        idCounter++,
-        Date.now(),
-        Math.random().toString(36).slice(2)
-      ].join(":");
-    }
-    hasValue() {
-      for (let context = currentContext; context; context = context.parent)
-        if (this.id in context.slots) {
-          let value = context.slots[this.id];
-          if (value === MISSING_VALUE)
-            break;
-          return context !== currentContext && (currentContext.slots[this.id] = value), !0;
-        }
-      return currentContext && (currentContext.slots[this.id] = MISSING_VALUE), !1;
-    }
-    getValue() {
-      if (this.hasValue())
-        return currentContext.slots[this.id];
-    }
-    withValue(value, callback, args, thisArg) {
-      let slots = {
-        __proto__: null,
-        [this.id]: value
-      }, parent = currentContext;
-      currentContext = { parent, slots };
-      try {
-        return callback.apply(thisArg, args);
-      } finally {
-        currentContext = parent;
-      }
-    }
-    // Capture the current context and wrap a callback function so that it
-    // reestablishes the captured context when called.
-    static bind(callback) {
-      let context = currentContext;
-      return function() {
-        let saved = currentContext;
-        try {
-          return currentContext = context, callback.apply(this, arguments);
-        } finally {
-          currentContext = saved;
-        }
-      };
-    }
-    // Immediately run a callback function without any captured context.
-    static noContext(callback, args, thisArg) {
-      if (currentContext) {
-        let saved = currentContext;
-        try {
-          return currentContext = null, callback.apply(thisArg, args);
-        } finally {
-          currentContext = saved;
-        }
-      } else
-        return callback.apply(thisArg, args);
-    }
-  };
-  function maybe2(fn) {
-    try {
-      return fn();
-    } catch {
-    }
-  }
-  var globalKey = "@wry/context:Slot", host = (
-    // Prefer globalThis when available.
-    // https://github.com/benjamn/wryware/issues/347
-    maybe2(() => globalThis) || // Fall back to global, which works in Node.js and may be converted by some
-    // bundlers to the appropriate identifier (window, self, ...) depending on the
-    // bundling target. https://github.com/endojs/endo/issues/576#issuecomment-1178515224
-    maybe2(() => global) || // Otherwise, use a dummy host that's local to this module. We used to fall
-    // back to using the Array constructor as a namespace, but that was flagged in
-    // https://github.com/benjamn/wryware/issues/347, and can be avoided.
-    /* @__PURE__ */ Object.create(null)
-  ), globalHost = host, Slot2 = globalHost[globalKey] || // Earlier versions of this package stored the globalKey property on the Array
-  // constructor, so we check there as well, to prevent Slot class duplication.
-  Array[globalKey] || (function(Slot3) {
-    try {
-      Object.defineProperty(globalHost, globalKey, {
-        value: Slot3,
-        enumerable: !1,
-        writable: !1,
-        // When it was possible for globalHost to be the Array constructor (a
-        // legacy Slot dedup strategy), it was important for the property to be
-        // configurable:true so it could be deleted. That does not seem to be as
-        // important when globalHost is the global object, but I don't want to
-        // cause similar problems again, and configurable:true seems safest.
-        // https://github.com/endojs/endo/issues/576#issuecomment-1178274008
-        configurable: !0
-      });
-    } finally {
-      return Slot3;
-    }
-  })(makeSlotClass());
-
-  // internal/ui/src/node_modules/@wry/context/lib/index.js
-  var { bind, noContext } = Slot2;
-
-  // internal/ui/src/node_modules/optimism/lib/context.js
-  var parentEntrySlot = new Slot2();
-
-  // internal/ui/src/node_modules/optimism/lib/helpers.js
-  var { hasOwnProperty: hasOwnProperty2 } = Object.prototype, arrayFromSet = Array.from || function(set) {
-    let array = [];
-    return set.forEach((item) => array.push(item)), array;
-  };
-  function maybeUnsubscribe(entryOrDep) {
-    let { unsubscribe } = entryOrDep;
-    typeof unsubscribe == "function" && (entryOrDep.unsubscribe = void 0, unsubscribe());
-  }
-
-  // internal/ui/src/node_modules/optimism/lib/entry.js
-  var emptySetPool = [], POOL_TARGET_SIZE = 100;
-  function assert(condition, optionalMessage) {
-    if (!condition)
-      throw new Error(optionalMessage || "assertion failure");
-  }
-  function valueIs(a, b) {
-    let len = a.length;
-    return (
-      // Unknown values are not equal to each other.
-      len > 0 && // Both values must be ordinary (or both exceptional) to be equal.
-      len === b.length && // The underlying value or exception must be the same.
-      a[len - 1] === b[len - 1]
-    );
-  }
-  function valueGet(value) {
-    switch (value.length) {
-      case 0:
-        throw new Error("unknown value");
-      case 1:
-        return value[0];
-      case 2:
-        throw value[1];
-    }
-  }
-  function valueCopy(value) {
-    return value.slice(0);
-  }
-  var Entry = class _Entry {
-    constructor(fn) {
-      this.fn = fn, this.parents = /* @__PURE__ */ new Set(), this.childValues = /* @__PURE__ */ new Map(), this.dirtyChildren = null, this.dirty = !0, this.recomputing = !1, this.value = [], this.deps = null, ++_Entry.count;
-    }
-    peek() {
-      if (this.value.length === 1 && !mightBeDirty(this))
-        return rememberParent(this), this.value[0];
-    }
-    // This is the most important method of the Entry API, because it
-    // determines whether the cached this.value can be returned immediately,
-    // or must be recomputed. The overall performance of the caching system
-    // depends on the truth of the following observations: (1) this.dirty is
-    // usually false, (2) this.dirtyChildren is usually null/empty, and thus
-    // (3) valueGet(this.value) is usually returned without recomputation.
-    recompute(args) {
-      return assert(!this.recomputing, "already recomputing"), rememberParent(this), mightBeDirty(this) ? reallyRecompute(this, args) : valueGet(this.value);
-    }
-    setDirty() {
-      this.dirty || (this.dirty = !0, reportDirty(this), maybeUnsubscribe(this));
-    }
-    dispose() {
-      this.setDirty(), forgetChildren(this), eachParent(this, (parent, child) => {
-        parent.setDirty(), forgetChild(parent, this);
-      });
-    }
-    forget() {
-      this.dispose();
-    }
-    dependOn(dep2) {
-      dep2.add(this), this.deps || (this.deps = emptySetPool.pop() || /* @__PURE__ */ new Set()), this.deps.add(dep2);
-    }
-    forgetDeps() {
-      this.deps && (arrayFromSet(this.deps).forEach((dep2) => dep2.delete(this)), this.deps.clear(), emptySetPool.push(this.deps), this.deps = null);
-    }
-  };
-  Entry.count = 0;
-  function rememberParent(child) {
-    let parent = parentEntrySlot.getValue();
-    if (parent)
-      return child.parents.add(parent), parent.childValues.has(child) || parent.childValues.set(child, []), mightBeDirty(child) ? reportDirtyChild(parent, child) : reportCleanChild(parent, child), parent;
-  }
-  function reallyRecompute(entry, args) {
-    return forgetChildren(entry), parentEntrySlot.withValue(entry, recomputeNewValue, [entry, args]), maybeSubscribe(entry, args) && setClean(entry), valueGet(entry.value);
-  }
-  function recomputeNewValue(entry, args) {
-    entry.recomputing = !0;
-    let { normalizeResult } = entry, oldValueCopy;
-    normalizeResult && entry.value.length === 1 && (oldValueCopy = valueCopy(entry.value)), entry.value.length = 0;
-    try {
-      if (entry.value[0] = entry.fn.apply(null, args), normalizeResult && oldValueCopy && !valueIs(oldValueCopy, entry.value))
-        try {
-          entry.value[0] = normalizeResult(entry.value[0], oldValueCopy[0]);
-        } catch {
-        }
-    } catch (e) {
-      entry.value[1] = e;
-    }
-    entry.recomputing = !1;
-  }
-  function mightBeDirty(entry) {
-    return entry.dirty || !!(entry.dirtyChildren && entry.dirtyChildren.size);
-  }
-  function setClean(entry) {
-    entry.dirty = !1, !mightBeDirty(entry) && reportClean(entry);
-  }
-  function reportDirty(child) {
-    eachParent(child, reportDirtyChild);
-  }
-  function reportClean(child) {
-    eachParent(child, reportCleanChild);
-  }
-  function eachParent(child, callback) {
-    let parentCount = child.parents.size;
-    if (parentCount) {
-      let parents = arrayFromSet(child.parents);
-      for (let i = 0; i < parentCount; ++i)
-        callback(parents[i], child);
-    }
-  }
-  function reportDirtyChild(parent, child) {
-    assert(parent.childValues.has(child)), assert(mightBeDirty(child));
-    let parentWasClean = !mightBeDirty(parent);
-    if (!parent.dirtyChildren)
-      parent.dirtyChildren = emptySetPool.pop() || /* @__PURE__ */ new Set();
-    else if (parent.dirtyChildren.has(child))
-      return;
-    parent.dirtyChildren.add(child), parentWasClean && reportDirty(parent);
-  }
-  function reportCleanChild(parent, child) {
-    assert(parent.childValues.has(child)), assert(!mightBeDirty(child));
-    let childValue = parent.childValues.get(child);
-    childValue.length === 0 ? parent.childValues.set(child, valueCopy(child.value)) : valueIs(childValue, child.value) || parent.setDirty(), removeDirtyChild(parent, child), !mightBeDirty(parent) && reportClean(parent);
-  }
-  function removeDirtyChild(parent, child) {
-    let dc = parent.dirtyChildren;
-    dc && (dc.delete(child), dc.size === 0 && (emptySetPool.length < POOL_TARGET_SIZE && emptySetPool.push(dc), parent.dirtyChildren = null));
-  }
-  function forgetChildren(parent) {
-    parent.childValues.size > 0 && parent.childValues.forEach((_value, child) => {
-      forgetChild(parent, child);
-    }), parent.forgetDeps(), assert(parent.dirtyChildren === null);
-  }
-  function forgetChild(parent, child) {
-    child.parents.delete(parent), parent.childValues.delete(child), removeDirtyChild(parent, child);
-  }
-  function maybeSubscribe(entry, args) {
-    if (typeof entry.subscribe == "function")
-      try {
-        maybeUnsubscribe(entry), entry.unsubscribe = entry.subscribe.apply(null, args);
-      } catch {
-        return entry.setDirty(), !1;
-      }
-    return !0;
-  }
-
-  // internal/ui/src/node_modules/optimism/lib/dep.js
-  var EntryMethods = {
-    setDirty: !0,
-    dispose: !0,
-    forget: !0
-    // Fully remove parent Entry from LRU cache and computation graph
-  };
-  function dep(options) {
-    let depsByKey = /* @__PURE__ */ new Map(), subscribe = options && options.subscribe;
-    function depend(key) {
-      let parent = parentEntrySlot.getValue();
-      if (parent) {
-        let dep2 = depsByKey.get(key);
-        dep2 || depsByKey.set(key, dep2 = /* @__PURE__ */ new Set()), parent.dependOn(dep2), typeof subscribe == "function" && (maybeUnsubscribe(dep2), dep2.unsubscribe = subscribe(key));
-      }
-    }
-    return depend.dirty = function(key, entryMethodName) {
-      let dep2 = depsByKey.get(key);
-      if (dep2) {
-        let m = entryMethodName && hasOwnProperty2.call(EntryMethods, entryMethodName) ? entryMethodName : "setDirty";
-        arrayFromSet(dep2).forEach((entry) => entry[m]()), depsByKey.delete(key), maybeUnsubscribe(dep2);
-      }
-    }, depend;
-  }
-
-  // internal/ui/src/node_modules/optimism/lib/index.js
-  var defaultKeyTrie;
-  function defaultMakeCacheKey(...args) {
-    return (defaultKeyTrie || (defaultKeyTrie = new Trie(typeof WeakMap == "function"))).lookupArray(args);
-  }
-  var caches = /* @__PURE__ */ new Set();
-  function wrap3(originalFunction, { max = Math.pow(2, 16), keyArgs, makeCacheKey = defaultMakeCacheKey, normalizeResult, subscribe, cache: cacheOption = StrongCache } = /* @__PURE__ */ Object.create(null)) {
-    let cache = typeof cacheOption == "function" ? new cacheOption(max, (entry) => entry.dispose()) : cacheOption, optimistic = function() {
-      let key = makeCacheKey.apply(null, keyArgs ? keyArgs.apply(null, arguments) : arguments);
-      if (key === void 0)
-        return originalFunction.apply(null, arguments);
-      let entry = cache.get(key);
-      entry || (cache.set(key, entry = new Entry(originalFunction)), entry.normalizeResult = normalizeResult, entry.subscribe = subscribe, entry.forget = () => cache.delete(key));
-      let value = entry.recompute(Array.prototype.slice.call(arguments));
-      return cache.set(key, entry), caches.add(cache), parentEntrySlot.hasValue() || (caches.forEach((cache2) => cache2.clean()), caches.clear()), value;
-    };
-    Object.defineProperty(optimistic, "size", {
-      get: () => cache.size,
-      configurable: !1,
-      enumerable: !1
-    }), Object.freeze(optimistic.options = {
-      max,
-      keyArgs,
-      makeCacheKey,
-      normalizeResult,
-      subscribe,
-      cache
-    });
-    function dirtyKey(key) {
-      let entry = key && cache.get(key);
-      entry && entry.setDirty();
-    }
-    optimistic.dirtyKey = dirtyKey, optimistic.dirty = function() {
-      dirtyKey(makeCacheKey.apply(null, arguments));
-    };
-    function peekKey(key) {
-      let entry = key && cache.get(key);
-      if (entry)
-        return entry.peek();
-    }
-    optimistic.peekKey = peekKey, optimistic.peek = function() {
-      return peekKey(makeCacheKey.apply(null, arguments));
-    };
-    function forgetKey(key) {
-      return key ? cache.delete(key) : !1;
-    }
-    return optimistic.forgetKey = forgetKey, optimistic.forget = function() {
-      return forgetKey(makeCacheKey.apply(null, arguments));
-    }, optimistic.makeCacheKey = makeCacheKey, optimistic.getKey = keyArgs ? function() {
-      return makeCacheKey.apply(null, keyArgs.apply(null, arguments));
-    } : makeCacheKey, Object.freeze(optimistic);
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/graphql/DocumentTransform.js
-  function identity(document2) {
-    return document2;
-  }
-  var DocumentTransform = (
-    /** @class */
-    (function() {
-      function DocumentTransform2(transform, options) {
-        options === void 0 && (options = /* @__PURE__ */ Object.create(null)), this.resultCache = canUseWeakSet ? /* @__PURE__ */ new WeakSet() : /* @__PURE__ */ new Set(), this.transform = transform, options.getCacheKey && (this.getCacheKey = options.getCacheKey), this.cached = options.cache !== !1, this.resetCache();
-      }
-      return DocumentTransform2.prototype.getCacheKey = function(document2) {
-        return [document2];
-      }, DocumentTransform2.identity = function() {
-        return new DocumentTransform2(identity, { cache: !1 });
-      }, DocumentTransform2.split = function(predicate, left, right) {
-        return right === void 0 && (right = DocumentTransform2.identity()), Object.assign(new DocumentTransform2(
-          function(document2) {
-            var documentTransform = predicate(document2) ? left : right;
-            return documentTransform.transformDocument(document2);
-          },
-          // Reasonably assume both `left` and `right` transforms handle their own caching
-          { cache: !1 }
-        ), { left, right });
-      }, DocumentTransform2.prototype.resetCache = function() {
-        var _this = this;
-        if (this.cached) {
-          var stableCacheKeys_1 = new Trie(canUseWeakMap);
-          this.performWork = wrap3(DocumentTransform2.prototype.performWork.bind(this), {
-            makeCacheKey: function(document2) {
-              var cacheKeys = _this.getCacheKey(document2);
-              if (cacheKeys)
-                return invariant4(Array.isArray(cacheKeys), 105), stableCacheKeys_1.lookupArray(cacheKeys);
-            },
-            max: cacheSizes["documentTransform.cache"],
-            cache: WeakCache
-          });
-        }
-      }, DocumentTransform2.prototype.performWork = function(document2) {
-        return checkDocument(document2), this.transform(document2);
-      }, DocumentTransform2.prototype.transformDocument = function(document2) {
-        if (this.resultCache.has(document2))
-          return document2;
-        var transformedDocument = this.performWork(document2);
-        return this.resultCache.add(transformedDocument), transformedDocument;
-      }, DocumentTransform2.prototype.concat = function(otherTransform) {
-        var _this = this;
-        return Object.assign(new DocumentTransform2(
-          function(document2) {
-            return otherTransform.transformDocument(_this.transformDocument(document2));
-          },
-          // Reasonably assume both transforms handle their own caching
-          { cache: !1 }
-        ), {
-          left: this,
-          right: otherTransform
-        });
-      }, DocumentTransform2;
-    })()
-  );
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/graphql/print.js
-  var printCache, print2 = Object.assign(function(ast) {
-    var result2 = printCache.get(ast);
-    return result2 || (result2 = print(ast), printCache.set(ast, result2)), result2;
-  }, {
-    reset: function() {
-      printCache = new AutoCleanedWeakCache(
-        cacheSizes.print || 2e3
-        /* defaultCacheSizes.print */
-      );
-    }
-  });
-  print2.reset();
-  globalThis.__DEV__ !== !1 && registerGlobalCache("print", function() {
-    return printCache ? printCache.size : 0;
-  });
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/arrays.js
-  var isArray = Array.isArray;
-  function isNonEmptyArray(value) {
-    return Array.isArray(value) && value.length > 0;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/graphql/transform.js
-  var TYPENAME_FIELD = {
-    kind: Kind.FIELD,
-    name: {
-      kind: Kind.NAME,
-      value: "__typename"
-    }
-  };
-  function isEmpty(op, fragmentMap) {
-    return !op || op.selectionSet.selections.every(function(selection) {
-      return selection.kind === Kind.FRAGMENT_SPREAD && isEmpty(fragmentMap[selection.name.value], fragmentMap);
-    });
-  }
-  function nullIfDocIsEmpty(doc) {
-    return isEmpty(getOperationDefinition(doc) || getFragmentDefinition(doc), createFragmentMap(getFragmentDefinitions(doc))) ? null : doc;
-  }
-  function getDirectiveMatcher(configs) {
-    var names = /* @__PURE__ */ new Map(), tests = /* @__PURE__ */ new Map();
-    return configs.forEach(function(directive) {
-      directive && (directive.name ? names.set(directive.name, directive) : directive.test && tests.set(directive.test, directive));
-    }), function(directive) {
-      var config = names.get(directive.name.value);
-      return !config && tests.size && tests.forEach(function(testConfig, test) {
-        test(directive) && (config = testConfig);
-      }), config;
-    };
-  }
-  function makeInUseGetterFunction(defaultKey) {
-    var map = /* @__PURE__ */ new Map();
-    return function(key) {
-      key === void 0 && (key = defaultKey);
-      var inUse = map.get(key);
-      return inUse || map.set(key, inUse = {
-        // Variable and fragment spread names used directly within this
-        // operation or fragment definition, as identified by key. These sets
-        // will be populated during the first traversal of the document in
-        // removeDirectivesFromDocument below.
-        variables: /* @__PURE__ */ new Set(),
-        fragmentSpreads: /* @__PURE__ */ new Set()
-      }), inUse;
-    };
-  }
-  function removeDirectivesFromDocument(directives, doc) {
-    checkDocument(doc);
-    for (var getInUseByOperationName = makeInUseGetterFunction(""), getInUseByFragmentName = makeInUseGetterFunction(""), getInUse = function(ancestors) {
-      for (var p = 0, ancestor = void 0; p < ancestors.length && (ancestor = ancestors[p]); ++p)
-        if (!isArray(ancestor)) {
-          if (ancestor.kind === Kind.OPERATION_DEFINITION)
-            return getInUseByOperationName(ancestor.name && ancestor.name.value);
-          if (ancestor.kind === Kind.FRAGMENT_DEFINITION)
-            return getInUseByFragmentName(ancestor.name.value);
-        }
-      return globalThis.__DEV__ !== !1 && invariant4.error(125), null;
-    }, operationCount = 0, i = doc.definitions.length - 1; i >= 0; --i)
-      doc.definitions[i].kind === Kind.OPERATION_DEFINITION && ++operationCount;
-    var directiveMatcher = getDirectiveMatcher(directives), shouldRemoveField = function(nodeDirectives) {
-      return isNonEmptyArray(nodeDirectives) && nodeDirectives.map(directiveMatcher).some(function(config) {
-        return config && config.remove;
-      });
-    }, originalFragmentDefsByPath = /* @__PURE__ */ new Map(), firstVisitMadeChanges = !1, fieldOrInlineFragmentVisitor = {
-      enter: function(node) {
-        if (shouldRemoveField(node.directives))
-          return firstVisitMadeChanges = !0, null;
-      }
-    }, docWithoutDirectiveSubtrees = visit(doc, {
-      // These two AST node types share the same implementation, defined above.
-      Field: fieldOrInlineFragmentVisitor,
-      InlineFragment: fieldOrInlineFragmentVisitor,
-      VariableDefinition: {
-        enter: function() {
-          return !1;
-        }
-      },
-      Variable: {
-        enter: function(node, _key, _parent, _path, ancestors) {
-          var inUse = getInUse(ancestors);
-          inUse && inUse.variables.add(node.name.value);
-        }
-      },
-      FragmentSpread: {
-        enter: function(node, _key, _parent, _path, ancestors) {
-          if (shouldRemoveField(node.directives))
-            return firstVisitMadeChanges = !0, null;
-          var inUse = getInUse(ancestors);
-          inUse && inUse.fragmentSpreads.add(node.name.value);
-        }
-      },
-      FragmentDefinition: {
-        enter: function(node, _key, _parent, path) {
-          originalFragmentDefsByPath.set(JSON.stringify(path), node);
-        },
-        leave: function(node, _key, _parent, path) {
-          var originalNode = originalFragmentDefsByPath.get(JSON.stringify(path));
-          if (node === originalNode)
-            return node;
-          if (
-            // This logic applies only if the document contains one or more
-            // operations, since removing all fragments from a document containing
-            // only fragments makes the document useless.
-            operationCount > 0 && node.selectionSet.selections.every(function(selection) {
-              return selection.kind === Kind.FIELD && selection.name.value === "__typename";
-            })
-          )
-            return getInUseByFragmentName(node.name.value).removed = !0, firstVisitMadeChanges = !0, null;
-        }
-      },
-      Directive: {
-        leave: function(node) {
-          if (directiveMatcher(node))
-            return firstVisitMadeChanges = !0, null;
-        }
-      }
-    });
-    if (!firstVisitMadeChanges)
-      return doc;
-    var populateTransitiveVars = function(inUse) {
-      return inUse.transitiveVars || (inUse.transitiveVars = new Set(inUse.variables), inUse.removed || inUse.fragmentSpreads.forEach(function(childFragmentName) {
-        populateTransitiveVars(getInUseByFragmentName(childFragmentName)).transitiveVars.forEach(function(varName) {
-          inUse.transitiveVars.add(varName);
-        });
-      })), inUse;
-    }, allFragmentNamesUsed = /* @__PURE__ */ new Set();
-    docWithoutDirectiveSubtrees.definitions.forEach(function(def) {
-      def.kind === Kind.OPERATION_DEFINITION ? populateTransitiveVars(getInUseByOperationName(def.name && def.name.value)).fragmentSpreads.forEach(function(childFragmentName) {
-        allFragmentNamesUsed.add(childFragmentName);
-      }) : def.kind === Kind.FRAGMENT_DEFINITION && // If there are no operations in the document, then all fragment
-      // definitions count as usages of their own fragment names. This heuristic
-      // prevents accidentally removing all fragment definitions from the
-      // document just because it contains no operations that use the fragments.
-      operationCount === 0 && !getInUseByFragmentName(def.name.value).removed && allFragmentNamesUsed.add(def.name.value);
-    }), allFragmentNamesUsed.forEach(function(fragmentName) {
-      populateTransitiveVars(getInUseByFragmentName(fragmentName)).fragmentSpreads.forEach(function(childFragmentName) {
-        allFragmentNamesUsed.add(childFragmentName);
-      });
-    });
-    var fragmentWillBeRemoved = function(fragmentName) {
-      return !!// A fragment definition will be removed if there are no spreads that refer
-      // to it, or the fragment was explicitly removed because it had no fields
-      // other than __typename.
-      (!allFragmentNamesUsed.has(fragmentName) || getInUseByFragmentName(fragmentName).removed);
-    }, enterVisitor = {
-      enter: function(node) {
-        if (fragmentWillBeRemoved(node.name.value))
-          return null;
-      }
-    };
-    return nullIfDocIsEmpty(visit(docWithoutDirectiveSubtrees, {
-      // If the fragment is going to be removed, then leaving any dangling
-      // FragmentSpread nodes with the same name would be a mistake.
-      FragmentSpread: enterVisitor,
-      // This is where the fragment definition is actually removed.
-      FragmentDefinition: enterVisitor,
-      OperationDefinition: {
-        leave: function(node) {
-          if (node.variableDefinitions) {
-            var usedVariableNames_1 = populateTransitiveVars(
-              // If an operation is anonymous, we use the empty string as its key.
-              getInUseByOperationName(node.name && node.name.value)
-            ).transitiveVars;
-            if (usedVariableNames_1.size < node.variableDefinitions.length)
-              return __assign(__assign({}, node), { variableDefinitions: node.variableDefinitions.filter(function(varDef) {
-                return usedVariableNames_1.has(varDef.variable.name.value);
-              }) });
-          }
-        }
-      }
-    }));
-  }
-  var addTypenameToDocument = Object.assign(function(doc) {
-    return visit(doc, {
-      SelectionSet: {
-        enter: function(node, _key, parent) {
-          if (!(parent && parent.kind === Kind.OPERATION_DEFINITION)) {
-            var selections = node.selections;
-            if (selections) {
-              var skip = selections.some(function(selection) {
-                return isField(selection) && (selection.name.value === "__typename" || selection.name.value.lastIndexOf("__", 0) === 0);
-              });
-              if (!skip) {
-                var field = parent;
-                if (!(isField(field) && field.directives && field.directives.some(function(d) {
-                  return d.name.value === "export";
-                })))
-                  return __assign(__assign({}, node), { selections: __spreadArray(__spreadArray([], selections, !0), [TYPENAME_FIELD], !1) });
-              }
-            }
-          }
-        }
-      }
-    });
-  }, {
-    added: function(field) {
-      return field === TYPENAME_FIELD;
-    }
-  });
-  function buildQueryFromSelectionSet(document2) {
-    var definition = getMainDefinition(document2), definitionOperation = definition.operation;
-    if (definitionOperation === "query")
-      return document2;
-    var modifiedDoc = visit(document2, {
-      OperationDefinition: {
-        enter: function(node) {
-          return __assign(__assign({}, node), { operation: "query" });
-        }
-      }
-    });
-    return modifiedDoc;
-  }
-  function removeClientSetsFromDocument(document2) {
-    checkDocument(document2);
-    var modifiedDoc = removeDirectivesFromDocument([
-      {
-        test: function(directive) {
-          return directive.name.value === "client";
-        },
-        remove: !0
-      }
-    ], document2);
-    return modifiedDoc;
-  }
-  function addNonReactiveToNamedFragments(document2) {
-    return checkDocument(document2), visit(document2, {
-      FragmentSpread: function(node) {
-        var _a2;
-        if (!(!((_a2 = node.directives) === null || _a2 === void 0) && _a2.some(function(directive) {
-          return directive.name.value === "unmask";
-        })))
-          return __assign(__assign({}, node), { directives: __spreadArray(__spreadArray([], node.directives || [], !0), [
-            {
-              kind: Kind.DIRECTIVE,
-              name: { kind: Kind.NAME, value: "nonreactive" }
-            }
-          ], !1) });
-      }
-    });
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/mergeDeep.js
-  var hasOwnProperty3 = Object.prototype.hasOwnProperty;
-  function mergeDeep() {
-    for (var sources = [], _i = 0; _i < arguments.length; _i++)
-      sources[_i] = arguments[_i];
-    return mergeDeepArray(sources);
-  }
-  function mergeDeepArray(sources) {
-    var target = sources[0] || {}, count = sources.length;
-    if (count > 1)
-      for (var merger = new DeepMerger(), i = 1; i < count; ++i)
-        target = merger.merge(target, sources[i]);
-    return target;
-  }
-  var defaultReconciler = function(target, source, property) {
-    return this.merge(target[property], source[property]);
-  }, DeepMerger = (
-    /** @class */
-    (function() {
-      function DeepMerger2(reconciler) {
-        reconciler === void 0 && (reconciler = defaultReconciler), this.reconciler = reconciler, this.isObject = isNonNullObject, this.pastCopies = /* @__PURE__ */ new Set();
-      }
-      return DeepMerger2.prototype.merge = function(target, source) {
-        for (var _this = this, context = [], _i = 2; _i < arguments.length; _i++)
-          context[_i - 2] = arguments[_i];
-        return isNonNullObject(source) && isNonNullObject(target) ? (Object.keys(source).forEach(function(sourceKey) {
-          if (hasOwnProperty3.call(target, sourceKey)) {
-            var targetValue = target[sourceKey];
-            if (source[sourceKey] !== targetValue) {
-              var result2 = _this.reconciler.apply(_this, __spreadArray([
-                target,
-                source,
-                sourceKey
-              ], context, !1));
-              result2 !== targetValue && (target = _this.shallowCopyForMerge(target), target[sourceKey] = result2);
-            }
-          } else
-            target = _this.shallowCopyForMerge(target), target[sourceKey] = source[sourceKey];
-        }), target) : source;
-      }, DeepMerger2.prototype.shallowCopyForMerge = function(value) {
-        return isNonNullObject(value) && (this.pastCopies.has(value) || (Array.isArray(value) ? value = value.slice(0) : value = __assign({ __proto__: Object.getPrototypeOf(value) }, value), this.pastCopies.add(value))), value;
-      }, DeepMerger2;
-    })()
-  );
-
-  // internal/ui/src/node_modules/zen-observable-ts/module.js
-  function _createForOfIteratorHelperLoose(o, allowArrayLike) {
-    var it = typeof Symbol < "u" && o[Symbol.iterator] || o["@@iterator"];
-    if (it) return (it = it.call(o)).next.bind(it);
-    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length == "number") {
-      it && (o = it);
-      var i = 0;
-      return function() {
-        return i >= o.length ? { done: !0 } : { done: !1, value: o[i++] };
-      };
-    }
-    throw new TypeError(`Invalid attempt to iterate non-iterable instance.
-In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
-  }
-  function _unsupportedIterableToArray(o, minLen) {
-    if (o) {
-      if (typeof o == "string") return _arrayLikeToArray(o, minLen);
-      var n = Object.prototype.toString.call(o).slice(8, -1);
-      if (n === "Object" && o.constructor && (n = o.constructor.name), n === "Map" || n === "Set") return Array.from(o);
-      if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-    }
-  }
-  function _arrayLikeToArray(arr, len) {
-    (len == null || len > arr.length) && (len = arr.length);
-    for (var i = 0, arr2 = new Array(len); i < len; i++)
-      arr2[i] = arr[i];
-    return arr2;
-  }
-  function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || !1, descriptor.configurable = !0, "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-  function _createClass(Constructor, protoProps, staticProps) {
-    return protoProps && _defineProperties(Constructor.prototype, protoProps), staticProps && _defineProperties(Constructor, staticProps), Object.defineProperty(Constructor, "prototype", { writable: !1 }), Constructor;
-  }
-  var hasSymbols = function() {
-    return typeof Symbol == "function";
-  }, hasSymbol = function(name) {
-    return hasSymbols() && !!Symbol[name];
-  }, getSymbol = function(name) {
-    return hasSymbol(name) ? Symbol[name] : "@@" + name;
-  };
-  hasSymbols() && !hasSymbol("observable") && (Symbol.observable = Symbol("observable"));
-  var SymbolIterator = getSymbol("iterator"), SymbolObservable = getSymbol("observable"), SymbolSpecies = getSymbol("species");
-  function getMethod(obj, key) {
-    var value = obj[key];
-    if (value != null) {
-      if (typeof value != "function") throw new TypeError(value + " is not a function");
-      return value;
-    }
-  }
-  function getSpecies(obj) {
-    var ctor = obj.constructor;
-    return ctor !== void 0 && (ctor = ctor[SymbolSpecies], ctor === null && (ctor = void 0)), ctor !== void 0 ? ctor : Observable;
-  }
-  function isObservable(x) {
-    return x instanceof Observable;
-  }
-  function hostReportError(e) {
-    hostReportError.log ? hostReportError.log(e) : setTimeout(function() {
-      throw e;
-    });
-  }
-  function enqueue(fn) {
-    Promise.resolve().then(function() {
-      try {
-        fn();
-      } catch (e) {
-        hostReportError(e);
-      }
-    });
-  }
-  function cleanupSubscription(subscription) {
-    var cleanup = subscription._cleanup;
-    if (cleanup !== void 0 && (subscription._cleanup = void 0, !!cleanup))
-      try {
-        if (typeof cleanup == "function")
-          cleanup();
-        else {
-          var unsubscribe = getMethod(cleanup, "unsubscribe");
-          unsubscribe && unsubscribe.call(cleanup);
-        }
-      } catch (e) {
-        hostReportError(e);
-      }
-  }
-  function closeSubscription(subscription) {
-    subscription._observer = void 0, subscription._queue = void 0, subscription._state = "closed";
-  }
-  function flushSubscription(subscription) {
-    var queue = subscription._queue;
-    if (queue) {
-      subscription._queue = void 0, subscription._state = "ready";
-      for (var i = 0; i < queue.length && (notifySubscription(subscription, queue[i].type, queue[i].value), subscription._state !== "closed"); ++i)
-        ;
-    }
-  }
-  function notifySubscription(subscription, type, value) {
-    subscription._state = "running";
-    var observer = subscription._observer;
-    try {
-      var m = getMethod(observer, type);
-      switch (type) {
-        case "next":
-          m && m.call(observer, value);
-          break;
-        case "error":
-          if (closeSubscription(subscription), m) m.call(observer, value);
-          else throw value;
-          break;
-        case "complete":
-          closeSubscription(subscription), m && m.call(observer);
-          break;
-      }
-    } catch (e) {
-      hostReportError(e);
-    }
-    subscription._state === "closed" ? cleanupSubscription(subscription) : subscription._state === "running" && (subscription._state = "ready");
-  }
-  function onNotify(subscription, type, value) {
-    if (subscription._state !== "closed") {
-      if (subscription._state === "buffering") {
-        subscription._queue.push({
-          type,
-          value
-        });
-        return;
-      }
-      if (subscription._state !== "ready") {
-        subscription._state = "buffering", subscription._queue = [{
-          type,
-          value
-        }], enqueue(function() {
-          return flushSubscription(subscription);
-        });
-        return;
-      }
-      notifySubscription(subscription, type, value);
-    }
-  }
-  var Subscription = /* @__PURE__ */ (function() {
-    function Subscription2(observer, subscriber) {
-      this._cleanup = void 0, this._observer = observer, this._queue = void 0, this._state = "initializing";
-      var subscriptionObserver = new SubscriptionObserver(this);
-      try {
-        this._cleanup = subscriber.call(void 0, subscriptionObserver);
-      } catch (e) {
-        subscriptionObserver.error(e);
-      }
-      this._state === "initializing" && (this._state = "ready");
-    }
-    var _proto = Subscription2.prototype;
-    return _proto.unsubscribe = function() {
-      this._state !== "closed" && (closeSubscription(this), cleanupSubscription(this));
-    }, _createClass(Subscription2, [{
-      key: "closed",
-      get: function() {
-        return this._state === "closed";
-      }
-    }]), Subscription2;
-  })(), SubscriptionObserver = /* @__PURE__ */ (function() {
-    function SubscriptionObserver2(subscription) {
-      this._subscription = subscription;
-    }
-    var _proto2 = SubscriptionObserver2.prototype;
-    return _proto2.next = function(value) {
-      onNotify(this._subscription, "next", value);
-    }, _proto2.error = function(value) {
-      onNotify(this._subscription, "error", value);
-    }, _proto2.complete = function() {
-      onNotify(this._subscription, "complete");
-    }, _createClass(SubscriptionObserver2, [{
-      key: "closed",
-      get: function() {
-        return this._subscription._state === "closed";
-      }
-    }]), SubscriptionObserver2;
-  })(), Observable = /* @__PURE__ */ (function() {
-    function Observable2(subscriber) {
-      if (!(this instanceof Observable2)) throw new TypeError("Observable cannot be called as a function");
-      if (typeof subscriber != "function") throw new TypeError("Observable initializer must be a function");
-      this._subscriber = subscriber;
-    }
-    var _proto3 = Observable2.prototype;
-    return _proto3.subscribe = function(observer) {
-      return (typeof observer != "object" || observer === null) && (observer = {
-        next: observer,
-        error: arguments[1],
-        complete: arguments[2]
-      }), new Subscription(observer, this._subscriber);
-    }, _proto3.forEach = function(fn) {
-      var _this = this;
-      return new Promise(function(resolve, reject) {
-        if (typeof fn != "function") {
-          reject(new TypeError(fn + " is not a function"));
-          return;
-        }
-        function done() {
-          subscription.unsubscribe(), resolve();
-        }
-        var subscription = _this.subscribe({
-          next: function(value) {
-            try {
-              fn(value, done);
-            } catch (e) {
-              reject(e), subscription.unsubscribe();
-            }
-          },
-          error: reject,
-          complete: resolve
-        });
-      });
-    }, _proto3.map = function(fn) {
-      var _this2 = this;
-      if (typeof fn != "function") throw new TypeError(fn + " is not a function");
-      var C = getSpecies(this);
-      return new C(function(observer) {
-        return _this2.subscribe({
-          next: function(value) {
-            try {
-              value = fn(value);
-            } catch (e) {
-              return observer.error(e);
-            }
-            observer.next(value);
-          },
-          error: function(e) {
-            observer.error(e);
-          },
-          complete: function() {
-            observer.complete();
-          }
-        });
-      });
-    }, _proto3.filter = function(fn) {
-      var _this3 = this;
-      if (typeof fn != "function") throw new TypeError(fn + " is not a function");
-      var C = getSpecies(this);
-      return new C(function(observer) {
-        return _this3.subscribe({
-          next: function(value) {
-            try {
-              if (!fn(value)) return;
-            } catch (e) {
-              return observer.error(e);
-            }
-            observer.next(value);
-          },
-          error: function(e) {
-            observer.error(e);
-          },
-          complete: function() {
-            observer.complete();
-          }
-        });
-      });
-    }, _proto3.reduce = function(fn) {
-      var _this4 = this;
-      if (typeof fn != "function") throw new TypeError(fn + " is not a function");
-      var C = getSpecies(this), hasSeed = arguments.length > 1, hasValue = !1, seed = arguments[1], acc = seed;
-      return new C(function(observer) {
-        return _this4.subscribe({
-          next: function(value) {
-            var first = !hasValue;
-            if (hasValue = !0, !first || hasSeed)
-              try {
-                acc = fn(acc, value);
-              } catch (e) {
-                return observer.error(e);
-              }
-            else
-              acc = value;
-          },
-          error: function(e) {
-            observer.error(e);
-          },
-          complete: function() {
-            if (!hasValue && !hasSeed) return observer.error(new TypeError("Cannot reduce an empty sequence"));
-            observer.next(acc), observer.complete();
-          }
-        });
-      });
-    }, _proto3.concat = function() {
-      for (var _this5 = this, _len = arguments.length, sources = new Array(_len), _key = 0; _key < _len; _key++)
-        sources[_key] = arguments[_key];
-      var C = getSpecies(this);
-      return new C(function(observer) {
-        var subscription, index = 0;
-        function startNext(next) {
-          subscription = next.subscribe({
-            next: function(v) {
-              observer.next(v);
-            },
-            error: function(e) {
-              observer.error(e);
-            },
-            complete: function() {
-              index === sources.length ? (subscription = void 0, observer.complete()) : startNext(C.from(sources[index++]));
-            }
-          });
-        }
-        return startNext(_this5), function() {
-          subscription && (subscription.unsubscribe(), subscription = void 0);
-        };
-      });
-    }, _proto3.flatMap = function(fn) {
-      var _this6 = this;
-      if (typeof fn != "function") throw new TypeError(fn + " is not a function");
-      var C = getSpecies(this);
-      return new C(function(observer) {
-        var subscriptions = [], outer = _this6.subscribe({
-          next: function(value) {
-            if (fn)
-              try {
-                value = fn(value);
-              } catch (e) {
-                return observer.error(e);
-              }
-            var inner = C.from(value).subscribe({
-              next: function(value2) {
-                observer.next(value2);
-              },
-              error: function(e) {
-                observer.error(e);
-              },
-              complete: function() {
-                var i = subscriptions.indexOf(inner);
-                i >= 0 && subscriptions.splice(i, 1), completeIfDone();
-              }
-            });
-            subscriptions.push(inner);
-          },
-          error: function(e) {
-            observer.error(e);
-          },
-          complete: function() {
-            completeIfDone();
-          }
-        });
-        function completeIfDone() {
-          outer.closed && subscriptions.length === 0 && observer.complete();
-        }
-        return function() {
-          subscriptions.forEach(function(s) {
-            return s.unsubscribe();
-          }), outer.unsubscribe();
-        };
-      });
-    }, _proto3[SymbolObservable] = function() {
-      return this;
-    }, Observable2.from = function(x) {
-      var C = typeof this == "function" ? this : Observable2;
-      if (x == null) throw new TypeError(x + " is not an object");
-      var method = getMethod(x, SymbolObservable);
-      if (method) {
-        var observable = method.call(x);
-        if (Object(observable) !== observable) throw new TypeError(observable + " is not an object");
-        return isObservable(observable) && observable.constructor === C ? observable : new C(function(observer) {
-          return observable.subscribe(observer);
-        });
-      }
-      if (hasSymbol("iterator") && (method = getMethod(x, SymbolIterator), method))
-        return new C(function(observer) {
-          enqueue(function() {
-            if (!observer.closed) {
-              for (var _iterator = _createForOfIteratorHelperLoose(method.call(x)), _step; !(_step = _iterator()).done; ) {
-                var item = _step.value;
-                if (observer.next(item), observer.closed) return;
-              }
-              observer.complete();
-            }
-          });
-        });
-      if (Array.isArray(x))
-        return new C(function(observer) {
-          enqueue(function() {
-            if (!observer.closed) {
-              for (var i = 0; i < x.length; ++i)
-                if (observer.next(x[i]), observer.closed) return;
-              observer.complete();
-            }
-          });
-        });
-      throw new TypeError(x + " is not observable");
-    }, Observable2.of = function() {
-      for (var _len2 = arguments.length, items = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++)
-        items[_key2] = arguments[_key2];
-      var C = typeof this == "function" ? this : Observable2;
-      return new C(function(observer) {
-        enqueue(function() {
-          if (!observer.closed) {
-            for (var i = 0; i < items.length; ++i)
-              if (observer.next(items[i]), observer.closed) return;
-            observer.complete();
-          }
-        });
-      });
-    }, _createClass(Observable2, null, [{
-      key: SymbolSpecies,
-      get: function() {
-        return this;
-      }
-    }]), Observable2;
-  })();
-  hasSymbols() && Object.defineProperty(Observable, Symbol("extensions"), {
-    value: {
-      symbol: SymbolObservable,
-      hostReportError
-    },
-    configurable: !0
-  });
-
-  // internal/ui/src/node_modules/symbol-observable/es/ponyfill.js
-  function symbolObservablePonyfill(root2) {
-    var result2, Symbol2 = root2.Symbol;
-    if (typeof Symbol2 == "function")
-      if (Symbol2.observable)
-        result2 = Symbol2.observable;
-      else {
-        typeof Symbol2.for == "function" ? result2 = Symbol2.for("https://github.com/benlesh/symbol-observable") : result2 = Symbol2("https://github.com/benlesh/symbol-observable");
-        try {
-          Symbol2.observable = result2;
-        } catch {
-        }
-      }
-    else
-      result2 = "@@observable";
-    return result2;
-  }
-
-  // internal/ui/src/node_modules/symbol-observable/es/index.js
-  var root;
-  typeof self < "u" ? root = self : typeof window < "u" ? root = window : typeof global < "u" ? root = global : typeof module < "u" ? root = module : root = Function("return this")();
-  var result = symbolObservablePonyfill(root);
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/observables/Observable.js
-  var prototype = Observable.prototype, fakeObsSymbol = "@@observable";
-  prototype[fakeObsSymbol] || (prototype[fakeObsSymbol] = function() {
-    return this;
-  });
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/promises/preventUnhandledRejection.js
-  function preventUnhandledRejection(promise) {
-    return promise.catch(function() {
-    }), promise;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/cloneDeep.js
-  var toString = Object.prototype.toString;
-  function cloneDeep(value) {
-    return cloneDeepHelper(value);
-  }
-  function cloneDeepHelper(val, seen) {
-    switch (toString.call(val)) {
-      case "[object Array]": {
-        if (seen = seen || /* @__PURE__ */ new Map(), seen.has(val))
-          return seen.get(val);
-        var copy_1 = val.slice(0);
-        return seen.set(val, copy_1), copy_1.forEach(function(child, i) {
-          copy_1[i] = cloneDeepHelper(child, seen);
-        }), copy_1;
-      }
-      case "[object Object]": {
-        if (seen = seen || /* @__PURE__ */ new Map(), seen.has(val))
-          return seen.get(val);
-        var copy_2 = Object.create(Object.getPrototypeOf(val));
-        return seen.set(val, copy_2), Object.keys(val).forEach(function(key) {
-          copy_2[key] = cloneDeepHelper(val[key], seen);
-        }), copy_2;
-      }
-      default:
-        return val;
-    }
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/maybeDeepFreeze.js
-  function deepFreeze(value) {
-    var workSet = /* @__PURE__ */ new Set([value]);
-    return workSet.forEach(function(obj) {
-      isNonNullObject(obj) && shallowFreeze(obj) === obj && Object.getOwnPropertyNames(obj).forEach(function(name) {
-        isNonNullObject(obj[name]) && workSet.add(obj[name]);
-      });
-    }), value;
-  }
-  function shallowFreeze(obj) {
-    if (globalThis.__DEV__ !== !1 && !Object.isFrozen(obj))
-      try {
-        Object.freeze(obj);
-      } catch (e) {
-        if (e instanceof TypeError)
-          return null;
-        throw e;
-      }
-    return obj;
-  }
-  function maybeDeepFreeze(obj) {
-    return globalThis.__DEV__ !== !1 && deepFreeze(obj), obj;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/observables/iteration.js
-  function iterateObserversSafely(observers, method, argument) {
-    var observersWithMethod = [];
-    observers.forEach(function(obs) {
-      return obs[method] && observersWithMethod.push(obs);
-    }), observersWithMethod.forEach(function(obs) {
-      return obs[method](argument);
-    });
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/observables/asyncMap.js
-  function asyncMap(observable, mapFn, catchFn) {
-    return new Observable(function(observer) {
-      var promiseQueue = {
-        // Normally we would initialize promiseQueue to Promise.resolve(), but
-        // in this case, for backwards compatibility, we need to be careful to
-        // invoke the first callback synchronously.
-        then: function(callback) {
-          return new Promise(function(resolve) {
-            return resolve(callback());
-          });
-        }
-      };
-      function makeCallback(examiner, key) {
-        return function(arg) {
-          if (examiner) {
-            var both = function() {
-              return observer.closed ? (
-                /* will be swallowed */
-                0
-              ) : examiner(arg);
-            };
-            promiseQueue = promiseQueue.then(both, both).then(function(result2) {
-              return observer.next(result2);
-            }, function(error) {
-              return observer.error(error);
-            });
-          } else
-            observer[key](arg);
-        };
-      }
-      var handler = {
-        next: makeCallback(mapFn, "next"),
-        error: makeCallback(catchFn, "error"),
-        complete: function() {
-          promiseQueue.then(function() {
-            return observer.complete();
-          });
-        }
-      }, sub = observable.subscribe(handler);
-      return function() {
-        return sub.unsubscribe();
-      };
-    });
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/observables/subclassing.js
-  function fixObservableSubclass(subclass) {
-    function set(key) {
-      Object.defineProperty(subclass, key, { value: Observable });
-    }
-    return canUseSymbol && Symbol.species && set(Symbol.species), set("@@species"), subclass;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/observables/Concast.js
-  function isPromiseLike2(value) {
-    return value && typeof value.then == "function";
-  }
-  var Concast = (
-    /** @class */
-    (function(_super) {
-      __extends(Concast2, _super);
-      function Concast2(sources) {
-        var _this = _super.call(this, function(observer) {
-          return _this.addObserver(observer), function() {
-            return _this.removeObserver(observer);
-          };
-        }) || this;
-        return _this.observers = /* @__PURE__ */ new Set(), _this.promise = new Promise(function(resolve, reject) {
-          _this.resolve = resolve, _this.reject = reject;
-        }), _this.handlers = {
-          next: function(result2) {
-            _this.sub !== null && (_this.latest = ["next", result2], _this.notify("next", result2), iterateObserversSafely(_this.observers, "next", result2));
-          },
-          error: function(error) {
-            var sub = _this.sub;
-            sub !== null && (sub && setTimeout(function() {
-              return sub.unsubscribe();
-            }), _this.sub = null, _this.latest = ["error", error], _this.reject(error), _this.notify("error", error), iterateObserversSafely(_this.observers, "error", error));
-          },
-          complete: function() {
-            var _a2 = _this, sub = _a2.sub, _b = _a2.sources, sources2 = _b === void 0 ? [] : _b;
-            if (sub !== null) {
-              var value = sources2.shift();
-              value ? isPromiseLike2(value) ? value.then(function(obs) {
-                return _this.sub = obs.subscribe(_this.handlers);
-              }, _this.handlers.error) : _this.sub = value.subscribe(_this.handlers) : (sub && setTimeout(function() {
-                return sub.unsubscribe();
-              }), _this.sub = null, _this.latest && _this.latest[0] === "next" ? _this.resolve(_this.latest[1]) : _this.resolve(), _this.notify("complete"), iterateObserversSafely(_this.observers, "complete"));
-            }
-          }
-        }, _this.nextResultListeners = /* @__PURE__ */ new Set(), _this.cancel = function(reason) {
-          _this.reject(reason), _this.sources = [], _this.handlers.error(reason);
-        }, _this.promise.catch(function(_) {
-        }), typeof sources == "function" && (sources = [new Observable(sources)]), isPromiseLike2(sources) ? sources.then(function(iterable) {
-          return _this.start(iterable);
-        }, _this.handlers.error) : _this.start(sources), _this;
-      }
-      return Concast2.prototype.start = function(sources) {
-        this.sub === void 0 && (this.sources = Array.from(sources), this.handlers.complete());
-      }, Concast2.prototype.deliverLastMessage = function(observer) {
-        if (this.latest) {
-          var nextOrError = this.latest[0], method = observer[nextOrError];
-          method && method.call(observer, this.latest[1]), this.sub === null && nextOrError === "next" && observer.complete && observer.complete();
-        }
-      }, Concast2.prototype.addObserver = function(observer) {
-        this.observers.has(observer) || (this.deliverLastMessage(observer), this.observers.add(observer));
-      }, Concast2.prototype.removeObserver = function(observer) {
-        this.observers.delete(observer) && this.observers.size < 1 && this.handlers.complete();
-      }, Concast2.prototype.notify = function(method, arg) {
-        var nextResultListeners = this.nextResultListeners;
-        nextResultListeners.size && (this.nextResultListeners = /* @__PURE__ */ new Set(), nextResultListeners.forEach(function(listener) {
-          return listener(method, arg);
-        }));
-      }, Concast2.prototype.beforeNext = function(callback) {
-        var called = !1;
-        this.nextResultListeners.add(function(method, arg) {
-          called || (called = !0, callback(method, arg));
-        });
-      }, Concast2;
-    })(Observable)
-  );
-  fixObservableSubclass(Concast);
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/incrementalResult.js
-  function isExecutionPatchIncrementalResult(value) {
-    return "incremental" in value;
-  }
-  function isExecutionPatchInitialResult(value) {
-    return "hasNext" in value && "data" in value;
-  }
-  function isExecutionPatchResult(value) {
-    return isExecutionPatchIncrementalResult(value) || isExecutionPatchInitialResult(value);
-  }
-  function isApolloPayloadResult(value) {
-    return isNonNullObject(value) && "payload" in value;
-  }
-  function mergeIncrementalData(prevResult, result2) {
-    var mergedData = prevResult, merger = new DeepMerger();
-    return isExecutionPatchIncrementalResult(result2) && isNonEmptyArray(result2.incremental) && result2.incremental.forEach(function(_a2) {
-      for (var data2 = _a2.data, path = _a2.path, i = path.length - 1; i >= 0; --i) {
-        var key = path[i], isNumericKey = !isNaN(+key), parent_1 = isNumericKey ? [] : {};
-        parent_1[key] = data2, data2 = parent_1;
-      }
-      mergedData = merger.merge(mergedData, data2);
-    }), mergedData;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/errorHandling.js
-  function graphQLResultHasError(result2) {
-    var errors = getGraphQLErrorsFromResult(result2);
-    return isNonEmptyArray(errors);
-  }
-  function getGraphQLErrorsFromResult(result2) {
-    var graphQLErrors = isNonEmptyArray(result2.errors) ? result2.errors.slice(0) : [];
-    return isExecutionPatchIncrementalResult(result2) && isNonEmptyArray(result2.incremental) && result2.incremental.forEach(function(incrementalResult) {
-      incrementalResult.errors && graphQLErrors.push.apply(graphQLErrors, incrementalResult.errors);
-    }), graphQLErrors;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/compact.js
-  function compact() {
-    for (var objects = [], _i = 0; _i < arguments.length; _i++)
-      objects[_i] = arguments[_i];
-    var result2 = /* @__PURE__ */ Object.create(null);
-    return objects.forEach(function(obj) {
-      obj && Object.keys(obj).forEach(function(key) {
-        var value = obj[key];
-        value !== void 0 && (result2[key] = value);
-      });
-    }), result2;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/common/mergeOptions.js
-  function mergeOptions(defaults, options) {
-    return compact(defaults, options, options.variables && {
-      variables: compact(__assign(__assign({}, defaults && defaults.variables), options.variables))
-    });
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/utils/fromError.js
-  function fromError(errorValue) {
-    return new Observable(function(observer) {
-      observer.error(errorValue);
-    });
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/utils/throwServerError.js
-  var throwServerError = function(response, result2, message2) {
-    var error = new Error(message2);
-    throw error.name = "ServerError", error.response = response, error.statusCode = response.status, error.result = result2, error;
-  };
-
-  // internal/ui/src/node_modules/@apollo/client/link/utils/validateOperation.js
-  function validateOperation(operation) {
-    for (var OPERATION_FIELDS = [
-      "query",
-      "operationName",
-      "variables",
-      "extensions",
-      "context"
-    ], _i = 0, _a2 = Object.keys(operation); _i < _a2.length; _i++) {
-      var key = _a2[_i];
-      if (OPERATION_FIELDS.indexOf(key) < 0)
-        throw newInvariantError(58, key);
-    }
-    return operation;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/utils/createOperation.js
-  function createOperation(starting, operation) {
-    var context = __assign({}, starting), setContext = function(next) {
-      typeof next == "function" ? context = __assign(__assign({}, context), next(context)) : context = __assign(__assign({}, context), next);
-    }, getContext = function() {
-      return __assign({}, context);
-    };
-    return Object.defineProperty(operation, "setContext", {
-      enumerable: !1,
-      value: setContext
-    }), Object.defineProperty(operation, "getContext", {
-      enumerable: !1,
-      value: getContext
-    }), operation;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/utils/transformOperation.js
-  function transformOperation(operation) {
-    var transformedOperation = {
-      variables: operation.variables || {},
-      extensions: operation.extensions || {},
-      operationName: operation.operationName,
-      query: operation.query
-    };
-    return transformedOperation.operationName || (transformedOperation.operationName = typeof transformedOperation.query != "string" ? getOperationName(transformedOperation.query) || void 0 : ""), transformedOperation;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/utils/filterOperationVariables.js
-  function filterOperationVariables(variables, query) {
-    var result2 = __assign({}, variables), unusedNames = new Set(Object.keys(variables));
-    return visit(query, {
-      Variable: function(node, _key, parent) {
-        parent && parent.kind !== "VariableDefinition" && unusedNames.delete(node.name.value);
-      }
-    }), unusedNames.forEach(function(name) {
-      delete result2[name];
-    }), result2;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/utilities/deprecation/index.js
-  var muteAllDeprecations = Symbol.for("apollo.deprecations"), global2 = global_default, slot = new Slot2();
-  function isMuted(name) {
-    return global2[muteAllDeprecations] || (slot.getValue() || []).includes(name);
-  }
-  function muteDeprecations(name) {
-    for (var args = [], _i = 1; _i < arguments.length; _i++)
-      args[_i - 1] = arguments[_i];
-    return slot.withValue.apply(slot, __spreadArray([Array.isArray(name) ? name : [name]], args, !1));
-  }
-  function warnRemovedOption(options, name, callSite, recommendation) {
-    recommendation === void 0 && (recommendation = "Please remove this option."), warnDeprecated(name, function() {
-      name in options && globalThis.__DEV__ !== !1 && invariant4.warn(104, callSite, name, recommendation);
-    });
-  }
-  function warnDeprecated(name, cb) {
-    isMuted(name) || cb();
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/core/ApolloLink.js
-  function passthrough(op, forward) {
-    return forward ? forward(op) : Observable.of();
-  }
-  function toLink(handler) {
-    return typeof handler == "function" ? new ApolloLink(handler) : handler;
-  }
-  function isTerminating(link) {
-    return link.request.length <= 1;
-  }
-  var ApolloLink = (
-    /** @class */
-    (function() {
-      function ApolloLink2(request) {
-        request && (this.request = request);
-      }
-      return ApolloLink2.empty = function() {
-        return new ApolloLink2(function() {
-          return Observable.of();
-        });
-      }, ApolloLink2.from = function(links) {
-        return links.length === 0 ? ApolloLink2.empty() : links.map(toLink).reduce(function(x, y) {
-          return x.concat(y);
-        });
-      }, ApolloLink2.split = function(test, left, right) {
-        var leftLink = toLink(left), rightLink = toLink(right || new ApolloLink2(passthrough)), ret;
-        return isTerminating(leftLink) && isTerminating(rightLink) ? ret = new ApolloLink2(function(operation) {
-          return test(operation) ? leftLink.request(operation) || Observable.of() : rightLink.request(operation) || Observable.of();
-        }) : ret = new ApolloLink2(function(operation, forward) {
-          return test(operation) ? leftLink.request(operation, forward) || Observable.of() : rightLink.request(operation, forward) || Observable.of();
-        }), Object.assign(ret, { left: leftLink, right: rightLink });
-      }, ApolloLink2.execute = function(link, operation) {
-        return link.request(createOperation(operation.context, transformOperation(validateOperation(operation)))) || Observable.of();
-      }, ApolloLink2.concat = function(first, second) {
-        var firstLink = toLink(first);
-        if (isTerminating(firstLink))
-          return globalThis.__DEV__ !== !1 && invariant4.warn(47, firstLink), firstLink;
-        var nextLink = toLink(second), ret;
-        return isTerminating(nextLink) ? ret = new ApolloLink2(function(operation) {
-          return firstLink.request(operation, function(op) {
-            return nextLink.request(op) || Observable.of();
-          }) || Observable.of();
-        }) : ret = new ApolloLink2(function(operation, forward) {
-          return firstLink.request(operation, function(op) {
-            return nextLink.request(op, forward) || Observable.of();
-          }) || Observable.of();
-        }), Object.assign(ret, { left: firstLink, right: nextLink });
-      }, ApolloLink2.prototype.split = function(test, left, right) {
-        return this.concat(ApolloLink2.split(test, left, right || new ApolloLink2(passthrough)));
-      }, ApolloLink2.prototype.concat = function(next) {
-        return ApolloLink2.concat(this, next);
-      }, ApolloLink2.prototype.request = function(operation, forward) {
-        throw newInvariantError(48);
-      }, ApolloLink2.prototype.onError = function(error, observer) {
-        if (globalThis.__DEV__ !== !1 && warnDeprecated("onError", function() {
-          globalThis.__DEV__ !== !1 && invariant4.warn(49);
-        }), observer && observer.error)
-          return observer.error(error), !1;
-        throw error;
-      }, ApolloLink2.prototype.setOnError = function(fn) {
-        return globalThis.__DEV__ !== !1 && globalThis.__DEV__ !== !1 && invariant4.warn(50), this.onError = fn, this;
-      }, ApolloLink2;
-    })()
-  );
-
-  // internal/ui/src/node_modules/@apollo/client/link/core/execute.js
-  var execute = ApolloLink.execute;
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/iterators/async.js
-  function asyncIterator(source) {
-    var _a2, iterator = source[Symbol.asyncIterator]();
-    return _a2 = {
-      next: function() {
-        return iterator.next();
-      }
-    }, _a2[Symbol.asyncIterator] = function() {
-      return this;
-    }, _a2;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/iterators/nodeStream.js
-  function nodeStreamIterator(stream) {
-    var cleanup = null, error = null, done = !1, data2 = [], waiting = [];
-    function onData(chunk) {
-      if (!error) {
-        if (waiting.length) {
-          var shiftedArr = waiting.shift();
-          if (Array.isArray(shiftedArr) && shiftedArr[0])
-            return shiftedArr[0]({ value: chunk, done: !1 });
-        }
-        data2.push(chunk);
-      }
-    }
-    function onError(err) {
-      error = err;
-      var all = waiting.slice();
-      all.forEach(function(pair) {
-        pair[1](err);
-      }), !cleanup || cleanup();
-    }
-    function onEnd() {
-      done = !0;
-      var all = waiting.slice();
-      all.forEach(function(pair) {
-        pair[0]({ value: void 0, done: !0 });
-      }), !cleanup || cleanup();
-    }
-    cleanup = function() {
-      cleanup = null, stream.removeListener("data", onData), stream.removeListener("error", onError), stream.removeListener("end", onEnd), stream.removeListener("finish", onEnd), stream.removeListener("close", onEnd);
-    }, stream.on("data", onData), stream.on("error", onError), stream.on("end", onEnd), stream.on("finish", onEnd), stream.on("close", onEnd);
-    function getNext() {
-      return new Promise(function(resolve, reject) {
-        if (error)
-          return reject(error);
-        if (data2.length)
-          return resolve({ value: data2.shift(), done: !1 });
-        if (done)
-          return resolve({ value: void 0, done: !0 });
-        waiting.push([resolve, reject]);
-      });
-    }
-    var iterator = {
-      next: function() {
-        return getNext();
-      }
-    };
-    return canUseAsyncIteratorSymbol && (iterator[Symbol.asyncIterator] = function() {
-      return this;
-    }), iterator;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/iterators/promise.js
-  function promiseIterator(promise) {
-    var resolved = !1, iterator = {
-      next: function() {
-        return resolved ? Promise.resolve({
-          value: void 0,
-          done: !0
-        }) : (resolved = !0, new Promise(function(resolve, reject) {
-          promise.then(function(value) {
-            resolve({ value, done: !1 });
-          }).catch(reject);
-        }));
-      }
-    };
-    return canUseAsyncIteratorSymbol && (iterator[Symbol.asyncIterator] = function() {
-      return this;
-    }), iterator;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/iterators/reader.js
-  function readerIterator(reader) {
-    var iterator = {
-      next: function() {
-        return reader.read();
-      }
-    };
-    return canUseAsyncIteratorSymbol && (iterator[Symbol.asyncIterator] = function() {
-      return this;
-    }), iterator;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/responseIterator.js
-  function isNodeResponse(value) {
-    return !!value.body;
-  }
-  function isReadableStream(value) {
-    return !!value.getReader;
-  }
-  function isAsyncIterableIterator(value) {
-    return !!(canUseAsyncIteratorSymbol && value[Symbol.asyncIterator]);
-  }
-  function isStreamableBlob(value) {
-    return !!value.stream;
-  }
-  function isBlob(value) {
-    return !!value.arrayBuffer;
-  }
-  function isNodeReadableStream(value) {
-    return !!value.pipe;
-  }
-  function responseIterator(response) {
-    var body = response;
-    if (isNodeResponse(response) && (body = response.body), isAsyncIterableIterator(body))
-      return asyncIterator(body);
-    if (isReadableStream(body))
-      return readerIterator(body.getReader());
-    if (isStreamableBlob(body))
-      return readerIterator(body.stream().getReader());
-    if (isBlob(body))
-      return promiseIterator(body.arrayBuffer());
-    if (isNodeReadableStream(body))
-      return nodeStreamIterator(body);
-    throw new Error("Unknown body type for responseIterator. Please pass a streamable response.");
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/errors/index.js
-  var PROTOCOL_ERRORS_SYMBOL = Symbol();
-  function graphQLResultHasProtocolErrors(result2) {
-    return result2.extensions ? Array.isArray(result2.extensions[PROTOCOL_ERRORS_SYMBOL]) : !1;
-  }
-  function isApolloError(err) {
-    return err.hasOwnProperty("graphQLErrors");
-  }
-  var generateErrorMessage = function(err) {
-    var errors = __spreadArray(__spreadArray(__spreadArray([], err.graphQLErrors, !0), err.clientErrors, !0), err.protocolErrors, !0);
-    return err.networkError && errors.push(err.networkError), errors.map(function(err2) {
-      return isNonNullObject(err2) && err2.message || "Error message not found.";
-    }).join(`
-`);
-  }, ApolloError = (
-    /** @class */
-    (function(_super) {
-      __extends(ApolloError2, _super);
-      function ApolloError2(_a2) {
-        var graphQLErrors = _a2.graphQLErrors, protocolErrors = _a2.protocolErrors, clientErrors = _a2.clientErrors, networkError = _a2.networkError, errorMessage = _a2.errorMessage, extraInfo = _a2.extraInfo, _this = _super.call(this, errorMessage) || this;
-        return _this.name = "ApolloError", _this.graphQLErrors = graphQLErrors || [], _this.protocolErrors = protocolErrors || [], _this.clientErrors = clientErrors || [], _this.networkError = networkError || null, _this.message = errorMessage || generateErrorMessage(_this), _this.extraInfo = extraInfo, _this.cause = __spreadArray(__spreadArray(__spreadArray([
-          networkError
-        ], graphQLErrors || [], !0), protocolErrors || [], !0), clientErrors || [], !0).find(function(e) {
-          return !!e;
-        }) || null, _this.__proto__ = ApolloError2.prototype, _this;
-      }
-      return ApolloError2;
-    })(Error)
-  );
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/parseAndCheckHttpResponse.js
-  var hasOwnProperty4 = Object.prototype.hasOwnProperty;
-  function readMultipartBody(response, nextValue) {
-    return __awaiter(this, void 0, void 0, function() {
-      var decoder, contentType, delimiter, boundaryVal, boundary, buffer, iterator, running, _a2, value, done, chunk, searchFrom, bi, message2, i, headers, contentType_1, body, result2, next, _b, _c, _d;
-      return __generator(this, function(_e) {
-        switch (_e.label) {
-          case 0:
-            if (TextDecoder === void 0)
-              throw new Error("TextDecoder must be defined in the environment: please import a polyfill.");
-            decoder = new TextDecoder("utf-8"), contentType = (_d = response.headers) === null || _d === void 0 ? void 0 : _d.get("content-type"), delimiter = "boundary=", boundaryVal = contentType?.includes(delimiter) ? contentType?.substring(contentType?.indexOf(delimiter) + delimiter.length).replace(/['"]/g, "").replace(/\;(.*)/gm, "").trim() : "-", boundary = `\r
---`.concat(boundaryVal), buffer = "", iterator = responseIterator(response), running = !0, _e.label = 1;
-          case 1:
-            return running ? [4, iterator.next()] : [3, 3];
-          case 2:
-            for (_a2 = _e.sent(), value = _a2.value, done = _a2.done, chunk = typeof value == "string" ? value : decoder.decode(value), searchFrom = buffer.length - boundary.length + 1, running = !done, buffer += chunk, bi = buffer.indexOf(boundary, searchFrom); bi > -1; ) {
-              if (message2 = void 0, _b = [
-                buffer.slice(0, bi),
-                buffer.slice(bi + boundary.length)
-              ], message2 = _b[0], buffer = _b[1], i = message2.indexOf(`\r
-\r
-`), headers = parseHeaders(message2.slice(0, i)), contentType_1 = headers["content-type"], contentType_1 && contentType_1.toLowerCase().indexOf("application/json") === -1)
-                throw new Error("Unsupported patch content type: application/json is required.");
-              if (body = message2.slice(i), body) {
-                if (result2 = parseJsonBody(response, body), Object.keys(result2).length > 1 || "data" in result2 || "incremental" in result2 || "errors" in result2 || "payload" in result2)
-                  if (isApolloPayloadResult(result2)) {
-                    if (next = {}, "payload" in result2) {
-                      if (Object.keys(result2).length === 1 && result2.payload === null)
-                        return [
-                          2
-                          /*return*/
-                        ];
-                      next = __assign({}, result2.payload);
-                    }
-                    "errors" in result2 && (next = __assign(__assign({}, next), { extensions: __assign(__assign({}, "extensions" in next ? next.extensions : null), (_c = {}, _c[PROTOCOL_ERRORS_SYMBOL] = result2.errors, _c)) })), nextValue(next);
-                  } else
-                    nextValue(result2);
-                else if (
-                  // If the chunk contains only a "hasNext: false", we can call
-                  // observer.complete() immediately.
-                  Object.keys(result2).length === 1 && "hasNext" in result2 && !result2.hasNext
-                )
-                  return [
-                    2
-                    /*return*/
-                  ];
-              }
-              bi = buffer.indexOf(boundary);
-            }
-            return [3, 1];
-          case 3:
-            return [
-              2
-              /*return*/
-            ];
-        }
-      });
-    });
-  }
-  function parseHeaders(headerText) {
-    var headersInit = {};
-    return headerText.split(`
-`).forEach(function(line) {
-      var i = line.indexOf(":");
-      if (i > -1) {
-        var name_1 = line.slice(0, i).trim().toLowerCase(), value = line.slice(i + 1).trim();
-        headersInit[name_1] = value;
-      }
-    }), headersInit;
-  }
-  function parseJsonBody(response, bodyText) {
-    if (response.status >= 300) {
-      var getResult = function() {
-        try {
-          return JSON.parse(bodyText);
-        } catch {
-          return bodyText;
-        }
-      };
-      throwServerError(response, getResult(), "Response not successful: Received status code ".concat(response.status));
-    }
-    try {
-      return JSON.parse(bodyText);
-    } catch (err) {
-      var parseError = err;
-      throw parseError.name = "ServerParseError", parseError.response = response, parseError.statusCode = response.status, parseError.bodyText = bodyText, parseError;
-    }
-  }
-  function handleError(err, observer) {
-    err.result && err.result.errors && err.result.data && observer.next(err.result), observer.error(err);
-  }
-  function parseAndCheckHttpResponse(operations) {
-    return function(response) {
-      return response.text().then(function(bodyText) {
-        return parseJsonBody(response, bodyText);
-      }).then(function(result2) {
-        return !Array.isArray(result2) && !hasOwnProperty4.call(result2, "data") && !hasOwnProperty4.call(result2, "errors") && throwServerError(response, result2, "Server response was missing for query '".concat(Array.isArray(operations) ? operations.map(function(op) {
-          return op.operationName;
-        }) : operations.operationName, "'.")), result2;
-      });
-    };
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/serializeFetchParameter.js
-  var serializeFetchParameter = function(p, label) {
-    var serialized;
-    try {
-      serialized = JSON.stringify(p);
-    } catch (e) {
-      var parseError = newInvariantError(54, label, e.message);
-      throw parseError.parseError = e, parseError;
-    }
-    return serialized;
-  };
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/selectHttpOptionsAndBody.js
-  var defaultHttpOptions = {
-    includeQuery: !0,
-    includeExtensions: !1,
-    preserveHeaderCase: !1
-  }, defaultHeaders = {
-    // headers are case insensitive (https://stackoverflow.com/a/5259004)
-    accept: "*/*",
-    // The content-type header describes the type of the body of the request, and
-    // so it typically only is sent with requests that actually have bodies. One
-    // could imagine that Apollo Client would remove this header when constructing
-    // a GET request (which has no body), but we historically have not done that.
-    // This means that browsers will preflight all Apollo Client requests (even
-    // GET requests). Apollo Server's CSRF prevention feature (introduced in
-    // AS3.7) takes advantage of this fact and does not block requests with this
-    // header. If you want to drop this header from GET requests, then you should
-    // probably replace it with a `apollo-require-preflight` header, or servers
-    // with CSRF prevention enabled might block your GET request. See
-    // https://www.apollographql.com/docs/apollo-server/security/cors/#preventing-cross-site-request-forgery-csrf
-    // for more details.
-    "content-type": "application/json"
-  }, defaultOptions2 = {
-    method: "POST"
-  }, fallbackHttpConfig = {
-    http: defaultHttpOptions,
-    headers: defaultHeaders,
-    options: defaultOptions2
-  }, defaultPrinter = function(ast, printer) {
-    return printer(ast);
-  };
-  function selectHttpOptionsAndBodyInternal(operation, printer) {
-    for (var configs = [], _i = 2; _i < arguments.length; _i++)
-      configs[_i - 2] = arguments[_i];
-    var options = {}, http = {};
-    configs.forEach(function(config) {
-      options = __assign(__assign(__assign({}, options), config.options), { headers: __assign(__assign({}, options.headers), config.headers) }), config.credentials && (options.credentials = config.credentials), http = __assign(__assign({}, http), config.http);
-    }), options.headers && (options.headers = removeDuplicateHeaders(options.headers, http.preserveHeaderCase));
-    var operationName = operation.operationName, extensions = operation.extensions, variables = operation.variables, query = operation.query, body = { operationName, variables };
-    return http.includeExtensions && (body.extensions = extensions), http.includeQuery && (body.query = printer(query, print2)), {
-      options,
-      body
-    };
-  }
-  function removeDuplicateHeaders(headers, preserveHeaderCase) {
-    if (!preserveHeaderCase) {
-      var normalizedHeaders_1 = {};
-      return Object.keys(Object(headers)).forEach(function(name) {
-        normalizedHeaders_1[name.toLowerCase()] = headers[name];
-      }), normalizedHeaders_1;
-    }
-    var headerData = {};
-    Object.keys(Object(headers)).forEach(function(name) {
-      headerData[name.toLowerCase()] = {
-        originalName: name,
-        value: headers[name]
-      };
-    });
-    var normalizedHeaders = {};
-    return Object.keys(headerData).forEach(function(name) {
-      normalizedHeaders[headerData[name].originalName] = headerData[name].value;
-    }), normalizedHeaders;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/checkFetcher.js
-  var checkFetcher = function(fetcher) {
-    if (!fetcher && typeof fetch > "u")
-      throw newInvariantError(51);
-  };
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/selectURI.js
-  var selectURI = function(operation, fallbackURI) {
-    var context = operation.getContext(), contextURI = context.uri;
-    return contextURI || (typeof fallbackURI == "function" ? fallbackURI(operation) : fallbackURI || "/graphql");
-  };
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/rewriteURIForGET.js
-  function rewriteURIForGET(chosenURI, body) {
-    var queryParams = [], addQueryParam = function(key, value) {
-      queryParams.push("".concat(key, "=").concat(encodeURIComponent(value)));
-    };
-    if ("query" in body && addQueryParam("query", body.query), body.operationName && addQueryParam("operationName", body.operationName), body.variables) {
-      var serializedVariables = void 0;
-      try {
-        serializedVariables = serializeFetchParameter(body.variables, "Variables map");
-      } catch (parseError) {
-        return { parseError };
-      }
-      addQueryParam("variables", serializedVariables);
-    }
-    if (body.extensions) {
-      var serializedExtensions = void 0;
-      try {
-        serializedExtensions = serializeFetchParameter(body.extensions, "Extensions map");
-      } catch (parseError) {
-        return { parseError };
-      }
-      addQueryParam("extensions", serializedExtensions);
-    }
-    var fragment = "", preFragment = chosenURI, fragmentStart = chosenURI.indexOf("#");
-    fragmentStart !== -1 && (fragment = chosenURI.substr(fragmentStart), preFragment = chosenURI.substr(0, fragmentStart));
-    var queryParamsPrefix = preFragment.indexOf("?") === -1 ? "?" : "&", newURI = preFragment + queryParamsPrefix + queryParams.join("&") + fragment;
-    return { newURI };
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/createHttpLink.js
-  var backupFetch = maybe(function() {
-    return fetch;
-  }), createHttpLink = function(linkOptions) {
-    linkOptions === void 0 && (linkOptions = {});
-    var _a2 = linkOptions.uri, uri = _a2 === void 0 ? "/graphql" : _a2, preferredFetch = linkOptions.fetch, _b = linkOptions.print, print3 = _b === void 0 ? defaultPrinter : _b, includeExtensions = linkOptions.includeExtensions, preserveHeaderCase = linkOptions.preserveHeaderCase, useGETForQueries = linkOptions.useGETForQueries, _c = linkOptions.includeUnusedVariables, includeUnusedVariables = _c === void 0 ? !1 : _c, requestOptions = __rest(linkOptions, ["uri", "fetch", "print", "includeExtensions", "preserveHeaderCase", "useGETForQueries", "includeUnusedVariables"]);
-    globalThis.__DEV__ !== !1 && checkFetcher(preferredFetch || backupFetch);
-    var linkConfig = {
-      http: { includeExtensions, preserveHeaderCase },
-      options: requestOptions.fetchOptions,
-      credentials: requestOptions.credentials,
-      headers: requestOptions.headers
-    };
-    return new ApolloLink(function(operation) {
-      var chosenURI = selectURI(operation, uri), context = operation.getContext(), clientAwarenessHeaders = {};
-      if (context.clientAwareness) {
-        var _a3 = context.clientAwareness, name_1 = _a3.name, version2 = _a3.version;
-        name_1 && (clientAwarenessHeaders["apollographql-client-name"] = name_1), version2 && (clientAwarenessHeaders["apollographql-client-version"] = version2);
-      }
-      var contextHeaders = __assign(__assign({}, clientAwarenessHeaders), context.headers), contextConfig = {
-        http: context.http,
-        options: context.fetchOptions,
-        credentials: context.credentials,
-        headers: contextHeaders
-      };
-      if (hasDirectives(["client"], operation.query)) {
-        globalThis.__DEV__ !== !1 && globalThis.__DEV__ !== !1 && invariant4.warn(52);
-        var transformedQuery = removeClientSetsFromDocument(operation.query);
-        if (!transformedQuery)
-          return fromError(new Error("HttpLink: Trying to send a client-only query to the server. To send to the server, ensure a non-client field is added to the query or set the `transformOptions.removeClientFields` option to `true`."));
-        operation.query = transformedQuery;
-      }
-      var _b2 = selectHttpOptionsAndBodyInternal(operation, print3, fallbackHttpConfig, linkConfig, contextConfig), options = _b2.options, body = _b2.body;
-      body.variables && !includeUnusedVariables && (body.variables = filterOperationVariables(body.variables, operation.query));
-      var controller;
-      !options.signal && typeof AbortController < "u" && (controller = new AbortController(), options.signal = controller.signal);
-      var definitionIsMutation = function(d) {
-        return d.kind === "OperationDefinition" && d.operation === "mutation";
-      }, definitionIsSubscription = function(d) {
-        return d.kind === "OperationDefinition" && d.operation === "subscription";
-      }, isSubscription = definitionIsSubscription(getMainDefinition(operation.query)), hasDefer = hasDirectives(["defer"], operation.query);
-      if (useGETForQueries && !operation.query.definitions.some(definitionIsMutation) && (options.method = "GET"), hasDefer || isSubscription) {
-        options.headers = options.headers || {};
-        var acceptHeader = "multipart/mixed;";
-        isSubscription && hasDefer && globalThis.__DEV__ !== !1 && invariant4.warn(53), isSubscription ? acceptHeader += "boundary=graphql;subscriptionSpec=1.0,application/json" : hasDefer && (acceptHeader += "deferSpec=20220824,application/json"), options.headers.accept = acceptHeader;
-      }
-      if (options.method === "GET") {
-        var _c2 = rewriteURIForGET(chosenURI, body), newURI = _c2.newURI, parseError = _c2.parseError;
-        if (parseError)
-          return fromError(parseError);
-        chosenURI = newURI;
-      } else
-        try {
-          options.body = serializeFetchParameter(body, "Payload");
-        } catch (parseError2) {
-          return fromError(parseError2);
-        }
-      return new Observable(function(observer) {
-        var currentFetch = preferredFetch || maybe(function() {
-          return fetch;
-        }) || backupFetch, observerNext = observer.next.bind(observer);
-        return currentFetch(chosenURI, options).then(function(response) {
-          var _a4;
-          operation.setContext({ response });
-          var ctype = (_a4 = response.headers) === null || _a4 === void 0 ? void 0 : _a4.get("content-type");
-          return ctype !== null && /^multipart\/mixed/i.test(ctype) ? readMultipartBody(response, observerNext) : parseAndCheckHttpResponse(operation)(response).then(observerNext);
-        }).then(function() {
-          controller = void 0, observer.complete();
-        }).catch(function(err) {
-          controller = void 0, handleError(err, observer);
-        }), function() {
-          controller && controller.abort();
-        };
-      });
-    });
-  };
-
-  // internal/ui/src/node_modules/@apollo/client/link/http/HttpLink.js
-  var HttpLink = (
-    /** @class */
-    (function(_super) {
-      __extends(HttpLink2, _super);
-      function HttpLink2(options) {
-        options === void 0 && (options = {});
-        var _this = _super.call(this, createHttpLink(options).request) || this;
-        return _this.options = options, _this;
-      }
-      return HttpLink2;
-    })(ApolloLink)
-  );
-
-  // internal/ui/src/node_modules/@wry/equality/lib/index.js
-  var { toString: toString2, hasOwnProperty: hasOwnProperty5 } = Object.prototype, fnToStr = Function.prototype.toString, previousComparisons = /* @__PURE__ */ new Map();
-  function equal(a, b) {
-    try {
-      return check(a, b);
-    } finally {
-      previousComparisons.clear();
-    }
-  }
-  var lib_default = equal;
-  function check(a, b) {
-    if (a === b)
-      return !0;
-    let aTag = toString2.call(a), bTag = toString2.call(b);
-    if (aTag !== bTag)
-      return !1;
-    switch (aTag) {
-      case "[object Array]":
-        if (a.length !== b.length)
-          return !1;
-      // Fall through to object case...
-      case "[object Object]": {
-        if (previouslyCompared(a, b))
-          return !0;
-        let aKeys = definedKeys(a), bKeys = definedKeys(b), keyCount = aKeys.length;
-        if (keyCount !== bKeys.length)
-          return !1;
-        for (let k = 0; k < keyCount; ++k)
-          if (!hasOwnProperty5.call(b, aKeys[k]))
-            return !1;
-        for (let k = 0; k < keyCount; ++k) {
-          let key = aKeys[k];
-          if (!check(a[key], b[key]))
-            return !1;
-        }
-        return !0;
-      }
-      case "[object Error]":
-        return a.name === b.name && a.message === b.message;
-      case "[object Number]":
-        if (a !== a)
-          return b !== b;
-      // Fall through to shared +a === +b case...
-      case "[object Boolean]":
-      case "[object Date]":
-        return +a == +b;
-      case "[object RegExp]":
-      case "[object String]":
-        return a == `${b}`;
-      case "[object Map]":
-      case "[object Set]": {
-        if (a.size !== b.size)
-          return !1;
-        if (previouslyCompared(a, b))
-          return !0;
-        let aIterator = a.entries(), isMap = aTag === "[object Map]";
-        for (; ; ) {
-          let info = aIterator.next();
-          if (info.done)
-            break;
-          let [aKey, aValue] = info.value;
-          if (!b.has(aKey) || isMap && !check(aValue, b.get(aKey)))
-            return !1;
-        }
-        return !0;
-      }
-      case "[object Uint16Array]":
-      case "[object Uint8Array]":
-      // Buffer, in Node.js.
-      case "[object Uint32Array]":
-      case "[object Int32Array]":
-      case "[object Int8Array]":
-      case "[object Int16Array]":
-      case "[object ArrayBuffer]":
-        a = new Uint8Array(a), b = new Uint8Array(b);
-      // Fall through...
-      case "[object DataView]": {
-        let len = a.byteLength;
-        if (len === b.byteLength)
-          for (; len-- && a[len] === b[len]; )
-            ;
-        return len === -1;
-      }
-      case "[object AsyncFunction]":
-      case "[object GeneratorFunction]":
-      case "[object AsyncGeneratorFunction]":
-      case "[object Function]": {
-        let aCode = fnToStr.call(a);
-        return aCode !== fnToStr.call(b) ? !1 : !endsWith(aCode, nativeCodeSuffix);
-      }
-    }
-    return !1;
-  }
-  function definedKeys(obj) {
-    return Object.keys(obj).filter(isDefinedKey, obj);
-  }
-  function isDefinedKey(key) {
-    return this[key] !== void 0;
-  }
-  var nativeCodeSuffix = "{ [native code] }";
-  function endsWith(full, suffix) {
-    let fromIndex = full.length - suffix.length;
-    return fromIndex >= 0 && full.indexOf(suffix, fromIndex) === fromIndex;
-  }
-  function previouslyCompared(a, b) {
-    let bSet = previousComparisons.get(a);
-    if (bSet) {
-      if (bSet.has(b))
-        return !0;
-    } else
-      previousComparisons.set(a, bSet = /* @__PURE__ */ new Set());
-    return bSet.add(b), !1;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/core/equalByQuery.js
-  function equalByQuery(query, _a2, _b, variables) {
-    var aData = _a2.data, aRest = __rest(_a2, ["data"]), bData = _b.data, bRest = __rest(_b, ["data"]);
-    return lib_default(aRest, bRest) && equalBySelectionSet(getMainDefinition(query).selectionSet, aData, bData, {
-      fragmentMap: createFragmentMap(getFragmentDefinitions(query)),
-      variables
-    });
-  }
-  function equalBySelectionSet(selectionSet, aResult, bResult, context) {
-    if (aResult === bResult)
-      return !0;
-    var seenSelections = /* @__PURE__ */ new Set();
-    return selectionSet.selections.every(function(selection) {
-      if (seenSelections.has(selection) || (seenSelections.add(selection), !shouldInclude(selection, context.variables)) || selectionHasNonreactiveDirective(selection))
-        return !0;
-      if (isField(selection)) {
-        var resultKey = resultKeyNameFromField(selection), aResultChild = aResult && aResult[resultKey], bResultChild = bResult && bResult[resultKey], childSelectionSet = selection.selectionSet;
-        if (!childSelectionSet)
-          return lib_default(aResultChild, bResultChild);
-        var aChildIsArray = Array.isArray(aResultChild), bChildIsArray = Array.isArray(bResultChild);
-        if (aChildIsArray !== bChildIsArray)
-          return !1;
-        if (aChildIsArray && bChildIsArray) {
-          var length_1 = aResultChild.length;
-          if (bResultChild.length !== length_1)
-            return !1;
-          for (var i = 0; i < length_1; ++i)
-            if (!equalBySelectionSet(childSelectionSet, aResultChild[i], bResultChild[i], context))
-              return !1;
-          return !0;
-        }
-        return equalBySelectionSet(childSelectionSet, aResultChild, bResultChild, context);
-      } else {
-        var fragment = getFragmentFromSelection(selection, context.fragmentMap);
-        if (fragment)
-          return selectionHasNonreactiveDirective(fragment) ? !0 : equalBySelectionSet(
-            fragment.selectionSet,
-            // Notice that we reuse the same aResult and bResult values here,
-            // since the fragment ...spread does not specify a field name, but
-            // consists of multiple fields (within the fragment's selection set)
-            // that should be applied to the current result value(s).
-            aResult,
-            bResult,
-            context
-          );
-      }
-    });
-  }
-  function selectionHasNonreactiveDirective(selection) {
-    return !!selection.directives && selection.directives.some(directiveIsNonreactive);
-  }
-  function directiveIsNonreactive(dir) {
-    return dir.name.value === "nonreactive";
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/masking/utils.js
-  var MapImpl = canUseWeakMap ? WeakMap : Map, SetImpl = canUseWeakSet ? WeakSet : Set, disableWarningsSlot = new Slot2(), issuedWarning = !1;
-  function warnOnImproperCacheImplementation() {
-    issuedWarning || (issuedWarning = !0, globalThis.__DEV__ !== !1 && invariant4.warn(64));
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/masking/maskDefinition.js
-  function maskDefinition(data2, selectionSet, context) {
-    return disableWarningsSlot.withValue(!0, function() {
-      var masked = maskSelectionSet(data2, selectionSet, context, !1);
-      return Object.isFrozen(data2) && maybeDeepFreeze(masked), masked;
-    });
-  }
-  function getMutableTarget(data2, mutableTargets) {
-    if (mutableTargets.has(data2))
-      return mutableTargets.get(data2);
-    var mutableTarget = Array.isArray(data2) ? [] : /* @__PURE__ */ Object.create(null);
-    return mutableTargets.set(data2, mutableTarget), mutableTarget;
-  }
-  function maskSelectionSet(data2, selectionSet, context, migration, path) {
-    var _a2, knownChanged = context.knownChanged, memo2 = getMutableTarget(data2, context.mutableTargets);
-    if (Array.isArray(data2)) {
-      for (var _i = 0, _b = Array.from(data2.entries()); _i < _b.length; _i++) {
-        var _c = _b[_i], index = _c[0], item = _c[1];
-        if (item === null) {
-          memo2[index] = null;
-          continue;
-        }
-        var masked = maskSelectionSet(item, selectionSet, context, migration, globalThis.__DEV__ !== !1 ? "".concat(path || "", "[").concat(index, "]") : void 0);
-        knownChanged.has(masked) && knownChanged.add(memo2), memo2[index] = masked;
-      }
-      return knownChanged.has(memo2) ? memo2 : data2;
-    }
-    for (var _d = 0, _e = selectionSet.selections; _d < _e.length; _d++) {
-      var selection = _e[_d], value = void 0;
-      if (migration && knownChanged.add(memo2), selection.kind === Kind.FIELD) {
-        var keyName = resultKeyNameFromField(selection), childSelectionSet = selection.selectionSet;
-        if (value = memo2[keyName] || data2[keyName], value === void 0)
-          continue;
-        if (childSelectionSet && value !== null) {
-          var masked = maskSelectionSet(data2[keyName], childSelectionSet, context, migration, globalThis.__DEV__ !== !1 ? "".concat(path || "", ".").concat(keyName) : void 0);
-          knownChanged.has(masked) && (value = masked);
-        }
-        globalThis.__DEV__ === !1 && (memo2[keyName] = value), globalThis.__DEV__ !== !1 && (migration && keyName !== "__typename" && // either the field is not present in the memo object
-        // or it has a `get` descriptor, not a `value` descriptor
-        // => it is a warning accessor and we can overwrite it
-        // with another accessor
-        !(!((_a2 = Object.getOwnPropertyDescriptor(memo2, keyName)) === null || _a2 === void 0) && _a2.value) ? Object.defineProperty(memo2, keyName, getAccessorWarningDescriptor(keyName, value, path || "", context.operationName, context.operationType)) : (delete memo2[keyName], memo2[keyName] = value));
-      }
-      if (selection.kind === Kind.INLINE_FRAGMENT && (!selection.typeCondition || context.cache.fragmentMatches(selection, data2.__typename)) && (value = maskSelectionSet(data2, selection.selectionSet, context, migration, path)), selection.kind === Kind.FRAGMENT_SPREAD) {
-        var fragmentName = selection.name.value, fragment = context.fragmentMap[fragmentName] || (context.fragmentMap[fragmentName] = context.cache.lookupFragment(fragmentName));
-        invariant4(fragment, 59, fragmentName);
-        var mode = getFragmentMaskMode(selection);
-        mode !== "mask" && (value = maskSelectionSet(data2, fragment.selectionSet, context, mode === "migrate", path));
-      }
-      knownChanged.has(value) && knownChanged.add(memo2);
-    }
-    return "__typename" in data2 && !("__typename" in memo2) && (memo2.__typename = data2.__typename), Object.keys(memo2).length !== Object.keys(data2).length && knownChanged.add(memo2), knownChanged.has(memo2) ? memo2 : data2;
-  }
-  function getAccessorWarningDescriptor(fieldName, value, path, operationName, operationType) {
-    var getValue = function() {
-      return disableWarningsSlot.getValue() || (globalThis.__DEV__ !== !1 && invariant4.warn(60, operationName ? "".concat(operationType, " '").concat(operationName, "'") : "anonymous ".concat(operationType), "".concat(path, ".").concat(fieldName).replace(/^\./, "")), getValue = function() {
-        return value;
-      }), value;
-    };
-    return {
-      get: function() {
-        return getValue();
-      },
-      set: function(newValue) {
-        getValue = function() {
-          return newValue;
-        };
-      },
-      enumerable: !0,
-      configurable: !0
-    };
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/masking/maskFragment.js
-  function maskFragment(data2, document2, cache, fragmentName) {
-    if (!cache.fragmentMatches)
-      return globalThis.__DEV__ !== !1 && warnOnImproperCacheImplementation(), data2;
-    var fragments = document2.definitions.filter(function(node) {
-      return node.kind === Kind.FRAGMENT_DEFINITION;
-    });
-    typeof fragmentName > "u" && (invariant4(fragments.length === 1, 61, fragments.length), fragmentName = fragments[0].name.value);
-    var fragment = fragments.find(function(fragment2) {
-      return fragment2.name.value === fragmentName;
-    });
-    return invariant4(!!fragment, 62, fragmentName), data2 == null || lib_default(data2, {}) ? data2 : maskDefinition(data2, fragment.selectionSet, {
-      operationType: "fragment",
-      operationName: fragment.name.value,
-      fragmentMap: createFragmentMap(getFragmentDefinitions(document2)),
-      cache,
-      mutableTargets: new MapImpl(),
-      knownChanged: new SetImpl()
-    });
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/masking/maskOperation.js
-  function maskOperation(data2, document2, cache) {
-    var _a2;
-    if (!cache.fragmentMatches)
-      return globalThis.__DEV__ !== !1 && warnOnImproperCacheImplementation(), data2;
-    var definition = getOperationDefinition(document2);
-    return invariant4(definition, 63), data2 == null ? data2 : maskDefinition(data2, definition.selectionSet, {
-      operationType: definition.operation,
-      operationName: (_a2 = definition.name) === null || _a2 === void 0 ? void 0 : _a2.value,
-      fragmentMap: createFragmentMap(getFragmentDefinitions(document2)),
-      cache,
-      mutableTargets: new MapImpl(),
-      knownChanged: new SetImpl()
-    });
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/cache/core/cache.js
-  var ApolloCache = (
-    /** @class */
-    (function() {
-      function ApolloCache2() {
-        this.assumeImmutableResults = !1, this.getFragmentDoc = wrap3(getFragmentQueryDocument, {
-          max: cacheSizes["cache.fragmentQueryDocuments"] || 1e3,
-          cache: WeakCache
-        });
-      }
-      return ApolloCache2.prototype.lookupFragment = function(fragmentName) {
-        return null;
-      }, ApolloCache2.prototype.batch = function(options) {
-        var _this = this, optimisticId = typeof options.optimistic == "string" ? options.optimistic : options.optimistic === !1 ? null : void 0, updateResult;
-        return this.performTransaction(function() {
-          return updateResult = options.update(_this);
-        }, optimisticId), updateResult;
-      }, ApolloCache2.prototype.recordOptimisticTransaction = function(transaction, optimisticId) {
-        this.performTransaction(transaction, optimisticId);
-      }, ApolloCache2.prototype.transformDocument = function(document2) {
-        return document2;
-      }, ApolloCache2.prototype.transformForLink = function(document2) {
-        return document2;
-      }, ApolloCache2.prototype.identify = function(object) {
-      }, ApolloCache2.prototype.gc = function() {
-        return [];
-      }, ApolloCache2.prototype.modify = function(options) {
-        return !1;
-      }, ApolloCache2.prototype.readQuery = function(options, optimistic) {
-        var _this = this;
-        return optimistic === void 0 && (optimistic = !!options.optimistic), globalThis.__DEV__ !== !1 && warnRemovedOption(options, "canonizeResults", "cache.readQuery"), muteDeprecations("canonizeResults", function() {
-          return _this.read(__assign(__assign({}, options), { rootId: options.id || "ROOT_QUERY", optimistic }));
-        });
-      }, ApolloCache2.prototype.watchFragment = function(options) {
-        var _this = this, fragment = options.fragment, fragmentName = options.fragmentName, from = options.from, _a2 = options.optimistic, optimistic = _a2 === void 0 ? !0 : _a2, otherOptions = __rest(options, ["fragment", "fragmentName", "from", "optimistic"]), query = this.getFragmentDoc(fragment, fragmentName), id = typeof from > "u" || typeof from == "string" ? from : this.identify(from), dataMasking = !!options[Symbol.for("apollo.dataMasking")];
-        if (globalThis.__DEV__ !== !1) {
-          var actualFragmentName = fragmentName || getFragmentDefinition(fragment).name.value;
-          id || globalThis.__DEV__ !== !1 && invariant4.warn(1, actualFragmentName);
-        }
-        var diffOptions = __assign(__assign({}, otherOptions), { returnPartialData: !0, id, query, optimistic }), latestDiff;
-        return new Observable(function(observer) {
-          return _this.watch(__assign(__assign({}, diffOptions), { immediate: !0, callback: function(diff) {
-            var data2 = dataMasking ? maskFragment(diff.result, fragment, _this, fragmentName) : diff.result;
-            if (
-              // Always ensure we deliver the first result
-              !(latestDiff && equalByQuery(
-                query,
-                { data: latestDiff.result },
-                { data: data2 },
-                // TODO: Fix the type on WatchFragmentOptions so that TVars
-                // extends OperationVariables
-                options.variables
-              ))
-            ) {
-              var result2 = {
-                data: data2,
-                complete: !!diff.complete
-              };
-              diff.missing && (result2.missing = mergeDeepArray(diff.missing.map(function(error) {
-                return error.missing;
-              }))), latestDiff = __assign(__assign({}, diff), { result: data2 }), observer.next(result2);
-            }
-          } }));
-        });
-      }, ApolloCache2.prototype.readFragment = function(options, optimistic) {
-        var _this = this;
-        return optimistic === void 0 && (optimistic = !!options.optimistic), globalThis.__DEV__ !== !1 && warnRemovedOption(options, "canonizeResults", "cache.readFragment"), muteDeprecations("canonizeResults", function() {
-          return _this.read(__assign(__assign({}, options), { query: _this.getFragmentDoc(options.fragment, options.fragmentName), rootId: options.id, optimistic }));
-        });
-      }, ApolloCache2.prototype.writeQuery = function(_a2) {
-        var id = _a2.id, data2 = _a2.data, options = __rest(_a2, ["id", "data"]);
-        return this.write(Object.assign(options, {
-          dataId: id || "ROOT_QUERY",
-          result: data2
-        }));
-      }, ApolloCache2.prototype.writeFragment = function(_a2) {
-        var id = _a2.id, data2 = _a2.data, fragment = _a2.fragment, fragmentName = _a2.fragmentName, options = __rest(_a2, ["id", "data", "fragment", "fragmentName"]);
-        return this.write(Object.assign(options, {
-          query: this.getFragmentDoc(fragment, fragmentName),
-          dataId: id,
-          result: data2
-        }));
-      }, ApolloCache2.prototype.updateQuery = function(options, update) {
-        return globalThis.__DEV__ !== !1 && warnRemovedOption(options, "canonizeResults", "cache.updateQuery"), this.batch({
-          update: function(cache) {
-            var value = muteDeprecations("canonizeResults", function() {
-              return cache.readQuery(options);
-            }), data2 = update(value);
-            return data2 == null ? value : (cache.writeQuery(__assign(__assign({}, options), { data: data2 })), data2);
-          }
-        });
-      }, ApolloCache2.prototype.updateFragment = function(options, update) {
-        return globalThis.__DEV__ !== !1 && warnRemovedOption(options, "canonizeResults", "cache.updateFragment"), this.batch({
-          update: function(cache) {
-            var value = muteDeprecations("canonizeResults", function() {
-              return cache.readFragment(options);
-            }), data2 = update(value);
-            return data2 == null ? value : (cache.writeFragment(__assign(__assign({}, options), { data: data2 })), data2);
-          }
-        });
-      }, ApolloCache2;
-    })()
-  );
-  globalThis.__DEV__ !== !1 && (ApolloCache.prototype.getMemoryInternals = getApolloCacheMemoryInternals);
-
-  // internal/ui/src/node_modules/@apollo/client/cache/core/types/common.js
-  var MissingFieldError = (
-    /** @class */
-    (function(_super) {
-      __extends(MissingFieldError2, _super);
-      function MissingFieldError2(message2, path, query, variables) {
-        var _a2, _this = _super.call(this, message2) || this;
-        if (_this.message = message2, _this.path = path, _this.query = query, _this.variables = variables, Array.isArray(_this.path)) {
-          _this.missing = _this.message;
-          for (var i = _this.path.length - 1; i >= 0; --i)
-            _this.missing = (_a2 = {}, _a2[_this.path[i]] = _this.missing, _a2);
-        } else
-          _this.missing = _this.path;
-        return _this.__proto__ = MissingFieldError2.prototype, _this;
-      }
-      return MissingFieldError2;
-    })(Error)
-  );
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/helpers.js
-  var hasOwn2 = Object.prototype.hasOwnProperty;
-  function isNullish(value) {
-    return value == null;
-  }
-  function defaultDataIdFromObject(_a2, context) {
-    var __typename = _a2.__typename, id = _a2.id, _id = _a2._id;
-    if (typeof __typename == "string" && (context && (context.keyObject = isNullish(id) ? isNullish(_id) ? void 0 : { _id } : { id }), isNullish(id) && !isNullish(_id) && (id = _id), !isNullish(id)))
-      return "".concat(__typename, ":").concat(typeof id == "number" || typeof id == "string" ? id : JSON.stringify(id));
-  }
-  var defaultConfig = {
-    dataIdFromObject: defaultDataIdFromObject,
-    addTypename: !0,
-    resultCaching: !0,
-    // Thanks to the shouldCanonizeResults helper, this should be the only line
-    // you have to change to reenable canonization by default in the future.
-    canonizeResults: !1
-  };
-  function normalizeConfig(config) {
-    return compact(defaultConfig, config);
-  }
-  function shouldCanonizeResults(config) {
-    var value = config.canonizeResults;
-    return value === void 0 ? defaultConfig.canonizeResults : value;
-  }
-  function getTypenameFromStoreObject(store, objectOrReference) {
-    return isReference(objectOrReference) ? store.get(objectOrReference.__ref, "__typename") : objectOrReference && objectOrReference.__typename;
-  }
-  var TypeOrFieldNameRegExp = /^[_a-z][_0-9a-z]*/i;
-  function fieldNameFromStoreName(storeFieldName) {
-    var match2 = storeFieldName.match(TypeOrFieldNameRegExp);
-    return match2 ? match2[0] : storeFieldName;
-  }
-  function selectionSetMatchesResult(selectionSet, result2, variables) {
-    return isNonNullObject(result2) ? isArray(result2) ? result2.every(function(item) {
-      return selectionSetMatchesResult(selectionSet, item, variables);
-    }) : selectionSet.selections.every(function(field) {
-      if (isField(field) && shouldInclude(field, variables)) {
-        var key = resultKeyNameFromField(field);
-        return hasOwn2.call(result2, key) && (!field.selectionSet || selectionSetMatchesResult(field.selectionSet, result2[key], variables));
-      }
-      return !0;
-    }) : !1;
-  }
-  function storeValueIsStoreObject(value) {
-    return isNonNullObject(value) && !isReference(value) && !isArray(value);
-  }
-  function makeProcessedFieldsMerger() {
-    return new DeepMerger();
-  }
-  function extractFragmentContext(document2, fragments) {
-    var fragmentMap = createFragmentMap(getFragmentDefinitions(document2));
-    return {
-      fragmentMap,
-      lookupFragment: function(name) {
-        var def = fragmentMap[name];
-        return !def && fragments && (def = fragments.lookup(name)), def || null;
-      }
-    };
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/entityStore.js
-  var DELETE = /* @__PURE__ */ Object.create(null), delModifier = function() {
-    return DELETE;
-  }, INVALIDATE = /* @__PURE__ */ Object.create(null), EntityStore = (
-    /** @class */
-    (function() {
-      function EntityStore2(policies, group) {
-        var _this = this;
-        this.policies = policies, this.group = group, this.data = /* @__PURE__ */ Object.create(null), this.rootIds = /* @__PURE__ */ Object.create(null), this.refs = /* @__PURE__ */ Object.create(null), this.getFieldValue = function(objectOrReference, storeFieldName) {
-          return maybeDeepFreeze(isReference(objectOrReference) ? _this.get(objectOrReference.__ref, storeFieldName) : objectOrReference && objectOrReference[storeFieldName]);
-        }, this.canRead = function(objOrRef) {
-          return isReference(objOrRef) ? _this.has(objOrRef.__ref) : typeof objOrRef == "object";
-        }, this.toReference = function(objOrIdOrRef, mergeIntoStore) {
-          if (typeof objOrIdOrRef == "string")
-            return makeReference(objOrIdOrRef);
-          if (isReference(objOrIdOrRef))
-            return objOrIdOrRef;
-          var id = _this.policies.identify(objOrIdOrRef)[0];
-          if (id) {
-            var ref = makeReference(id);
-            return mergeIntoStore && _this.merge(id, objOrIdOrRef), ref;
-          }
-        };
-      }
-      return EntityStore2.prototype.toObject = function() {
-        return __assign({}, this.data);
-      }, EntityStore2.prototype.has = function(dataId) {
-        return this.lookup(dataId, !0) !== void 0;
-      }, EntityStore2.prototype.get = function(dataId, fieldName) {
-        if (this.group.depend(dataId, fieldName), hasOwn2.call(this.data, dataId)) {
-          var storeObject = this.data[dataId];
-          if (storeObject && hasOwn2.call(storeObject, fieldName))
-            return storeObject[fieldName];
-        }
-        if (fieldName === "__typename" && hasOwn2.call(this.policies.rootTypenamesById, dataId))
-          return this.policies.rootTypenamesById[dataId];
-        if (this instanceof Layer)
-          return this.parent.get(dataId, fieldName);
-      }, EntityStore2.prototype.lookup = function(dataId, dependOnExistence) {
-        if (dependOnExistence && this.group.depend(dataId, "__exists"), hasOwn2.call(this.data, dataId))
-          return this.data[dataId];
-        if (this instanceof Layer)
-          return this.parent.lookup(dataId, dependOnExistence);
-        if (this.policies.rootTypenamesById[dataId])
-          return /* @__PURE__ */ Object.create(null);
-      }, EntityStore2.prototype.merge = function(older, newer) {
-        var _this = this, dataId;
-        isReference(older) && (older = older.__ref), isReference(newer) && (newer = newer.__ref);
-        var existing = typeof older == "string" ? this.lookup(dataId = older) : older, incoming = typeof newer == "string" ? this.lookup(dataId = newer) : newer;
-        if (incoming) {
-          invariant4(typeof dataId == "string", 2);
-          var merged = new DeepMerger(storeObjectReconciler).merge(existing, incoming);
-          if (this.data[dataId] = merged, merged !== existing && (delete this.refs[dataId], this.group.caching)) {
-            var fieldsToDirty_1 = /* @__PURE__ */ Object.create(null);
-            existing || (fieldsToDirty_1.__exists = 1), Object.keys(incoming).forEach(function(storeFieldName) {
-              if (!existing || existing[storeFieldName] !== merged[storeFieldName]) {
-                fieldsToDirty_1[storeFieldName] = 1;
-                var fieldName = fieldNameFromStoreName(storeFieldName);
-                fieldName !== storeFieldName && !_this.policies.hasKeyArgs(merged.__typename, fieldName) && (fieldsToDirty_1[fieldName] = 1), merged[storeFieldName] === void 0 && !(_this instanceof Layer) && delete merged[storeFieldName];
-              }
-            }), fieldsToDirty_1.__typename && !(existing && existing.__typename) && // Since we return default root __typename strings
-            // automatically from store.get, we don't need to dirty the
-            // ROOT_QUERY.__typename field if merged.__typename is equal
-            // to the default string (usually "Query").
-            this.policies.rootTypenamesById[dataId] === merged.__typename && delete fieldsToDirty_1.__typename, Object.keys(fieldsToDirty_1).forEach(function(fieldName) {
-              return _this.group.dirty(dataId, fieldName);
-            });
-          }
-        }
-      }, EntityStore2.prototype.modify = function(dataId, fields) {
-        var _this = this, storeObject = this.lookup(dataId);
-        if (storeObject) {
-          var changedFields_1 = /* @__PURE__ */ Object.create(null), needToMerge_1 = !1, allDeleted_1 = !0, sharedDetails_1 = {
-            DELETE,
-            INVALIDATE,
-            isReference,
-            toReference: this.toReference,
-            canRead: this.canRead,
-            readField: function(fieldNameOrOptions, from) {
-              return _this.policies.readField(typeof fieldNameOrOptions == "string" ? {
-                fieldName: fieldNameOrOptions,
-                from: from || makeReference(dataId)
-              } : fieldNameOrOptions, { store: _this });
-            }
-          };
-          if (Object.keys(storeObject).forEach(function(storeFieldName) {
-            var fieldName = fieldNameFromStoreName(storeFieldName), fieldValue = storeObject[storeFieldName];
-            if (fieldValue !== void 0) {
-              var modify = typeof fields == "function" ? fields : fields[storeFieldName] || fields[fieldName];
-              if (modify) {
-                var newValue = modify === delModifier ? DELETE : modify(maybeDeepFreeze(fieldValue), __assign(__assign({}, sharedDetails_1), { fieldName, storeFieldName, storage: _this.getStorage(dataId, storeFieldName) }));
-                if (newValue === INVALIDATE)
-                  _this.group.dirty(dataId, storeFieldName);
-                else if (newValue === DELETE && (newValue = void 0), newValue !== fieldValue && (changedFields_1[storeFieldName] = newValue, needToMerge_1 = !0, fieldValue = newValue, globalThis.__DEV__ !== !1)) {
-                  var checkReference = function(ref) {
-                    if (_this.lookup(ref.__ref) === void 0)
-                      return globalThis.__DEV__ !== !1 && invariant4.warn(3, ref), !0;
-                  };
-                  if (isReference(newValue))
-                    checkReference(newValue);
-                  else if (Array.isArray(newValue))
-                    for (var seenReference = !1, someNonReference = void 0, _i = 0, newValue_1 = newValue; _i < newValue_1.length; _i++) {
-                      var value = newValue_1[_i];
-                      if (isReference(value)) {
-                        if (seenReference = !0, checkReference(value))
-                          break;
-                      } else if (typeof value == "object" && value) {
-                        var id = _this.policies.identify(value)[0];
-                        id && (someNonReference = value);
-                      }
-                      if (seenReference && someNonReference !== void 0) {
-                        globalThis.__DEV__ !== !1 && invariant4.warn(4, someNonReference);
-                        break;
-                      }
-                    }
-                }
-              }
-              fieldValue !== void 0 && (allDeleted_1 = !1);
-            }
-          }), needToMerge_1)
-            return this.merge(dataId, changedFields_1), allDeleted_1 && (this instanceof Layer ? this.data[dataId] = void 0 : delete this.data[dataId], this.group.dirty(dataId, "__exists")), !0;
-        }
-        return !1;
-      }, EntityStore2.prototype.delete = function(dataId, fieldName, args) {
-        var _a2, storeObject = this.lookup(dataId);
-        if (storeObject) {
-          var typename = this.getFieldValue(storeObject, "__typename"), storeFieldName = fieldName && args ? this.policies.getStoreFieldName({ typename, fieldName, args }) : fieldName;
-          return this.modify(dataId, storeFieldName ? (_a2 = {}, _a2[storeFieldName] = delModifier, _a2) : delModifier);
-        }
-        return !1;
-      }, EntityStore2.prototype.evict = function(options, limit) {
-        var evicted = !1;
-        return options.id && (hasOwn2.call(this.data, options.id) && (evicted = this.delete(options.id, options.fieldName, options.args)), this instanceof Layer && this !== limit && (evicted = this.parent.evict(options, limit) || evicted), (options.fieldName || evicted) && this.group.dirty(options.id, options.fieldName || "__exists")), evicted;
-      }, EntityStore2.prototype.clear = function() {
-        this.replace(null);
-      }, EntityStore2.prototype.extract = function() {
-        var _this = this, obj = this.toObject(), extraRootIds = [];
-        return this.getRootIdSet().forEach(function(id) {
-          hasOwn2.call(_this.policies.rootTypenamesById, id) || extraRootIds.push(id);
-        }), extraRootIds.length && (obj.__META = { extraRootIds: extraRootIds.sort() }), obj;
-      }, EntityStore2.prototype.replace = function(newData) {
-        var _this = this;
-        if (Object.keys(this.data).forEach(function(dataId) {
-          newData && hasOwn2.call(newData, dataId) || _this.delete(dataId);
-        }), newData) {
-          var __META = newData.__META, rest_1 = __rest(newData, ["__META"]);
-          Object.keys(rest_1).forEach(function(dataId) {
-            _this.merge(dataId, rest_1[dataId]);
-          }), __META && __META.extraRootIds.forEach(this.retain, this);
-        }
-      }, EntityStore2.prototype.retain = function(rootId) {
-        return this.rootIds[rootId] = (this.rootIds[rootId] || 0) + 1;
-      }, EntityStore2.prototype.release = function(rootId) {
-        if (this.rootIds[rootId] > 0) {
-          var count = --this.rootIds[rootId];
-          return count || delete this.rootIds[rootId], count;
-        }
-        return 0;
-      }, EntityStore2.prototype.getRootIdSet = function(ids) {
-        return ids === void 0 && (ids = /* @__PURE__ */ new Set()), Object.keys(this.rootIds).forEach(ids.add, ids), this instanceof Layer ? this.parent.getRootIdSet(ids) : Object.keys(this.policies.rootTypenamesById).forEach(ids.add, ids), ids;
-      }, EntityStore2.prototype.gc = function() {
-        var _this = this, ids = this.getRootIdSet(), snapshot = this.toObject();
-        ids.forEach(function(id) {
-          hasOwn2.call(snapshot, id) && (Object.keys(_this.findChildRefIds(id)).forEach(ids.add, ids), delete snapshot[id]);
-        });
-        var idsToRemove = Object.keys(snapshot);
-        if (idsToRemove.length) {
-          for (var root_1 = this; root_1 instanceof Layer; )
-            root_1 = root_1.parent;
-          idsToRemove.forEach(function(id) {
-            return root_1.delete(id);
-          });
-        }
-        return idsToRemove;
-      }, EntityStore2.prototype.findChildRefIds = function(dataId) {
-        if (!hasOwn2.call(this.refs, dataId)) {
-          var found_1 = this.refs[dataId] = /* @__PURE__ */ Object.create(null), root2 = this.data[dataId];
-          if (!root2)
-            return found_1;
-          var workSet_1 = /* @__PURE__ */ new Set([root2]);
-          workSet_1.forEach(function(obj) {
-            isReference(obj) && (found_1[obj.__ref] = !0), isNonNullObject(obj) && Object.keys(obj).forEach(function(key) {
-              var child = obj[key];
-              isNonNullObject(child) && workSet_1.add(child);
-            });
-          });
-        }
-        return this.refs[dataId];
-      }, EntityStore2.prototype.makeCacheKey = function() {
-        return this.group.keyMaker.lookupArray(arguments);
-      }, EntityStore2;
-    })()
-  );
-  var CacheGroup = (
-    /** @class */
-    (function() {
-      function CacheGroup2(caching, parent) {
-        parent === void 0 && (parent = null), this.caching = caching, this.parent = parent, this.d = null, this.resetCaching();
-      }
-      return CacheGroup2.prototype.resetCaching = function() {
-        this.d = this.caching ? dep() : null, this.keyMaker = new Trie(canUseWeakMap);
-      }, CacheGroup2.prototype.depend = function(dataId, storeFieldName) {
-        if (this.d) {
-          this.d(makeDepKey(dataId, storeFieldName));
-          var fieldName = fieldNameFromStoreName(storeFieldName);
-          fieldName !== storeFieldName && this.d(makeDepKey(dataId, fieldName)), this.parent && this.parent.depend(dataId, storeFieldName);
-        }
-      }, CacheGroup2.prototype.dirty = function(dataId, storeFieldName) {
-        this.d && this.d.dirty(
-          makeDepKey(dataId, storeFieldName),
-          // When storeFieldName === "__exists", that means the entity identified
-          // by dataId has either disappeared from the cache or was newly added,
-          // so the result caching system would do well to "forget everything it
-          // knows" about that object. To achieve that kind of invalidation, we
-          // not only dirty the associated result cache entry, but also remove it
-          // completely from the dependency graph. For the optimism implementation
-          // details, see https://github.com/benjamn/optimism/pull/195.
-          storeFieldName === "__exists" ? "forget" : "setDirty"
-        );
-      }, CacheGroup2;
-    })()
-  );
-  function makeDepKey(dataId, storeFieldName) {
-    return storeFieldName + "#" + dataId;
-  }
-  function maybeDependOnExistenceOfEntity(store, entityId) {
-    supportsResultCaching(store) && store.group.depend(entityId, "__exists");
-  }
-  (function(EntityStore2) {
-    var Root = (
-      /** @class */
-      (function(_super) {
-        __extends(Root2, _super);
-        function Root2(_a2) {
-          var policies = _a2.policies, _b = _a2.resultCaching, resultCaching = _b === void 0 ? !0 : _b, seed = _a2.seed, _this = _super.call(this, policies, new CacheGroup(resultCaching)) || this;
-          return _this.stump = new Stump(_this), _this.storageTrie = new Trie(canUseWeakMap), seed && _this.replace(seed), _this;
-        }
-        return Root2.prototype.addLayer = function(layerId, replay) {
-          return this.stump.addLayer(layerId, replay);
-        }, Root2.prototype.removeLayer = function() {
-          return this;
-        }, Root2.prototype.getStorage = function() {
-          return this.storageTrie.lookupArray(arguments);
-        }, Root2;
-      })(EntityStore2)
-    );
-    EntityStore2.Root = Root;
-  })(EntityStore || (EntityStore = {}));
-  var Layer = (
-    /** @class */
-    (function(_super) {
-      __extends(Layer2, _super);
-      function Layer2(id, parent, replay, group) {
-        var _this = _super.call(this, parent.policies, group) || this;
-        return _this.id = id, _this.parent = parent, _this.replay = replay, _this.group = group, replay(_this), _this;
-      }
-      return Layer2.prototype.addLayer = function(layerId, replay) {
-        return new Layer2(layerId, this, replay, this.group);
-      }, Layer2.prototype.removeLayer = function(layerId) {
-        var _this = this, parent = this.parent.removeLayer(layerId);
-        return layerId === this.id ? (this.group.caching && Object.keys(this.data).forEach(function(dataId) {
-          var ownStoreObject = _this.data[dataId], parentStoreObject = parent.lookup(dataId);
-          parentStoreObject ? ownStoreObject ? ownStoreObject !== parentStoreObject && Object.keys(ownStoreObject).forEach(function(storeFieldName) {
-            equal(ownStoreObject[storeFieldName], parentStoreObject[storeFieldName]) || _this.group.dirty(dataId, storeFieldName);
-          }) : (_this.group.dirty(dataId, "__exists"), Object.keys(parentStoreObject).forEach(function(storeFieldName) {
-            _this.group.dirty(dataId, storeFieldName);
-          })) : _this.delete(dataId);
-        }), parent) : parent === this.parent ? this : parent.addLayer(this.id, this.replay);
-      }, Layer2.prototype.toObject = function() {
-        return __assign(__assign({}, this.parent.toObject()), this.data);
-      }, Layer2.prototype.findChildRefIds = function(dataId) {
-        var fromParent = this.parent.findChildRefIds(dataId);
-        return hasOwn2.call(this.data, dataId) ? __assign(__assign({}, fromParent), _super.prototype.findChildRefIds.call(this, dataId)) : fromParent;
-      }, Layer2.prototype.getStorage = function() {
-        for (var p = this.parent; p.parent; )
-          p = p.parent;
-        return p.getStorage.apply(
-          p,
-          // @ts-expect-error
-          arguments
-        );
-      }, Layer2;
-    })(EntityStore)
-  ), Stump = (
-    /** @class */
-    (function(_super) {
-      __extends(Stump2, _super);
-      function Stump2(root2) {
-        return _super.call(this, "EntityStore.Stump", root2, function() {
-        }, new CacheGroup(root2.group.caching, root2.group)) || this;
-      }
-      return Stump2.prototype.removeLayer = function() {
-        return this;
-      }, Stump2.prototype.merge = function(older, newer) {
-        return this.parent.merge(older, newer);
-      }, Stump2;
-    })(Layer)
-  );
-  function storeObjectReconciler(existingObject, incomingObject, property) {
-    var existingValue = existingObject[property], incomingValue = incomingObject[property];
-    return equal(existingValue, incomingValue) ? existingValue : incomingValue;
-  }
-  function supportsResultCaching(store) {
-    return !!(store instanceof EntityStore && store.group.caching);
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/object-canon.js
-  function shallowCopy(value) {
-    return isNonNullObject(value) ? isArray(value) ? value.slice(0) : __assign({ __proto__: Object.getPrototypeOf(value) }, value) : value;
-  }
-  var ObjectCanon = (
-    /** @class */
-    (function() {
-      function ObjectCanon2() {
-        this.known = new (canUseWeakSet ? WeakSet : Set)(), this.pool = new Trie(canUseWeakMap), this.passes = /* @__PURE__ */ new WeakMap(), this.keysByJSON = /* @__PURE__ */ new Map(), this.empty = this.admit({});
-      }
-      return ObjectCanon2.prototype.isKnown = function(value) {
-        return isNonNullObject(value) && this.known.has(value);
-      }, ObjectCanon2.prototype.pass = function(value) {
-        if (isNonNullObject(value)) {
-          var copy = shallowCopy(value);
-          return this.passes.set(copy, value), copy;
-        }
-        return value;
-      }, ObjectCanon2.prototype.admit = function(value) {
-        var _this = this;
-        if (isNonNullObject(value)) {
-          var original = this.passes.get(value);
-          if (original)
-            return original;
-          var proto = Object.getPrototypeOf(value);
-          switch (proto) {
-            case Array.prototype: {
-              if (this.known.has(value))
-                return value;
-              var array = value.map(this.admit, this), node = this.pool.lookupArray(array);
-              return node.array || (this.known.add(node.array = array), globalThis.__DEV__ !== !1 && Object.freeze(array)), node.array;
-            }
-            case null:
-            case Object.prototype: {
-              if (this.known.has(value))
-                return value;
-              var proto_1 = Object.getPrototypeOf(value), array_1 = [proto_1], keys = this.sortedKeys(value);
-              array_1.push(keys.json);
-              var firstValueIndex_1 = array_1.length;
-              keys.sorted.forEach(function(key) {
-                array_1.push(_this.admit(value[key]));
-              });
-              var node = this.pool.lookupArray(array_1);
-              if (!node.object) {
-                var obj_1 = node.object = Object.create(proto_1);
-                this.known.add(obj_1), keys.sorted.forEach(function(key, i) {
-                  obj_1[key] = array_1[firstValueIndex_1 + i];
-                }), globalThis.__DEV__ !== !1 && Object.freeze(obj_1);
-              }
-              return node.object;
-            }
-          }
-        }
-        return value;
-      }, ObjectCanon2.prototype.sortedKeys = function(obj) {
-        var keys = Object.keys(obj), node = this.pool.lookupArray(keys);
-        if (!node.keys) {
-          keys.sort();
-          var json = JSON.stringify(keys);
-          (node.keys = this.keysByJSON.get(json)) || this.keysByJSON.set(json, node.keys = { sorted: keys, json });
-        }
-        return node.keys;
-      }, ObjectCanon2;
-    })()
-  );
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/readFromStore.js
-  function execSelectionSetKeyArgs(options) {
-    return [
-      options.selectionSet,
-      options.objectOrReference,
-      options.context,
-      // We split out this property so we can pass different values
-      // independently without modifying options.context itself.
-      options.context.canonizeResults
-    ];
-  }
-  var StoreReader = (
-    /** @class */
-    (function() {
-      function StoreReader2(config) {
-        var _this = this;
-        this.knownResults = new (canUseWeakMap ? WeakMap : Map)(), this.config = compact(config, {
-          addTypename: config.addTypename !== !1,
-          canonizeResults: shouldCanonizeResults(config)
-        }), this.canon = config.canon || new ObjectCanon(), this.executeSelectionSet = wrap3(function(options) {
-          var _a2, canonizeResults = options.context.canonizeResults, peekArgs = execSelectionSetKeyArgs(options);
-          peekArgs[3] = !canonizeResults;
-          var other = (_a2 = _this.executeSelectionSet).peek.apply(_a2, peekArgs);
-          return other ? canonizeResults ? __assign(__assign({}, other), {
-            // If we previously read this result without canonizing it, we can
-            // reuse that result simply by canonizing it now.
-            result: _this.canon.admit(other.result)
-          }) : other : (maybeDependOnExistenceOfEntity(options.context.store, options.enclosingRef.__ref), _this.execSelectionSetImpl(options));
-        }, {
-          max: this.config.resultCacheMaxSize || cacheSizes["inMemoryCache.executeSelectionSet"] || 5e4,
-          keyArgs: execSelectionSetKeyArgs,
-          // Note that the parameters of makeCacheKey are determined by the
-          // array returned by keyArgs.
-          makeCacheKey: function(selectionSet, parent, context, canonizeResults) {
-            if (supportsResultCaching(context.store))
-              return context.store.makeCacheKey(selectionSet, isReference(parent) ? parent.__ref : parent, context.varString, canonizeResults);
-          }
-        }), this.executeSubSelectedArray = wrap3(function(options) {
-          return maybeDependOnExistenceOfEntity(options.context.store, options.enclosingRef.__ref), _this.execSubSelectedArrayImpl(options);
-        }, {
-          max: this.config.resultCacheMaxSize || cacheSizes["inMemoryCache.executeSubSelectedArray"] || 1e4,
-          makeCacheKey: function(_a2) {
-            var field = _a2.field, array = _a2.array, context = _a2.context;
-            if (supportsResultCaching(context.store))
-              return context.store.makeCacheKey(field, array, context.varString);
-          }
-        });
-      }
-      return StoreReader2.prototype.resetCanon = function() {
-        this.canon = new ObjectCanon();
-      }, StoreReader2.prototype.diffQueryAgainstStore = function(_a2) {
-        var store = _a2.store, query = _a2.query, _b = _a2.rootId, rootId = _b === void 0 ? "ROOT_QUERY" : _b, variables = _a2.variables, _c = _a2.returnPartialData, returnPartialData = _c === void 0 ? !0 : _c, _d = _a2.canonizeResults, canonizeResults = _d === void 0 ? this.config.canonizeResults : _d, policies = this.config.cache.policies;
-        variables = __assign(__assign({}, getDefaultValues(getQueryDefinition(query))), variables);
-        var rootRef = makeReference(rootId), execResult = this.executeSelectionSet({
-          selectionSet: getMainDefinition(query).selectionSet,
-          objectOrReference: rootRef,
-          enclosingRef: rootRef,
-          context: __assign({ store, query, policies, variables, varString: canonicalStringify(variables), canonizeResults }, extractFragmentContext(query, this.config.fragments))
-        }), missing;
-        if (execResult.missing && (missing = [
-          new MissingFieldError(firstMissing(execResult.missing), execResult.missing, query, variables)
-        ], !returnPartialData))
-          throw missing[0];
-        return {
-          result: execResult.result,
-          complete: !missing,
-          missing
-        };
-      }, StoreReader2.prototype.isFresh = function(result2, parent, selectionSet, context) {
-        if (supportsResultCaching(context.store) && this.knownResults.get(result2) === selectionSet) {
-          var latest = this.executeSelectionSet.peek(
-            selectionSet,
-            parent,
-            context,
-            // If result is canonical, then it could only have been previously
-            // cached by the canonizing version of executeSelectionSet, so we can
-            // avoid checking both possibilities here.
-            this.canon.isKnown(result2)
-          );
-          if (latest && result2 === latest.result)
-            return !0;
-        }
-        return !1;
-      }, StoreReader2.prototype.execSelectionSetImpl = function(_a2) {
-        var _this = this, selectionSet = _a2.selectionSet, objectOrReference = _a2.objectOrReference, enclosingRef = _a2.enclosingRef, context = _a2.context;
-        if (isReference(objectOrReference) && !context.policies.rootTypenamesById[objectOrReference.__ref] && !context.store.has(objectOrReference.__ref))
-          return {
-            result: this.canon.empty,
-            missing: "Dangling reference to missing ".concat(objectOrReference.__ref, " object")
-          };
-        var variables = context.variables, policies = context.policies, store = context.store, typename = store.getFieldValue(objectOrReference, "__typename"), objectsToMerge = [], missing, missingMerger = new DeepMerger();
-        this.config.addTypename && typeof typename == "string" && !policies.rootIdsByTypename[typename] && objectsToMerge.push({ __typename: typename });
-        function handleMissing(result3, resultName) {
-          var _a3;
-          return result3.missing && (missing = missingMerger.merge(missing, (_a3 = {}, _a3[resultName] = result3.missing, _a3))), result3.result;
-        }
-        var workSet = new Set(selectionSet.selections);
-        workSet.forEach(function(selection) {
-          var _a3, _b;
-          if (shouldInclude(selection, variables))
-            if (isField(selection)) {
-              var fieldValue = policies.readField({
-                fieldName: selection.name.value,
-                field: selection,
-                variables: context.variables,
-                from: objectOrReference
-              }, context), resultName = resultKeyNameFromField(selection);
-              fieldValue === void 0 ? addTypenameToDocument.added(selection) || (missing = missingMerger.merge(missing, (_a3 = {}, _a3[resultName] = "Can't find field '".concat(selection.name.value, "' on ").concat(isReference(objectOrReference) ? objectOrReference.__ref + " object" : "object " + JSON.stringify(objectOrReference, null, 2)), _a3))) : isArray(fieldValue) ? fieldValue.length > 0 && (fieldValue = handleMissing(_this.executeSubSelectedArray({
-                field: selection,
-                array: fieldValue,
-                enclosingRef,
-                context
-              }), resultName)) : selection.selectionSet ? fieldValue != null && (fieldValue = handleMissing(_this.executeSelectionSet({
-                selectionSet: selection.selectionSet,
-                objectOrReference: fieldValue,
-                enclosingRef: isReference(fieldValue) ? fieldValue : enclosingRef,
-                context
-              }), resultName)) : context.canonizeResults && (fieldValue = _this.canon.pass(fieldValue)), fieldValue !== void 0 && objectsToMerge.push((_b = {}, _b[resultName] = fieldValue, _b));
-            } else {
-              var fragment = getFragmentFromSelection(selection, context.lookupFragment);
-              if (!fragment && selection.kind === Kind.FRAGMENT_SPREAD)
-                throw newInvariantError(10, selection.name.value);
-              fragment && policies.fragmentMatches(fragment, typename) && fragment.selectionSet.selections.forEach(workSet.add, workSet);
-            }
-        });
-        var result2 = mergeDeepArray(objectsToMerge), finalResult = { result: result2, missing }, frozen = context.canonizeResults ? this.canon.admit(finalResult) : maybeDeepFreeze(finalResult);
-        return frozen.result && this.knownResults.set(frozen.result, selectionSet), frozen;
-      }, StoreReader2.prototype.execSubSelectedArrayImpl = function(_a2) {
-        var _this = this, field = _a2.field, array = _a2.array, enclosingRef = _a2.enclosingRef, context = _a2.context, missing, missingMerger = new DeepMerger();
-        function handleMissing(childResult, i) {
-          var _a3;
-          return childResult.missing && (missing = missingMerger.merge(missing, (_a3 = {}, _a3[i] = childResult.missing, _a3))), childResult.result;
-        }
-        return field.selectionSet && (array = array.filter(context.store.canRead)), array = array.map(function(item, i) {
-          return item === null ? null : isArray(item) ? handleMissing(_this.executeSubSelectedArray({
-            field,
-            array: item,
-            enclosingRef,
-            context
-          }), i) : field.selectionSet ? handleMissing(_this.executeSelectionSet({
-            selectionSet: field.selectionSet,
-            objectOrReference: item,
-            enclosingRef: isReference(item) ? item : enclosingRef,
-            context
-          }), i) : (globalThis.__DEV__ !== !1 && assertSelectionSetForIdValue(context.store, field, item), item);
-        }), {
-          result: context.canonizeResults ? this.canon.admit(array) : array,
-          missing
-        };
-      }, StoreReader2;
-    })()
-  );
-  function firstMissing(tree) {
-    try {
-      JSON.stringify(tree, function(_, value) {
-        if (typeof value == "string")
-          throw value;
-        return value;
-      });
-    } catch (result2) {
-      return result2;
-    }
-  }
-  function assertSelectionSetForIdValue(store, field, fieldValue) {
-    if (!field.selectionSet) {
-      var workSet_1 = /* @__PURE__ */ new Set([fieldValue]);
-      workSet_1.forEach(function(value) {
-        isNonNullObject(value) && (invariant4(
-          !isReference(value),
-          11,
-          getTypenameFromStoreObject(store, value),
-          field.name.value
-        ), Object.values(value).forEach(workSet_1.add, workSet_1));
-      });
-    }
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/reactiveVars.js
-  var cacheSlot = new Slot2(), cacheInfoMap = /* @__PURE__ */ new WeakMap();
-  function getCacheInfo(cache) {
-    var info = cacheInfoMap.get(cache);
-    return info || cacheInfoMap.set(cache, info = {
-      vars: /* @__PURE__ */ new Set(),
-      dep: dep()
-    }), info;
-  }
-  function forgetCache(cache) {
-    getCacheInfo(cache).vars.forEach(function(rv) {
-      return rv.forgetCache(cache);
-    });
-  }
-  function recallCache(cache) {
-    getCacheInfo(cache).vars.forEach(function(rv) {
-      return rv.attachCache(cache);
-    });
-  }
-  function makeVar(value) {
-    var caches2 = /* @__PURE__ */ new Set(), listeners = /* @__PURE__ */ new Set(), rv = function(newValue) {
-      if (arguments.length > 0) {
-        if (value !== newValue) {
-          value = newValue, caches2.forEach(function(cache2) {
-            getCacheInfo(cache2).dep.dirty(rv), broadcast(cache2);
-          });
-          var oldListeners = Array.from(listeners);
-          listeners.clear(), oldListeners.forEach(function(listener) {
-            return listener(value);
-          });
-        }
-      } else {
-        var cache = cacheSlot.getValue();
-        cache && (attach(cache), getCacheInfo(cache).dep(rv));
-      }
-      return value;
-    };
-    rv.onNextChange = function(listener) {
-      return listeners.add(listener), function() {
-        listeners.delete(listener);
-      };
-    };
-    var attach = rv.attachCache = function(cache) {
-      return caches2.add(cache), getCacheInfo(cache).vars.add(rv), rv;
-    };
-    return rv.forgetCache = function(cache) {
-      return caches2.delete(cache);
-    }, rv;
-  }
-  function broadcast(cache) {
-    cache.broadcastWatches && cache.broadcastWatches();
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/key-extractor.js
-  var specifierInfoCache = /* @__PURE__ */ Object.create(null);
-  function lookupSpecifierInfo(spec) {
-    var cacheKey = JSON.stringify(spec);
-    return specifierInfoCache[cacheKey] || (specifierInfoCache[cacheKey] = /* @__PURE__ */ Object.create(null));
-  }
-  function keyFieldsFnFromSpecifier(specifier) {
-    var info = lookupSpecifierInfo(specifier);
-    return info.keyFieldsFn || (info.keyFieldsFn = function(object, context) {
-      var extract = function(from, key) {
-        return context.readField(key, from);
-      }, keyObject = context.keyObject = collectSpecifierPaths(specifier, function(schemaKeyPath) {
-        var extracted = extractKeyPath(
-          context.storeObject,
-          schemaKeyPath,
-          // Using context.readField to extract paths from context.storeObject
-          // allows the extraction to see through Reference objects and respect
-          // custom read functions.
-          extract
-        );
-        return extracted === void 0 && object !== context.storeObject && hasOwn2.call(object, schemaKeyPath[0]) && (extracted = extractKeyPath(object, schemaKeyPath, extractKey)), invariant4(extracted !== void 0, 5, schemaKeyPath.join("."), object), extracted;
-      });
-      return "".concat(context.typename, ":").concat(JSON.stringify(keyObject));
-    });
-  }
-  function keyArgsFnFromSpecifier(specifier) {
-    var info = lookupSpecifierInfo(specifier);
-    return info.keyArgsFn || (info.keyArgsFn = function(args, _a2) {
-      var field = _a2.field, variables = _a2.variables, fieldName = _a2.fieldName, collected = collectSpecifierPaths(specifier, function(keyPath) {
-        var firstKey = keyPath[0], firstChar = firstKey.charAt(0);
-        if (firstChar === "@") {
-          if (field && isNonEmptyArray(field.directives)) {
-            var directiveName_1 = firstKey.slice(1), d = field.directives.find(function(d2) {
-              return d2.name.value === directiveName_1;
-            }), directiveArgs = d && argumentsObjectFromField(d, variables);
-            return directiveArgs && extractKeyPath(
-              directiveArgs,
-              // If keyPath.length === 1, this code calls extractKeyPath with an
-              // empty path, which works because it uses directiveArgs as the
-              // extracted value.
-              keyPath.slice(1)
-            );
-          }
-          return;
-        }
-        if (firstChar === "$") {
-          var variableName = firstKey.slice(1);
-          if (variables && hasOwn2.call(variables, variableName)) {
-            var varKeyPath = keyPath.slice(0);
-            return varKeyPath[0] = variableName, extractKeyPath(variables, varKeyPath);
-          }
-          return;
-        }
-        if (args)
-          return extractKeyPath(args, keyPath);
-      }), suffix = JSON.stringify(collected);
-      return (args || suffix !== "{}") && (fieldName += ":" + suffix), fieldName;
-    });
-  }
-  function collectSpecifierPaths(specifier, extractor) {
-    var merger = new DeepMerger();
-    return getSpecifierPaths(specifier).reduce(function(collected, path) {
-      var _a2, toMerge = extractor(path);
-      if (toMerge !== void 0) {
-        for (var i = path.length - 1; i >= 0; --i)
-          toMerge = (_a2 = {}, _a2[path[i]] = toMerge, _a2);
-        collected = merger.merge(collected, toMerge);
-      }
-      return collected;
-    }, /* @__PURE__ */ Object.create(null));
-  }
-  function getSpecifierPaths(spec) {
-    var info = lookupSpecifierInfo(spec);
-    if (!info.paths) {
-      var paths_1 = info.paths = [], currentPath_1 = [];
-      spec.forEach(function(s, i) {
-        isArray(s) ? (getSpecifierPaths(s).forEach(function(p) {
-          return paths_1.push(currentPath_1.concat(p));
-        }), currentPath_1.length = 0) : (currentPath_1.push(s), isArray(spec[i + 1]) || (paths_1.push(currentPath_1.slice(0)), currentPath_1.length = 0));
-      });
-    }
-    return info.paths;
-  }
-  function extractKey(object, key) {
-    return object[key];
-  }
-  function extractKeyPath(object, path, extract) {
-    return extract = extract || extractKey, normalize(path.reduce(function reducer(obj, key) {
-      return isArray(obj) ? obj.map(function(child) {
-        return reducer(child, key);
-      }) : obj && extract(obj, key);
-    }, object));
-  }
-  function normalize(value) {
-    return isNonNullObject(value) ? isArray(value) ? value.map(normalize) : collectSpecifierPaths(Object.keys(value).sort(), function(path) {
-      return extractKeyPath(value, path);
-    }) : value;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/policies.js
-  function argsFromFieldSpecifier(spec) {
-    return spec.args !== void 0 ? spec.args : spec.field ? argumentsObjectFromField(spec.field, spec.variables) : null;
-  }
-  var nullKeyFieldsFn = function() {
-  }, simpleKeyArgsFn = function(_args, context) {
-    return context.fieldName;
-  }, mergeTrueFn = function(existing, incoming, _a2) {
-    var mergeObjects = _a2.mergeObjects;
-    return mergeObjects(existing, incoming);
-  }, mergeFalseFn = function(_, incoming) {
-    return incoming;
-  }, Policies = (
-    /** @class */
-    (function() {
-      function Policies2(config) {
-        this.config = config, this.typePolicies = /* @__PURE__ */ Object.create(null), this.toBeAdded = /* @__PURE__ */ Object.create(null), this.supertypeMap = /* @__PURE__ */ new Map(), this.fuzzySubtypes = /* @__PURE__ */ new Map(), this.rootIdsByTypename = /* @__PURE__ */ Object.create(null), this.rootTypenamesById = /* @__PURE__ */ Object.create(null), this.usingPossibleTypes = !1, this.config = __assign({ dataIdFromObject: defaultDataIdFromObject }, config), this.cache = this.config.cache, this.setRootTypename("Query"), this.setRootTypename("Mutation"), this.setRootTypename("Subscription"), config.possibleTypes && this.addPossibleTypes(config.possibleTypes), config.typePolicies && this.addTypePolicies(config.typePolicies);
-      }
-      return Policies2.prototype.identify = function(object, partialContext) {
-        var _a2, policies = this, typename = partialContext && (partialContext.typename || ((_a2 = partialContext.storeObject) === null || _a2 === void 0 ? void 0 : _a2.__typename)) || object.__typename;
-        if (typename === this.rootTypenamesById.ROOT_QUERY)
-          return ["ROOT_QUERY"];
-        var storeObject = partialContext && partialContext.storeObject || object, context = __assign(__assign({}, partialContext), { typename, storeObject, readField: partialContext && partialContext.readField || function() {
-          var options = normalizeReadFieldOptions(arguments, storeObject);
-          return policies.readField(options, {
-            store: policies.cache.data,
-            variables: options.variables
-          });
-        } }), id, policy = typename && this.getTypePolicy(typename), keyFn = policy && policy.keyFn || this.config.dataIdFromObject;
-        return disableWarningsSlot.withValue(!0, function() {
-          for (; keyFn; ) {
-            var specifierOrId = keyFn(__assign(__assign({}, object), storeObject), context);
-            if (isArray(specifierOrId))
-              keyFn = keyFieldsFnFromSpecifier(specifierOrId);
-            else {
-              id = specifierOrId;
-              break;
-            }
-          }
-        }), id = id ? String(id) : void 0, context.keyObject ? [id, context.keyObject] : [id];
-      }, Policies2.prototype.addTypePolicies = function(typePolicies) {
-        var _this = this;
-        Object.keys(typePolicies).forEach(function(typename) {
-          var _a2 = typePolicies[typename], queryType = _a2.queryType, mutationType = _a2.mutationType, subscriptionType = _a2.subscriptionType, incoming = __rest(_a2, ["queryType", "mutationType", "subscriptionType"]);
-          queryType && _this.setRootTypename("Query", typename), mutationType && _this.setRootTypename("Mutation", typename), subscriptionType && _this.setRootTypename("Subscription", typename), hasOwn2.call(_this.toBeAdded, typename) ? _this.toBeAdded[typename].push(incoming) : _this.toBeAdded[typename] = [incoming];
-        });
-      }, Policies2.prototype.updateTypePolicy = function(typename, incoming, existingFieldPolicies) {
-        var existing = this.getTypePolicy(typename), keyFields = incoming.keyFields, fields = incoming.fields;
-        function setMerge(existing2, merge) {
-          existing2.merge = typeof merge == "function" ? merge : merge === !0 ? mergeTrueFn : merge === !1 ? mergeFalseFn : existing2.merge;
-        }
-        setMerge(existing, incoming.merge), existing.keyFn = // Pass false to disable normalization for this typename.
-        keyFields === !1 ? nullKeyFieldsFn : isArray(keyFields) ? keyFieldsFnFromSpecifier(keyFields) : typeof keyFields == "function" ? keyFields : existing.keyFn, fields && Object.keys(fields).forEach(function(fieldName) {
-          var existing2 = existingFieldPolicies[fieldName];
-          (!existing2 || existing2?.typename !== typename) && (existing2 = existingFieldPolicies[fieldName] = { typename });
-          var incoming2 = fields[fieldName];
-          if (typeof incoming2 == "function")
-            existing2.read = incoming2;
-          else {
-            var keyArgs = incoming2.keyArgs, read = incoming2.read, merge = incoming2.merge;
-            existing2.keyFn = // Pass false to disable argument-based differentiation of
-            // field identities.
-            keyArgs === !1 ? simpleKeyArgsFn : isArray(keyArgs) ? keyArgsFnFromSpecifier(keyArgs) : typeof keyArgs == "function" ? keyArgs : existing2.keyFn, typeof read == "function" && (existing2.read = read), setMerge(existing2, merge);
-          }
-          existing2.read && existing2.merge && (existing2.keyFn = existing2.keyFn || simpleKeyArgsFn);
-        });
-      }, Policies2.prototype.setRootTypename = function(which, typename) {
-        typename === void 0 && (typename = which);
-        var rootId = "ROOT_" + which.toUpperCase(), old = this.rootTypenamesById[rootId];
-        typename !== old && (invariant4(!old || old === which, 6, which), old && delete this.rootIdsByTypename[old], this.rootIdsByTypename[typename] = rootId, this.rootTypenamesById[rootId] = typename);
-      }, Policies2.prototype.addPossibleTypes = function(possibleTypes) {
-        var _this = this;
-        this.usingPossibleTypes = !0, Object.keys(possibleTypes).forEach(function(supertype) {
-          _this.getSupertypeSet(supertype, !0), possibleTypes[supertype].forEach(function(subtype) {
-            _this.getSupertypeSet(subtype, !0).add(supertype);
-            var match2 = subtype.match(TypeOrFieldNameRegExp);
-            (!match2 || match2[0] !== subtype) && _this.fuzzySubtypes.set(subtype, new RegExp(subtype));
-          });
-        });
-      }, Policies2.prototype.getTypePolicy = function(typename) {
-        var _this = this;
-        if (!hasOwn2.call(this.typePolicies, typename)) {
-          var policy_1 = this.typePolicies[typename] = /* @__PURE__ */ Object.create(null);
-          policy_1.fields = /* @__PURE__ */ Object.create(null);
-          var supertypes_1 = this.supertypeMap.get(typename);
-          !supertypes_1 && this.fuzzySubtypes.size && (supertypes_1 = this.getSupertypeSet(typename, !0), this.fuzzySubtypes.forEach(function(regExp, fuzzy) {
-            if (regExp.test(typename)) {
-              var fuzzySupertypes = _this.supertypeMap.get(fuzzy);
-              fuzzySupertypes && fuzzySupertypes.forEach(function(supertype) {
-                return supertypes_1.add(supertype);
-              });
-            }
-          })), supertypes_1 && supertypes_1.size && supertypes_1.forEach(function(supertype) {
-            var _a2 = _this.getTypePolicy(supertype), fields = _a2.fields, rest = __rest(_a2, ["fields"]);
-            Object.assign(policy_1, rest), Object.assign(policy_1.fields, fields);
-          });
-        }
-        var inbox = this.toBeAdded[typename];
-        return inbox && inbox.length && inbox.splice(0).forEach(function(policy) {
-          _this.updateTypePolicy(typename, policy, _this.typePolicies[typename].fields);
-        }), this.typePolicies[typename];
-      }, Policies2.prototype.getFieldPolicy = function(typename, fieldName) {
-        if (typename)
-          return this.getTypePolicy(typename).fields[fieldName];
-      }, Policies2.prototype.getSupertypeSet = function(subtype, createIfMissing) {
-        var supertypeSet = this.supertypeMap.get(subtype);
-        return !supertypeSet && createIfMissing && this.supertypeMap.set(subtype, supertypeSet = /* @__PURE__ */ new Set()), supertypeSet;
-      }, Policies2.prototype.fragmentMatches = function(fragment, typename, result2, variables) {
-        var _this = this;
-        if (!fragment.typeCondition)
-          return !0;
-        if (!typename)
-          return !1;
-        var supertype = fragment.typeCondition.name.value;
-        if (typename === supertype)
-          return !0;
-        if (this.usingPossibleTypes && this.supertypeMap.has(supertype))
-          for (var typenameSupertypeSet = this.getSupertypeSet(typename, !0), workQueue_1 = [typenameSupertypeSet], maybeEnqueue_1 = function(subtype) {
-            var supertypeSet2 = _this.getSupertypeSet(subtype, !1);
-            supertypeSet2 && supertypeSet2.size && workQueue_1.indexOf(supertypeSet2) < 0 && workQueue_1.push(supertypeSet2);
-          }, needToCheckFuzzySubtypes = !!(result2 && this.fuzzySubtypes.size), checkingFuzzySubtypes = !1, i = 0; i < workQueue_1.length; ++i) {
-            var supertypeSet = workQueue_1[i];
-            if (supertypeSet.has(supertype))
-              return typenameSupertypeSet.has(supertype) || (checkingFuzzySubtypes && globalThis.__DEV__ !== !1 && invariant4.warn(7, typename, supertype), typenameSupertypeSet.add(supertype)), !0;
-            supertypeSet.forEach(maybeEnqueue_1), needToCheckFuzzySubtypes && // Start checking fuzzy subtypes only after exhausting all
-            // non-fuzzy subtypes (after the final iteration of the loop).
-            i === workQueue_1.length - 1 && // We could wait to compare fragment.selectionSet to result
-            // after we verify the supertype, but this check is often less
-            // expensive than that search, and we will have to do the
-            // comparison anyway whenever we find a potential match.
-            selectionSetMatchesResult(fragment.selectionSet, result2, variables) && (needToCheckFuzzySubtypes = !1, checkingFuzzySubtypes = !0, this.fuzzySubtypes.forEach(function(regExp, fuzzyString) {
-              var match2 = typename.match(regExp);
-              match2 && match2[0] === typename && maybeEnqueue_1(fuzzyString);
-            }));
-          }
-        return !1;
-      }, Policies2.prototype.hasKeyArgs = function(typename, fieldName) {
-        var policy = this.getFieldPolicy(typename, fieldName);
-        return !!(policy && policy.keyFn);
-      }, Policies2.prototype.getStoreFieldName = function(fieldSpec) {
-        var typename = fieldSpec.typename, fieldName = fieldSpec.fieldName, policy = this.getFieldPolicy(typename, fieldName), storeFieldName, keyFn = policy && policy.keyFn;
-        if (keyFn && typename)
-          for (var context = {
-            typename,
-            fieldName,
-            field: fieldSpec.field || null,
-            variables: fieldSpec.variables
-          }, args = argsFromFieldSpecifier(fieldSpec); keyFn; ) {
-            var specifierOrString = keyFn(args, context);
-            if (isArray(specifierOrString))
-              keyFn = keyArgsFnFromSpecifier(specifierOrString);
-            else {
-              storeFieldName = specifierOrString || fieldName;
-              break;
-            }
-          }
-        return storeFieldName === void 0 && (storeFieldName = fieldSpec.field ? storeKeyNameFromField(fieldSpec.field, fieldSpec.variables) : getStoreKeyName(fieldName, argsFromFieldSpecifier(fieldSpec))), storeFieldName === !1 ? fieldName : fieldName === fieldNameFromStoreName(storeFieldName) ? storeFieldName : fieldName + ":" + storeFieldName;
-      }, Policies2.prototype.readField = function(options, context) {
-        var objectOrReference = options.from;
-        if (objectOrReference) {
-          var nameOrField = options.field || options.fieldName;
-          if (nameOrField) {
-            if (options.typename === void 0) {
-              var typename = context.store.getFieldValue(objectOrReference, "__typename");
-              typename && (options.typename = typename);
-            }
-            var storeFieldName = this.getStoreFieldName(options), fieldName = fieldNameFromStoreName(storeFieldName), existing = context.store.getFieldValue(objectOrReference, storeFieldName), policy = this.getFieldPolicy(options.typename, fieldName), read = policy && policy.read;
-            if (read) {
-              var readOptions = makeFieldFunctionOptions(this, objectOrReference, options, context, context.store.getStorage(isReference(objectOrReference) ? objectOrReference.__ref : objectOrReference, storeFieldName));
-              return cacheSlot.withValue(this.cache, read, [
-                existing,
-                readOptions
-              ]);
-            }
-            return existing;
-          }
-        }
-      }, Policies2.prototype.getReadFunction = function(typename, fieldName) {
-        var policy = this.getFieldPolicy(typename, fieldName);
-        return policy && policy.read;
-      }, Policies2.prototype.getMergeFunction = function(parentTypename, fieldName, childTypename) {
-        var policy = this.getFieldPolicy(parentTypename, fieldName), merge = policy && policy.merge;
-        return !merge && childTypename && (policy = this.getTypePolicy(childTypename), merge = policy && policy.merge), merge;
-      }, Policies2.prototype.runMergeFunction = function(existing, incoming, _a2, context, storage) {
-        var field = _a2.field, typename = _a2.typename, merge = _a2.merge;
-        return merge === mergeTrueFn ? makeMergeObjectsFunction(context.store)(existing, incoming) : merge === mergeFalseFn ? incoming : (context.overwrite && (existing = void 0), merge(existing, incoming, makeFieldFunctionOptions(
-          this,
-          // Unlike options.readField for read functions, we do not fall
-          // back to the current object if no foreignObjOrRef is provided,
-          // because it's not clear what the current object should be for
-          // merge functions: the (possibly undefined) existing object, or
-          // the incoming object? If you think your merge function needs
-          // to read sibling fields in order to produce a new value for
-          // the current field, you might want to rethink your strategy,
-          // because that's a recipe for making merge behavior sensitive
-          // to the order in which fields are written into the cache.
-          // However, readField(name, ref) is useful for merge functions
-          // that need to deduplicate child objects and references.
-          void 0,
-          {
-            typename,
-            fieldName: field.name.value,
-            field,
-            variables: context.variables
-          },
-          context,
-          storage || /* @__PURE__ */ Object.create(null)
-        )));
-      }, Policies2;
-    })()
-  );
-  function makeFieldFunctionOptions(policies, objectOrReference, fieldSpec, context, storage) {
-    var storeFieldName = policies.getStoreFieldName(fieldSpec), fieldName = fieldNameFromStoreName(storeFieldName), variables = fieldSpec.variables || context.variables, _a2 = context.store, toReference = _a2.toReference, canRead = _a2.canRead;
-    return {
-      args: argsFromFieldSpecifier(fieldSpec),
-      field: fieldSpec.field || null,
-      fieldName,
-      storeFieldName,
-      variables,
-      isReference,
-      toReference,
-      storage,
-      cache: policies.cache,
-      canRead,
-      readField: function() {
-        return policies.readField(normalizeReadFieldOptions(arguments, objectOrReference, variables), context);
-      },
-      mergeObjects: makeMergeObjectsFunction(context.store)
-    };
-  }
-  function normalizeReadFieldOptions(readFieldArgs, objectOrReference, variables) {
-    var fieldNameOrOptions = readFieldArgs[0], from = readFieldArgs[1], argc = readFieldArgs.length, options;
-    return typeof fieldNameOrOptions == "string" ? options = {
-      fieldName: fieldNameOrOptions,
-      // Default to objectOrReference only when no second argument was
-      // passed for the from parameter, not when undefined is explicitly
-      // passed as the second argument.
-      from: argc > 1 ? from : objectOrReference
-    } : (options = __assign({}, fieldNameOrOptions), hasOwn2.call(options, "from") || (options.from = objectOrReference)), globalThis.__DEV__ !== !1 && options.from === void 0 && globalThis.__DEV__ !== !1 && invariant4.warn(8, stringifyForDisplay(Array.from(readFieldArgs))), options.variables === void 0 && (options.variables = variables), options;
-  }
-  function makeMergeObjectsFunction(store) {
-    return function(existing, incoming) {
-      if (isArray(existing) || isArray(incoming))
-        throw newInvariantError(9);
-      if (isNonNullObject(existing) && isNonNullObject(incoming)) {
-        var eType = store.getFieldValue(existing, "__typename"), iType = store.getFieldValue(incoming, "__typename"), typesDiffer = eType && iType && eType !== iType;
-        if (typesDiffer)
-          return incoming;
-        if (isReference(existing) && storeValueIsStoreObject(incoming))
-          return store.merge(existing.__ref, incoming), existing;
-        if (storeValueIsStoreObject(existing) && isReference(incoming))
-          return store.merge(existing, incoming.__ref), incoming;
-        if (storeValueIsStoreObject(existing) && storeValueIsStoreObject(incoming))
-          return __assign(__assign({}, existing), incoming);
-      }
-      return incoming;
-    };
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/writeToStore.js
-  function getContextFlavor(context, clientOnly, deferred) {
-    var key = "".concat(clientOnly).concat(deferred), flavored = context.flavors.get(key);
-    return flavored || context.flavors.set(key, flavored = context.clientOnly === clientOnly && context.deferred === deferred ? context : __assign(__assign({}, context), { clientOnly, deferred })), flavored;
-  }
-  var StoreWriter = (
-    /** @class */
-    (function() {
-      function StoreWriter2(cache, reader, fragments) {
-        this.cache = cache, this.reader = reader, this.fragments = fragments;
-      }
-      return StoreWriter2.prototype.writeToStore = function(store, _a2) {
-        var _this = this, query = _a2.query, result2 = _a2.result, dataId = _a2.dataId, variables = _a2.variables, overwrite = _a2.overwrite, operationDefinition = getOperationDefinition(query), merger = makeProcessedFieldsMerger();
-        variables = __assign(__assign({}, getDefaultValues(operationDefinition)), variables);
-        var context = __assign(__assign({ store, written: /* @__PURE__ */ Object.create(null), merge: function(existing, incoming) {
-          return merger.merge(existing, incoming);
-        }, variables, varString: canonicalStringify(variables) }, extractFragmentContext(query, this.fragments)), { overwrite: !!overwrite, incomingById: /* @__PURE__ */ new Map(), clientOnly: !1, deferred: !1, flavors: /* @__PURE__ */ new Map() }), ref = this.processSelectionSet({
-          result: result2 || /* @__PURE__ */ Object.create(null),
-          dataId,
-          selectionSet: operationDefinition.selectionSet,
-          mergeTree: { map: /* @__PURE__ */ new Map() },
-          context
-        });
-        if (!isReference(ref))
-          throw newInvariantError(12, result2);
-        return context.incomingById.forEach(function(_a3, dataId2) {
-          var storeObject = _a3.storeObject, mergeTree = _a3.mergeTree, fieldNodeSet = _a3.fieldNodeSet, entityRef = makeReference(dataId2);
-          if (mergeTree && mergeTree.map.size) {
-            var applied = _this.applyMerges(mergeTree, entityRef, storeObject, context);
-            if (isReference(applied))
-              return;
-            storeObject = applied;
-          }
-          if (globalThis.__DEV__ !== !1 && !context.overwrite) {
-            var fieldsWithSelectionSets_1 = /* @__PURE__ */ Object.create(null);
-            fieldNodeSet.forEach(function(field) {
-              field.selectionSet && (fieldsWithSelectionSets_1[field.name.value] = !0);
-            });
-            var hasSelectionSet_1 = function(storeFieldName) {
-              return fieldsWithSelectionSets_1[fieldNameFromStoreName(storeFieldName)] === !0;
-            }, hasMergeFunction_1 = function(storeFieldName) {
-              var childTree = mergeTree && mergeTree.map.get(storeFieldName);
-              return !!(childTree && childTree.info && childTree.info.merge);
-            };
-            Object.keys(storeObject).forEach(function(storeFieldName) {
-              hasSelectionSet_1(storeFieldName) && !hasMergeFunction_1(storeFieldName) && warnAboutDataLoss(entityRef, storeObject, storeFieldName, context.store);
-            });
-          }
-          store.merge(dataId2, storeObject);
-        }), store.retain(ref.__ref), ref;
-      }, StoreWriter2.prototype.processSelectionSet = function(_a2) {
-        var _this = this, dataId = _a2.dataId, result2 = _a2.result, selectionSet = _a2.selectionSet, context = _a2.context, mergeTree = _a2.mergeTree, policies = this.cache.policies, incoming = /* @__PURE__ */ Object.create(null), typename = dataId && policies.rootTypenamesById[dataId] || getTypenameFromResult(result2, selectionSet, context.fragmentMap) || dataId && context.store.get(dataId, "__typename");
-        typeof typename == "string" && (incoming.__typename = typename);
-        var readField = function() {
-          var options = normalizeReadFieldOptions(arguments, incoming, context.variables);
-          if (isReference(options.from)) {
-            var info = context.incomingById.get(options.from.__ref);
-            if (info) {
-              var result_1 = policies.readField(__assign(__assign({}, options), { from: info.storeObject }), context);
-              if (result_1 !== void 0)
-                return result_1;
-            }
-          }
-          return policies.readField(options, context);
-        }, fieldNodeSet = /* @__PURE__ */ new Set();
-        this.flattenFields(
-          selectionSet,
-          result2,
-          // This WriteContext will be the default context value for fields returned
-          // by the flattenFields method, but some fields may be assigned a modified
-          // context, depending on the presence of @client and other directives.
-          context,
-          typename
-        ).forEach(function(context2, field) {
-          var _a3, resultFieldKey = resultKeyNameFromField(field), value = result2[resultFieldKey];
-          if (fieldNodeSet.add(field), value !== void 0) {
-            var storeFieldName = policies.getStoreFieldName({
-              typename,
-              fieldName: field.name.value,
-              field,
-              variables: context2.variables
-            }), childTree = getChildMergeTree(mergeTree, storeFieldName), incomingValue = _this.processFieldValue(
-              value,
-              field,
-              // Reset context.clientOnly and context.deferred to their default
-              // values before processing nested selection sets.
-              field.selectionSet ? getContextFlavor(context2, !1, !1) : context2,
-              childTree
-            ), childTypename = void 0;
-            field.selectionSet && (isReference(incomingValue) || storeValueIsStoreObject(incomingValue)) && (childTypename = readField("__typename", incomingValue));
-            var merge = policies.getMergeFunction(typename, field.name.value, childTypename);
-            merge ? childTree.info = {
-              // TODO Check compatibility against any existing childTree.field?
-              field,
-              typename,
-              merge
-            } : maybeRecycleChildMergeTree(mergeTree, storeFieldName), incoming = context2.merge(incoming, (_a3 = {}, _a3[storeFieldName] = incomingValue, _a3));
-          } else globalThis.__DEV__ !== !1 && !context2.clientOnly && !context2.deferred && !addTypenameToDocument.added(field) && // If the field has a read function, it may be a synthetic field or
-          // provide a default value, so its absence from the written data should
-          // not be cause for alarm.
-          !policies.getReadFunction(typename, field.name.value) && globalThis.__DEV__ !== !1 && invariant4.error(13, resultKeyNameFromField(field), result2);
-        });
-        try {
-          var _b = policies.identify(result2, {
-            typename,
-            selectionSet,
-            fragmentMap: context.fragmentMap,
-            storeObject: incoming,
-            readField
-          }), id = _b[0], keyObject = _b[1];
-          dataId = dataId || id, keyObject && (incoming = context.merge(incoming, keyObject));
-        } catch (e) {
-          if (!dataId)
-            throw e;
-        }
-        if (typeof dataId == "string") {
-          var dataRef = makeReference(dataId), sets = context.written[dataId] || (context.written[dataId] = []);
-          if (sets.indexOf(selectionSet) >= 0 || (sets.push(selectionSet), this.reader && this.reader.isFresh(result2, dataRef, selectionSet, context)))
-            return dataRef;
-          var previous_1 = context.incomingById.get(dataId);
-          return previous_1 ? (previous_1.storeObject = context.merge(previous_1.storeObject, incoming), previous_1.mergeTree = mergeMergeTrees(previous_1.mergeTree, mergeTree), fieldNodeSet.forEach(function(field) {
-            return previous_1.fieldNodeSet.add(field);
-          })) : context.incomingById.set(dataId, {
-            storeObject: incoming,
-            // Save a reference to mergeTree only if it is not empty, because
-            // empty MergeTrees may be recycled by maybeRecycleChildMergeTree and
-            // reused for entirely different parts of the result tree.
-            mergeTree: mergeTreeIsEmpty(mergeTree) ? void 0 : mergeTree,
-            fieldNodeSet
-          }), dataRef;
-        }
-        return incoming;
-      }, StoreWriter2.prototype.processFieldValue = function(value, field, context, mergeTree) {
-        var _this = this;
-        return !field.selectionSet || value === null ? globalThis.__DEV__ !== !1 ? cloneDeep(value) : value : isArray(value) ? value.map(function(item, i) {
-          var value2 = _this.processFieldValue(item, field, context, getChildMergeTree(mergeTree, i));
-          return maybeRecycleChildMergeTree(mergeTree, i), value2;
-        }) : this.processSelectionSet({
-          result: value,
-          selectionSet: field.selectionSet,
-          context,
-          mergeTree
-        });
-      }, StoreWriter2.prototype.flattenFields = function(selectionSet, result2, context, typename) {
-        typename === void 0 && (typename = getTypenameFromResult(result2, selectionSet, context.fragmentMap));
-        var fieldMap = /* @__PURE__ */ new Map(), policies = this.cache.policies, limitingTrie = new Trie(!1);
-        return (function flatten(selectionSet2, inheritedContext) {
-          var visitedNode = limitingTrie.lookup(
-            selectionSet2,
-            // Because we take inheritedClientOnly and inheritedDeferred into
-            // consideration here (in addition to selectionSet), it's possible for
-            // the same selection set to be flattened more than once, if it appears
-            // in the query with different @client and/or @directive configurations.
-            inheritedContext.clientOnly,
-            inheritedContext.deferred
-          );
-          visitedNode.visited || (visitedNode.visited = !0, selectionSet2.selections.forEach(function(selection) {
-            if (shouldInclude(selection, context.variables)) {
-              var clientOnly = inheritedContext.clientOnly, deferred = inheritedContext.deferred;
-              if (
-                // Since the presence of @client or @defer on this field can only
-                // cause clientOnly or deferred to become true, we can skip the
-                // forEach loop if both clientOnly and deferred are already true.
-                !(clientOnly && deferred) && isNonEmptyArray(selection.directives) && selection.directives.forEach(function(dir) {
-                  var name = dir.name.value;
-                  if (name === "client" && (clientOnly = !0), name === "defer") {
-                    var args = argumentsObjectFromField(dir, context.variables);
-                    (!args || args.if !== !1) && (deferred = !0);
-                  }
-                }), isField(selection)
-              ) {
-                var existing = fieldMap.get(selection);
-                existing && (clientOnly = clientOnly && existing.clientOnly, deferred = deferred && existing.deferred), fieldMap.set(selection, getContextFlavor(context, clientOnly, deferred));
-              } else {
-                var fragment = getFragmentFromSelection(selection, context.lookupFragment);
-                if (!fragment && selection.kind === Kind.FRAGMENT_SPREAD)
-                  throw newInvariantError(14, selection.name.value);
-                fragment && policies.fragmentMatches(fragment, typename, result2, context.variables) && flatten(fragment.selectionSet, getContextFlavor(context, clientOnly, deferred));
-              }
-            }
-          }));
-        })(selectionSet, context), fieldMap;
-      }, StoreWriter2.prototype.applyMerges = function(mergeTree, existing, incoming, context, getStorageArgs) {
-        var _a2, _this = this;
-        if (mergeTree.map.size && !isReference(incoming)) {
-          var e_1 = (
-            // Items in the same position in different arrays are not
-            // necessarily related to each other, so when incoming is an array
-            // we process its elements as if there was no existing data.
-            !isArray(incoming) && // Likewise, existing must be either a Reference or a StoreObject
-            // in order for its fields to be safe to merge with the fields of
-            // the incoming object.
-            (isReference(existing) || storeValueIsStoreObject(existing)) ? existing : void 0
-          ), i_1 = incoming;
-          e_1 && !getStorageArgs && (getStorageArgs = [isReference(e_1) ? e_1.__ref : e_1]);
-          var changedFields_1, getValue_1 = function(from, name) {
-            return isArray(from) ? typeof name == "number" ? from[name] : void 0 : context.store.getFieldValue(from, String(name));
-          };
-          mergeTree.map.forEach(function(childTree, storeFieldName) {
-            var eVal = getValue_1(e_1, storeFieldName), iVal = getValue_1(i_1, storeFieldName);
-            if (iVal !== void 0) {
-              getStorageArgs && getStorageArgs.push(storeFieldName);
-              var aVal = _this.applyMerges(childTree, eVal, iVal, context, getStorageArgs);
-              aVal !== iVal && (changedFields_1 = changedFields_1 || /* @__PURE__ */ new Map(), changedFields_1.set(storeFieldName, aVal)), getStorageArgs && invariant4(getStorageArgs.pop() === storeFieldName);
-            }
-          }), changedFields_1 && (incoming = isArray(i_1) ? i_1.slice(0) : __assign({}, i_1), changedFields_1.forEach(function(value, name) {
-            incoming[name] = value;
-          }));
-        }
-        return mergeTree.info ? this.cache.policies.runMergeFunction(existing, incoming, mergeTree.info, context, getStorageArgs && (_a2 = context.store).getStorage.apply(_a2, getStorageArgs)) : incoming;
-      }, StoreWriter2;
-    })()
-  );
-  var emptyMergeTreePool = [];
-  function getChildMergeTree(_a2, name) {
-    var map = _a2.map;
-    return map.has(name) || map.set(name, emptyMergeTreePool.pop() || { map: /* @__PURE__ */ new Map() }), map.get(name);
-  }
-  function mergeMergeTrees(left, right) {
-    if (left === right || !right || mergeTreeIsEmpty(right))
-      return left;
-    if (!left || mergeTreeIsEmpty(left))
-      return right;
-    var info = left.info && right.info ? __assign(__assign({}, left.info), right.info) : left.info || right.info, needToMergeMaps = left.map.size && right.map.size, map = needToMergeMaps ? /* @__PURE__ */ new Map() : left.map.size ? left.map : right.map, merged = { info, map };
-    if (needToMergeMaps) {
-      var remainingRightKeys_1 = new Set(right.map.keys());
-      left.map.forEach(function(leftTree, key) {
-        merged.map.set(key, mergeMergeTrees(leftTree, right.map.get(key))), remainingRightKeys_1.delete(key);
-      }), remainingRightKeys_1.forEach(function(key) {
-        merged.map.set(key, mergeMergeTrees(right.map.get(key), left.map.get(key)));
-      });
-    }
-    return merged;
-  }
-  function mergeTreeIsEmpty(tree) {
-    return !tree || !(tree.info || tree.map.size);
-  }
-  function maybeRecycleChildMergeTree(_a2, name) {
-    var map = _a2.map, childTree = map.get(name);
-    childTree && mergeTreeIsEmpty(childTree) && (emptyMergeTreePool.push(childTree), map.delete(name));
-  }
-  var warnings = /* @__PURE__ */ new Set();
-  function warnAboutDataLoss(existingRef, incomingObj, storeFieldName, store) {
-    var getChild = function(objOrRef) {
-      var child = store.getFieldValue(objOrRef, storeFieldName);
-      return typeof child == "object" && child;
-    }, existing = getChild(existingRef);
-    if (existing) {
-      var incoming = getChild(incomingObj);
-      if (incoming && !isReference(existing) && !equal(existing, incoming) && !Object.keys(existing).every(function(key) {
-        return store.getFieldValue(incoming, key) !== void 0;
-      })) {
-        var parentType = store.getFieldValue(existingRef, "__typename") || store.getFieldValue(incomingObj, "__typename"), fieldName = fieldNameFromStoreName(storeFieldName), typeDotName = "".concat(parentType, ".").concat(fieldName);
-        if (!warnings.has(typeDotName)) {
-          warnings.add(typeDotName);
-          var childTypenames = [];
-          !isArray(existing) && !isArray(incoming) && [existing, incoming].forEach(function(child) {
-            var typename = store.getFieldValue(child, "__typename");
-            typeof typename == "string" && !childTypenames.includes(typename) && childTypenames.push(typename);
-          }), globalThis.__DEV__ !== !1 && invariant4.warn(15, fieldName, parentType, childTypenames.length ? "either ensure all objects of type " + childTypenames.join(" and ") + " have an ID or a custom merge function, or " : "", typeDotName, __assign({}, existing), __assign({}, incoming));
-        }
-      }
-    }
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/cache/inmemory/inMemoryCache.js
-  var InMemoryCache = (
-    /** @class */
-    (function(_super) {
-      __extends(InMemoryCache2, _super);
-      function InMemoryCache2(config) {
-        config === void 0 && (config = {});
-        var _this = _super.call(this) || this;
-        return _this.watches = /* @__PURE__ */ new Set(), _this.addTypenameTransform = new DocumentTransform(addTypenameToDocument), _this.assumeImmutableResults = !0, _this.makeVar = makeVar, _this.txCount = 0, globalThis.__DEV__ !== !1 && (warnRemovedOption(config, "addTypename", "InMemoryCache", "Please remove the `addTypename` option when initializing `InMemoryCache`."), warnRemovedOption(config, "canonizeResults", "InMemoryCache", "Please remove the `canonizeResults` option when initializing `InMemoryCache`.")), _this.config = normalizeConfig(config), _this.addTypename = !!_this.config.addTypename, _this.policies = new Policies({
-          cache: _this,
-          dataIdFromObject: _this.config.dataIdFromObject,
-          possibleTypes: _this.config.possibleTypes,
-          typePolicies: _this.config.typePolicies
-        }), _this.init(), _this;
-      }
-      return InMemoryCache2.prototype.init = function() {
-        var rootStore = this.data = new EntityStore.Root({
-          policies: this.policies,
-          resultCaching: this.config.resultCaching
-        });
-        this.optimisticData = rootStore.stump, this.resetResultCache();
-      }, InMemoryCache2.prototype.resetResultCache = function(resetResultIdentities) {
-        var _this = this, previousReader = this.storeReader, fragments = this.config.fragments;
-        this.addTypenameTransform.resetCache(), fragments?.resetCaches(), this.storeWriter = new StoreWriter(this, this.storeReader = new StoreReader({
-          cache: this,
-          addTypename: this.addTypename,
-          resultCacheMaxSize: this.config.resultCacheMaxSize,
-          canonizeResults: shouldCanonizeResults(this.config),
-          canon: resetResultIdentities ? void 0 : previousReader && previousReader.canon,
-          fragments
-        }), fragments), this.maybeBroadcastWatch = wrap3(function(c, options) {
-          return _this.broadcastWatch(c, options);
-        }, {
-          max: this.config.resultCacheMaxSize || cacheSizes["inMemoryCache.maybeBroadcastWatch"] || 5e3,
-          makeCacheKey: function(c) {
-            var store = c.optimistic ? _this.optimisticData : _this.data;
-            if (supportsResultCaching(store)) {
-              var optimistic = c.optimistic, id = c.id, variables = c.variables;
-              return store.makeCacheKey(
-                c.query,
-                // Different watches can have the same query, optimistic
-                // status, rootId, and variables, but if their callbacks are
-                // different, the (identical) result needs to be delivered to
-                // each distinct callback. The easiest way to achieve that
-                // separation is to include c.callback in the cache key for
-                // maybeBroadcastWatch calls. See issue #5733.
-                c.callback,
-                canonicalStringify({ optimistic, id, variables })
-              );
-            }
-          }
-        }), (/* @__PURE__ */ new Set([this.data.group, this.optimisticData.group])).forEach(function(group) {
-          return group.resetCaching();
-        });
-      }, InMemoryCache2.prototype.restore = function(data2) {
-        return this.init(), data2 && this.data.replace(data2), this;
-      }, InMemoryCache2.prototype.extract = function(optimistic) {
-        return optimistic === void 0 && (optimistic = !1), (optimistic ? this.optimisticData : this.data).extract();
-      }, InMemoryCache2.prototype.read = function(options) {
-        globalThis.__DEV__ !== !1 && warnRemovedOption(options, "canonizeResults", "cache.read");
-        var _a2 = options.returnPartialData, returnPartialData = _a2 === void 0 ? !1 : _a2;
-        try {
-          return this.storeReader.diffQueryAgainstStore(__assign(__assign({}, options), { store: options.optimistic ? this.optimisticData : this.data, config: this.config, returnPartialData })).result || null;
-        } catch (e) {
-          if (e instanceof MissingFieldError)
-            return null;
-          throw e;
-        }
-      }, InMemoryCache2.prototype.write = function(options) {
-        try {
-          return ++this.txCount, this.storeWriter.writeToStore(this.data, options);
-        } finally {
-          !--this.txCount && options.broadcast !== !1 && this.broadcastWatches();
-        }
-      }, InMemoryCache2.prototype.modify = function(options) {
-        if (hasOwn2.call(options, "id") && !options.id)
-          return !1;
-        var store = options.optimistic ? this.optimisticData : this.data;
-        try {
-          return ++this.txCount, store.modify(options.id || "ROOT_QUERY", options.fields);
-        } finally {
-          !--this.txCount && options.broadcast !== !1 && this.broadcastWatches();
-        }
-      }, InMemoryCache2.prototype.diff = function(options) {
-        return globalThis.__DEV__ !== !1 && warnRemovedOption(options, "canonizeResults", "cache.diff"), this.storeReader.diffQueryAgainstStore(__assign(__assign({}, options), { store: options.optimistic ? this.optimisticData : this.data, rootId: options.id || "ROOT_QUERY", config: this.config }));
-      }, InMemoryCache2.prototype.watch = function(watch) {
-        var _this = this;
-        return this.watches.size || recallCache(this), this.watches.add(watch), watch.immediate && this.maybeBroadcastWatch(watch), function() {
-          _this.watches.delete(watch) && !_this.watches.size && forgetCache(_this), _this.maybeBroadcastWatch.forget(watch);
-        };
-      }, InMemoryCache2.prototype.gc = function(options) {
-        globalThis.__DEV__ !== !1 && warnRemovedOption(options || {}, "resetResultIdentities", "cache.gc", "First ensure all usages of `canonizeResults` are removed, then remove this option."), canonicalStringify.reset(), print2.reset();
-        var ids = this.optimisticData.gc();
-        return options && !this.txCount && (options.resetResultCache ? this.resetResultCache(options.resetResultIdentities) : options.resetResultIdentities && this.storeReader.resetCanon()), ids;
-      }, InMemoryCache2.prototype.retain = function(rootId, optimistic) {
-        return (optimistic ? this.optimisticData : this.data).retain(rootId);
-      }, InMemoryCache2.prototype.release = function(rootId, optimistic) {
-        return (optimistic ? this.optimisticData : this.data).release(rootId);
-      }, InMemoryCache2.prototype.identify = function(object) {
-        if (isReference(object))
-          return object.__ref;
-        try {
-          return this.policies.identify(object)[0];
-        } catch (e) {
-          globalThis.__DEV__ !== !1 && invariant4.warn(e);
-        }
-      }, InMemoryCache2.prototype.evict = function(options) {
-        if (!options.id) {
-          if (hasOwn2.call(options, "id"))
-            return !1;
-          options = __assign(__assign({}, options), { id: "ROOT_QUERY" });
-        }
-        try {
-          return ++this.txCount, this.optimisticData.evict(options, this.data);
-        } finally {
-          !--this.txCount && options.broadcast !== !1 && this.broadcastWatches();
-        }
-      }, InMemoryCache2.prototype.reset = function(options) {
-        var _this = this;
-        return this.init(), canonicalStringify.reset(), options && options.discardWatches ? (this.watches.forEach(function(watch) {
-          return _this.maybeBroadcastWatch.forget(watch);
-        }), this.watches.clear(), forgetCache(this)) : this.broadcastWatches(), Promise.resolve();
-      }, InMemoryCache2.prototype.removeOptimistic = function(idToRemove) {
-        var newOptimisticData = this.optimisticData.removeLayer(idToRemove);
-        newOptimisticData !== this.optimisticData && (this.optimisticData = newOptimisticData, this.broadcastWatches());
-      }, InMemoryCache2.prototype.batch = function(options) {
-        var _this = this, update = options.update, _a2 = options.optimistic, optimistic = _a2 === void 0 ? !0 : _a2, removeOptimistic = options.removeOptimistic, onWatchUpdated = options.onWatchUpdated, updateResult, perform = function(layer) {
-          var _a3 = _this, data2 = _a3.data, optimisticData = _a3.optimisticData;
-          ++_this.txCount, layer && (_this.data = _this.optimisticData = layer);
-          try {
-            return updateResult = update(_this);
-          } finally {
-            --_this.txCount, _this.data = data2, _this.optimisticData = optimisticData;
-          }
-        }, alreadyDirty = /* @__PURE__ */ new Set();
-        return onWatchUpdated && !this.txCount && this.broadcastWatches(__assign(__assign({}, options), { onWatchUpdated: function(watch) {
-          return alreadyDirty.add(watch), !1;
-        } })), typeof optimistic == "string" ? this.optimisticData = this.optimisticData.addLayer(optimistic, perform) : optimistic === !1 ? perform(this.data) : perform(), typeof removeOptimistic == "string" && (this.optimisticData = this.optimisticData.removeLayer(removeOptimistic)), onWatchUpdated && alreadyDirty.size ? (this.broadcastWatches(__assign(__assign({}, options), { onWatchUpdated: function(watch, diff) {
-          var result2 = onWatchUpdated.call(this, watch, diff);
-          return result2 !== !1 && alreadyDirty.delete(watch), result2;
-        } })), alreadyDirty.size && alreadyDirty.forEach(function(watch) {
-          return _this.maybeBroadcastWatch.dirty(watch);
-        })) : this.broadcastWatches(options), updateResult;
-      }, InMemoryCache2.prototype.performTransaction = function(update, optimisticId) {
-        return this.batch({
-          update,
-          optimistic: optimisticId || optimisticId !== null
-        });
-      }, InMemoryCache2.prototype.transformDocument = function(document2) {
-        return this.addTypenameToDocument(this.addFragmentsToDocument(document2));
-      }, InMemoryCache2.prototype.fragmentMatches = function(fragment, typename) {
-        return this.policies.fragmentMatches(fragment, typename);
-      }, InMemoryCache2.prototype.lookupFragment = function(fragmentName) {
-        var _a2;
-        return ((_a2 = this.config.fragments) === null || _a2 === void 0 ? void 0 : _a2.lookup(fragmentName)) || null;
-      }, InMemoryCache2.prototype.broadcastWatches = function(options) {
-        var _this = this;
-        this.txCount || this.watches.forEach(function(c) {
-          return _this.maybeBroadcastWatch(c, options);
-        });
-      }, InMemoryCache2.prototype.addFragmentsToDocument = function(document2) {
-        var fragments = this.config.fragments;
-        return fragments ? fragments.transform(document2) : document2;
-      }, InMemoryCache2.prototype.addTypenameToDocument = function(document2) {
-        return this.addTypename ? this.addTypenameTransform.transformDocument(document2) : document2;
-      }, InMemoryCache2.prototype.broadcastWatch = function(c, options) {
-        var _this = this, lastDiff = c.lastDiff, diff = muteDeprecations("canonizeResults", function() {
-          return _this.diff(c);
-        });
-        options && (c.optimistic && typeof options.optimistic == "string" && (diff.fromOptimisticTransaction = !0), options.onWatchUpdated && options.onWatchUpdated.call(this, c, diff, lastDiff) === !1) || (!lastDiff || !equal(lastDiff.result, diff.result)) && c.callback(c.lastDiff = diff, lastDiff);
-      }, InMemoryCache2;
-    })(ApolloCache)
-  );
-  globalThis.__DEV__ !== !1 && (InMemoryCache.prototype.getMemoryInternals = getInMemoryCacheMemoryInternals);
-
-  // internal/ui/src/node_modules/@apollo/client/core/networkStatus.js
-  var NetworkStatus;
-  (function(NetworkStatus2) {
-    NetworkStatus2[NetworkStatus2.loading = 1] = "loading", NetworkStatus2[NetworkStatus2.setVariables = 2] = "setVariables", NetworkStatus2[NetworkStatus2.fetchMore = 3] = "fetchMore", NetworkStatus2[NetworkStatus2.refetch = 4] = "refetch", NetworkStatus2[NetworkStatus2.poll = 6] = "poll", NetworkStatus2[NetworkStatus2.ready = 7] = "ready", NetworkStatus2[NetworkStatus2.error = 8] = "error";
-  })(NetworkStatus || (NetworkStatus = {}));
-  function isNetworkRequestInFlight(networkStatus) {
-    return networkStatus ? networkStatus < 7 : !1;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/core/ObservableQuery.js
-  var assign = Object.assign, hasOwnProperty6 = Object.hasOwnProperty, ObservableQuery = (
-    /** @class */
-    (function(_super) {
-      __extends(ObservableQuery2, _super);
-      function ObservableQuery2(_a2) {
-        var queryManager = _a2.queryManager, queryInfo = _a2.queryInfo, options = _a2.options, _this = this, startedInactive = ObservableQuery2.inactiveOnCreation.getValue();
-        _this = _super.call(this, function(observer) {
-          _this._getOrCreateQuery();
-          try {
-            var subObserver = observer._subscription._observer;
-            subObserver && !subObserver.error && (subObserver.error = defaultSubscriptionObserverErrorCallback);
-          } catch {
-          }
-          var first = !_this.observers.size;
-          _this.observers.add(observer);
-          var last = _this.last;
-          return last && last.error ? observer.error && observer.error(last.error) : last && last.result && observer.next && observer.next(_this.maskResult(last.result)), first && _this.reobserve().catch(function() {
-          }), function() {
-            _this.observers.delete(observer) && !_this.observers.size && _this.tearDownQuery();
-          };
-        }) || this, _this.observers = /* @__PURE__ */ new Set(), _this.subscriptions = /* @__PURE__ */ new Set(), _this.dirty = !1, _this._getOrCreateQuery = function() {
-          return startedInactive && (queryManager.queries.set(_this.queryId, queryInfo), startedInactive = !1), _this.queryManager.getOrCreateQuery(_this.queryId);
-        }, _this.queryInfo = queryInfo, _this.queryManager = queryManager, _this.waitForOwnResult = skipCacheDataFor(options.fetchPolicy), _this.isTornDown = !1, _this.subscribeToMore = _this.subscribeToMore.bind(_this), _this.maskResult = _this.maskResult.bind(_this);
-        var _b = queryManager.defaultOptions.watchQuery, _c = _b === void 0 ? {} : _b, _d = _c.fetchPolicy, defaultFetchPolicy = _d === void 0 ? "cache-first" : _d, _e = options.fetchPolicy, fetchPolicy = _e === void 0 ? defaultFetchPolicy : _e, _f = options.initialFetchPolicy, initialFetchPolicy = _f === void 0 ? fetchPolicy === "standby" ? defaultFetchPolicy : fetchPolicy : _f;
-        _this.options = __assign(__assign({}, options), {
-          // Remember the initial options.fetchPolicy so we can revert back to this
-          // policy when variables change. This information can also be specified
-          // (or overridden) by providing options.initialFetchPolicy explicitly.
-          initialFetchPolicy,
-          // This ensures this.options.fetchPolicy always has a string value, in
-          // case options.fetchPolicy was not provided.
-          fetchPolicy
-        }), _this.queryId = queryInfo.queryId || queryManager.generateQueryId();
-        var opDef = getOperationDefinition(_this.query);
-        return _this.queryName = opDef && opDef.name && opDef.name.value, _this;
-      }
-      return Object.defineProperty(ObservableQuery2.prototype, "query", {
-        // The `query` computed property will always reflect the document transformed
-        // by the last run query. `this.options.query` will always reflect the raw
-        // untransformed query to ensure document transforms with runtime conditionals
-        // are run on the original document.
-        get: function() {
-          return this.lastQuery || this.options.query;
-        },
-        enumerable: !1,
-        configurable: !0
-      }), Object.defineProperty(ObservableQuery2.prototype, "variables", {
-        // Computed shorthand for this.options.variables, preserved for
-        // backwards compatibility.
-        /**
-         * An object containing the variables that were provided for the query.
-         */
-        get: function() {
-          return this.options.variables;
-        },
-        enumerable: !1,
-        configurable: !0
-      }), ObservableQuery2.prototype.result = function() {
-        var _this = this;
-        return globalThis.__DEV__ !== !1 && warnDeprecated("observableQuery.result", function() {
-          globalThis.__DEV__ !== !1 && invariant4.warn(23);
-        }), new Promise(function(resolve, reject) {
-          var observer = {
-            next: function(result2) {
-              resolve(result2), _this.observers.delete(observer), _this.observers.size || _this.queryManager.removeQuery(_this.queryId), setTimeout(function() {
-                subscription.unsubscribe();
-              }, 0);
-            },
-            error: reject
-          }, subscription = _this.subscribe(observer);
-        });
-      }, ObservableQuery2.prototype.resetDiff = function() {
-        this.queryInfo.resetDiff();
-      }, ObservableQuery2.prototype.getCurrentFullResult = function(saveAsLastResult) {
-        var _this = this;
-        saveAsLastResult === void 0 && (saveAsLastResult = !0);
-        var lastResult = muteDeprecations("getLastResult", function() {
-          return _this.getLastResult(!0);
-        }), networkStatus = this.queryInfo.networkStatus || lastResult && lastResult.networkStatus || NetworkStatus.ready, result2 = __assign(__assign({}, lastResult), { loading: isNetworkRequestInFlight(networkStatus), networkStatus }), _a2 = this.options.fetchPolicy, fetchPolicy = _a2 === void 0 ? "cache-first" : _a2;
-        if (
-          // These fetch policies should never deliver data from the cache, unless
-          // redelivering a previously delivered result.
-          !(skipCacheDataFor(fetchPolicy) || // If this.options.query has @client(always: true) fields, we cannot
-          // trust diff.result, since it was read from the cache without running
-          // local resolvers (and it's too late to run resolvers now, since we must
-          // return a result synchronously).
-          this.queryManager.getDocumentInfo(this.query).hasForcedResolvers)
-        )
-          if (this.waitForOwnResult)
-            this.queryInfo.updateWatch();
-          else {
-            var diff = this.queryInfo.getDiff();
-            (diff.complete || this.options.returnPartialData) && (result2.data = diff.result), equal(result2.data, {}) && (result2.data = void 0), diff.complete ? (delete result2.partial, diff.complete && result2.networkStatus === NetworkStatus.loading && (fetchPolicy === "cache-first" || fetchPolicy === "cache-only") && (result2.networkStatus = NetworkStatus.ready, result2.loading = !1)) : result2.partial = !0, result2.networkStatus === NetworkStatus.ready && (result2.error || result2.errors) && (result2.networkStatus = NetworkStatus.error), globalThis.__DEV__ !== !1 && !diff.complete && !this.options.partialRefetch && !result2.loading && !result2.data && !result2.error && logMissingFieldErrors(diff.missing);
-          }
-        return saveAsLastResult && this.updateLastResult(result2), result2;
-      }, ObservableQuery2.prototype.getCurrentResult = function(saveAsLastResult) {
-        return saveAsLastResult === void 0 && (saveAsLastResult = !0), this.maskResult(this.getCurrentFullResult(saveAsLastResult));
-      }, ObservableQuery2.prototype.isDifferentFromLastResult = function(newResult, variables) {
-        if (!this.last)
-          return !0;
-        var documentInfo = this.queryManager.getDocumentInfo(this.query), dataMasking = this.queryManager.dataMasking, query = dataMasking ? documentInfo.nonReactiveQuery : this.query, resultIsDifferent = dataMasking || documentInfo.hasNonreactiveDirective ? !equalByQuery(query, this.last.result, newResult, this.variables) : !equal(this.last.result, newResult);
-        return resultIsDifferent || variables && !equal(this.last.variables, variables);
-      }, ObservableQuery2.prototype.getLast = function(key, variablesMustMatch) {
-        var last = this.last;
-        if (last && last[key] && (!variablesMustMatch || equal(last.variables, this.variables)))
-          return last[key];
-      }, ObservableQuery2.prototype.getLastResult = function(variablesMustMatch) {
-        return globalThis.__DEV__ !== !1 && warnDeprecated("getLastResult", function() {
-          globalThis.__DEV__ !== !1 && invariant4.warn(24);
-        }), this.getLast("result", variablesMustMatch);
-      }, ObservableQuery2.prototype.getLastError = function(variablesMustMatch) {
-        return globalThis.__DEV__ !== !1 && warnDeprecated("getLastError", function() {
-          globalThis.__DEV__ !== !1 && invariant4.warn(25);
-        }), this.getLast("error", variablesMustMatch);
-      }, ObservableQuery2.prototype.resetLastResults = function() {
-        globalThis.__DEV__ !== !1 && warnDeprecated("resetLastResults", function() {
-          globalThis.__DEV__ !== !1 && invariant4.warn(26);
-        }), delete this.last, this.isTornDown = !1;
-      }, ObservableQuery2.prototype.resetQueryStoreErrors = function() {
-        globalThis.__DEV__ !== !1 && globalThis.__DEV__ !== !1 && invariant4.warn(27), this.queryManager.resetErrors(this.queryId);
-      }, ObservableQuery2.prototype.refetch = function(variables) {
-        var _a2, reobserveOptions = {
-          // Always disable polling for refetches.
-          pollInterval: 0
-        }, fetchPolicy = this.options.fetchPolicy;
-        if (fetchPolicy === "no-cache" ? reobserveOptions.fetchPolicy = "no-cache" : reobserveOptions.fetchPolicy = "network-only", globalThis.__DEV__ !== !1 && variables && hasOwnProperty6.call(variables, "variables")) {
-          var queryDef = getQueryDefinition(this.query), vars = queryDef.variableDefinitions;
-          (!vars || !vars.some(function(v) {
-            return v.variable.name.value === "variables";
-          })) && globalThis.__DEV__ !== !1 && invariant4.warn(
-            28,
-            variables,
-            ((_a2 = queryDef.name) === null || _a2 === void 0 ? void 0 : _a2.value) || queryDef
-          );
-        }
-        return variables && !equal(this.options.variables, variables) && (reobserveOptions.variables = this.options.variables = __assign(__assign({}, this.options.variables), variables)), this.queryInfo.resetLastWrite(), this.reobserve(reobserveOptions, NetworkStatus.refetch);
-      }, ObservableQuery2.prototype.fetchMore = function(fetchMoreOptions) {
-        var _this = this, combinedOptions = __assign(__assign({}, fetchMoreOptions.query ? fetchMoreOptions : __assign(__assign(__assign(__assign({}, this.options), { query: this.options.query }), fetchMoreOptions), { variables: __assign(__assign({}, this.options.variables), fetchMoreOptions.variables) })), {
-          // The fetchMore request goes immediately to the network and does
-          // not automatically write its result to the cache (hence no-cache
-          // instead of network-only), because we allow the caller of
-          // fetchMore to provide an updateQuery callback that determines how
-          // the data gets written to the cache.
-          fetchPolicy: "no-cache"
-        });
-        combinedOptions.query = this.transformDocument(combinedOptions.query);
-        var qid = this.queryManager.generateQueryId();
-        this.lastQuery = fetchMoreOptions.query ? this.transformDocument(this.options.query) : combinedOptions.query;
-        var queryInfo = this.queryInfo, originalNetworkStatus = queryInfo.networkStatus;
-        queryInfo.networkStatus = NetworkStatus.fetchMore, combinedOptions.notifyOnNetworkStatusChange && this.observe();
-        var updatedQuerySet = /* @__PURE__ */ new Set(), updateQuery = fetchMoreOptions?.updateQuery, isCached = this.options.fetchPolicy !== "no-cache";
-        return isCached || invariant4(updateQuery, 29), this.queryManager.fetchQuery(qid, combinedOptions, NetworkStatus.fetchMore).then(function(fetchMoreResult) {
-          if (_this.queryManager.removeQuery(qid), queryInfo.networkStatus === NetworkStatus.fetchMore && (queryInfo.networkStatus = originalNetworkStatus), isCached)
-            _this.queryManager.cache.batch({
-              update: function(cache) {
-                var updateQuery2 = fetchMoreOptions.updateQuery;
-                updateQuery2 ? cache.updateQuery({
-                  query: _this.query,
-                  variables: _this.variables,
-                  returnPartialData: !0,
-                  optimistic: !1
-                }, function(previous) {
-                  return updateQuery2(previous, {
-                    fetchMoreResult: fetchMoreResult.data,
-                    variables: combinedOptions.variables
-                  });
-                }) : cache.writeQuery({
-                  query: combinedOptions.query,
-                  variables: combinedOptions.variables,
-                  data: fetchMoreResult.data
-                });
-              },
-              onWatchUpdated: function(watch) {
-                updatedQuerySet.add(watch.query);
-              }
-            });
-          else {
-            var lastResult = _this.getLast("result"), data2 = updateQuery(lastResult.data, {
-              fetchMoreResult: fetchMoreResult.data,
-              variables: combinedOptions.variables
-            });
-            _this.reportResult(__assign(__assign({}, lastResult), { networkStatus: originalNetworkStatus, loading: isNetworkRequestInFlight(originalNetworkStatus), data: data2 }), _this.variables);
-          }
-          return _this.maskResult(fetchMoreResult);
-        }).finally(function() {
-          isCached && !updatedQuerySet.has(_this.query) && _this.reobserveCacheFirst();
-        });
-      }, ObservableQuery2.prototype.subscribeToMore = function(options) {
-        var _this = this, subscription = this.queryManager.startGraphQLSubscription({
-          query: options.document,
-          variables: options.variables,
-          context: options.context
-        }).subscribe({
-          next: function(subscriptionData) {
-            var updateQuery = options.updateQuery;
-            updateQuery && _this.updateQuery(function(previous, updateOptions) {
-              return updateQuery(previous, __assign({ subscriptionData }, updateOptions));
-            });
-          },
-          error: function(err) {
-            if (options.onError) {
-              options.onError(err);
-              return;
-            }
-            globalThis.__DEV__ !== !1 && invariant4.error(30, err);
-          }
-        });
-        return this.subscriptions.add(subscription), function() {
-          _this.subscriptions.delete(subscription) && subscription.unsubscribe();
-        };
-      }, ObservableQuery2.prototype.setOptions = function(newOptions) {
-        return globalThis.__DEV__ !== !1 && (warnRemovedOption(newOptions, "canonizeResults", "setOptions"), warnDeprecated("setOptions", function() {
-          globalThis.__DEV__ !== !1 && invariant4.warn(31);
-        })), this.reobserve(newOptions);
-      }, ObservableQuery2.prototype.silentSetOptions = function(newOptions) {
-        var mergedOptions = compact(this.options, newOptions || {});
-        assign(this.options, mergedOptions);
-      }, ObservableQuery2.prototype.setVariables = function(variables) {
-        var _this = this;
-        return equal(this.variables, variables) ? this.observers.size ? muteDeprecations("observableQuery.result", function() {
-          return _this.result();
-        }) : Promise.resolve() : (this.options.variables = variables, this.observers.size ? this.reobserve({
-          // Reset options.fetchPolicy to its original value.
-          fetchPolicy: this.options.initialFetchPolicy,
-          variables
-        }, NetworkStatus.setVariables) : Promise.resolve());
-      }, ObservableQuery2.prototype.updateQuery = function(mapFn) {
-        var queryManager = this.queryManager, _a2 = queryManager.cache.diff({
-          query: this.options.query,
-          variables: this.variables,
-          returnPartialData: !0,
-          optimistic: !1
-        }), result2 = _a2.result, complete = _a2.complete, newResult = mapFn(result2, {
-          variables: this.variables,
-          complete: !!complete,
-          previousData: result2
-        });
-        newResult && (queryManager.cache.writeQuery({
-          query: this.options.query,
-          data: newResult,
-          variables: this.variables
-        }), queryManager.broadcastQueries());
-      }, ObservableQuery2.prototype.startPolling = function(pollInterval) {
-        this.options.pollInterval = pollInterval, this.updatePolling();
-      }, ObservableQuery2.prototype.stopPolling = function() {
-        this.options.pollInterval = 0, this.updatePolling();
-      }, ObservableQuery2.prototype.applyNextFetchPolicy = function(reason, options) {
-        if (options.nextFetchPolicy) {
-          var _a2 = options.fetchPolicy, fetchPolicy = _a2 === void 0 ? "cache-first" : _a2, _b = options.initialFetchPolicy, initialFetchPolicy = _b === void 0 ? fetchPolicy : _b;
-          fetchPolicy === "standby" || (typeof options.nextFetchPolicy == "function" ? options.fetchPolicy = options.nextFetchPolicy(fetchPolicy, {
-            reason,
-            options,
-            observable: this,
-            initialFetchPolicy
-          }) : reason === "variables-changed" ? options.fetchPolicy = initialFetchPolicy : options.fetchPolicy = options.nextFetchPolicy);
-        }
-        return options.fetchPolicy;
-      }, ObservableQuery2.prototype.fetch = function(options, newNetworkStatus, query) {
-        var queryInfo = this._getOrCreateQuery();
-        return queryInfo.setObservableQuery(this), this.queryManager.fetchConcastWithInfo(queryInfo, options, newNetworkStatus, query);
-      }, ObservableQuery2.prototype.updatePolling = function() {
-        var _this = this;
-        if (!this.queryManager.ssrMode) {
-          var _a2 = this, pollingInfo = _a2.pollingInfo, pollInterval = _a2.options.pollInterval;
-          if (!pollInterval || !this.hasObservers()) {
-            pollingInfo && (clearTimeout(pollingInfo.timeout), delete this.pollingInfo);
-            return;
-          }
-          if (!(pollingInfo && pollingInfo.interval === pollInterval)) {
-            invariant4(pollInterval, 32);
-            var info = pollingInfo || (this.pollingInfo = {});
-            info.interval = pollInterval;
-            var maybeFetch = function() {
-              var _a3, _b;
-              _this.pollingInfo && (!isNetworkRequestInFlight(_this.queryInfo.networkStatus) && !(!((_b = (_a3 = _this.options).skipPollAttempt) === null || _b === void 0) && _b.call(_a3)) ? _this.reobserve({
-                // Most fetchPolicy options don't make sense to use in a polling context, as
-                // users wouldn't want to be polling the cache directly. However, network-only and
-                // no-cache are both useful for when the user wants to control whether or not the
-                // polled results are written to the cache.
-                fetchPolicy: _this.options.initialFetchPolicy === "no-cache" ? "no-cache" : "network-only"
-              }, NetworkStatus.poll).then(poll, poll) : poll());
-            }, poll = function() {
-              var info2 = _this.pollingInfo;
-              info2 && (clearTimeout(info2.timeout), info2.timeout = setTimeout(maybeFetch, info2.interval));
-            };
-            poll();
-          }
-        }
-      }, ObservableQuery2.prototype.updateLastResult = function(newResult, variables) {
-        var _this = this;
-        variables === void 0 && (variables = this.variables);
-        var error = muteDeprecations("getLastError", function() {
-          return _this.getLastError();
-        });
-        return error && this.last && !equal(variables, this.last.variables) && (error = void 0), this.last = __assign({ result: this.queryManager.assumeImmutableResults ? newResult : cloneDeep(newResult), variables }, error ? { error } : null);
-      }, ObservableQuery2.prototype.reobserveAsConcast = function(newOptions, newNetworkStatus) {
-        var _this = this;
-        this.isTornDown = !1;
-        var useDisposableConcast = (
-          // Refetching uses a disposable Concast to allow refetches using different
-          // options/variables, without permanently altering the options of the
-          // original ObservableQuery.
-          newNetworkStatus === NetworkStatus.refetch || // The fetchMore method does not actually call the reobserve method, but,
-          // if it did, it would definitely use a disposable Concast.
-          newNetworkStatus === NetworkStatus.fetchMore || // Polling uses a disposable Concast so the polling options (which force
-          // fetchPolicy to be "network-only" or "no-cache") won't override the original options.
-          newNetworkStatus === NetworkStatus.poll
-        ), oldVariables = this.options.variables, oldFetchPolicy = this.options.fetchPolicy, mergedOptions = compact(this.options, newOptions || {}), options = useDisposableConcast ? (
-          // Disposable Concast fetches receive a shallow copy of this.options
-          // (merged with newOptions), leaving this.options unmodified.
-          mergedOptions
-        ) : assign(this.options, mergedOptions), query = this.transformDocument(options.query);
-        this.lastQuery = query, useDisposableConcast || (this.updatePolling(), newOptions && newOptions.variables && !equal(newOptions.variables, oldVariables) && // Don't mess with the fetchPolicy if it's currently "standby".
-        options.fetchPolicy !== "standby" && // If we're changing the fetchPolicy anyway, don't try to change it here
-        // using applyNextFetchPolicy. The explicit options.fetchPolicy wins.
-        (options.fetchPolicy === oldFetchPolicy || // A `nextFetchPolicy` function has even higher priority, though,
-        // so in that case `applyNextFetchPolicy` must be called.
-        typeof options.nextFetchPolicy == "function") && (this.applyNextFetchPolicy("variables-changed", options), newNetworkStatus === void 0 && (newNetworkStatus = NetworkStatus.setVariables))), this.waitForOwnResult && (this.waitForOwnResult = skipCacheDataFor(options.fetchPolicy));
-        var finishWaitingForOwnResult = function() {
-          _this.concast === concast && (_this.waitForOwnResult = !1);
-        }, variables = options.variables && __assign({}, options.variables), _a2 = this.fetch(options, newNetworkStatus, query), concast = _a2.concast, fromLink = _a2.fromLink, observer = {
-          next: function(result2) {
-            equal(_this.variables, variables) && (finishWaitingForOwnResult(), _this.reportResult(result2, variables));
-          },
-          error: function(error) {
-            equal(_this.variables, variables) && (isApolloError(error) || (error = new ApolloError({ networkError: error })), finishWaitingForOwnResult(), _this.reportError(error, variables));
-          }
-        };
-        return !useDisposableConcast && (fromLink || !this.concast) && (this.concast && this.observer && this.concast.removeObserver(this.observer), this.concast = concast, this.observer = observer), concast.addObserver(observer), concast;
-      }, ObservableQuery2.prototype.reobserve = function(newOptions, newNetworkStatus) {
-        return preventUnhandledRejection(this.reobserveAsConcast(newOptions, newNetworkStatus).promise.then(this.maskResult));
-      }, ObservableQuery2.prototype.resubscribeAfterError = function() {
-        for (var _this = this, args = [], _i = 0; _i < arguments.length; _i++)
-          args[_i] = arguments[_i];
-        var last = this.last;
-        muteDeprecations("resetLastResults", function() {
-          return _this.resetLastResults();
-        });
-        var subscription = this.subscribe.apply(this, args);
-        return this.last = last, subscription;
-      }, ObservableQuery2.prototype.observe = function() {
-        this.reportResult(
-          // Passing false is important so that this.getCurrentResult doesn't
-          // save the fetchMore result as this.lastResult, causing it to be
-          // ignored due to the this.isDifferentFromLastResult check in
-          // this.reportResult.
-          this.getCurrentFullResult(!1),
-          this.variables
-        );
-      }, ObservableQuery2.prototype.reportResult = function(result2, variables) {
-        var _this = this, lastError = muteDeprecations("getLastError", function() {
-          return _this.getLastError();
-        }), isDifferent = this.isDifferentFromLastResult(result2, variables);
-        (lastError || !result2.partial || this.options.returnPartialData) && this.updateLastResult(result2, variables), (lastError || isDifferent) && iterateObserversSafely(this.observers, "next", this.maskResult(result2));
-      }, ObservableQuery2.prototype.reportError = function(error, variables) {
-        var _this = this, errorResult = __assign(__assign({}, muteDeprecations("getLastResult", function() {
-          return _this.getLastResult();
-        })), { error, errors: error.graphQLErrors, networkStatus: NetworkStatus.error, loading: !1 });
-        this.updateLastResult(errorResult, variables), iterateObserversSafely(this.observers, "error", this.last.error = error);
-      }, ObservableQuery2.prototype.hasObservers = function() {
-        return this.observers.size > 0;
-      }, ObservableQuery2.prototype.tearDownQuery = function() {
-        this.isTornDown || (this.concast && this.observer && (this.concast.removeObserver(this.observer), delete this.concast, delete this.observer), this.stopPolling(), this.subscriptions.forEach(function(sub) {
-          return sub.unsubscribe();
-        }), this.subscriptions.clear(), this.queryManager.stopQuery(this.queryId), this.observers.clear(), this.isTornDown = !0);
-      }, ObservableQuery2.prototype.transformDocument = function(document2) {
-        return this.queryManager.transform(document2);
-      }, ObservableQuery2.prototype.maskResult = function(result2) {
-        return result2 && "data" in result2 ? __assign(__assign({}, result2), { data: this.queryManager.maskOperation({
-          document: this.query,
-          data: result2.data,
-          fetchPolicy: this.options.fetchPolicy,
-          id: this.queryId
-        }) }) : result2;
-      }, ObservableQuery2.prototype.resetNotifications = function() {
-        this.cancelNotifyTimeout(), this.dirty = !1;
-      }, ObservableQuery2.prototype.cancelNotifyTimeout = function() {
-        this.notifyTimeout && (clearTimeout(this.notifyTimeout), this.notifyTimeout = void 0);
-      }, ObservableQuery2.prototype.scheduleNotify = function() {
-        var _this = this;
-        this.dirty || (this.dirty = !0, this.notifyTimeout || (this.notifyTimeout = setTimeout(function() {
-          return _this.notify();
-        }, 0)));
-      }, ObservableQuery2.prototype.notify = function() {
-        if (this.cancelNotifyTimeout(), this.dirty && (this.options.fetchPolicy == "cache-only" || this.options.fetchPolicy == "cache-and-network" || !isNetworkRequestInFlight(this.queryInfo.networkStatus))) {
-          var diff = this.queryInfo.getDiff();
-          diff.fromOptimisticTransaction ? this.observe() : this.reobserveCacheFirst();
-        }
-        this.dirty = !1;
-      }, ObservableQuery2.prototype.reobserveCacheFirst = function() {
-        var _a2 = this.options, fetchPolicy = _a2.fetchPolicy, nextFetchPolicy = _a2.nextFetchPolicy;
-        return fetchPolicy === "cache-and-network" || fetchPolicy === "network-only" ? this.reobserve({
-          fetchPolicy: "cache-first",
-          // Use a temporary nextFetchPolicy function that replaces itself with the
-          // previous nextFetchPolicy value and returns the original fetchPolicy.
-          nextFetchPolicy: function(currentFetchPolicy, context) {
-            return this.nextFetchPolicy = nextFetchPolicy, typeof this.nextFetchPolicy == "function" ? this.nextFetchPolicy(currentFetchPolicy, context) : fetchPolicy;
-          }
-        }) : this.reobserve();
-      }, ObservableQuery2.inactiveOnCreation = new Slot2(), ObservableQuery2;
-    })(Observable)
-  );
-  fixObservableSubclass(ObservableQuery);
-  function defaultSubscriptionObserverErrorCallback(error) {
-    globalThis.__DEV__ !== !1 && invariant4.error(33, error.message, error.stack);
-  }
-  function logMissingFieldErrors(missing) {
-    globalThis.__DEV__ !== !1 && missing && globalThis.__DEV__ !== !1 && invariant4.debug(34, missing);
-  }
-  function skipCacheDataFor(fetchPolicy) {
-    return fetchPolicy === "network-only" || fetchPolicy === "no-cache" || fetchPolicy === "standby";
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/core/QueryInfo.js
-  var destructiveMethodCounts = new (canUseWeakMap ? WeakMap : Map)();
-  function wrapDestructiveCacheMethod(cache, methodName) {
-    var original = cache[methodName];
-    typeof original == "function" && (cache[methodName] = function() {
-      return destructiveMethodCounts.set(
-        cache,
-        // The %1e15 allows the count to wrap around to 0 safely every
-        // quadrillion evictions, so there's no risk of overflow. To be
-        // clear, this is more of a pedantic principle than something
-        // that matters in any conceivable practical scenario.
-        (destructiveMethodCounts.get(cache) + 1) % 1e15
-      ), original.apply(this, arguments);
-    });
-  }
-  var QueryInfo = (
-    /** @class */
-    (function() {
-      function QueryInfo2(queryManager, queryId) {
-        queryId === void 0 && (queryId = queryManager.generateQueryId()), this.queryId = queryId, this.document = null, this.lastRequestId = 1, this.stopped = !1, this.observableQuery = null;
-        var cache = this.cache = queryManager.cache;
-        destructiveMethodCounts.has(cache) || (destructiveMethodCounts.set(cache, 0), wrapDestructiveCacheMethod(cache, "evict"), wrapDestructiveCacheMethod(cache, "modify"), wrapDestructiveCacheMethod(cache, "reset"));
-      }
-      return QueryInfo2.prototype.init = function(query) {
-        var networkStatus = query.networkStatus || NetworkStatus.loading;
-        return this.variables && this.networkStatus !== NetworkStatus.loading && !equal(this.variables, query.variables) && (networkStatus = NetworkStatus.setVariables), equal(query.variables, this.variables) || (this.lastDiff = void 0, this.cancel()), Object.assign(this, {
-          document: query.document,
-          variables: query.variables,
-          networkError: null,
-          graphQLErrors: this.graphQLErrors || [],
-          networkStatus
-        }), query.observableQuery && this.setObservableQuery(query.observableQuery), query.lastRequestId && (this.lastRequestId = query.lastRequestId), this;
-      }, QueryInfo2.prototype.resetDiff = function() {
-        this.lastDiff = void 0;
-      }, QueryInfo2.prototype.getDiff = function() {
-        var _this = this, options = this.getDiffOptions();
-        if (this.lastDiff && equal(options, this.lastDiff.options))
-          return this.lastDiff.diff;
-        this.updateWatch(this.variables);
-        var oq = this.observableQuery;
-        if (oq && oq.options.fetchPolicy === "no-cache")
-          return { complete: !1 };
-        var diff = muteDeprecations("canonizeResults", function() {
-          return _this.cache.diff(options);
-        });
-        return this.updateLastDiff(diff, options), diff;
-      }, QueryInfo2.prototype.updateLastDiff = function(diff, options) {
-        this.lastDiff = diff ? {
-          diff,
-          options: options || this.getDiffOptions()
-        } : void 0;
-      }, QueryInfo2.prototype.getDiffOptions = function(variables) {
-        var _a2;
-        return variables === void 0 && (variables = this.variables), {
-          query: this.document,
-          variables,
-          returnPartialData: !0,
-          optimistic: !0,
-          canonizeResults: (_a2 = this.observableQuery) === null || _a2 === void 0 ? void 0 : _a2.options.canonizeResults
-        };
-      }, QueryInfo2.prototype.setDiff = function(diff) {
-        var _this = this, _a2, oldDiff = this.lastDiff && this.lastDiff.diff;
-        diff && !diff.complete && muteDeprecations("getLastError", function() {
-          var _a3;
-          return (_a3 = _this.observableQuery) === null || _a3 === void 0 ? void 0 : _a3.getLastError();
-        }) || (this.updateLastDiff(diff), equal(oldDiff && oldDiff.result, diff && diff.result) || (_a2 = this.observableQuery) === null || _a2 === void 0 || _a2.scheduleNotify());
-      }, QueryInfo2.prototype.setObservableQuery = function(oq) {
-        oq !== this.observableQuery && (this.observableQuery = oq, oq && (oq.queryInfo = this));
-      }, QueryInfo2.prototype.stop = function() {
-        var _a2;
-        if (!this.stopped) {
-          this.stopped = !0, (_a2 = this.observableQuery) === null || _a2 === void 0 || _a2.resetNotifications(), this.cancel();
-          var oq = this.observableQuery;
-          oq && oq.stopPolling();
-        }
-      }, QueryInfo2.prototype.cancel = function() {
-        var _a2;
-        (_a2 = this.cancelWatch) === null || _a2 === void 0 || _a2.call(this), this.cancelWatch = void 0;
-      }, QueryInfo2.prototype.updateWatch = function(variables) {
-        var _this = this;
-        variables === void 0 && (variables = this.variables);
-        var oq = this.observableQuery;
-        if (!(oq && oq.options.fetchPolicy === "no-cache")) {
-          var watchOptions = __assign(__assign({}, this.getDiffOptions(variables)), { watcher: this, callback: function(diff) {
-            return _this.setDiff(diff);
-          } });
-          (!this.lastWatch || !equal(watchOptions, this.lastWatch)) && (this.cancel(), this.cancelWatch = this.cache.watch(this.lastWatch = watchOptions));
-        }
-      }, QueryInfo2.prototype.resetLastWrite = function() {
-        this.lastWrite = void 0;
-      }, QueryInfo2.prototype.shouldWrite = function(result2, variables) {
-        var lastWrite = this.lastWrite;
-        return !(lastWrite && // If cache.evict has been called since the last time we wrote this
-        // data into the cache, there's a chance writing this result into
-        // the cache will repair what was evicted.
-        lastWrite.dmCount === destructiveMethodCounts.get(this.cache) && equal(variables, lastWrite.variables) && equal(result2.data, lastWrite.result.data));
-      }, QueryInfo2.prototype.markResult = function(result2, document2, options, cacheWriteBehavior) {
-        var _this = this, _a2, merger = new DeepMerger(), graphQLErrors = isNonEmptyArray(result2.errors) ? result2.errors.slice(0) : [];
-        if ((_a2 = this.observableQuery) === null || _a2 === void 0 || _a2.resetNotifications(), "incremental" in result2 && isNonEmptyArray(result2.incremental)) {
-          var mergedData = mergeIncrementalData(this.getDiff().result, result2);
-          result2.data = mergedData;
-        } else if ("hasNext" in result2 && result2.hasNext) {
-          var diff = this.getDiff();
-          result2.data = merger.merge(diff.result, result2.data);
-        }
-        this.graphQLErrors = graphQLErrors, options.fetchPolicy === "no-cache" ? this.updateLastDiff({ result: result2.data, complete: !0 }, this.getDiffOptions(options.variables)) : cacheWriteBehavior !== 0 && (shouldWriteResult(result2, options.errorPolicy) ? this.cache.performTransaction(function(cache) {
-          if (_this.shouldWrite(result2, options.variables))
-            cache.writeQuery({
-              query: document2,
-              data: result2.data,
-              variables: options.variables,
-              overwrite: cacheWriteBehavior === 1
-            }), _this.lastWrite = {
-              result: result2,
-              variables: options.variables,
-              dmCount: destructiveMethodCounts.get(_this.cache)
-            };
-          else if (_this.lastDiff && _this.lastDiff.diff.complete) {
-            result2.data = _this.lastDiff.diff.result;
-            return;
-          }
-          var diffOptions = _this.getDiffOptions(options.variables), diff2 = muteDeprecations("canonizeResults", function() {
-            return cache.diff(diffOptions);
-          });
-          !_this.stopped && equal(_this.variables, options.variables) && _this.updateWatch(options.variables), _this.updateLastDiff(diff2, diffOptions), diff2.complete && (result2.data = diff2.result);
-        }) : this.lastWrite = void 0);
-      }, QueryInfo2.prototype.markReady = function() {
-        return this.networkError = null, this.networkStatus = NetworkStatus.ready;
-      }, QueryInfo2.prototype.markError = function(error) {
-        var _a2;
-        return this.networkStatus = NetworkStatus.error, this.lastWrite = void 0, (_a2 = this.observableQuery) === null || _a2 === void 0 || _a2.resetNotifications(), error.graphQLErrors && (this.graphQLErrors = error.graphQLErrors), error.networkError && (this.networkError = error.networkError), error;
-      }, QueryInfo2;
-    })()
-  );
-  function shouldWriteResult(result2, errorPolicy) {
-    errorPolicy === void 0 && (errorPolicy = "none");
-    var ignoreErrors = errorPolicy === "ignore" || errorPolicy === "all", writeWithErrors = !graphQLResultHasError(result2);
-    return !writeWithErrors && ignoreErrors && result2.data && (writeWithErrors = !0), writeWithErrors;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/core/QueryManager.js
-  var hasOwnProperty7 = Object.prototype.hasOwnProperty, IGNORE = /* @__PURE__ */ Object.create(null), QueryManager = (
-    /** @class */
-    (function() {
-      function QueryManager2(options) {
-        var _this = this;
-        this.clientAwareness = {}, this.queries = /* @__PURE__ */ new Map(), this.fetchCancelFns = /* @__PURE__ */ new Map(), this.transformCache = new AutoCleanedWeakCache(
-          cacheSizes["queryManager.getDocumentInfo"] || 2e3
-          /* defaultCacheSizes["queryManager.getDocumentInfo"] */
-        ), this.queryIdCounter = 1, this.requestIdCounter = 1, this.mutationIdCounter = 1, this.inFlightLinkObservables = new Trie(!1), this.noCacheWarningsByQueryId = /* @__PURE__ */ new Set();
-        var defaultDocumentTransform = new DocumentTransform(
-          function(document2) {
-            return _this.cache.transformDocument(document2);
-          },
-          // Allow the apollo cache to manage its own transform caches
-          { cache: !1 }
-        );
-        this.cache = options.cache, this.link = options.link, this.defaultOptions = options.defaultOptions, this.queryDeduplication = options.queryDeduplication, this.clientAwareness = options.clientAwareness, this.localState = options.localState, this.ssrMode = options.ssrMode, this.assumeImmutableResults = options.assumeImmutableResults, this.dataMasking = options.dataMasking;
-        var documentTransform = options.documentTransform;
-        this.documentTransform = documentTransform ? defaultDocumentTransform.concat(documentTransform).concat(defaultDocumentTransform) : defaultDocumentTransform, this.defaultContext = options.defaultContext || /* @__PURE__ */ Object.create(null), (this.onBroadcast = options.onBroadcast) && (this.mutationStore = /* @__PURE__ */ Object.create(null));
-      }
-      return QueryManager2.prototype.stop = function() {
-        var _this = this;
-        this.queries.forEach(function(_info, queryId) {
-          _this.stopQueryNoBroadcast(queryId);
-        }), this.cancelPendingFetches(newInvariantError(35));
-      }, QueryManager2.prototype.cancelPendingFetches = function(error) {
-        this.fetchCancelFns.forEach(function(cancel) {
-          return cancel(error);
-        }), this.fetchCancelFns.clear();
-      }, QueryManager2.prototype.mutate = function(_a2) {
-        return __awaiter(this, arguments, void 0, function(_b) {
-          var mutationId, hasClientExports2, mutationStoreValue, isOptimistic, self2, _c, _d, mutation = _b.mutation, variables = _b.variables, optimisticResponse = _b.optimisticResponse, updateQueries = _b.updateQueries, _e = _b.refetchQueries, refetchQueries = _e === void 0 ? [] : _e, _f = _b.awaitRefetchQueries, awaitRefetchQueries = _f === void 0 ? !1 : _f, updateWithProxyFn = _b.update, onQueryUpdated = _b.onQueryUpdated, _g = _b.fetchPolicy, fetchPolicy = _g === void 0 ? ((_c = this.defaultOptions.mutate) === null || _c === void 0 ? void 0 : _c.fetchPolicy) || "network-only" : _g, _h = _b.errorPolicy, errorPolicy = _h === void 0 ? ((_d = this.defaultOptions.mutate) === null || _d === void 0 ? void 0 : _d.errorPolicy) || "none" : _h, keepRootFields = _b.keepRootFields, context = _b.context;
-          return __generator(this, function(_j) {
-            switch (_j.label) {
-              case 0:
-                return invariant4(mutation, 36), invariant4(fetchPolicy === "network-only" || fetchPolicy === "no-cache", 37), mutationId = this.generateMutationId(), mutation = this.cache.transformForLink(this.transform(mutation)), hasClientExports2 = this.getDocumentInfo(mutation).hasClientExports, variables = this.getVariables(mutation, variables), hasClientExports2 ? [4, this.localState.addExportedVariables(mutation, variables, context)] : [3, 2];
-              case 1:
-                variables = _j.sent(), _j.label = 2;
-              case 2:
-                return mutationStoreValue = this.mutationStore && (this.mutationStore[mutationId] = {
-                  mutation,
-                  variables,
-                  loading: !0,
-                  error: null
-                }), isOptimistic = optimisticResponse && this.markMutationOptimistic(optimisticResponse, {
-                  mutationId,
-                  document: mutation,
-                  variables,
-                  fetchPolicy,
-                  errorPolicy,
-                  context,
-                  updateQueries,
-                  update: updateWithProxyFn,
-                  keepRootFields
-                }), this.broadcastQueries(), self2 = this, [2, new Promise(function(resolve, reject) {
-                  return asyncMap(self2.getObservableFromLink(mutation, __assign(__assign({}, context), { optimisticResponse: isOptimistic ? optimisticResponse : void 0 }), variables, {}, !1), function(result2) {
-                    if (graphQLResultHasError(result2) && errorPolicy === "none")
-                      throw new ApolloError({
-                        graphQLErrors: getGraphQLErrorsFromResult(result2)
-                      });
-                    mutationStoreValue && (mutationStoreValue.loading = !1, mutationStoreValue.error = null);
-                    var storeResult = __assign({}, result2);
-                    return typeof refetchQueries == "function" && (refetchQueries = refetchQueries(storeResult)), errorPolicy === "ignore" && graphQLResultHasError(storeResult) && delete storeResult.errors, self2.markMutationResult({
-                      mutationId,
-                      result: storeResult,
-                      document: mutation,
-                      variables,
-                      fetchPolicy,
-                      errorPolicy,
-                      context,
-                      update: updateWithProxyFn,
-                      updateQueries,
-                      awaitRefetchQueries,
-                      refetchQueries,
-                      removeOptimistic: isOptimistic ? mutationId : void 0,
-                      onQueryUpdated,
-                      keepRootFields
-                    });
-                  }).subscribe({
-                    next: function(storeResult) {
-                      self2.broadcastQueries(), (!("hasNext" in storeResult) || storeResult.hasNext === !1) && resolve(__assign(__assign({}, storeResult), { data: self2.maskOperation({
-                        document: mutation,
-                        data: storeResult.data,
-                        fetchPolicy,
-                        id: mutationId
-                      }) }));
-                    },
-                    error: function(err) {
-                      mutationStoreValue && (mutationStoreValue.loading = !1, mutationStoreValue.error = err), isOptimistic && self2.cache.removeOptimistic(mutationId), self2.broadcastQueries(), reject(err instanceof ApolloError ? err : new ApolloError({
-                        networkError: err
-                      }));
-                    }
-                  });
-                })];
-            }
-          });
-        });
-      }, QueryManager2.prototype.markMutationResult = function(mutation, cache) {
-        var _this = this;
-        cache === void 0 && (cache = this.cache);
-        var result2 = mutation.result, cacheWrites = [], skipCache = mutation.fetchPolicy === "no-cache";
-        if (!skipCache && shouldWriteResult(result2, mutation.errorPolicy)) {
-          if (isExecutionPatchIncrementalResult(result2) || cacheWrites.push({
-            result: result2.data,
-            dataId: "ROOT_MUTATION",
-            query: mutation.document,
-            variables: mutation.variables
-          }), isExecutionPatchIncrementalResult(result2) && isNonEmptyArray(result2.incremental)) {
-            var diff = cache.diff({
-              id: "ROOT_MUTATION",
-              // The cache complains if passed a mutation where it expects a
-              // query, so we transform mutations and subscriptions to queries
-              // (only once, thanks to this.transformCache).
-              query: this.getDocumentInfo(mutation.document).asQuery,
-              variables: mutation.variables,
-              optimistic: !1,
-              returnPartialData: !0
-            }), mergedData = void 0;
-            diff.result && (mergedData = mergeIncrementalData(diff.result, result2)), typeof mergedData < "u" && (result2.data = mergedData, cacheWrites.push({
-              result: mergedData,
-              dataId: "ROOT_MUTATION",
-              query: mutation.document,
-              variables: mutation.variables
-            }));
-          }
-          var updateQueries_1 = mutation.updateQueries;
-          updateQueries_1 && this.queries.forEach(function(_a2, queryId) {
-            var observableQuery = _a2.observableQuery, queryName = observableQuery && observableQuery.queryName;
-            if (!(!queryName || !hasOwnProperty7.call(updateQueries_1, queryName))) {
-              var updater = updateQueries_1[queryName], _b = _this.queries.get(queryId), document2 = _b.document, variables = _b.variables, _c = cache.diff({
-                query: document2,
-                variables,
-                returnPartialData: !0,
-                optimistic: !1
-              }), currentQueryResult = _c.result, complete = _c.complete;
-              if (complete && currentQueryResult) {
-                var nextQueryResult = updater(currentQueryResult, {
-                  mutationResult: result2,
-                  queryName: document2 && getOperationName(document2) || void 0,
-                  queryVariables: variables
-                });
-                nextQueryResult && cacheWrites.push({
-                  result: nextQueryResult,
-                  dataId: "ROOT_QUERY",
-                  query: document2,
-                  variables
-                });
-              }
-            }
-          });
-        }
-        if (cacheWrites.length > 0 || (mutation.refetchQueries || "").length > 0 || mutation.update || mutation.onQueryUpdated || mutation.removeOptimistic) {
-          var results_1 = [];
-          if (this.refetchQueries({
-            updateCache: function(cache2) {
-              skipCache || cacheWrites.forEach(function(write) {
-                return cache2.write(write);
-              });
-              var update = mutation.update, isFinalResult = !isExecutionPatchResult(result2) || isExecutionPatchIncrementalResult(result2) && !result2.hasNext;
-              if (update) {
-                if (!skipCache) {
-                  var diff2 = cache2.diff({
-                    id: "ROOT_MUTATION",
-                    // The cache complains if passed a mutation where it expects a
-                    // query, so we transform mutations and subscriptions to queries
-                    // (only once, thanks to this.transformCache).
-                    query: _this.getDocumentInfo(mutation.document).asQuery,
-                    variables: mutation.variables,
-                    optimistic: !1,
-                    returnPartialData: !0
-                  });
-                  diff2.complete && (result2 = __assign(__assign({}, result2), { data: diff2.result }), "incremental" in result2 && delete result2.incremental, "hasNext" in result2 && delete result2.hasNext);
-                }
-                isFinalResult && update(cache2, result2, {
-                  context: mutation.context,
-                  variables: mutation.variables
-                });
-              }
-              !skipCache && !mutation.keepRootFields && isFinalResult && cache2.modify({
-                id: "ROOT_MUTATION",
-                fields: function(value, _a2) {
-                  var fieldName = _a2.fieldName, DELETE2 = _a2.DELETE;
-                  return fieldName === "__typename" ? value : DELETE2;
-                }
-              });
-            },
-            include: mutation.refetchQueries,
-            // Write the final mutation.result to the root layer of the cache.
-            optimistic: !1,
-            // Remove the corresponding optimistic layer at the same time as we
-            // write the final non-optimistic result.
-            removeOptimistic: mutation.removeOptimistic,
-            // Let the caller of client.mutate optionally determine the refetching
-            // behavior for watched queries after the mutation.update function runs.
-            // If no onQueryUpdated function was provided for this mutation, pass
-            // null instead of undefined to disable the default refetching behavior.
-            onQueryUpdated: mutation.onQueryUpdated || null
-          }).forEach(function(result3) {
-            return results_1.push(result3);
-          }), mutation.awaitRefetchQueries || mutation.onQueryUpdated)
-            return Promise.all(results_1).then(function() {
-              return result2;
-            });
-        }
-        return Promise.resolve(result2);
-      }, QueryManager2.prototype.markMutationOptimistic = function(optimisticResponse, mutation) {
-        var _this = this, data2 = typeof optimisticResponse == "function" ? optimisticResponse(mutation.variables, { IGNORE }) : optimisticResponse;
-        return data2 === IGNORE ? !1 : (this.cache.recordOptimisticTransaction(function(cache) {
-          try {
-            _this.markMutationResult(__assign(__assign({}, mutation), { result: { data: data2 } }), cache);
-          } catch (error) {
-            globalThis.__DEV__ !== !1 && invariant4.error(error);
-          }
-        }, mutation.mutationId), !0);
-      }, QueryManager2.prototype.fetchQuery = function(queryId, options, networkStatus) {
-        return this.fetchConcastWithInfo(this.getOrCreateQuery(queryId), options, networkStatus).concast.promise;
-      }, QueryManager2.prototype.getQueryStore = function() {
-        var store = /* @__PURE__ */ Object.create(null);
-        return this.queries.forEach(function(info, queryId) {
-          store[queryId] = {
-            variables: info.variables,
-            networkStatus: info.networkStatus,
-            networkError: info.networkError,
-            graphQLErrors: info.graphQLErrors
-          };
-        }), store;
-      }, QueryManager2.prototype.resetErrors = function(queryId) {
-        var queryInfo = this.queries.get(queryId);
-        queryInfo && (queryInfo.networkError = void 0, queryInfo.graphQLErrors = []);
-      }, QueryManager2.prototype.transform = function(document2) {
-        return this.documentTransform.transformDocument(document2);
-      }, QueryManager2.prototype.getDocumentInfo = function(document2) {
-        var transformCache = this.transformCache;
-        if (!transformCache.has(document2)) {
-          var cacheEntry = {
-            // TODO These three calls (hasClientExports, shouldForceResolvers, and
-            // usesNonreactiveDirective) are performing independent full traversals
-            // of the transformed document. We should consider merging these
-            // traversals into a single pass in the future, though the work is
-            // cached after the first time.
-            hasClientExports: hasClientExports(document2),
-            hasForcedResolvers: this.localState.shouldForceResolvers(document2),
-            hasNonreactiveDirective: hasDirectives(["nonreactive"], document2),
-            nonReactiveQuery: addNonReactiveToNamedFragments(document2),
-            clientQuery: this.localState.clientQuery(document2),
-            serverQuery: removeDirectivesFromDocument([
-              { name: "client", remove: !0 },
-              { name: "connection" },
-              { name: "nonreactive" },
-              { name: "unmask" }
-            ], document2),
-            defaultVars: getDefaultValues(getOperationDefinition(document2)),
-            // Transform any mutation or subscription operations to query operations
-            // so we can read/write them from/to the cache.
-            asQuery: __assign(__assign({}, document2), { definitions: document2.definitions.map(function(def) {
-              return def.kind === "OperationDefinition" && def.operation !== "query" ? __assign(__assign({}, def), { operation: "query" }) : def;
-            }) })
-          };
-          transformCache.set(document2, cacheEntry);
-        }
-        return transformCache.get(document2);
-      }, QueryManager2.prototype.getVariables = function(document2, variables) {
-        return __assign(__assign({}, this.getDocumentInfo(document2).defaultVars), variables);
-      }, QueryManager2.prototype.watchQuery = function(options) {
-        var query = this.transform(options.query);
-        options = __assign(__assign({}, options), { variables: this.getVariables(query, options.variables) }), typeof options.notifyOnNetworkStatusChange > "u" && (options.notifyOnNetworkStatusChange = !1);
-        var queryInfo = new QueryInfo(this), observable = new ObservableQuery({
-          queryManager: this,
-          queryInfo,
-          options
-        });
-        return observable.lastQuery = query, ObservableQuery.inactiveOnCreation.getValue() || this.queries.set(observable.queryId, queryInfo), queryInfo.init({
-          document: query,
-          observableQuery: observable,
-          variables: observable.variables
-        }), observable;
-      }, QueryManager2.prototype.query = function(options, queryId) {
-        var _this = this;
-        queryId === void 0 && (queryId = this.generateQueryId()), invariant4(options.query, 38), invariant4(options.query.kind === "Document", 39), invariant4(!options.returnPartialData, 40), invariant4(!options.pollInterval, 41);
-        var query = this.transform(options.query);
-        return this.fetchQuery(queryId, __assign(__assign({}, options), { query })).then(function(result2) {
-          return result2 && __assign(__assign({}, result2), { data: _this.maskOperation({
-            document: query,
-            data: result2.data,
-            fetchPolicy: options.fetchPolicy,
-            id: queryId
-          }) });
-        }).finally(function() {
-          return _this.stopQuery(queryId);
-        });
-      }, QueryManager2.prototype.generateQueryId = function() {
-        return String(this.queryIdCounter++);
-      }, QueryManager2.prototype.generateRequestId = function() {
-        return this.requestIdCounter++;
-      }, QueryManager2.prototype.generateMutationId = function() {
-        return String(this.mutationIdCounter++);
-      }, QueryManager2.prototype.stopQueryInStore = function(queryId) {
-        this.stopQueryInStoreNoBroadcast(queryId), this.broadcastQueries();
-      }, QueryManager2.prototype.stopQueryInStoreNoBroadcast = function(queryId) {
-        var queryInfo = this.queries.get(queryId);
-        queryInfo && queryInfo.stop();
-      }, QueryManager2.prototype.clearStore = function(options) {
-        return options === void 0 && (options = {
-          discardWatches: !0
-        }), this.cancelPendingFetches(newInvariantError(42)), this.queries.forEach(function(queryInfo) {
-          queryInfo.observableQuery ? queryInfo.networkStatus = NetworkStatus.loading : queryInfo.stop();
-        }), this.mutationStore && (this.mutationStore = /* @__PURE__ */ Object.create(null)), this.cache.reset(options);
-      }, QueryManager2.prototype.getObservableQueries = function(include) {
-        var _this = this;
-        include === void 0 && (include = "active");
-        var queries = /* @__PURE__ */ new Map(), queryNames = /* @__PURE__ */ new Map(), queryNamesAndQueryStrings = /* @__PURE__ */ new Map(), legacyQueryOptions = /* @__PURE__ */ new Set();
-        return Array.isArray(include) && include.forEach(function(desc) {
-          if (typeof desc == "string")
-            queryNames.set(desc, desc), queryNamesAndQueryStrings.set(desc, !1);
-          else if (isDocumentNode(desc)) {
-            var queryString = print2(_this.transform(desc));
-            queryNames.set(queryString, getOperationName(desc)), queryNamesAndQueryStrings.set(queryString, !1);
-          } else isNonNullObject(desc) && desc.query && legacyQueryOptions.add(desc);
-        }), this.queries.forEach(function(_a2, queryId) {
-          var oq = _a2.observableQuery, document2 = _a2.document;
-          if (oq) {
-            if (include === "all") {
-              queries.set(queryId, oq);
-              return;
-            }
-            var queryName = oq.queryName, fetchPolicy = oq.options.fetchPolicy;
-            if (fetchPolicy === "standby" || include === "active" && !oq.hasObservers())
-              return;
-            (include === "active" || queryName && queryNamesAndQueryStrings.has(queryName) || document2 && queryNamesAndQueryStrings.has(print2(document2))) && (queries.set(queryId, oq), queryName && queryNamesAndQueryStrings.set(queryName, !0), document2 && queryNamesAndQueryStrings.set(print2(document2), !0));
-          }
-        }), legacyQueryOptions.size && legacyQueryOptions.forEach(function(options) {
-          var queryId = makeUniqueId("legacyOneTimeQuery"), queryInfo = _this.getOrCreateQuery(queryId).init({
-            document: options.query,
-            variables: options.variables
-          }), oq = new ObservableQuery({
-            queryManager: _this,
-            queryInfo,
-            options: __assign(__assign({}, options), { fetchPolicy: "network-only" })
-          });
-          invariant4(oq.queryId === queryId), queryInfo.setObservableQuery(oq), queries.set(queryId, oq);
-        }), globalThis.__DEV__ !== !1 && queryNamesAndQueryStrings.size && queryNamesAndQueryStrings.forEach(function(included, nameOrQueryString) {
-          if (!included) {
-            var queryName = queryNames.get(nameOrQueryString);
-            queryName ? globalThis.__DEV__ !== !1 && invariant4.warn(43, queryName) : globalThis.__DEV__ !== !1 && invariant4.warn(44);
-          }
-        }), queries;
-      }, QueryManager2.prototype.reFetchObservableQueries = function(includeStandby) {
-        var _this = this;
-        includeStandby === void 0 && (includeStandby = !1);
-        var observableQueryPromises = [];
-        return this.getObservableQueries(includeStandby ? "all" : "active").forEach(function(observableQuery, queryId) {
-          var fetchPolicy = observableQuery.options.fetchPolicy;
-          muteDeprecations("resetLastResults", function() {
-            return observableQuery.resetLastResults();
-          }), (includeStandby || fetchPolicy !== "standby" && fetchPolicy !== "cache-only") && observableQueryPromises.push(observableQuery.refetch()), (_this.queries.get(queryId) || observableQuery.queryInfo).setDiff(null);
-        }), this.broadcastQueries(), Promise.all(observableQueryPromises);
-      }, QueryManager2.prototype.startGraphQLSubscription = function(options) {
-        var _this = this, query = options.query, variables = options.variables, fetchPolicy = options.fetchPolicy, _a2 = options.errorPolicy, errorPolicy = _a2 === void 0 ? "none" : _a2, _b = options.context, context = _b === void 0 ? {} : _b, _c = options.extensions, extensions = _c === void 0 ? {} : _c;
-        query = this.transform(query), variables = this.getVariables(query, variables);
-        var makeObservable = function(variables2) {
-          return _this.getObservableFromLink(query, context, variables2, extensions).map(function(result2) {
-            fetchPolicy !== "no-cache" && (shouldWriteResult(result2, errorPolicy) && _this.cache.write({
-              query,
-              result: result2.data,
-              dataId: "ROOT_SUBSCRIPTION",
-              variables: variables2
-            }), _this.broadcastQueries());
-            var hasErrors = graphQLResultHasError(result2), hasProtocolErrors = graphQLResultHasProtocolErrors(result2);
-            if (hasErrors || hasProtocolErrors) {
-              var errors = {};
-              if (hasErrors && (errors.graphQLErrors = result2.errors), hasProtocolErrors && (errors.protocolErrors = result2.extensions[PROTOCOL_ERRORS_SYMBOL]), errorPolicy === "none" || hasProtocolErrors)
-                throw new ApolloError(errors);
-            }
-            return errorPolicy === "ignore" && delete result2.errors, result2;
-          });
-        };
-        if (this.getDocumentInfo(query).hasClientExports) {
-          var observablePromise_1 = this.localState.addExportedVariables(query, variables, context).then(makeObservable);
-          return new Observable(function(observer) {
-            var sub = null;
-            return observablePromise_1.then(function(observable) {
-              return sub = observable.subscribe(observer);
-            }, observer.error), function() {
-              return sub && sub.unsubscribe();
-            };
-          });
-        }
-        return makeObservable(variables);
-      }, QueryManager2.prototype.stopQuery = function(queryId) {
-        this.stopQueryNoBroadcast(queryId), this.broadcastQueries();
-      }, QueryManager2.prototype.stopQueryNoBroadcast = function(queryId) {
-        this.stopQueryInStoreNoBroadcast(queryId), this.removeQuery(queryId);
-      }, QueryManager2.prototype.removeQuery = function(queryId) {
-        var _a2;
-        this.fetchCancelFns.delete(queryId), this.queries.has(queryId) && ((_a2 = this.queries.get(queryId)) === null || _a2 === void 0 || _a2.stop(), this.queries.delete(queryId));
-      }, QueryManager2.prototype.broadcastQueries = function() {
-        this.onBroadcast && this.onBroadcast(), this.queries.forEach(function(info) {
-          var _a2;
-          return (_a2 = info.observableQuery) === null || _a2 === void 0 ? void 0 : _a2.notify();
-        });
-      }, QueryManager2.prototype.getLocalState = function() {
-        return this.localState;
-      }, QueryManager2.prototype.getObservableFromLink = function(query, context, variables, extensions, deduplication) {
-        var _this = this, _a2;
-        deduplication === void 0 && (deduplication = (_a2 = context?.queryDeduplication) !== null && _a2 !== void 0 ? _a2 : this.queryDeduplication);
-        var observable, _b = this.getDocumentInfo(query), serverQuery = _b.serverQuery, clientQuery = _b.clientQuery;
-        if (serverQuery) {
-          var _c = this, inFlightLinkObservables_1 = _c.inFlightLinkObservables, link = _c.link, operation = {
-            query: serverQuery,
-            variables,
-            operationName: getOperationName(serverQuery) || void 0,
-            context: this.prepareContext(__assign(__assign({}, context), { forceFetch: !deduplication })),
-            extensions
-          };
-          if (context = operation.context, deduplication) {
-            var printedServerQuery_1 = print2(serverQuery), varJson_1 = canonicalStringify(variables), entry = inFlightLinkObservables_1.lookup(printedServerQuery_1, varJson_1);
-            if (observable = entry.observable, !observable) {
-              var concast_1 = new Concast([
-                execute(link, operation)
-              ]);
-              observable = entry.observable = concast_1, concast_1.beforeNext(function cb(method, arg) {
-                method === "next" && "hasNext" in arg && arg.hasNext ? concast_1.beforeNext(cb) : inFlightLinkObservables_1.remove(printedServerQuery_1, varJson_1);
-              });
-            }
-          } else
-            observable = new Concast([
-              execute(link, operation)
-            ]);
-        } else
-          observable = new Concast([Observable.of({ data: {} })]), context = this.prepareContext(context);
-        return clientQuery && (observable = asyncMap(observable, function(result2) {
-          return _this.localState.runResolvers({
-            document: clientQuery,
-            remoteResult: result2,
-            context,
-            variables
-          });
-        })), observable;
-      }, QueryManager2.prototype.getResultsFromLink = function(queryInfo, cacheWriteBehavior, options) {
-        var requestId = queryInfo.lastRequestId = this.generateRequestId(), linkDocument = this.cache.transformForLink(options.query);
-        return asyncMap(this.getObservableFromLink(linkDocument, options.context, options.variables), function(result2) {
-          var graphQLErrors = getGraphQLErrorsFromResult(result2), hasErrors = graphQLErrors.length > 0, errorPolicy = options.errorPolicy;
-          if (requestId >= queryInfo.lastRequestId) {
-            if (hasErrors && errorPolicy === "none")
-              throw queryInfo.markError(new ApolloError({
-                graphQLErrors
-              }));
-            queryInfo.markResult(result2, linkDocument, options, cacheWriteBehavior), queryInfo.markReady();
-          }
-          var aqr = {
-            data: result2.data,
-            loading: !1,
-            networkStatus: NetworkStatus.ready
-          };
-          return hasErrors && errorPolicy === "none" && (aqr.data = void 0), hasErrors && errorPolicy !== "ignore" && (aqr.errors = graphQLErrors, aqr.networkStatus = NetworkStatus.error), aqr;
-        }, function(networkError) {
-          var error = isApolloError(networkError) ? networkError : new ApolloError({ networkError });
-          throw requestId >= queryInfo.lastRequestId && queryInfo.markError(error), error;
-        });
-      }, QueryManager2.prototype.fetchConcastWithInfo = function(queryInfo, options, networkStatus, query) {
-        var _this = this;
-        networkStatus === void 0 && (networkStatus = NetworkStatus.loading), query === void 0 && (query = options.query);
-        var variables = this.getVariables(query, options.variables), defaults = this.defaultOptions.watchQuery, _a2 = options.fetchPolicy, fetchPolicy = _a2 === void 0 ? defaults && defaults.fetchPolicy || "cache-first" : _a2, _b = options.errorPolicy, errorPolicy = _b === void 0 ? defaults && defaults.errorPolicy || "none" : _b, _c = options.returnPartialData, returnPartialData = _c === void 0 ? !1 : _c, _d = options.notifyOnNetworkStatusChange, notifyOnNetworkStatusChange = _d === void 0 ? !1 : _d, _e = options.context, context = _e === void 0 ? {} : _e, normalized = Object.assign({}, options, {
-          query,
-          variables,
-          fetchPolicy,
-          errorPolicy,
-          returnPartialData,
-          notifyOnNetworkStatusChange,
-          context
-        }), fromVariables = function(variables2) {
-          normalized.variables = variables2;
-          var sourcesWithInfo2 = _this.fetchQueryByPolicy(queryInfo, normalized, networkStatus);
-          return (
-            // If we're in standby, postpone advancing options.fetchPolicy using
-            // applyNextFetchPolicy.
-            normalized.fetchPolicy !== "standby" && // The "standby" policy currently returns [] from fetchQueryByPolicy, so
-            // this is another way to detect when nothing was done/fetched.
-            sourcesWithInfo2.sources.length > 0 && queryInfo.observableQuery && queryInfo.observableQuery.applyNextFetchPolicy("after-fetch", options), sourcesWithInfo2
-          );
-        }, cleanupCancelFn = function() {
-          return _this.fetchCancelFns.delete(queryInfo.queryId);
-        };
-        this.fetchCancelFns.set(queryInfo.queryId, function(reason) {
-          cleanupCancelFn(), setTimeout(function() {
-            return concast.cancel(reason);
-          });
-        });
-        var concast, containsDataFromLink;
-        if (this.getDocumentInfo(normalized.query).hasClientExports)
-          concast = new Concast(this.localState.addExportedVariables(normalized.query, normalized.variables, normalized.context).then(fromVariables).then(function(sourcesWithInfo2) {
-            return sourcesWithInfo2.sources;
-          })), containsDataFromLink = !0;
-        else {
-          var sourcesWithInfo = fromVariables(normalized.variables);
-          containsDataFromLink = sourcesWithInfo.fromLink, concast = new Concast(sourcesWithInfo.sources);
-        }
-        return concast.promise.then(cleanupCancelFn, cleanupCancelFn), {
-          concast,
-          fromLink: containsDataFromLink
-        };
-      }, QueryManager2.prototype.refetchQueries = function(_a2) {
-        var _this = this, updateCache = _a2.updateCache, include = _a2.include, _b = _a2.optimistic, optimistic = _b === void 0 ? !1 : _b, _c = _a2.removeOptimistic, removeOptimistic = _c === void 0 ? optimistic ? makeUniqueId("refetchQueries") : void 0 : _c, onQueryUpdated = _a2.onQueryUpdated, includedQueriesById = /* @__PURE__ */ new Map();
-        include && this.getObservableQueries(include).forEach(function(oq, queryId) {
-          includedQueriesById.set(queryId, {
-            oq,
-            lastDiff: (_this.queries.get(queryId) || oq.queryInfo).getDiff()
-          });
-        });
-        var results = /* @__PURE__ */ new Map();
-        return updateCache && this.cache.batch({
-          update: updateCache,
-          // Since you can perform any combination of cache reads and/or writes in
-          // the cache.batch update function, its optimistic option can be either
-          // a boolean or a string, representing three distinct modes of
-          // operation:
-          //
-          // * false: read/write only the root layer
-          // * true: read/write the topmost layer
-          // * string: read/write a fresh optimistic layer with that ID string
-          //
-          // When typeof optimistic === "string", a new optimistic layer will be
-          // temporarily created within cache.batch with that string as its ID. If
-          // we then pass that same string as the removeOptimistic option, we can
-          // make cache.batch immediately remove the optimistic layer after
-          // running the updateCache function, triggering only one broadcast.
-          //
-          // However, the refetchQueries method accepts only true or false for its
-          // optimistic option (not string). We interpret true to mean a temporary
-          // optimistic layer should be created, to allow efficiently rolling back
-          // the effect of the updateCache function, which involves passing a
-          // string instead of true as the optimistic option to cache.batch, when
-          // refetchQueries receives optimistic: true.
-          //
-          // In other words, we are deliberately not supporting the use case of
-          // writing to an *existing* optimistic layer (using the refetchQueries
-          // updateCache function), since that would potentially interfere with
-          // other optimistic updates in progress. Instead, you can read/write
-          // only the root layer by passing optimistic: false to refetchQueries,
-          // or you can read/write a brand new optimistic layer that will be
-          // automatically removed by passing optimistic: true.
-          optimistic: optimistic && removeOptimistic || !1,
-          // The removeOptimistic option can also be provided by itself, even if
-          // optimistic === false, to remove some previously-added optimistic
-          // layer safely and efficiently, like we do in markMutationResult.
-          //
-          // If an explicit removeOptimistic string is provided with optimistic:
-          // true, the removeOptimistic string will determine the ID of the
-          // temporary optimistic layer, in case that ever matters.
-          removeOptimistic,
-          onWatchUpdated: function(watch, diff, lastDiff) {
-            var oq = watch.watcher instanceof QueryInfo && watch.watcher.observableQuery;
-            if (oq) {
-              if (onQueryUpdated) {
-                includedQueriesById.delete(oq.queryId);
-                var result2 = onQueryUpdated(oq, diff, lastDiff);
-                return result2 === !0 && (result2 = oq.refetch()), result2 !== !1 && results.set(oq, result2), result2;
-              }
-              onQueryUpdated !== null && includedQueriesById.set(oq.queryId, { oq, lastDiff, diff });
-            }
-          }
-        }), includedQueriesById.size && includedQueriesById.forEach(function(_a3, queryId) {
-          var oq = _a3.oq, lastDiff = _a3.lastDiff, diff = _a3.diff, result2;
-          onQueryUpdated && (diff || (diff = muteDeprecations("canonizeResults", function() {
-            return _this.cache.diff(oq.queryInfo.getDiffOptions());
-          })), result2 = onQueryUpdated(oq, diff, lastDiff)), (!onQueryUpdated || result2 === !0) && (result2 = oq.refetch()), result2 !== !1 && results.set(oq, result2), queryId.indexOf("legacyOneTimeQuery") >= 0 && _this.stopQueryNoBroadcast(queryId);
-        }), removeOptimistic && this.cache.removeOptimistic(removeOptimistic), results;
-      }, QueryManager2.prototype.maskOperation = function(options) {
-        var _a2, _b, _c, document2 = options.document, data2 = options.data;
-        if (globalThis.__DEV__ !== !1) {
-          var fetchPolicy = options.fetchPolicy, id = options.id, operationType = (_a2 = getOperationDefinition(document2)) === null || _a2 === void 0 ? void 0 : _a2.operation, operationId = ((_b = operationType?.[0]) !== null && _b !== void 0 ? _b : "o") + id;
-          this.dataMasking && fetchPolicy === "no-cache" && !isFullyUnmaskedOperation(document2) && !this.noCacheWarningsByQueryId.has(operationId) && (this.noCacheWarningsByQueryId.add(operationId), globalThis.__DEV__ !== !1 && invariant4.warn(
-            45,
-            (_c = getOperationName(document2)) !== null && _c !== void 0 ? _c : "Unnamed ".concat(operationType ?? "operation")
-          ));
-        }
-        return this.dataMasking ? maskOperation(data2, document2, this.cache) : data2;
-      }, QueryManager2.prototype.maskFragment = function(options) {
-        var data2 = options.data, fragment = options.fragment, fragmentName = options.fragmentName;
-        return this.dataMasking ? maskFragment(data2, fragment, this.cache, fragmentName) : data2;
-      }, QueryManager2.prototype.fetchQueryByPolicy = function(queryInfo, _a2, networkStatus) {
-        var _this = this, query = _a2.query, variables = _a2.variables, fetchPolicy = _a2.fetchPolicy, refetchWritePolicy = _a2.refetchWritePolicy, errorPolicy = _a2.errorPolicy, returnPartialData = _a2.returnPartialData, context = _a2.context, notifyOnNetworkStatusChange = _a2.notifyOnNetworkStatusChange, oldNetworkStatus = queryInfo.networkStatus;
-        queryInfo.init({
-          document: query,
-          variables,
-          networkStatus
-        });
-        var readCache = function() {
-          return queryInfo.getDiff();
-        }, resultsFromCache = function(diff2, networkStatus2) {
-          networkStatus2 === void 0 && (networkStatus2 = queryInfo.networkStatus || NetworkStatus.loading);
-          var data2 = diff2.result;
-          globalThis.__DEV__ !== !1 && !returnPartialData && !equal(data2, {}) && logMissingFieldErrors(diff2.missing);
-          var fromData = function(data3) {
-            return Observable.of(__assign({ data: data3, loading: isNetworkRequestInFlight(networkStatus2), networkStatus: networkStatus2 }, diff2.complete ? null : { partial: !0 }));
-          };
-          return data2 && _this.getDocumentInfo(query).hasForcedResolvers ? _this.localState.runResolvers({
-            document: query,
-            remoteResult: { data: data2 },
-            context,
-            variables,
-            onlyRunForcedResolvers: !0
-          }).then(function(resolved) {
-            return fromData(resolved.data || void 0);
-          }) : errorPolicy === "none" && networkStatus2 === NetworkStatus.refetch && Array.isArray(diff2.missing) ? fromData(void 0) : fromData(data2);
-        }, cacheWriteBehavior = fetchPolicy === "no-cache" ? 0 : networkStatus === NetworkStatus.refetch && refetchWritePolicy !== "merge" ? 1 : 2, resultsFromLink = function() {
-          return _this.getResultsFromLink(queryInfo, cacheWriteBehavior, {
-            query,
-            variables,
-            context,
-            fetchPolicy,
-            errorPolicy
-          });
-        }, shouldNotify = notifyOnNetworkStatusChange && typeof oldNetworkStatus == "number" && oldNetworkStatus !== networkStatus && isNetworkRequestInFlight(networkStatus);
-        switch (fetchPolicy) {
-          default:
-          case "cache-first": {
-            var diff = readCache();
-            return diff.complete ? {
-              fromLink: !1,
-              sources: [resultsFromCache(diff, queryInfo.markReady())]
-            } : returnPartialData || shouldNotify ? {
-              fromLink: !0,
-              sources: [resultsFromCache(diff), resultsFromLink()]
-            } : { fromLink: !0, sources: [resultsFromLink()] };
-          }
-          case "cache-and-network": {
-            var diff = readCache();
-            return diff.complete || returnPartialData || shouldNotify ? {
-              fromLink: !0,
-              sources: [resultsFromCache(diff), resultsFromLink()]
-            } : { fromLink: !0, sources: [resultsFromLink()] };
-          }
-          case "cache-only":
-            return {
-              fromLink: !1,
-              sources: [resultsFromCache(readCache(), queryInfo.markReady())]
-            };
-          case "network-only":
-            return shouldNotify ? {
-              fromLink: !0,
-              sources: [resultsFromCache(readCache()), resultsFromLink()]
-            } : { fromLink: !0, sources: [resultsFromLink()] };
-          case "no-cache":
-            return shouldNotify ? {
-              fromLink: !0,
-              // Note that queryInfo.getDiff() for no-cache queries does not call
-              // cache.diff, but instead returns a { complete: false } stub result
-              // when there is no queryInfo.diff already defined.
-              sources: [resultsFromCache(queryInfo.getDiff()), resultsFromLink()]
-            } : { fromLink: !0, sources: [resultsFromLink()] };
-          case "standby":
-            return { fromLink: !1, sources: [] };
-        }
-      }, QueryManager2.prototype.getOrCreateQuery = function(queryId) {
-        return queryId && !this.queries.has(queryId) && this.queries.set(queryId, new QueryInfo(this, queryId)), this.queries.get(queryId);
-      }, QueryManager2.prototype.prepareContext = function(context) {
-        context === void 0 && (context = {});
-        var newContext = this.localState.prepareContext(context);
-        return __assign(__assign(__assign({}, this.defaultContext), newContext), { clientAwareness: this.clientAwareness });
-      }, QueryManager2;
-    })()
-  );
-
-  // internal/ui/src/node_modules/@apollo/client/core/LocalState.js
-  var LocalState = (
-    /** @class */
-    (function() {
-      function LocalState2(_a2) {
-        var cache = _a2.cache, client = _a2.client, resolvers = _a2.resolvers, fragmentMatcher = _a2.fragmentMatcher;
-        this.selectionsToResolveCache = /* @__PURE__ */ new WeakMap(), this.cache = cache, client && (this.client = client), resolvers && this.addResolvers(resolvers), fragmentMatcher && this.setFragmentMatcher(fragmentMatcher);
-      }
-      return LocalState2.prototype.addResolvers = function(resolvers) {
-        var _this = this;
-        this.resolvers = this.resolvers || {}, Array.isArray(resolvers) ? resolvers.forEach(function(resolverGroup) {
-          _this.resolvers = mergeDeep(_this.resolvers, resolverGroup);
-        }) : this.resolvers = mergeDeep(this.resolvers, resolvers);
-      }, LocalState2.prototype.setResolvers = function(resolvers) {
-        this.resolvers = {}, this.addResolvers(resolvers);
-      }, LocalState2.prototype.getResolvers = function() {
-        return this.resolvers || {};
-      }, LocalState2.prototype.runResolvers = function(_a2) {
-        return __awaiter(this, arguments, void 0, function(_b) {
-          var document2 = _b.document, remoteResult = _b.remoteResult, context = _b.context, variables = _b.variables, _c = _b.onlyRunForcedResolvers, onlyRunForcedResolvers = _c === void 0 ? !1 : _c;
-          return __generator(this, function(_d) {
-            return document2 ? [2, this.resolveDocument(document2, remoteResult.data, context, variables, this.fragmentMatcher, onlyRunForcedResolvers).then(function(localResult) {
-              return __assign(__assign({}, remoteResult), { data: localResult.result });
-            })] : [2, remoteResult];
-          });
-        });
-      }, LocalState2.prototype.setFragmentMatcher = function(fragmentMatcher) {
-        this.fragmentMatcher = fragmentMatcher;
-      }, LocalState2.prototype.getFragmentMatcher = function() {
-        return this.fragmentMatcher;
-      }, LocalState2.prototype.clientQuery = function(document2) {
-        return hasDirectives(["client"], document2) && this.resolvers ? document2 : null;
-      }, LocalState2.prototype.serverQuery = function(document2) {
-        return removeClientSetsFromDocument(document2);
-      }, LocalState2.prototype.prepareContext = function(context) {
-        var cache = this.cache;
-        return __assign(__assign({}, context), {
-          cache,
-          // Getting an entry's cache key is useful for local state resolvers.
-          getCacheKey: function(obj) {
-            return cache.identify(obj);
-          }
-        });
-      }, LocalState2.prototype.addExportedVariables = function(document_1) {
-        return __awaiter(this, arguments, void 0, function(document2, variables, context) {
-          return variables === void 0 && (variables = {}), context === void 0 && (context = {}), __generator(this, function(_a2) {
-            return document2 ? [2, this.resolveDocument(document2, this.buildRootValueFromCache(document2, variables) || {}, this.prepareContext(context), variables).then(function(data2) {
-              return __assign(__assign({}, variables), data2.exportedVariables);
-            })] : [2, __assign({}, variables)];
-          });
-        });
-      }, LocalState2.prototype.shouldForceResolvers = function(document2) {
-        var forceResolvers = !1;
-        return visit(document2, {
-          Directive: {
-            enter: function(node) {
-              if (node.name.value === "client" && node.arguments && (forceResolvers = node.arguments.some(function(arg) {
-                return arg.name.value === "always" && arg.value.kind === "BooleanValue" && arg.value.value === !0;
-              }), forceResolvers))
-                return BREAK;
-            }
-          }
-        }), forceResolvers;
-      }, LocalState2.prototype.buildRootValueFromCache = function(document2, variables) {
-        return this.cache.diff({
-          query: buildQueryFromSelectionSet(document2),
-          variables,
-          returnPartialData: !0,
-          optimistic: !1
-        }).result;
-      }, LocalState2.prototype.resolveDocument = function(document_1, rootValue_1) {
-        return __awaiter(this, arguments, void 0, function(document2, rootValue, context, variables, fragmentMatcher, onlyRunForcedResolvers) {
-          var mainDefinition, fragments, fragmentMap, selectionsToResolve, definitionOperation, defaultOperationType, _a2, cache, client, execContext, isClientFieldDescendant;
-          return context === void 0 && (context = {}), variables === void 0 && (variables = {}), fragmentMatcher === void 0 && (fragmentMatcher = function() {
-            return !0;
-          }), onlyRunForcedResolvers === void 0 && (onlyRunForcedResolvers = !1), __generator(this, function(_b) {
-            return mainDefinition = getMainDefinition(document2), fragments = getFragmentDefinitions(document2), fragmentMap = createFragmentMap(fragments), selectionsToResolve = this.collectSelectionsToResolve(mainDefinition, fragmentMap), definitionOperation = mainDefinition.operation, defaultOperationType = definitionOperation ? definitionOperation.charAt(0).toUpperCase() + definitionOperation.slice(1) : "Query", _a2 = this, cache = _a2.cache, client = _a2.client, execContext = {
-              fragmentMap,
-              context: __assign(__assign({}, context), { cache, client }),
-              variables,
-              fragmentMatcher,
-              defaultOperationType,
-              exportedVariables: {},
-              selectionsToResolve,
-              onlyRunForcedResolvers
-            }, isClientFieldDescendant = !1, [2, this.resolveSelectionSet(mainDefinition.selectionSet, isClientFieldDescendant, rootValue, execContext).then(function(result2) {
-              return {
-                result: result2,
-                exportedVariables: execContext.exportedVariables
-              };
-            })];
-          });
-        });
-      }, LocalState2.prototype.resolveSelectionSet = function(selectionSet, isClientFieldDescendant, rootValue, execContext) {
-        return __awaiter(this, void 0, void 0, function() {
-          var fragmentMap, context, variables, resultsToMerge, execute2, _this = this;
-          return __generator(this, function(_a2) {
-            return fragmentMap = execContext.fragmentMap, context = execContext.context, variables = execContext.variables, resultsToMerge = [rootValue], execute2 = function(selection) {
-              return __awaiter(_this, void 0, void 0, function() {
-                var fragment, typeCondition;
-                return __generator(this, function(_a3) {
-                  return !isClientFieldDescendant && !execContext.selectionsToResolve.has(selection) ? [
-                    2
-                    /*return*/
-                  ] : shouldInclude(selection, variables) ? isField(selection) ? [2, this.resolveField(selection, isClientFieldDescendant, rootValue, execContext).then(function(fieldResult) {
-                    var _a4;
-                    typeof fieldResult < "u" && resultsToMerge.push((_a4 = {}, _a4[resultKeyNameFromField(selection)] = fieldResult, _a4));
-                  })] : (isInlineFragment(selection) ? fragment = selection : (fragment = fragmentMap[selection.name.value], invariant4(fragment, 21, selection.name.value)), fragment && fragment.typeCondition && (typeCondition = fragment.typeCondition.name.value, execContext.fragmentMatcher(rootValue, typeCondition, context)) ? [2, this.resolveSelectionSet(fragment.selectionSet, isClientFieldDescendant, rootValue, execContext).then(function(fragmentResult) {
-                    resultsToMerge.push(fragmentResult);
-                  })] : [
-                    2
-                    /*return*/
-                  ]) : [
-                    2
-                    /*return*/
-                  ];
-                });
-              });
-            }, [2, Promise.all(selectionSet.selections.map(execute2)).then(function() {
-              return mergeDeepArray(resultsToMerge);
-            })];
-          });
-        });
-      }, LocalState2.prototype.resolveField = function(field, isClientFieldDescendant, rootValue, execContext) {
-        return __awaiter(this, void 0, void 0, function() {
-          var variables, fieldName, aliasedFieldName, aliasUsed, defaultResult, resultPromise, resolverType, resolverMap, resolve, _this = this;
-          return __generator(this, function(_a2) {
-            return rootValue ? (variables = execContext.variables, fieldName = field.name.value, aliasedFieldName = resultKeyNameFromField(field), aliasUsed = fieldName !== aliasedFieldName, defaultResult = rootValue[aliasedFieldName] || rootValue[fieldName], resultPromise = Promise.resolve(defaultResult), (!execContext.onlyRunForcedResolvers || this.shouldForceResolvers(field)) && (resolverType = rootValue.__typename || execContext.defaultOperationType, resolverMap = this.resolvers && this.resolvers[resolverType], resolverMap && (resolve = resolverMap[aliasUsed ? fieldName : aliasedFieldName], resolve && (resultPromise = Promise.resolve(
-              // In case the resolve function accesses reactive variables,
-              // set cacheSlot to the current cache instance.
-              cacheSlot.withValue(this.cache, resolve, [
-                rootValue,
-                argumentsObjectFromField(field, variables),
-                execContext.context,
-                { field, fragmentMap: execContext.fragmentMap }
-              ])
-            )))), [2, resultPromise.then(function(result2) {
-              var _a3, _b;
-              if (result2 === void 0 && (result2 = defaultResult), field.directives && field.directives.forEach(function(directive) {
-                directive.name.value === "export" && directive.arguments && directive.arguments.forEach(function(arg) {
-                  arg.name.value === "as" && arg.value.kind === "StringValue" && (execContext.exportedVariables[arg.value.value] = result2);
-                });
-              }), !field.selectionSet || result2 == null)
-                return result2;
-              var isClientField = (_b = (_a3 = field.directives) === null || _a3 === void 0 ? void 0 : _a3.some(function(d) {
-                return d.name.value === "client";
-              })) !== null && _b !== void 0 ? _b : !1;
-              if (Array.isArray(result2))
-                return _this.resolveSubSelectedArray(field, isClientFieldDescendant || isClientField, result2, execContext);
-              if (field.selectionSet)
-                return _this.resolveSelectionSet(field.selectionSet, isClientFieldDescendant || isClientField, result2, execContext);
-            })]) : [2, null];
-          });
-        });
-      }, LocalState2.prototype.resolveSubSelectedArray = function(field, isClientFieldDescendant, result2, execContext) {
-        var _this = this;
-        return Promise.all(result2.map(function(item) {
-          if (item === null)
-            return null;
-          if (Array.isArray(item))
-            return _this.resolveSubSelectedArray(field, isClientFieldDescendant, item, execContext);
-          if (field.selectionSet)
-            return _this.resolveSelectionSet(field.selectionSet, isClientFieldDescendant, item, execContext);
-        }));
-      }, LocalState2.prototype.collectSelectionsToResolve = function(mainDefinition, fragmentMap) {
-        var isSingleASTNode = function(node) {
-          return !Array.isArray(node);
-        }, selectionsToResolveCache = this.selectionsToResolveCache;
-        function collectByDefinition(definitionNode) {
-          if (!selectionsToResolveCache.has(definitionNode)) {
-            var matches_1 = /* @__PURE__ */ new Set();
-            selectionsToResolveCache.set(definitionNode, matches_1), visit(definitionNode, {
-              Directive: function(node, _, __, ___, ancestors) {
-                node.name.value === "client" && ancestors.forEach(function(node2) {
-                  isSingleASTNode(node2) && isSelectionNode(node2) && matches_1.add(node2);
-                });
-              },
-              FragmentSpread: function(spread, _, __, ___, ancestors) {
-                var fragment = fragmentMap[spread.name.value];
-                invariant4(fragment, 22, spread.name.value);
-                var fragmentSelections = collectByDefinition(fragment);
-                fragmentSelections.size > 0 && (ancestors.forEach(function(node) {
-                  isSingleASTNode(node) && isSelectionNode(node) && matches_1.add(node);
-                }), matches_1.add(spread), fragmentSelections.forEach(function(selection) {
-                  matches_1.add(selection);
-                }));
-              }
-            });
-          }
-          return selectionsToResolveCache.get(definitionNode);
-        }
-        return collectByDefinition(mainDefinition);
-      }, LocalState2;
-    })()
-  );
-
-  // internal/ui/src/node_modules/@apollo/client/core/ApolloClient.js
-  var hasSuggestedDevtools = !1;
-  var ApolloClient = (
-    /** @class */
-    (function() {
-      function ApolloClient2(options) {
-        var _this = this, _a2, _b, _c;
-        if (this.resetStoreCallbacks = [], this.clearStoreCallbacks = [], !options.cache)
-          throw newInvariantError(16);
-        var uri = options.uri, credentials = options.credentials, headers = options.headers, cache = options.cache, documentTransform = options.documentTransform, _d = options.ssrMode, ssrMode = _d === void 0 ? !1 : _d, _e = options.ssrForceFetchDelay, ssrForceFetchDelay = _e === void 0 ? 0 : _e, connectToDevTools = options.connectToDevTools, _f = options.queryDeduplication, queryDeduplication = _f === void 0 ? !0 : _f, defaultOptions3 = options.defaultOptions, defaultContext = options.defaultContext, _g = options.assumeImmutableResults, assumeImmutableResults = _g === void 0 ? cache.assumeImmutableResults : _g, resolvers = options.resolvers, typeDefs = options.typeDefs, fragmentMatcher = options.fragmentMatcher, clientAwareness = options.clientAwareness, clientAwarenessName = options.name, clientAwarenessVersion = options.version, devtools = options.devtools, dataMasking = options.dataMasking;
-        globalThis.__DEV__ !== !1 && (warnRemovedOption(options, "connectToDevTools", "ApolloClient", "Please use `devtools.enabled` instead."), warnRemovedOption(options, "uri", "ApolloClient", "Please initialize an instance of `HttpLink` with `uri` instead."), warnRemovedOption(options, "credentials", "ApolloClient", "Please initialize an instance of `HttpLink` with `credentials` instead."), warnRemovedOption(options, "headers", "ApolloClient", "Please initialize an instance of `HttpLink` with `headers` instead."), warnRemovedOption(options, "name", "ApolloClient", "Please use the `clientAwareness.name` option instead."), warnRemovedOption(options, "version", "ApolloClient", "Please use the `clientAwareness.version` option instead."), warnRemovedOption(options, "typeDefs", "ApolloClient"), options.link || globalThis.__DEV__ !== !1 && invariant4.warn(17));
-        var link = options.link;
-        link || (link = uri ? new HttpLink({ uri, credentials, headers }) : ApolloLink.empty()), this.link = link, this.cache = cache, this.disableNetworkFetches = ssrMode || ssrForceFetchDelay > 0, this.queryDeduplication = queryDeduplication, this.defaultOptions = defaultOptions3 || /* @__PURE__ */ Object.create(null), this.typeDefs = typeDefs, this.devtoolsConfig = __assign(__assign({}, devtools), { enabled: (_a2 = devtools?.enabled) !== null && _a2 !== void 0 ? _a2 : connectToDevTools }), this.devtoolsConfig.enabled === void 0 && (this.devtoolsConfig.enabled = globalThis.__DEV__ !== !1), ssrForceFetchDelay && setTimeout(function() {
-          return _this.disableNetworkFetches = !1;
-        }, ssrForceFetchDelay), this.watchQuery = this.watchQuery.bind(this), this.query = this.query.bind(this), this.mutate = this.mutate.bind(this), this.watchFragment = this.watchFragment.bind(this), this.resetStore = this.resetStore.bind(this), this.reFetchObservableQueries = this.reFetchObservableQueries.bind(this), this.version = version, this.localState = new LocalState({
-          cache,
-          client: this,
-          resolvers,
-          fragmentMatcher
-        }), this.queryManager = new QueryManager({
-          cache: this.cache,
-          link: this.link,
-          defaultOptions: this.defaultOptions,
-          defaultContext,
-          documentTransform,
-          queryDeduplication,
-          ssrMode,
-          dataMasking: !!dataMasking,
-          clientAwareness: {
-            name: (_b = clientAwareness?.name) !== null && _b !== void 0 ? _b : clientAwarenessName,
-            version: (_c = clientAwareness?.version) !== null && _c !== void 0 ? _c : clientAwarenessVersion
-          },
-          localState: this.localState,
-          assumeImmutableResults,
-          onBroadcast: this.devtoolsConfig.enabled ? function() {
-            _this.devToolsHookCb && _this.devToolsHookCb({
-              action: {},
-              state: {
-                queries: _this.queryManager.getQueryStore(),
-                mutations: _this.queryManager.mutationStore || {}
-              },
-              dataWithOptimisticResults: _this.cache.extract(!0)
-            });
-          } : void 0
-        }), this.devtoolsConfig.enabled && this.connectToDevTools();
-      }
-      return Object.defineProperty(ApolloClient2.prototype, "prioritizeCacheValues", {
-        /**
-         * Whether to prioritize cache values over network results when `query` or `watchQuery` is called.
-         * This will essentially turn a `"network-only"` or `"cache-and-network"` fetchPolicy into a `"cache-first"` fetchPolicy,
-         * but without influencing the `fetchPolicy` of the created `ObservableQuery` long-term.
-         *
-         * This can e.g. be used to prioritize the cache during the first render after SSR.
-         */
-        get: function() {
-          return this.disableNetworkFetches;
-        },
-        set: function(value) {
-          this.disableNetworkFetches = value;
-        },
-        enumerable: !1,
-        configurable: !0
-      }), ApolloClient2.prototype.connectToDevTools = function() {
-        if (!(typeof window > "u")) {
-          var windowWithDevTools = window, devtoolsSymbol = Symbol.for("apollo.devtools");
-          (windowWithDevTools[devtoolsSymbol] = windowWithDevTools[devtoolsSymbol] || []).push(this), windowWithDevTools.__APOLLO_CLIENT__ = this, !hasSuggestedDevtools && globalThis.__DEV__ !== !1 && (hasSuggestedDevtools = !0, window.document && window.top === window.self && /^(https?|file):$/.test(window.location.protocol) && setTimeout(function() {
-            if (!window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__) {
-              var nav = window.navigator, ua = nav && nav.userAgent, url = void 0;
-              typeof ua == "string" && (ua.indexOf("Chrome/") > -1 ? url = "https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm" : ua.indexOf("Firefox/") > -1 && (url = "https://addons.mozilla.org/en-US/firefox/addon/apollo-developer-tools/")), url && globalThis.__DEV__ !== !1 && invariant4.log("Download the Apollo DevTools for a better development experience: %s", url);
-            }
-          }, 1e4));
-        }
-      }, Object.defineProperty(ApolloClient2.prototype, "documentTransform", {
-        /**
-         * The `DocumentTransform` used to modify GraphQL documents before a request
-         * is made. If a custom `DocumentTransform` is not provided, this will be the
-         * default document transform.
-         */
-        get: function() {
-          return this.queryManager.documentTransform;
-        },
-        enumerable: !1,
-        configurable: !0
-      }), ApolloClient2.prototype.stop = function() {
-        this.queryManager.stop();
-      }, ApolloClient2.prototype.watchQuery = function(options) {
-        return this.defaultOptions.watchQuery && (options = mergeOptions(this.defaultOptions.watchQuery, options)), this.disableNetworkFetches && (options.fetchPolicy === "network-only" || options.fetchPolicy === "cache-and-network") && (options = __assign(__assign({}, options), { fetchPolicy: "cache-first" })), globalThis.__DEV__ !== !1 && (warnRemovedOption(options, "canonizeResults", "client.watchQuery"), warnRemovedOption(options, "partialRefetch", "client.watchQuery")), this.queryManager.watchQuery(options);
-      }, ApolloClient2.prototype.query = function(options) {
-        return this.defaultOptions.query && (options = mergeOptions(this.defaultOptions.query, options)), invariant4(options.fetchPolicy !== "cache-and-network", 18), this.disableNetworkFetches && options.fetchPolicy === "network-only" && (options = __assign(__assign({}, options), { fetchPolicy: "cache-first" })), globalThis.__DEV__ !== !1 && (warnRemovedOption(options, "canonizeResults", "client.query"), warnRemovedOption(options, "notifyOnNetworkStatusChange", "client.query", "This option does not affect `client.query` and can be safely removed."), options.fetchPolicy === "standby" && globalThis.__DEV__ !== !1 && invariant4.warn(19)), this.queryManager.query(options);
-      }, ApolloClient2.prototype.mutate = function(options) {
-        return this.defaultOptions.mutate && (options = mergeOptions(this.defaultOptions.mutate, options)), this.queryManager.mutate(options);
-      }, ApolloClient2.prototype.subscribe = function(options) {
-        var _this = this, id = this.queryManager.generateQueryId();
-        return this.queryManager.startGraphQLSubscription(options).map(function(result2) {
-          return __assign(__assign({}, result2), { data: _this.queryManager.maskOperation({
-            document: options.query,
-            data: result2.data,
-            fetchPolicy: options.fetchPolicy,
-            id
-          }) });
-        });
-      }, ApolloClient2.prototype.readQuery = function(options, optimistic) {
-        return optimistic === void 0 && (optimistic = !1), this.cache.readQuery(options, optimistic);
-      }, ApolloClient2.prototype.watchFragment = function(options) {
-        var _a2;
-        return this.cache.watchFragment(__assign(__assign({}, options), (_a2 = {}, _a2[Symbol.for("apollo.dataMasking")] = this.queryManager.dataMasking, _a2)));
-      }, ApolloClient2.prototype.readFragment = function(options, optimistic) {
-        return optimistic === void 0 && (optimistic = !1), this.cache.readFragment(options, optimistic);
-      }, ApolloClient2.prototype.writeQuery = function(options) {
-        var ref = this.cache.writeQuery(options);
-        return options.broadcast !== !1 && this.queryManager.broadcastQueries(), ref;
-      }, ApolloClient2.prototype.writeFragment = function(options) {
-        var ref = this.cache.writeFragment(options);
-        return options.broadcast !== !1 && this.queryManager.broadcastQueries(), ref;
-      }, ApolloClient2.prototype.__actionHookForDevTools = function(cb) {
-        this.devToolsHookCb = cb;
-      }, ApolloClient2.prototype.__requestRaw = function(payload) {
-        return execute(this.link, payload);
-      }, ApolloClient2.prototype.resetStore = function() {
-        var _this = this;
-        return Promise.resolve().then(function() {
-          return _this.queryManager.clearStore({
-            discardWatches: !1
-          });
-        }).then(function() {
-          return Promise.all(_this.resetStoreCallbacks.map(function(fn) {
-            return fn();
-          }));
-        }).then(function() {
-          return _this.reFetchObservableQueries();
-        });
-      }, ApolloClient2.prototype.clearStore = function() {
-        var _this = this;
-        return Promise.resolve().then(function() {
-          return _this.queryManager.clearStore({
-            discardWatches: !0
-          });
-        }).then(function() {
-          return Promise.all(_this.clearStoreCallbacks.map(function(fn) {
-            return fn();
-          }));
-        });
-      }, ApolloClient2.prototype.onResetStore = function(cb) {
-        var _this = this;
-        return this.resetStoreCallbacks.push(cb), function() {
-          _this.resetStoreCallbacks = _this.resetStoreCallbacks.filter(function(c) {
-            return c !== cb;
-          });
-        };
-      }, ApolloClient2.prototype.onClearStore = function(cb) {
-        var _this = this;
-        return this.clearStoreCallbacks.push(cb), function() {
-          _this.clearStoreCallbacks = _this.clearStoreCallbacks.filter(function(c) {
-            return c !== cb;
-          });
-        };
-      }, ApolloClient2.prototype.reFetchObservableQueries = function(includeStandby) {
-        return this.queryManager.reFetchObservableQueries(includeStandby);
-      }, ApolloClient2.prototype.refetchQueries = function(options) {
-        var map = this.queryManager.refetchQueries(options), queries = [], results = [];
-        map.forEach(function(result3, obsQuery) {
-          queries.push(obsQuery), results.push(result3);
-        });
-        var result2 = Promise.all(results);
-        return result2.queries = queries, result2.results = results, result2.catch(function(error) {
-          globalThis.__DEV__ !== !1 && invariant4.debug(20, error);
-        }), result2;
-      }, ApolloClient2.prototype.getObservableQueries = function(include) {
-        return include === void 0 && (include = "active"), this.queryManager.getObservableQueries(include);
-      }, ApolloClient2.prototype.extract = function(optimistic) {
-        return this.cache.extract(optimistic);
-      }, ApolloClient2.prototype.restore = function(serializedState) {
-        return this.cache.restore(serializedState);
-      }, ApolloClient2.prototype.addResolvers = function(resolvers) {
-        this.localState.addResolvers(resolvers);
-      }, ApolloClient2.prototype.setResolvers = function(resolvers) {
-        this.localState.setResolvers(resolvers);
-      }, ApolloClient2.prototype.getResolvers = function() {
-        return this.localState.getResolvers();
-      }, ApolloClient2.prototype.setLocalStateFragmentMatcher = function(fragmentMatcher) {
-        this.localState.setFragmentMatcher(fragmentMatcher);
-      }, ApolloClient2.prototype.setLink = function(newLink) {
-        this.link = this.queryManager.link = newLink;
-      }, Object.defineProperty(ApolloClient2.prototype, "defaultContext", {
-        get: function() {
-          return this.queryManager.defaultContext;
-        },
-        enumerable: !1,
-        configurable: !0
-      }), ApolloClient2;
-    })()
-  );
-  globalThis.__DEV__ !== !1 && (ApolloClient.prototype.getMemoryInternals = getApolloClientMemoryInternals);
-
-  // internal/ui/src/node_modules/@apollo/client/core/index.js
-  setVerbosity(globalThis.__DEV__ !== !1 ? "log" : "silent");
-
-  // internal/ui/src/node_modules/@apollo/client/react/context/ApolloContext.js
-  var React29 = __toESM(require_rehackt(), 1);
-  var contextKey = canUseSymbol ? Symbol.for("__APOLLO_CONTEXT__") : "__APOLLO_CONTEXT__";
-  function getApolloContext() {
-    invariant4("createContext" in React29, 69);
-    var context = React29.createContext[contextKey];
-    return context || (Object.defineProperty(React29.createContext, contextKey, {
-      value: context = React29.createContext({}),
-      enumerable: !1,
-      writable: !1,
-      configurable: !0
-    }), context.displayName = "ApolloContext"), context;
-  }
-
-  // internal/ui/src/node_modules/@apollo/client/react/context/ApolloProvider.js
-  var React30 = __toESM(require_rehackt(), 1);
-  var ApolloProvider = function(_a2) {
-    var client = _a2.client, children = _a2.children, ApolloContext = getApolloContext(), parentContext = React30.useContext(ApolloContext), context = React30.useMemo(function() {
-      return __assign(__assign({}, parentContext), { client: client || parentContext.client });
-    }, [parentContext, client]);
-    return invariant4(context.client, 71), React30.createElement(ApolloContext.Provider, { value: context }, children);
-  };
-
-  // internal/ui/src/app/lib/apolloClient.ts
-  var httpLink = new HttpLink({
-    uri: "/graph/query",
-    credentials: "include"
-    // Ensures cookies are sent with the request
-  }), errorLink = new ApolloLink((operation, forward) => forward(operation).map((response) => (response.errors && response.errors.length > 0 && console.error("GraphQL Errors:", response.errors), response))), apolloClient = new ApolloClient({
-    link: ApolloLink.from([errorLink, httpLink]),
-    cache: new InMemoryCache({
-      typePolicies: {
-        Query: {
-          fields: {
-            // Add type policies as needed
-          }
-        }
-      }
-    }),
-    defaultOptions: {
-      watchQuery: {
-        fetchPolicy: "cache-and-network",
-        errorPolicy: "all"
-      },
-      query: {
-        fetchPolicy: "network-only",
-        errorPolicy: "all"
-      },
-      mutate: {
-        errorPolicy: "all"
-      }
-    }
-  });
-
   // internal/ui/src/index.tsx
   var queryClient = new QueryClient();
-  import_client2.default.createRoot(document.getElementById("root")).render(
-    /* @__PURE__ */ import_react11.default.createElement(import_react11.default.StrictMode, null, /* @__PURE__ */ import_react11.default.createElement(ApolloProvider, { client: apolloClient }, /* @__PURE__ */ import_react11.default.createElement(QueryClientProvider, { client: queryClient }, /* @__PURE__ */ import_react11.default.createElement(ThemeProvider, { defaultTheme: "system", storageKey: "vite-ui-theme" }, /* @__PURE__ */ import_react11.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react11.default.createElement(App_default, null))))))
+  import_client.default.createRoot(document.getElementById("root")).render(
+    /* @__PURE__ */ import_react18.default.createElement(import_react18.default.StrictMode, null, /* @__PURE__ */ import_react18.default.createElement(QueryClientProvider, { client: queryClient }, /* @__PURE__ */ import_react18.default.createElement(ThemeProvider, { defaultTheme: "system", storageKey: "mirra-ui-theme" }, /* @__PURE__ */ import_react18.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react18.default.createElement(App_default, null)))))
   );
 })();
 /*! Bundled license information:

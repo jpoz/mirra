@@ -14,7 +14,8 @@ import {
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { fetchRecordings } from "../lib/api";
-import { getProviderStyles } from "@/lib/providers";
+import { getStatusTextColor, getProviderStyles, getSizeColor } from "@/lib/styles";
+import { formatBytes, truncateId } from "@/lib/formatters";
 
 export default function Recordings() {
   const navigate = useNavigate();
@@ -46,35 +47,6 @@ export default function Recordings() {
 
   const handleRefresh = () => {
     refetch();
-  };
-
-  const truncateId = (id: string) => {
-    return id.substring(0, 8);
-  };
-
-  const getStatusColor = (status: number) => {
-    if (status >= 200 && status < 300)
-      return "text-green-600 dark:text-green-400";
-    if (status >= 400 && status < 500)
-      return "text-yellow-600 dark:text-yellow-400";
-    if (status >= 500) return "text-red-600 dark:text-red-400";
-    return "text-muted-foreground";
-  };
-
-  const formatBytes = (bytes: number): string => {
-    if (bytes === 0) return "0 B";
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
-
-  const getSizeColor = (bytes: number): string => {
-    const tenKB = 10 * 1024;
-    const oneMB = 1024 * 1024;
-
-    if (bytes < tenKB) return "text-green-600 dark:text-green-400";
-    if (bytes < oneMB) return "text-yellow-600 dark:text-yellow-400";
-    return "text-red-600 dark:text-red-400";
   };
 
   return (
@@ -224,7 +196,7 @@ export default function Recordings() {
                           {recording.path}
                         </TableCell>
                         <TableCell
-                          className={`font-medium ${getStatusColor(recording.status)}`}
+                          className={`font-medium ${getStatusTextColor(recording.status)}`}
                         >
                           {recording.status}
                         </TableCell>

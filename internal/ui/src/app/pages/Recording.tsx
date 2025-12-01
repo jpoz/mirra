@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router";
-import RecordingDetail from "../components/RecordingDetail";
+import RecordingDetail from "../components/recording/RecordingDetail";
 import RecordingSidebar from "../components/RecordingSidebar";
 
 export default function Recording() {

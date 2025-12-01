@@ -23,6 +23,11 @@ func (p *OpenAIParser) Parse(body string) (*ParsedStream, error) {
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
 
+		// Skip empty lines and whitespace-only lines
+		if line == "" {
+			continue
+		}
+
 		// OpenAI format: "data: {...}" or "data: [DONE]"
 		if strings.HasPrefix(line, "data: ") {
 			dataContent := strings.TrimPrefix(line, "data: ")
@@ -73,37 +78,47 @@ func (p *OpenAIParser) processChunk(dataJSON string, parsed *ParsedStream) error
 	}
 
 	// Extract text from choices
-	if choices, ok := chunk["choices"].([]interface{}); ok && len(choices) > 0 {
-		if choice, ok := choices[0].(map[string]interface{}); ok {
-			// Extract delta content
-			if delta, ok := choice["delta"].(map[string]interface{}); ok {
-				// Handle text content
-				if content, ok := delta["content"].(string); ok {
-					parsed.Text += content
-				}
+	choices, ok := chunk["choices"].([]interface{})
+	if !ok {
+		// No choices field - this is fine, some chunks don't have it
+		return nil
+	}
+	if len(choices) == 0 {
+		// Empty choices array - this is fine
+		return nil
+	}
 
-				// Handle role (appears in first chunk)
-				if role, ok := delta["role"].(string); ok {
-					parsed.Metadata["role"] = role
-				}
-
-				// Handle tool calls if present
-				if toolCalls, ok := delta["tool_calls"].([]interface{}); ok {
-					p.extractToolCalls(toolCalls, parsed)
-				}
+	if choice, ok := choices[0].(map[string]interface{}); ok {
+		// Extract delta content
+		delta, ok := choice["delta"].(map[string]interface{})
+		if ok && len(delta) > 0 {
+			// Handle text content
+			if content, ok := delta["content"].(string); ok {
+				parsed.Text += content
 			}
 
-			// Extract finish reason from final chunk
-			if finishReason, ok := choice["finish_reason"]; ok && finishReason != nil {
-				if reason, ok := finishReason.(string); ok {
-					parsed.Metadata["finish_reason"] = reason
-				}
+			// Handle role (appears in first chunk)
+			if role, ok := delta["role"].(string); ok {
+				parsed.Metadata["role"] = role
 			}
 
-			// Extract index
-			if index, ok := choice["index"].(float64); ok {
-				parsed.Metadata["choice_index"] = int(index)
+			// Handle tool calls if present
+			if toolCalls, ok := delta["tool_calls"].([]interface{}); ok {
+				p.extractToolCalls(toolCalls, parsed)
 			}
+		}
+		// If delta is empty or missing, we skip it but continue processing other fields
+
+		// Extract finish reason from final chunk
+		if finishReason, ok := choice["finish_reason"]; ok && finishReason != nil {
+			if reason, ok := finishReason.(string); ok {
+				parsed.Metadata["finish_reason"] = reason
+			}
+		}
+
+		// Extract index
+		if index, ok := choice["index"].(float64); ok {
+			parsed.Metadata["choice_index"] = int(index)
 		}
 	}
 

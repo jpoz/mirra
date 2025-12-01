@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { fetchRecordings } from "../lib/api";
-import { getProviderStyles } from "@/lib/providers";
+import { getStatusTextColor, getProviderStyles } from "@/lib/styles";
 
 interface RecordingSidebarProps {
   currentRecordingId: string;
@@ -52,15 +52,6 @@ export default function RecordingSidebar({
   });
 
   const recordings = data?.recordings || [];
-
-  const getStatusColor = (status: number) => {
-    if (status >= 200 && status < 300)
-      return "text-green-600 dark:text-green-400";
-    if (status >= 400 && status < 500)
-      return "text-yellow-600 dark:text-yellow-400";
-    if (status >= 500) return "text-red-600 dark:text-red-400";
-    return "text-muted-foreground";
-  };
 
   // Keyboard navigation
   useEffect(() => {
@@ -155,7 +146,7 @@ export default function RecordingSidebar({
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span
-                      className={`text-xs font-medium ${getStatusColor(recording.status)}`}
+                      className={`text-xs font-medium ${getStatusTextColor(recording.status)}`}
                     >
                       {recording.status} {recording.method}
                     </span>

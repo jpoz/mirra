@@ -160,6 +160,56 @@ data: [DONE]
 	assert.Equal(t, "done", lastEvent.Type)
 }
 
+func TestOpenAIParser_EmptyDelta(t *testing.T) {
+	// OpenAI often sends chunks with empty delta objects
+	sseBody := `data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4","choices":[{"index":0,"delta":{"role":"assistant"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4","choices":[{"index":0,"delta":{},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4","choices":[{"index":0,"delta":{"content":"Hello"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4","choices":[{"index":0,"delta":{"content":" world"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
+`
+
+	parser := NewParser("openai")
+	require.NotNil(t, parser)
+
+	parsed, err := parser.Parse(sseBody)
+	require.NoError(t, err)
+	require.NotNil(t, parsed)
+
+	// Verify text was extracted despite empty deltas
+	assert.Equal(t, "Hello world", parsed.Text)
+	assert.Equal(t, "assistant", parsed.Metadata["role"])
+	assert.Equal(t, "stop", parsed.Metadata["finish_reason"])
+}
+
+func TestOpenAIParser_ExtraWhitespace(t *testing.T) {
+	// Test with extra blank lines and whitespace
+	sseBody := `
+data: {"id":"chatcmpl-123","model":"gpt-4","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+
+data: {"id":"chatcmpl-123","model":"gpt-4","choices":[{"index":0,"delta":{"content":"Test"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","model":"gpt-4","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
+`
+
+	parser := NewParser("openai")
+	parsed, err := parser.Parse(sseBody)
+	require.NoError(t, err)
+
+	// Should handle extra whitespace gracefully
+	assert.Equal(t, "Test", parsed.Text)
+	assert.Equal(t, "stop", parsed.Metadata["finish_reason"])
+}
+
 func TestGeminiParser(t *testing.T) {
 	// Gemini SSE sample
 	sseBody := `data: {"candidates":[{"content":{"parts":[{"text":"The sky"}],"role":"model"},"index":0}],"usageMetadata":{"promptTokenCount":5},"modelVersion":"gemini-2.5-flash-lite","responseId":"abc123"}
