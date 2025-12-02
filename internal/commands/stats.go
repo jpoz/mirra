@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/llmite-ai/mirra/internal/recorder"
+	"github.com/jpoz/mirra/internal/recorder"
 )
 
 func Stats(args []string) error {

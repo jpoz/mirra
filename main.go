@@ -9,11 +9,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/llmite-ai/mirra/internal/commands"
-	"github.com/llmite-ai/mirra/internal/config"
-	"github.com/llmite-ai/mirra/internal/logger"
-	"github.com/llmite-ai/mirra/internal/server"
-	"github.com/llmite-ai/mirra/internal/ui"
+	"github.com/jpoz/mirra/internal/commands"
+	"github.com/jpoz/mirra/internal/config"
+	"github.com/jpoz/mirra/internal/logger"
+	"github.com/jpoz/mirra/internal/server"
+	"github.com/jpoz/mirra/internal/ui"
 )
 
 func main() {

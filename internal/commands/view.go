@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/llmite-ai/mirra/internal/recorder"
-	"github.com/llmite-ai/mirra/internal/sse"
+	"github.com/jpoz/mirra/internal/recorder"
+	"github.com/jpoz/mirra/internal/sse"
 )
 
 func View(args []string) error {
