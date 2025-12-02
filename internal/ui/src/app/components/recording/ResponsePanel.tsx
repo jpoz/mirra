@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, ChevronRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Recording } from "@/lib/api";
 import { formatJSON, formatBody } from "@/lib/formatters";
@@ -13,6 +13,7 @@ interface ResponsePanelProps {
  */
 export function ResponsePanel({ recording }: ResponsePanelProps) {
   const [copied, setCopied] = useState(false);
+  const [headersCollapsed, setHeadersCollapsed] = useState(true);
 
   const copyToClipboard = () => {
     const responseData = formatJSON({
@@ -45,12 +46,22 @@ export function ResponsePanel({ recording }: ResponsePanelProps) {
       </div>
       <div className="p-4 space-y-3">
         <div>
-          <label className="text-sm font-medium text-muted-foreground">
+          <button
+            onClick={() => setHeadersCollapsed(!headersCollapsed)}
+            className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {headersCollapsed ? (
+              <ChevronRight className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
             Headers
-          </label>
-          <pre className="text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono">
-            {formatJSON(recording.response.headers)}
-          </pre>
+          </button>
+          {!headersCollapsed && (
+            <pre className="text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono">
+              {formatJSON(recording.response.headers)}
+            </pre>
+          )}
         </div>
 
         <div>

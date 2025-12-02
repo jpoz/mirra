@@ -20749,36 +20749,42 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/check.js
   var __iconNode2 = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]], Check = createLucideIcon("Check", __iconNode2);
 
+  // internal/ui/src/node_modules/lucide-react/dist/esm/icons/chevron-down.js
+  var __iconNode3 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]], ChevronDown = createLucideIcon("ChevronDown", __iconNode3);
+
+  // internal/ui/src/node_modules/lucide-react/dist/esm/icons/chevron-right.js
+  var __iconNode4 = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]], ChevronRight = createLucideIcon("ChevronRight", __iconNode4);
+
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/copy.js
-  var __iconNode3 = [
+  var __iconNode5 = [
     ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
     ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
-  ], Copy = createLucideIcon("Copy", __iconNode3);
+  ], Copy = createLucideIcon("Copy", __iconNode5);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/loader-circle.js
-  var __iconNode4 = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]], LoaderCircle = createLucideIcon("LoaderCircle", __iconNode4);
+  var __iconNode6 = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]], LoaderCircle = createLucideIcon("LoaderCircle", __iconNode6);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/moon.js
-  var __iconNode5 = [
+  var __iconNode7 = [
     ["path", { d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z", key: "a7tn18" }]
-  ], Moon = createLucideIcon("Moon", __iconNode5);
+  ], Moon = createLucideIcon("Moon", __iconNode7);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/refresh-cw.js
-  var __iconNode6 = [
+  var __iconNode8 = [
     ["path", { d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", key: "v9h5vc" }],
     ["path", { d: "M21 3v5h-5", key: "1q7to0" }],
     ["path", { d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", key: "3uifl3" }],
     ["path", { d: "M8 16H3v5", key: "1cv678" }]
-  ], RefreshCw = createLucideIcon("RefreshCw", __iconNode6);
+  ], RefreshCw = createLucideIcon("RefreshCw", __iconNode8);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/search.js
-  var __iconNode7 = [
+  var __iconNode9 = [
     ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }],
     ["path", { d: "m21 21-4.3-4.3", key: "1qie3q" }]
-  ], Search = createLucideIcon("Search", __iconNode7);
+  ], Search = createLucideIcon("Search", __iconNode9);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/sun.js
-  var __iconNode8 = [
+  var __iconNode10 = [
     ["circle", { cx: "12", cy: "12", r: "4", key: "4exip2" }],
     ["path", { d: "M12 2v2", key: "tus03m" }],
     ["path", { d: "M12 20v2", key: "1lh1kg" }],
@@ -20788,7 +20794,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ["path", { d: "M20 12h2", key: "1q8mjw" }],
     ["path", { d: "m6.34 17.66-1.41 1.41", key: "1m8zz5" }],
     ["path", { d: "m19.07 4.93-1.41 1.41", key: "1shlcs" }]
-  ], Sun = createLucideIcon("Sun", __iconNode8);
+  ], Sun = createLucideIcon("Sun", __iconNode10);
 
   // internal/ui/src/app/components/ui/table.tsx
   var import_react3 = __toESM(require_react(), 1);
@@ -24008,7 +24014,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // internal/ui/src/app/components/recording/RequestPanel.tsx
   var import_react9 = __toESM(require_react(), 1);
   function RequestPanel({ recording }) {
-    let [copied, setCopied] = (0, import_react9.useState)(!1);
+    let [copied, setCopied] = (0, import_react9.useState)(!1), [headersCollapsed, setHeadersCollapsed] = (0, import_react9.useState)(!0);
     return /* @__PURE__ */ import_react9.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react9.default.createElement("h3", { className: "font-semibold" }, "Request"), /* @__PURE__ */ import_react9.default.createElement(Button, { size: "sm", variant: "ghost", onClick: () => {
       let requestData = formatJSON({
         method: recording.request.method,
@@ -24018,13 +24024,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         body: recording.request.body
       });
       navigator.clipboard.writeText(requestData), setCopied(!0), setTimeout(() => setCopied(!1), 2e3);
-    } }, copied ? /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy"))), /* @__PURE__ */ import_react9.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Endpoint"), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-sm mt-1 font-mono" }, recording.request.method, " ", recording.request.path, recording.request.query && `?${recording.request.query}`)), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react9.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono" }, formatJSON(recording.request.headers))), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react9.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono max-h-96" }, formatBody(recording.request.body)))));
+    } }, copied ? /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy"))), /* @__PURE__ */ import_react9.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Endpoint"), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-sm mt-1 font-mono" }, recording.request.method, " ", recording.request.path, recording.request.query && `?${recording.request.query}`)), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement(
+      "button",
+      {
+        onClick: () => setHeadersCollapsed(!headersCollapsed),
+        className: "flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+      },
+      headersCollapsed ? /* @__PURE__ */ import_react9.default.createElement(ChevronRight, { className: "h-4 w-4" }) : /* @__PURE__ */ import_react9.default.createElement(ChevronDown, { className: "h-4 w-4" }),
+      "Headers"
+    ), !headersCollapsed && /* @__PURE__ */ import_react9.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono" }, formatJSON(recording.request.headers))), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react9.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono max-h-96" }, formatBody(recording.request.body)))));
   }
 
   // internal/ui/src/app/components/recording/ResponsePanel.tsx
   var import_react10 = __toESM(require_react(), 1);
   function ResponsePanel({ recording }) {
-    let [copied, setCopied] = (0, import_react10.useState)(!1);
+    let [copied, setCopied] = (0, import_react10.useState)(!1), [headersCollapsed, setHeadersCollapsed] = (0, import_react10.useState)(!0);
     return /* @__PURE__ */ import_react10.default.createElement("div", { className: "bg-card border rounded-md" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center justify-between p-3 bg-muted/30 border-b" }, /* @__PURE__ */ import_react10.default.createElement("h3", { className: "font-semibold" }, "Response"), /* @__PURE__ */ import_react10.default.createElement(Button, { size: "sm", variant: "ghost", onClick: () => {
       let responseData = formatJSON({
         status: recording.response.status,
@@ -24032,7 +24046,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         body: recording.response.body
       });
       navigator.clipboard.writeText(responseData), setCopied(!0), setTimeout(() => setCopied(!1), 2e3);
-    } }, copied ? /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy"))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Headers"), /* @__PURE__ */ import_react10.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono" }, formatJSON(recording.response.headers))), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react10.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono max-h-96" }, formatBody(recording.response.body)))));
+    } }, copied ? /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy"))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "p-4 space-y-3" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement(
+      "button",
+      {
+        onClick: () => setHeadersCollapsed(!headersCollapsed),
+        className: "flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+      },
+      headersCollapsed ? /* @__PURE__ */ import_react10.default.createElement(ChevronRight, { className: "h-4 w-4" }) : /* @__PURE__ */ import_react10.default.createElement(ChevronDown, { className: "h-4 w-4" }),
+      "Headers"
+    ), !headersCollapsed && /* @__PURE__ */ import_react10.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono" }, formatJSON(recording.response.headers))), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "text-sm font-medium text-muted-foreground" }, "Body"), /* @__PURE__ */ import_react10.default.createElement("pre", { className: "text-xs bg-muted p-3 rounded-md overflow-x-auto mt-1 font-mono max-h-96" }, formatBody(recording.response.body)))));
   }
 
   // internal/ui/src/app/components/recording/ParsedResponsePanel.tsx
@@ -24365,6 +24387,8 @@ lucide-react/dist/esm/Icon.js:
 lucide-react/dist/esm/createLucideIcon.js:
 lucide-react/dist/esm/icons/arrow-left.js:
 lucide-react/dist/esm/icons/check.js:
+lucide-react/dist/esm/icons/chevron-down.js:
+lucide-react/dist/esm/icons/chevron-right.js:
 lucide-react/dist/esm/icons/copy.js:
 lucide-react/dist/esm/icons/loader-circle.js:
 lucide-react/dist/esm/icons/moon.js:
