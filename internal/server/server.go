@@ -7,38 +7,60 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/llmite-ai/mirra/internal/api"
 	"github.com/llmite-ai/mirra/internal/config"
 	"github.com/llmite-ai/mirra/internal/proxy"
 	"github.com/llmite-ai/mirra/internal/recorder"
+	"github.com/llmite-ai/mirra/internal/ui"
 )
 
 type Server struct {
-	cfg      *config.Config
-	proxy    *proxy.Proxy
-	recorder *recorder.Recorder
+	cfg       *config.Config
+	proxy     *proxy.Proxy
+	recorder  *recorder.Recorder
+	log       *slog.Logger
+	uiManager *ui.Manager
 }
 
-func New(cfg *config.Config) *Server {
+func New(cfg *config.Config, log *slog.Logger, uiManager *ui.Manager) *Server {
 	rec := recorder.New(cfg.Recording.Enabled, cfg.Recording.Path)
 
 	return &Server{
-		cfg:      cfg,
-		recorder: rec,
-		proxy:    proxy.New(cfg, rec),
+		cfg:       cfg,
+		recorder:  rec,
+		proxy:     proxy.New(cfg, rec),
+		log:       log,
+		uiManager: uiManager,
 	}
 }
 
 func (s *Server) Start(ctx context.Context) error {
 	mux := http.NewServeMux()
 
+	// API handlers
+	apiHandlers := api.NewHandlers(s.cfg, s.log, s.recorder)
+	mux.Handle("GET /api/recordings", http.HandlerFunc(apiHandlers.ListRecordings))
+	mux.Handle("GET /api/recordings/{id}/parse", http.HandlerFunc(apiHandlers.ParseRecording))
+	mux.Handle("GET /api/recordings/{id}", http.HandlerFunc(apiHandlers.GetRecording))
+
 	// Health check endpoint
-	mux.HandleFunc("/health", s.healthHandler)
-	// Catch-all for unmatched routes proxy
-	mux.HandleFunc("/{path...}", s.proxy.Handle)
+	mux.Handle("GET /health", http.HandlerFunc(s.healthHandler))
+
+	// UI source files
+	mux.Handle("GET /src/", s.uiManager.SrcHandler("/src"))
+
+	// UI static files (GET requests to root)
+	mux.Handle("GET /", s.uiManager.Static("internal/ui/static", "/"))
+
+	// Proxy catch-all (all other requests)
+	mux.HandleFunc("/", s.proxy.Handle)
+
+	// Wrap mux with logging middleware
+	handler := s.loggingMiddleware(mux)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", s.cfg.Port),
-		Handler: mux,
+		Handler: handler,
 	}
 
 	errChan := make(chan error, 1)
@@ -74,4 +96,46 @@ func (s *Server) Start(ctx context.Context) error {
 func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write([]byte("OK"))
+}
+
+// GetRecorder returns the server's recorder instance
+func (s *Server) GetRecorder() *recorder.Recorder {
+	return s.recorder
+}
+
+// loggingMiddleware wraps an http.Handler to log request details
+func (s *Server) loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+
+		// Wrap response writer to capture status code
+		ww := &responseWriter{ResponseWriter: w, statusCode: http.StatusOK}
+
+		next.ServeHTTP(ww, r)
+
+		duration := time.Since(start)
+		s.log.Info("request",
+			"method", r.Method,
+			"path", r.URL.Path,
+			"status", ww.statusCode,
+			"duration", duration,
+		)
+	})
+}
+
+// responseWriter wraps http.ResponseWriter to capture status code
+type responseWriter struct {
+	http.ResponseWriter
+	statusCode int
+}
+
+func (rw *responseWriter) WriteHeader(code int) {
+	rw.statusCode = code
+	rw.ResponseWriter.WriteHeader(code)
+}
+
+func (rw *responseWriter) Flush() {
+	if flusher, ok := rw.ResponseWriter.(http.Flusher); ok {
+		flusher.Flush()
+	}
 }

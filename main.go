@@ -13,11 +13,12 @@ import (
 	"github.com/llmite-ai/mirra/internal/config"
 	"github.com/llmite-ai/mirra/internal/logger"
 	"github.com/llmite-ai/mirra/internal/server"
+	"github.com/llmite-ai/mirra/internal/ui"
 )
 
 func main() {
 	// Initialize default logger for commands
-	log := logger.NewLogger("pretty", "info", os.Stdout)
+	log := logger.NewLogger(os.Getenv("LOG_OUTPUT"), os.Getenv("LOG_LEVEL"), os.Stdout)
 	slog.SetDefault(log)
 
 	if len(os.Args) < 2 {
@@ -44,6 +45,11 @@ func main() {
 	case "view":
 		if err := commands.View(args); err != nil {
 			slog.Error("view failed", "error", err)
+			os.Exit(1)
+		}
+	case "reindex":
+		if err := commands.Reindex(args); err != nil {
+			slog.Error("reindex failed", "error", err)
 			os.Exit(1)
 		}
 	case "help", "-h", "--help":
@@ -79,7 +85,8 @@ func startCommand(args []string) {
 	log := logger.NewLogger(cfg.Logging.Format, cfg.Logging.Level, os.Stdout)
 	slog.SetDefault(log)
 
-	srv := server.New(cfg)
+	uiManager := ui.NewManager(ui.WithLogger(log))
+	srv := server.New(cfg, log, uiManager)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -107,13 +114,15 @@ Usage:
   mirra export [--from YYYY-MM-DD] [--to YYYY-MM-DD] [--provider claude|openai|gemini] [--output file.jsonl]
   mirra stats [--from YYYY-MM-DD] [--provider claude|openai|gemini]
   mirra view <recording-id>
+  mirra reindex [--recordings ./recordings]
   mirra help
 
 Commands:
-  start   - Start the proxy server
-  export  - Export recordings to a file
-  stats   - Show statistics about recordings
-  view    - View a specific recording
-  help    - Show this help message`
+  start    - Start the proxy server
+  export   - Export recordings to a file
+  stats    - Show statistics about recordings
+  view     - View a specific recording
+  reindex  - Rebuild the recording index for faster lookups
+  help     - Show this help message`
 	_, _ = fmt.Fprintln(os.Stdout, usage)
 }

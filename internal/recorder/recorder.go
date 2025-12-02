@@ -13,13 +13,14 @@ import (
 )
 
 type Recording struct {
-	ID        string       `json:"id"`
-	Timestamp time.Time    `json:"timestamp"`
-	Provider  string       `json:"provider"`
-	Request   RequestData  `json:"request"`
-	Response  ResponseData `json:"response"`
-	Timing    TimingData   `json:"timing"`
-	Error     string       `json:"error,omitempty"`
+	ID           string       `json:"id"`
+	Timestamp    time.Time    `json:"timestamp"`
+	Provider     string       `json:"provider"`
+	Request      RequestData  `json:"request"`
+	Response     ResponseData `json:"response"`
+	ResponseSize int64        `json:"responseSize"`
+	Timing       TimingData   `json:"timing"`
+	Error        string       `json:"error,omitempty"`
 }
 
 type RequestData struct {
@@ -50,6 +51,7 @@ type Recorder struct {
 	recordChan chan Recording
 	stopChan   chan struct{}
 	wg         sync.WaitGroup
+	index      *Index
 }
 
 func New(enabled bool, path string) *Recorder {
@@ -58,6 +60,7 @@ func New(enabled bool, path string) *Recorder {
 		path:       path,
 		recordChan: make(chan Recording, 100),
 		stopChan:   make(chan struct{}),
+		index:      NewIndex(path),
 	}
 
 	if enabled {
@@ -65,6 +68,20 @@ func New(enabled bool, path string) *Recorder {
 			slog.Error("failed to create recordings directory", "error", err, "path", path)
 			r.enabled = false
 			return r
+		}
+
+		// Load or rebuild index
+		if err := r.index.Load(); err != nil {
+			slog.Error("failed to load index, will rebuild", "error", err)
+			if err := r.index.Rebuild(); err != nil {
+				slog.Error("failed to rebuild index", "error", err)
+			}
+		} else if r.index.Size() == 0 {
+			// Index is empty, rebuild it
+			slog.Info("index is empty, rebuilding from existing recordings")
+			if err := r.index.Rebuild(); err != nil {
+				slog.Error("failed to rebuild index", "error", err)
+			}
 		}
 
 		r.wg.Add(1)
@@ -118,6 +135,13 @@ func (r *Recorder) writeRecording(rec Recording) error {
 	filename := fmt.Sprintf("recordings-%s.jsonl", time.Now().Format("2006-01-02"))
 	fullPath := filepath.Join(r.path, filename)
 
+	// Get current file size to determine offset
+	stat, err := os.Stat(fullPath)
+	var offset int64
+	if err == nil {
+		offset = stat.Size()
+	}
+
 	f, err := os.OpenFile(fullPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return fmt.Errorf("failed to open file: %w", err)
@@ -131,9 +155,20 @@ func (r *Recorder) writeRecording(rec Recording) error {
 		return fmt.Errorf("failed to marshal recording: %w", err)
 	}
 
+	length := int64(len(data))
 	if _, err := f.Write(append(data, '\n')); err != nil {
 		return fmt.Errorf("failed to write recording: %w", err)
 	}
+
+	// Update index
+	r.index.Add(IndexEntry{
+		ID:        rec.ID,
+		Filename:  filename,
+		Offset:    offset,
+		Length:    length,
+		Timestamp: rec.Timestamp,
+		Provider:  rec.Provider,
+	})
 
 	return nil
 }
@@ -145,13 +180,31 @@ func (r *Recorder) Close() error {
 
 	close(r.stopChan)
 	r.wg.Wait()
+
+	// Save index before closing
+	if err := r.index.Save(); err != nil {
+		slog.Error("failed to save index", "error", err)
+		return err
+	}
+
 	return nil
 }
 
+// GetIndex returns the recorder's index for use by API handlers
+func (r *Recorder) GetIndex() *Index {
+	return r.index
+}
+
 func NewRecording(provider, method, path, query string, startTime time.Time) Recording {
+	// Generate timestamp-prefixed ID for efficient file-based lookups
+	// Format: YYYYMMDD-{uuid} allows us to determine which day's file to search
+	timestamp := time.Now()
+	datePrefix := timestamp.Format("20060102")
+	id := fmt.Sprintf("%s-%s", datePrefix, uuid.New().String())
+
 	return Recording{
-		ID:        uuid.New().String(),
-		Timestamp: time.Now(),
+		ID:        id,
+		Timestamp: timestamp,
 		Provider:  provider,
 		Request: RequestData{
 			Method:  method,

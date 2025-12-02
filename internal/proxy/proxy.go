@@ -264,6 +264,9 @@ func (p *Proxy) handleRegular(w http.ResponseWriter, body io.Reader, rec *record
 		return
 	}
 
+	// Set response size
+	rec.ResponseSize = int64(buf.Len())
+
 	if buf.Len() > 0 {
 		// Check if response is gzipped
 		isGzipped := false
@@ -321,6 +324,9 @@ func (p *Proxy) handleStreaming(w http.ResponseWriter, body io.Reader, rec *reco
 	if err := scanner.Err(); err != nil {
 		slog.Error("error reading stream", "id", rec.ID[:8], "error", err)
 	}
+
+	// Set response size
+	rec.ResponseSize = int64(accumulated.Len())
 
 	if accumulated.Len() > 0 {
 		// Store streaming responses as string (they contain SSE format)
