@@ -1,4 +1,4 @@
-module github.com/llmite-ai/mirra
+module github.com/jpoz/mirra
 
 go 1.23.0
 

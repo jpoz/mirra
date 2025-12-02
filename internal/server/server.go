@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/llmite-ai/mirra/internal/api"
-	"github.com/llmite-ai/mirra/internal/config"
-	"github.com/llmite-ai/mirra/internal/proxy"
-	"github.com/llmite-ai/mirra/internal/recorder"
-	"github.com/llmite-ai/mirra/internal/ui"
+	"github.com/jpoz/mirra/internal/api"
+	"github.com/jpoz/mirra/internal/config"
+	"github.com/jpoz/mirra/internal/proxy"
+	"github.com/jpoz/mirra/internal/recorder"
+	"github.com/jpoz/mirra/internal/ui"
 )
 
 type Server struct {

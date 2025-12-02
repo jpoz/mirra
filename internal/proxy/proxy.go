@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/llmite-ai/mirra/internal/config"
-	"github.com/llmite-ai/mirra/internal/recorder"
+	"github.com/jpoz/mirra/internal/config"
+	"github.com/jpoz/mirra/internal/recorder"
 )
 
 type Proxy struct {
