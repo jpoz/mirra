@@ -77,7 +77,7 @@ export default function RecordingDetail({ recordingId }: RecordingDetailProps) {
 
   return (
     <div className="w-full h-full flex flex-col bg-background text-foreground">
-      <RecordingHeader recordingId={recordingId} />
+      <RecordingHeader recordingId={recordingId} recording={recording} />
 
       <div className="flex-1 flex flex-col overflow-hidden bg-background">
         <div className="bg-card border-b">

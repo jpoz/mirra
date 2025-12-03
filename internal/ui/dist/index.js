@@ -739,7 +739,7 @@ See https://reactjs.org/link/invalid-hook-call for tips about how to debug and f
           }
           return dispatcher.useContext(Context);
         }
-        function useState12(initialState2) {
+        function useState13(initialState2) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState2);
         }
@@ -1280,7 +1280,7 @@ Check the top-level render call using <` + parentName + ">.");
           toArray,
           only: onlyChild
         };
-        exports.Children = Children3, exports.Component = Component4, exports.Fragment = REACT_FRAGMENT_TYPE, exports.Profiler = REACT_PROFILER_TYPE, exports.PureComponent = PureComponent, exports.StrictMode = REACT_STRICT_MODE_TYPE, exports.Suspense = REACT_SUSPENSE_TYPE, exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals, exports.act = act, exports.cloneElement = cloneElement$1, exports.createContext = createContext9, exports.createElement = createElement$1, exports.createFactory = createFactory, exports.createRef = createRef, exports.forwardRef = forwardRef6, exports.isValidElement = isValidElement3, exports.lazy = lazy, exports.memo = memo2, exports.startTransition = startTransition3, exports.unstable_act = act, exports.useCallback = useCallback7, exports.useContext = useContext10, exports.useDebugValue = useDebugValue, exports.useDeferredValue = useDeferredValue, exports.useEffect = useEffect11, exports.useId = useId2, exports.useImperativeHandle = useImperativeHandle, exports.useInsertionEffect = useInsertionEffect, exports.useLayoutEffect = useLayoutEffect4, exports.useMemo = useMemo5, exports.useReducer = useReducer, exports.useRef = useRef6, exports.useState = useState12, exports.useSyncExternalStore = useSyncExternalStore2, exports.useTransition = useTransition2, exports.version = ReactVersion, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+        exports.Children = Children3, exports.Component = Component4, exports.Fragment = REACT_FRAGMENT_TYPE, exports.Profiler = REACT_PROFILER_TYPE, exports.PureComponent = PureComponent, exports.StrictMode = REACT_STRICT_MODE_TYPE, exports.Suspense = REACT_SUSPENSE_TYPE, exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals, exports.act = act, exports.cloneElement = cloneElement$1, exports.createContext = createContext9, exports.createElement = createElement$1, exports.createFactory = createFactory, exports.createRef = createRef, exports.forwardRef = forwardRef6, exports.isValidElement = isValidElement3, exports.lazy = lazy, exports.memo = memo2, exports.startTransition = startTransition3, exports.unstable_act = act, exports.useCallback = useCallback7, exports.useContext = useContext10, exports.useDebugValue = useDebugValue, exports.useDeferredValue = useDeferredValue, exports.useEffect = useEffect11, exports.useId = useId2, exports.useImperativeHandle = useImperativeHandle, exports.useInsertionEffect = useInsertionEffect, exports.useLayoutEffect = useLayoutEffect4, exports.useMemo = useMemo5, exports.useReducer = useReducer, exports.useRef = useRef6, exports.useState = useState13, exports.useSyncExternalStore = useSyncExternalStore2, exports.useTransition = useTransition2, exports.version = ReactVersion, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
       })();
     }
   });
@@ -20761,30 +20761,37 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
   ], Copy = createLucideIcon("Copy", __iconNode5);
 
+  // internal/ui/src/node_modules/lucide-react/dist/esm/icons/download.js
+  var __iconNode6 = [
+    ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
+    ["polyline", { points: "7 10 12 15 17 10", key: "2ggqvy" }],
+    ["line", { x1: "12", x2: "12", y1: "15", y2: "3", key: "1vk2je" }]
+  ], Download = createLucideIcon("Download", __iconNode6);
+
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/loader-circle.js
-  var __iconNode6 = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]], LoaderCircle = createLucideIcon("LoaderCircle", __iconNode6);
+  var __iconNode7 = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]], LoaderCircle = createLucideIcon("LoaderCircle", __iconNode7);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/moon.js
-  var __iconNode7 = [
+  var __iconNode8 = [
     ["path", { d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z", key: "a7tn18" }]
-  ], Moon = createLucideIcon("Moon", __iconNode7);
+  ], Moon = createLucideIcon("Moon", __iconNode8);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/refresh-cw.js
-  var __iconNode8 = [
+  var __iconNode9 = [
     ["path", { d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", key: "v9h5vc" }],
     ["path", { d: "M21 3v5h-5", key: "1q7to0" }],
     ["path", { d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", key: "3uifl3" }],
     ["path", { d: "M8 16H3v5", key: "1cv678" }]
-  ], RefreshCw = createLucideIcon("RefreshCw", __iconNode8);
+  ], RefreshCw = createLucideIcon("RefreshCw", __iconNode9);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/search.js
-  var __iconNode9 = [
+  var __iconNode10 = [
     ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }],
     ["path", { d: "m21 21-4.3-4.3", key: "1qie3q" }]
-  ], Search = createLucideIcon("Search", __iconNode9);
+  ], Search = createLucideIcon("Search", __iconNode10);
 
   // internal/ui/src/node_modules/lucide-react/dist/esm/icons/sun.js
-  var __iconNode10 = [
+  var __iconNode11 = [
     ["circle", { cx: "12", cy: "12", r: "4", key: "4exip2" }],
     ["path", { d: "M12 2v2", key: "tus03m" }],
     ["path", { d: "M12 20v2", key: "1lh1kg" }],
@@ -20794,7 +20801,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ["path", { d: "M20 12h2", key: "1q8mjw" }],
     ["path", { d: "m6.34 17.66-1.41 1.41", key: "1m8zz5" }],
     ["path", { d: "m19.07 4.93-1.41 1.41", key: "1shlcs" }]
-  ], Sun = createLucideIcon("Sun", __iconNode10);
+  ], Sun = createLucideIcon("Sun", __iconNode11);
 
   // internal/ui/src/app/components/ui/table.tsx
   var import_react3 = __toESM(require_react(), 1);
@@ -23953,8 +23960,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // internal/ui/src/app/components/recording/RecordingHeader.tsx
   var import_react5 = __toESM(require_react(), 1);
-  function RecordingHeader({ recordingId }) {
-    let navigate = useNavigate();
+  function RecordingHeader({ recordingId, recording }) {
+    let navigate = useNavigate(), [copied, setCopied] = (0, import_react5.useState)(!1);
     return /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between p-6 border-b bg-card" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement(
       "button",
       {
@@ -23963,7 +23970,42 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         "aria-label": "Back to recordings list"
       },
       /* @__PURE__ */ import_react5.default.createElement(ArrowLeft, { className: "h-5 w-5" })
-    ), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-xl font-bold" }, "Recording Details"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground font-mono mt-1" }, recordingId))));
+    ), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-xl font-bold" }, "Recording Details"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-muted-foreground font-mono mt-1" }, recordingId))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement(
+      Button,
+      {
+        size: "sm",
+        variant: "outline",
+        onClick: async () => {
+          if (recording)
+            try {
+              let recordingJson = JSON.stringify(recording, null, 2);
+              await navigator.clipboard.writeText(recordingJson), setCopied(!0), setTimeout(() => setCopied(!1), 2e3);
+            } catch (error) {
+              console.error("Failed to copy:", error);
+            }
+        },
+        disabled: !recording
+      },
+      copied ? /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Check, { className: "h-4 w-4 mr-1" }), "Copied") : /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(Copy, { className: "h-4 w-4 mr-1" }), "Copy JSON")
+    ), /* @__PURE__ */ import_react5.default.createElement(
+      Button,
+      {
+        size: "sm",
+        variant: "outline",
+        onClick: () => {
+          if (recording)
+            try {
+              let recordingJson = JSON.stringify(recording, null, 2), blob = new Blob([recordingJson], { type: "application/json" }), url = URL.createObjectURL(blob), link = document.createElement("a");
+              link.href = url, link.download = `recording-${recording.id}.json`, document.body.appendChild(link), link.click(), document.body.removeChild(link), URL.revokeObjectURL(url);
+            } catch (error) {
+              console.error("Failed to download:", error);
+            }
+        },
+        disabled: !recording
+      },
+      /* @__PURE__ */ import_react5.default.createElement(Download, { className: "h-4 w-4 mr-1" }),
+      "Download"
+    )));
   }
 
   // internal/ui/src/app/components/recording/RecordingMetadata.tsx
@@ -24117,7 +24159,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       queryFn: () => fetchParsedRecording(recordingId),
       enabled: activeTab === "parsed" && !!recording?.response.streaming
     });
-    return isLoadingRecording && !recording ? /* @__PURE__ */ import_react12.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react12.default.createElement(LoaderCircle, { className: "h-8 w-8 animate-spin text-primary" }), /* @__PURE__ */ import_react12.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Loading recording...")) : recording ? /* @__PURE__ */ import_react12.default.createElement("div", { className: "w-full h-full flex flex-col bg-background text-foreground" }, /* @__PURE__ */ import_react12.default.createElement(RecordingHeader, { recordingId }), /* @__PURE__ */ import_react12.default.createElement("div", { className: "flex-1 flex flex-col overflow-hidden bg-background" }, /* @__PURE__ */ import_react12.default.createElement("div", { className: "bg-card border-b" }, /* @__PURE__ */ import_react12.default.createElement("div", { className: "p-6 pb-0" }, /* @__PURE__ */ import_react12.default.createElement(RecordingMetadata, { recording }), recording.error && /* @__PURE__ */ import_react12.default.createElement(RecordingError, { error: recording.error }), /* @__PURE__ */ import_react12.default.createElement(
+    return isLoadingRecording && !recording ? /* @__PURE__ */ import_react12.default.createElement("div", { className: "flex-1 flex items-center justify-center py-12" }, /* @__PURE__ */ import_react12.default.createElement(LoaderCircle, { className: "h-8 w-8 animate-spin text-primary" }), /* @__PURE__ */ import_react12.default.createElement("span", { className: "ml-2 text-muted-foreground" }, "Loading recording...")) : recording ? /* @__PURE__ */ import_react12.default.createElement("div", { className: "w-full h-full flex flex-col bg-background text-foreground" }, /* @__PURE__ */ import_react12.default.createElement(RecordingHeader, { recordingId, recording }), /* @__PURE__ */ import_react12.default.createElement("div", { className: "flex-1 flex flex-col overflow-hidden bg-background" }, /* @__PURE__ */ import_react12.default.createElement("div", { className: "bg-card border-b" }, /* @__PURE__ */ import_react12.default.createElement("div", { className: "p-6 pb-0" }, /* @__PURE__ */ import_react12.default.createElement(RecordingMetadata, { recording }), recording.error && /* @__PURE__ */ import_react12.default.createElement(RecordingError, { error: recording.error }), /* @__PURE__ */ import_react12.default.createElement(
       RecordingTabs,
       {
         activeTab,
@@ -24390,6 +24432,7 @@ lucide-react/dist/esm/icons/check.js:
 lucide-react/dist/esm/icons/chevron-down.js:
 lucide-react/dist/esm/icons/chevron-right.js:
 lucide-react/dist/esm/icons/copy.js:
+lucide-react/dist/esm/icons/download.js:
 lucide-react/dist/esm/icons/loader-circle.js:
 lucide-react/dist/esm/icons/moon.js:
 lucide-react/dist/esm/icons/refresh-cw.js:
