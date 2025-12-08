@@ -52,6 +52,16 @@ func main() {
 			slog.Error("reindex failed", "error", err)
 			os.Exit(1)
 		}
+	case "groups":
+		if err := commands.Groups(args); err != nil {
+			slog.Error("groups failed", "error", err)
+			os.Exit(1)
+		}
+	case "clear":
+		if err := commands.Clear(args); err != nil {
+			slog.Error("clear failed", "error", err)
+			os.Exit(1)
+		}
 	case "help", "-h", "--help":
 		printUsage()
 	default:
@@ -115,6 +125,8 @@ Usage:
   mirra stats [--from YYYY-MM-DD] [--provider claude|openai|gemini]
   mirra view <recording-id>
   mirra reindex [--recordings ./recordings]
+  mirra groups sessions [--limit 20] [--provider <provider>] [--from YYYY-MM-DD] [--to YYYY-MM-DD] [--errors]
+  mirra clear [--recordings ./recordings] [--force]
   mirra help
 
 Commands:
@@ -123,6 +135,8 @@ Commands:
   stats    - Show statistics about recordings
   view     - View a specific recording
   reindex  - Rebuild the recording index for faster lookups
+  groups   - List and view session groups
+  clear    - Delete all recordings and reset the database
   help     - Show this help message`
 	_, _ = fmt.Fprintln(os.Stdout, usage)
 }
