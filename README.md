@@ -6,6 +6,25 @@ A transparent HTTP proxy for Large Language Model APIs that records all request/
 
 MIRRA acts as a pass-through intermediary for inspection, auditing, and analysis of LLM API usage. Currently supports Claude (Anthropic), OpenAI, and Google Gemini APIs.
 
+## Quick Installation
+
+Install directly with Go:
+```bash
+go install github.com/jpoz/mirra@latest
+```
+
+Or build from source:
+```bash
+git clone https://github.com/jpoz/mirra.git
+cd mirra
+go build -o mirra .
+```
+
+Then start the proxy:
+```bash
+mirra start
+```
+
 ## Features
 
 - **Transparent proxying**: Requests and responses pass through unmodified

@@ -45,13 +45,21 @@ type TimingData struct {
 }
 
 type Recorder struct {
-	enabled    bool
-	path       string
-	mu         sync.Mutex
-	recordChan chan Recording
-	stopChan   chan struct{}
-	wg         sync.WaitGroup
-	index      *Index
+	enabled      bool
+	path         string
+	mu           sync.Mutex
+	recordChan   chan Recording
+	stopChan     chan struct{}
+	wg           sync.WaitGroup
+	index        *Index
+	groupManager GroupManager
+}
+
+// GroupManager is an interface for grouping recordings
+// This allows the recorder to be decoupled from the grouping implementation
+type GroupManager interface {
+	OnRecordingWrite(*Recording) error
+	Close() error
 }
 
 func New(enabled bool, path string) *Recorder {
@@ -170,6 +178,14 @@ func (r *Recorder) writeRecording(rec Recording) error {
 		Provider:  rec.Provider,
 	})
 
+	// Update grouping indexes if enabled
+	if r.groupManager != nil {
+		if err := r.groupManager.OnRecordingWrite(&rec); err != nil {
+			slog.Error("failed to update grouping indexes", "error", err, "id", rec.ID)
+			// Don't fail the recording write if grouping fails
+		}
+	}
+
 	return nil
 }
 
@@ -181,6 +197,13 @@ func (r *Recorder) Close() error {
 	close(r.stopChan)
 	r.wg.Wait()
 
+	// Close grouping manager first
+	if r.groupManager != nil {
+		if err := r.groupManager.Close(); err != nil {
+			slog.Error("failed to close grouping manager", "error", err)
+		}
+	}
+
 	// Save index before closing
 	if err := r.index.Save(); err != nil {
 		slog.Error("failed to save index", "error", err)
@@ -188,6 +211,11 @@ func (r *Recorder) Close() error {
 	}
 
 	return nil
+}
+
+// SetGroupManager sets the group manager for this recorder
+func (r *Recorder) SetGroupManager(gm GroupManager) {
+	r.groupManager = gm
 }
 
 // GetIndex returns the recorder's index for use by API handlers

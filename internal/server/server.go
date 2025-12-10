@@ -9,28 +9,39 @@ import (
 
 	"github.com/jpoz/mirra/internal/api"
 	"github.com/jpoz/mirra/internal/config"
+	"github.com/jpoz/mirra/internal/grouping"
 	"github.com/jpoz/mirra/internal/proxy"
 	"github.com/jpoz/mirra/internal/recorder"
 	"github.com/jpoz/mirra/internal/ui"
 )
 
 type Server struct {
-	cfg       *config.Config
-	proxy     *proxy.Proxy
-	recorder  *recorder.Recorder
-	log       *slog.Logger
-	uiManager *ui.Manager
+	cfg          *config.Config
+	proxy        *proxy.Proxy
+	recorder     *recorder.Recorder
+	groupManager *grouping.Manager
+	log          *slog.Logger
+	uiManager    *ui.Manager
 }
 
 func New(cfg *config.Config, log *slog.Logger, uiManager *ui.Manager) *Server {
 	rec := recorder.New(cfg.Recording.Enabled, cfg.Recording.Path)
 
+	// Initialize grouping manager if recording is enabled
+	var groupMgr *grouping.Manager
+	if cfg.Recording.Enabled {
+		groupMgr = grouping.NewManager(cfg.Recording.Path, true)
+		rec.SetGroupManager(groupMgr)
+		slog.Info("grouping enabled")
+	}
+
 	return &Server{
-		cfg:       cfg,
-		recorder:  rec,
-		proxy:     proxy.New(cfg, rec),
-		log:       log,
-		uiManager: uiManager,
+		cfg:          cfg,
+		recorder:     rec,
+		groupManager: groupMgr,
+		proxy:        proxy.New(cfg, rec),
+		log:          log,
+		uiManager:    uiManager,
 	}
 }
 
@@ -42,6 +53,13 @@ func (s *Server) Start(ctx context.Context) error {
 	mux.Handle("GET /api/recordings", http.HandlerFunc(apiHandlers.ListRecordings))
 	mux.Handle("GET /api/recordings/{id}/parse", http.HandlerFunc(apiHandlers.ParseRecording))
 	mux.Handle("GET /api/recordings/{id}", http.HandlerFunc(apiHandlers.GetRecording))
+
+	// Group API handlers
+	if s.groupManager != nil {
+		groupHandlers := api.NewGroupHandlers(s.log, s.recorder, s.groupManager)
+		mux.Handle("GET /api/groups/sessions", http.HandlerFunc(groupHandlers.ListSessionGroups))
+		mux.Handle("GET /api/groups/sessions/", http.HandlerFunc(groupHandlers.GetSessionGroup))
+	}
 
 	// Health check endpoint
 	mux.Handle("GET /health", http.HandlerFunc(s.healthHandler))
