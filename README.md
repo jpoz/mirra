@@ -2,6 +2,8 @@
 
 **M**onitoring & **I**nspection **R**ecording **R**elay **A**rchive
 
+<img width="3284" height="2622" alt="CleanShot 2025-12-10 at 10 38 18@2x" src="https://github.com/user-attachments/assets/1f20054e-3712-437e-8124-885eada20e2f" />
+
 A transparent HTTP proxy for Large Language Model APIs that records all request/response traffic without modifying it.
 
 MIRRA acts as a pass-through intermediary for inspection, auditing, and analysis of LLM API usage. Currently supports Claude (Anthropic), OpenAI, and Google Gemini APIs.
